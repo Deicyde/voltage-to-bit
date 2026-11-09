@@ -1,4 +1,4 @@
-declarations audited: 424 (of which theorems: 282)
+declarations audited: 433 (of which theorems: 291)
 axioms used anywhere: [Classical.choice, Quot.sound, propext]
 AUDIT OK: no declaration depends on an axiom outside [propext, Classical.choice, Quot.sound]
 'VoltageToBit.IsTrajectory.safe' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -34,6 +34,8 @@ AUDIT OK: no declaration depends on an axiom outside [propext, Classical.choice,
 'VoltageToBit.Examples.illustrative_safe_atSupply' depends on axioms: [propext, Classical.choice, Quot.sound]
 'VoltageToBit.Examples.illustrative_riseCert_3' depends on axioms: [propext, Classical.choice, Quot.sound]
 'VoltageToBit.Examples.badBox_empty' depends on axioms: [propext, Classical.choice, Quot.sound]
+'VoltageToBit.Examples.illustrative_max_rise_slew' depends on axioms: [propext, Classical.choice, Quot.sound]
+'VoltageToBit.Examples.illustrative_max_fall_slew' depends on axioms: [propext, Classical.choice, Quot.sound]
 'VoltageToBit.Examples.early_sampling_counterexample' depends on axioms: [propext, Classical.choice, Quot.sound]
 'VoltageToBit.Examples.miswired_counterexample' depends on axioms: [propext, Classical.choice, Quot.sound]
 'VoltageToBit.Examples.noisy_counterexample' depends on axioms: [propext, Classical.choice, Quot.sound]

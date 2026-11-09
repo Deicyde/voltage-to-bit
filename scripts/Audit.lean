@@ -83,6 +83,8 @@ open VoltageToBit VoltageToBit.Examples
 #print axioms illustrative_safe_atSupply
 #print axioms illustrative_riseCert_3
 #print axioms badBox_empty
+#print axioms illustrative_max_rise_slew
+#print axioms illustrative_max_fall_slew
 #print axioms early_sampling_counterexample
 #print axioms miswired_counterexample
 #print axioms noisy_counterexample

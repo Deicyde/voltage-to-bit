@@ -64,6 +64,19 @@ theorem illustrative_no_early_high (u v : ℝ → ℝ)
   have : t - s ≤ 0.038 := by linarith
   nlinarith [ht.1]
 
+/-- Largest rising slew of the illustrative output for inputs in `[0, 0.40]` V:
+28.5508 V/ns. -/
+theorem illustrative_max_rise_slew :
+    (illustrative.IchargeMax 0 0.40 + illustrative.eps) / illustrative.Clo = 28.5508 := by
+  norm_num [Design.IchargeMax, illustrative, psq_eq_ite]
+
+/-- Largest falling slew of the illustrative output for inputs in
+`[1.25, 1.98]` V: 58.3144 V/ns. -/
+theorem illustrative_max_fall_slew :
+    (illustrative.IdischargeMax 1.25 1.98 + illustrative.eps) / illustrative.Clo
+      = 58.3144 := by
+  norm_num [Design.IdischargeMax, illustrative, psq_eq_ite]
+
 /-- A claimed rise deadline of 38 ps is false: there is a trajectory with a
 valid-low input from time 0 and a valid-low initial output that is not
 valid-high at `t = 0.038` ns. -/
