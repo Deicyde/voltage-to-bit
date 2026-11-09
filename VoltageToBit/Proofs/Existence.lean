@@ -11,17 +11,18 @@ file shows the quantifier is not empty.
   `Cf (v) * dv/dt = Inet θ u v + w t`, with a capacitance function `Cf` within
   `[Clo, Chi]` and a disturbance `|w| ≤ eps`, is a trajectory of the inclusion.
 * `exists_solution`: for continuous input `u`, continuous disturbance `w` with
-  `|w| ≤ eps` on `[a, b]`, a constant capacitance `C ∈ [Clo, Chi]`, and any
-  initial state in the safe domain, the ODE has a solution on all of `[a, b]`.
+  `|w| ≤ eps` on `[a, b]`, a voltage-dependent capacitance `Cf` that stays in
+  `[Clo, Chi]` and is Lipschitz on the safe domain, and any initial state in the
+  safe domain, the ODE has a solution on all of `[a, b]`.
   The proof applies Picard–Lindelöf to a vector field clamped to the safe
   domain (so it is globally Lipschitz and bounded, giving a solution on the
   whole interval at once) and then uses the boundary margins to show that the
   solution never leaves the safe domain, where clamping does nothing.
 * `exists_trajectory`: the combination.
 
-Existence is proved for a constant capacitance. The guarantee itself covers
-any state- or time-dependent capacitance within the bounds; existence for
-those is not proved here.
+Scope: existence is proved for continuous `u` and `w` and Lipschitz `Cf`. The
+guarantee itself needs none of this regularity; for less regular data it is a
+statement about whatever trajectories there are.
 -/
 
 namespace VoltageToBit
@@ -60,36 +61,50 @@ theorem abs_clamp_sub_le (lo hi x y : ℝ) : |clamp lo hi x - clamp lo hi y| ≤
   refine (abs_min_sub_min_le_max _ _ _ _).trans ?_
   simp
 
-theorem continuous_clamp (lo hi : ℝ) : Continuous (clamp lo hi) := by
-  unfold clamp
-  fun_prop
-
 /-- The ODE right-hand side with the state clamped to the safe domain. -/
-noncomputable def clampedField (D : Design) (θ : Params) (C : ℝ) (u w : ℝ → ℝ) (t x : ℝ) : ℝ :=
-  (Inet θ (u t) (clamp D.Vlo D.Vhi x) + w t) / C
+noncomputable def clampedField (D : Design) (θ : Params) (Cf u w : ℝ → ℝ) (t x : ℝ) : ℝ :=
+  (Inet θ (u t) (clamp D.Vlo D.Vhi x) + w t) / Cf (clamp D.Vlo D.Vhi x)
 
-/-- **Existence.** For continuous input and disturbance, constant capacitance in
-range, and an initial state in the safe domain, the ODE has a solution on the
-whole interval `[a, b]`, and it stays in the safe domain. -/
+/-- **Existence.** For continuous input and disturbance, a capacitance function
+that stays in range and is Lipschitz on the safe domain, and an initial state
+in the safe domain, the ODE `Cf (v) * dv/dt = Inet θ u v + w` has a solution on
+the whole interval `[a, b]`, and it stays in the safe domain. -/
 theorem exists_solution {D : Design} {θ : Params} (hD : D.Admissible) (hθ : D.InBox θ)
-    {C : ℝ} (hC1 : D.Clo ≤ C) {u w : ℝ → ℝ} (hu : Continuous u) (hw : Continuous w)
+    {Cf : ℝ → ℝ} (hCf : ∀ x, D.Clo ≤ Cf x) {Kc : ℝ}
+    (hCfLip : ∀ x ∈ D.Safe, ∀ y ∈ D.Safe, |Cf x - Cf y| ≤ Kc * |x - y|)
+    {u w : ℝ → ℝ} (hu : Continuous u) (hw : Continuous w)
     {a b : ℝ} (hab : a ≤ b) (hwb : ∀ t ∈ Icc a b, |w t| ≤ D.eps) {v₀ : ℝ}
     (hv₀ : v₀ ∈ D.Safe) :
     ∃ v : ℝ → ℝ, v a = v₀ ∧ (∀ t ∈ Icc a b, v t ∈ D.Safe) ∧
-      ∀ t ∈ Icc a b, HasDerivWithinAt v ((Inet θ (u t) (v t) + w t) / C) (Icc a b) t := by
-  have hCpos : 0 < C := lt_of_lt_of_le hD.C_pos hC1
+      ∀ t ∈ Icc a b,
+        HasDerivWithinAt v ((Inet θ (u t) (v t) + w t) / Cf (v t)) (Icc a b) t := by
+  have hClo : 0 < D.Clo := hD.C_pos
+  have hCpos : ∀ x, 0 < Cf x := fun x => lt_of_lt_of_le hClo (hCf x)
   have hdom : D.Vlo ≤ D.Vhi := by linarith [hD.Vlo_le, hD.VDD_pos, hD.VDD_le, hD.Vhi_ge]
   have hkp : 0 ≤ θ.kp := le_trans hD.kp_pos.le hθ.kp_ge
   have hkn : 0 ≤ θ.kn := le_trans hD.kn_pos.le hθ.kn_ge
   -- a bound on the input over the compact time interval
   obtain ⟨U, hU⟩ := isCompact_Icc.exists_bound_of_continuousOn (s := Icc a b) hu.continuousOn
-  -- Lipschitz constant of the clamped field in the state
+  -- a bound on the numerator `Inet + w` over time × safe domain
+  have hNcont : Continuous (fun p : ℝ × ℝ => Inet θ (u p.1) p.2 + w p.1) := by
+    have hI := (continuous_Inet θ).comp ((hu.comp continuous_fst).prodMk continuous_snd)
+    exact hI.add (hw.comp continuous_fst)
+  obtain ⟨M₀, hM₀⟩ := (isCompact_Icc.prod isCompact_Icc).exists_bound_of_continuousOn
+    (s := Icc a b ×ˢ Icc D.Vlo D.Vhi) hNcont.continuousOn
+  have hNbound : ∀ t ∈ Icc a b, ∀ x : ℝ,
+      |Inet θ (u t) (clamp D.Vlo D.Vhi x) + w t| ≤ |M₀| := by
+    intro t ht x
+    have := hM₀ (t, clamp D.Vlo D.Vhi x) ⟨ht, clamp_mem hdom x⟩
+    rw [Real.norm_eq_abs] at this
+    exact this.trans (le_abs_self _)
+  -- Lipschitz constant of the numerator in the state
   set Y : ℝ := max |D.Vlo| |D.Vhi| with hY
   set K₀ : ℝ := θ.kp * (Y + |U| + |θ.Vtp|) + θ.kn * (Y + |U| + |θ.Vtn|) with hK₀def
   have hY0 : 0 ≤ Y := le_trans (abs_nonneg _) (le_max_left _ _)
   have hK₀ : 0 ≤ K₀ := by positivity
-  have hLip : ∀ t ∈ Icc a b, ∀ x y : ℝ,
-      |clampedField D θ C u w t x - clampedField D θ C u w t y| ≤ K₀ / C * |x - y| := by
+  have hNLip : ∀ t ∈ Icc a b, ∀ x y : ℝ,
+      |Inet θ (u t) (clamp D.Vlo D.Vhi x) - Inet θ (u t) (clamp D.Vlo D.Vhi y)|
+        ≤ K₀ * |x - y| := by
     intro t ht x y
     have hx := clamp_mem hdom x
     have hy := clamp_mem hdom y
@@ -118,39 +133,72 @@ theorem exists_solution {D : Design} {θ : Params} (hD : D.Admissible) (hθ : D.
         mul_le_mul_of_nonneg_left (by linarith) (by linarith)
       rw [hK₀def]
       linarith
-    have hdiff : |Inet θ (u t) (clamp D.Vlo D.Vhi x) - Inet θ (u t) (clamp D.Vlo D.Vhi y)|
-        ≤ K₀ * |x - y| :=
-      h1.trans (mul_le_mul hmod h2 (abs_nonneg _) hK₀)
-    have e : clampedField D θ C u w t x - clampedField D θ C u w t y
-        = (Inet θ (u t) (clamp D.Vlo D.Vhi x) - Inet θ (u t) (clamp D.Vlo D.Vhi y)) / C := by
-      unfold clampedField; ring
-    rw [e, abs_div, abs_of_pos hCpos, div_mul_eq_mul_div]
-    exact div_le_div_of_nonneg_right hdiff hCpos.le
+    exact h1.trans (mul_le_mul hmod h2 (abs_nonneg _) hK₀)
+  -- Lipschitz constant of the clamped field in the state
+  set K : ℝ := K₀ / D.Clo + |M₀| * |Kc| / (D.Clo * D.Clo) with hKdef
+  have hK : 0 ≤ K := by positivity
+  have hLip : ∀ t ∈ Icc a b, ∀ x y : ℝ,
+      |clampedField D θ Cf u w t x - clampedField D θ Cf u w t y| ≤ K * |x - y| := by
+    intro t ht x y
+    have hx := clamp_mem hdom x
+    have hy := clamp_mem hdom y
+    have hCx := hCf (clamp D.Vlo D.Vhi x)
+    have hCy := hCf (clamp D.Vlo D.Vhi y)
+    have hCxpos := hCpos (clamp D.Vlo D.Vhi x)
+    have hCypos := hCpos (clamp D.Vlo D.Vhi y)
+    have hC : |Cf (clamp D.Vlo D.Vhi x) - Cf (clamp D.Vlo D.Vhi y)| ≤ |Kc| * |x - y| := by
+      refine (hCfLip _ hx _ hy).trans ?_
+      refine (mul_le_mul_of_nonneg_right (le_abs_self Kc) (abs_nonneg _)).trans ?_
+      exact mul_le_mul_of_nonneg_left (abs_clamp_sub_le _ _ x y) (abs_nonneg _)
+    have hsplit : clampedField D θ Cf u w t x - clampedField D θ Cf u w t y
+        = (Inet θ (u t) (clamp D.Vlo D.Vhi x) - Inet θ (u t) (clamp D.Vlo D.Vhi y))
+            / Cf (clamp D.Vlo D.Vhi x)
+          - (Inet θ (u t) (clamp D.Vlo D.Vhi y) + w t)
+              * (Cf (clamp D.Vlo D.Vhi x) - Cf (clamp D.Vlo D.Vhi y))
+              / (Cf (clamp D.Vlo D.Vhi x) * Cf (clamp D.Vlo D.Vhi y)) := by
+      unfold clampedField
+      field_simp
+      ring
+    rw [hsplit]
+    refine (abs_sub _ _).trans ?_
+    have t1 : |(Inet θ (u t) (clamp D.Vlo D.Vhi x) - Inet θ (u t) (clamp D.Vlo D.Vhi y))
+        / Cf (clamp D.Vlo D.Vhi x)| ≤ K₀ * |x - y| / D.Clo := by
+      rw [abs_div, abs_of_pos hCxpos]
+      exact div_le_div₀ (mul_nonneg hK₀ (abs_nonneg _)) (hNLip t ht x y) hClo hCx
+    have t2 : |(Inet θ (u t) (clamp D.Vlo D.Vhi y) + w t)
+          * (Cf (clamp D.Vlo D.Vhi x) - Cf (clamp D.Vlo D.Vhi y))
+          / (Cf (clamp D.Vlo D.Vhi x) * Cf (clamp D.Vlo D.Vhi y))|
+        ≤ |M₀| * (|Kc| * |x - y|) / (D.Clo * D.Clo) := by
+      rw [abs_div, abs_mul, abs_of_pos (mul_pos hCxpos hCypos)]
+      exact div_le_div₀ (by positivity)
+        (mul_le_mul (hNbound t ht y) hC (abs_nonneg _) (abs_nonneg _)) (mul_pos hClo hClo)
+        (mul_le_mul hCx hCy hClo.le hCxpos.le)
+    have e : K * |x - y| = K₀ * |x - y| / D.Clo + |M₀| * (|Kc| * |x - y|) / (D.Clo * D.Clo) := by
+      rw [hKdef]; ring
+    rw [e]
+    exact add_le_add t1 t2
   -- a bound on the clamped field
-  have hGcont : Continuous (fun p : ℝ × ℝ => (Inet θ (u p.1) p.2 + w p.1) / C) := by
-    have hI := (continuous_Inet θ).comp ((hu.comp continuous_fst).prodMk continuous_snd)
-    exact (hI.add (hw.comp continuous_fst)).div_const C
-  obtain ⟨L₀, hL₀⟩ := (isCompact_Icc.prod isCompact_Icc).exists_bound_of_continuousOn
-    (s := Icc a b ×ˢ Icc D.Vlo D.Vhi) hGcont.continuousOn
-  have hnorm : ∀ t ∈ Icc a b, ∀ x : ℝ, |clampedField D θ C u w t x| ≤ |L₀| := by
+  have hnorm : ∀ t ∈ Icc a b, ∀ x : ℝ, |clampedField D θ Cf u w t x| ≤ |M₀| / D.Clo := by
     intro t ht x
-    have := hL₀ (t, clamp D.Vlo D.Vhi x) ⟨ht, clamp_mem hdom x⟩
-    rw [Real.norm_eq_abs] at this
-    exact this.trans (le_abs_self _)
+    unfold clampedField
+    rw [abs_div, abs_of_pos (hCpos _)]
+    exact div_le_div₀ (abs_nonneg _) (hNbound t ht x) hClo (hCf _)
   -- Picard–Lindelöf on the whole interval
-  have hPL : IsPicardLindelof (clampedField D θ C u w) (tmin := a) (tmax := b)
+  have hL : 0 ≤ |M₀| / D.Clo := by positivity
+  have hPL : IsPicardLindelof (clampedField D θ Cf u w) (tmin := a) (tmax := b)
       ⟨a, left_mem_Icc.mpr hab⟩ v₀
-      (⟨|L₀| * (b - a), mul_nonneg (abs_nonneg _) (sub_nonneg.mpr hab)⟩ : ℝ≥0) 0
-      (⟨|L₀|, abs_nonneg _⟩ : ℝ≥0) (⟨K₀ / C, div_nonneg hK₀ hCpos.le⟩ : ℝ≥0) :=
+      (⟨|M₀| / D.Clo * (b - a), mul_nonneg hL (sub_nonneg.mpr hab)⟩ : ℝ≥0) 0
+      (⟨|M₀| / D.Clo, hL⟩ : ℝ≥0) (⟨K, hK⟩ : ℝ≥0) :=
     { lipschitzOnWith := fun t ht => by
         refine LipschitzWith.lipschitzOnWith ?_
         refine LipschitzWith.of_dist_le_mul fun x y => ?_
         rw [Real.dist_eq, Real.dist_eq]
         exact hLip t ht x y
       continuousOn := fun x _ => by
-        have : Continuous (fun t => clampedField D θ C u w t x) := by
-          have hI := (continuous_Inet θ).comp (hu.prodMk (continuous_const (y := clamp D.Vlo D.Vhi x)))
-          exact (hI.add hw).div_const C
+        have : Continuous (fun t => clampedField D θ Cf u w t x) := by
+          have hI := (continuous_Inet θ).comp
+            (hu.prodMk (continuous_const (y := clamp D.Vlo D.Vhi x)))
+          exact (hI.add hw).div_const _
         exact this.continuousOn
       norm_le := fun t ht x _ => by
         rw [Real.norm_eq_abs]
@@ -159,12 +207,12 @@ theorem exists_solution {D : Design} {θ : Params} (hD : D.Admissible) (hθ : D.
         have hmax : max (b - a) (a - a) = b - a := by
           rw [sub_self]
           exact max_eq_left (sub_nonneg.mpr hab)
-        show |L₀| * max (b - a) (a - a) ≤ |L₀| * (b - a) - 0
+        show |M₀| / D.Clo * max (b - a) (a - a) ≤ |M₀| / D.Clo * (b - a) - 0
         rw [hmax, sub_zero] }
   obtain ⟨α, hα0, hα⟩ := hPL.exists_eq_forall_mem_Icc_hasDerivWithinAt₀
   have hα0' : α a = v₀ := hα0
   have hαcont : ContinuousOn α (Icc a b) := fun t ht => (hα t ht).continuousWithinAt
-  have hαr : ∀ t ∈ Ico a b, HasDerivWithinAt α (clampedField D θ C u w t (α t)) (Ici t) t :=
+  have hαr : ∀ t ∈ Ico a b, HasDerivWithinAt α (clampedField D θ Cf u w t (α t)) (Ici t) t :=
     fun t ht => (hα t (Ico_subset_Icc_self ht)).mono_of_mem_nhdsWithin (Icc_mem_nhdsGE_of_mem ht)
   -- the solution of the clamped problem stays in the safe domain
   have hsafe : ∀ t ∈ Icc a b, α t ∈ D.Safe := by
@@ -177,7 +225,7 @@ theorem exists_solution {D : Design} {θ : Params} (hD : D.Admissible) (hθ : D.
       have hcl : clamp D.Vlo D.Vhi D.Vlo = D.Vlo := clamp_of_mem (left_mem_Icc.mpr hdom)
       unfold clampedField
       rw [hvs, hcl]
-      exact div_pos (by linarith) hCpos
+      exact div_pos (by linarith) (hCpos _)
     · refine barrier_le hαcont hαr (by rw [hα0']; exact hv₀.2) ?_ t ht
       intro s hs hvs
       have hI := Design.Inet_Vhi_lt hD hθ (u s)
@@ -185,28 +233,40 @@ theorem exists_solution {D : Design} {θ : Params} (hD : D.Admissible) (hθ : D.
       have hcl : clamp D.Vlo D.Vhi D.Vhi = D.Vhi := clamp_of_mem (right_mem_Icc.mpr hdom)
       unfold clampedField
       rw [hvs, hcl]
-      exact div_neg_of_neg_of_pos (by linarith) hCpos
+      exact div_neg_of_neg_of_pos (by linarith) (hCpos _)
   -- inside the safe domain the clamp is the identity
   refine ⟨α, hα0', hsafe, fun t ht => ?_⟩
   have h := hα t ht
   unfold clampedField at h
   rwa [clamp_of_mem (hsafe t ht)] at h
 
-/-- **Trajectories exist.** Under the hypotheses of `exists_solution`, there is
-a trajectory of the inclusion on `[a, b]` from any initial state in the safe
-domain. -/
+/-- **Trajectories exist.** Under the hypotheses of `exists_solution`, with the
+capacitance function also bounded above by `Chi`, there is a trajectory of the
+inclusion on `[a, b]` from any initial state in the safe domain. -/
 theorem exists_trajectory {D : Design} {θ : Params} (hD : D.Admissible) (hθ : D.InBox θ)
-    {C : ℝ} (hC1 : D.Clo ≤ C) (hC2 : C ≤ D.Chi) {u w : ℝ → ℝ} (hu : Continuous u)
-    (hw : Continuous w) {a b : ℝ} (hab : a ≤ b) (hwb : ∀ t ∈ Icc a b, |w t| ≤ D.eps)
-    {v₀ : ℝ} (hv₀ : v₀ ∈ D.Safe) :
+    {Cf : ℝ → ℝ} (hCf : ∀ x, D.Clo ≤ Cf x ∧ Cf x ≤ D.Chi) {Kc : ℝ}
+    (hCfLip : ∀ x ∈ D.Safe, ∀ y ∈ D.Safe, |Cf x - Cf y| ≤ Kc * |x - y|)
+    {u w : ℝ → ℝ} (hu : Continuous u) (hw : Continuous w) {a b : ℝ} (hab : a ≤ b)
+    (hwb : ∀ t ∈ Icc a b, |w t| ≤ D.eps) {v₀ : ℝ} (hv₀ : v₀ ∈ D.Safe) :
     ∃ v : ℝ → ℝ, v a = v₀ ∧ IsTrajectory D θ u v a b := by
-  obtain ⟨v, hv0, -, hode⟩ := exists_solution hD hθ hC1 hu hw hab hwb hv₀
-  have hCpos : 0 < C := lt_of_lt_of_le hD.C_pos hC1
-  refine ⟨v, hv0, IsTrajectory.of_ode (Cf := fun _ => C) (w := w) (fun _ => ⟨hC1, hC2⟩)
+  obtain ⟨v, hv0, -, hode⟩ :=
+    exists_solution hD hθ (fun x => (hCf x).1) hCfLip hu hw hab hwb hv₀
+  have hCpos : ∀ x, 0 < Cf x := fun x => lt_of_lt_of_le hD.C_pos (hCf x).1
+  refine ⟨v, hv0, IsTrajectory.of_ode (Cf := Cf) (w := w) hCf
     (fun t ht => hwb t (Ico_subset_Icc_self ht))
     (fun t ht => (hode t ht).continuousWithinAt) (fun t ht => ?_)⟩
   refine ⟨_, (hode t (Ico_subset_Icc_self ht)).mono_of_mem_nhdsWithin
     (Icc_mem_nhdsGE_of_mem ht), ?_⟩
+  have := (hCpos (v t)).ne'
   field_simp
+
+/-- Trajectories exist for every constant capacitance in range. -/
+theorem exists_trajectory_const {D : Design} {θ : Params} (hD : D.Admissible)
+    (hθ : D.InBox θ) {C : ℝ} (hC1 : D.Clo ≤ C) (hC2 : C ≤ D.Chi) {u w : ℝ → ℝ}
+    (hu : Continuous u) (hw : Continuous w) {a b : ℝ} (hab : a ≤ b)
+    (hwb : ∀ t ∈ Icc a b, |w t| ≤ D.eps) {v₀ : ℝ} (hv₀ : v₀ ∈ D.Safe) :
+    ∃ v : ℝ → ℝ, v a = v₀ ∧ IsTrajectory D θ u v a b :=
+  exists_trajectory hD hθ (Cf := fun _ => C) (Kc := 0) (fun _ => ⟨hC1, hC2⟩)
+    (fun x _ y _ => by simp) hu hw hab hwb hv₀
 
 end VoltageToBit

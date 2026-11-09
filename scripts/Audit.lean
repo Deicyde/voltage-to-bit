@@ -56,6 +56,7 @@ open VoltageToBit VoltageToBit.Examples
 #print axioms IsTrajectory.decoded
 #print axioms exists_solution
 #print axioms exists_trajectory
+#print axioms exists_trajectory_const
 #print axioms IsTrajectory.of_ode
 #print axioms IsTrajectory.of_model_error
 #print axioms IsTrajectory.rise_of_cert
@@ -63,9 +64,12 @@ open VoltageToBit VoltageToBit.Examples
 #print axioms IsTrajectory.rise_at_most
 #print axioms Design.Admissible.exists_rise_run
 #print axioms Design.Admissible.exists_fall_run
+#print axioms chain_restores_low
+#print axioms chain_restores_high
 #print axioms illustrative_admissible
 #print axioms illustrative_guarantee
 #print axioms illustrative_exists
+#print axioms illustrative_exists_const
 #print axioms illustrative_scenario
 #print axioms illustrative_riseCert_3
 #print axioms badBox_empty

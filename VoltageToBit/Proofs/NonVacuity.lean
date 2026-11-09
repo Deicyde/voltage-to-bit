@@ -73,7 +73,7 @@ theorem exists_rise_run (hD : D.Admissible) :
       ∀ t ∈ Icc D.tauUp (D.tauUp + 1), D.VOH ≤ v t := by
   obtain ⟨θ, hθ⟩ := hD.exists_inBox
   have hT : (0 : ℝ) ≤ D.tauUp + 1 := by linarith [hD.tauUp_pos]
-  obtain ⟨v, hv0, htraj⟩ := exists_trajectory hD hθ (C := D.Clo) le_rfl hD.C_le
+  obtain ⟨v, hv0, htraj⟩ := exists_trajectory_const hD hθ (C := D.Clo) le_rfl hD.C_le
     (u := fun _ => D.VIL) (w := fun _ => 0) continuous_const continuous_const hT
     (fun t _ => by simpa using hD.eps_nonneg) hD.VOL_mem_safe
   refine ⟨θ, fun _ => D.VIL, v, hθ, htraj, hv0, fun _ => le_rfl, fun t ht => ?_⟩
@@ -90,7 +90,7 @@ theorem exists_fall_run (hD : D.Admissible) :
       ∀ t ∈ Icc D.tauDn (D.tauDn + 1), v t ≤ D.VOL := by
   obtain ⟨θ, hθ⟩ := hD.exists_inBox
   have hT : (0 : ℝ) ≤ D.tauDn + 1 := by linarith [hD.tauDn_pos]
-  obtain ⟨v, hv0, htraj⟩ := exists_trajectory hD hθ (C := D.Clo) le_rfl hD.C_le
+  obtain ⟨v, hv0, htraj⟩ := exists_trajectory_const hD hθ (C := D.Clo) le_rfl hD.C_le
     (u := fun _ => D.VIH) (w := fun _ => 0) continuous_const continuous_const hT
     (fun t _ => by simpa using hD.eps_nonneg) hD.VOH_mem_safe
   refine ⟨θ, fun _ => D.VIH, v, hθ, htraj, hv0, fun _ => le_rfl, fun t ht => ?_⟩

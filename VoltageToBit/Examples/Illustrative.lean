@@ -100,19 +100,37 @@ theorem illustrative_guarantee (θ : Params) (hθ : illustrative.InBox θ) (u v 
     simpa [illustrative] using this
 
 /-- **Trajectories exist** for the illustrative inverter: for every parameter
-choice in the box, every constant capacitance in `[5, 20]` fF, every continuous
-input, every continuous disturbance of magnitude at most `2` µA, every interval
-and every initial state in the safe domain. -/
-theorem illustrative_exists (θ : Params) (hθ : illustrative.InBox θ) (C : ℝ)
-    (hC : C ∈ Icc (5 : ℝ) 20) (u w : ℝ → ℝ) (hu : Continuous u) (hw : Continuous w)
+choice in the box, every voltage-dependent capacitance with values in
+`[5, 20]` fF that is Lipschitz on the safe domain, every continuous input,
+every continuous disturbance of magnitude at most `2` µA, every interval and
+every initial state in the safe domain. -/
+theorem illustrative_exists (θ : Params) (hθ : illustrative.InBox θ) (Cf : ℝ → ℝ)
+    (hCf : ∀ x, Cf x ∈ Icc (5 : ℝ) 20) (Kc : ℝ)
+    (hCfLip : ∀ x ∈ Icc (-0.10 : ℝ) 2.08, ∀ y ∈ Icc (-0.10 : ℝ) 2.08,
+      |Cf x - Cf y| ≤ Kc * |x - y|)
+    (u w : ℝ → ℝ) (hu : Continuous u) (hw : Continuous w)
     (a b : ℝ) (hab : a ≤ b) (hwb : ∀ t ∈ Icc a b, |w t| ≤ 2) (v₀ : ℝ)
     (hv₀ : v₀ ∈ Icc (-0.10 : ℝ) 2.08) :
     ∃ v : ℝ → ℝ, v a = v₀ ∧ IsTrajectory illustrative θ u v a b := by
-  refine exists_trajectory illustrative_admissible hθ (C := C) ?_ ?_ hu hw hab ?_ ?_
-  · simpa [illustrative] using hC.1
-  · simpa [illustrative] using hC.2
+  have hsafe : illustrative.Safe = Icc (-0.10 : ℝ) 2.08 := by
+    norm_num [Design.Safe, illustrative]
+  refine exists_trajectory illustrative_admissible hθ (Cf := Cf) (Kc := Kc) ?_ ?_ hu hw hab ?_ ?_
+  · intro x
+    simpa [illustrative] using hCf x
+  · rw [hsafe]
+    exact hCfLip
   · simpa [illustrative] using hwb
-  · simpa [Design.Safe, illustrative] using hv₀
+  · rw [hsafe]
+    exact hv₀
+
+/-- The constant-capacitance special case of `illustrative_exists`. -/
+theorem illustrative_exists_const (θ : Params) (hθ : illustrative.InBox θ) (C : ℝ)
+    (hC : C ∈ Icc (5 : ℝ) 20) (u w : ℝ → ℝ) (hu : Continuous u) (hw : Continuous w)
+    (a b : ℝ) (hab : a ≤ b) (hwb : ∀ t ∈ Icc a b, |w t| ≤ 2) (v₀ : ℝ)
+    (hv₀ : v₀ ∈ Icc (-0.10 : ℝ) 2.08) :
+    ∃ v : ℝ → ℝ, v a = v₀ ∧ IsTrajectory illustrative θ u v a b :=
+  illustrative_exists θ hθ (fun _ => C) (fun _ => hC) 0 (fun x _ y _ => by simp) u w hu hw
+    a b hab hwb v₀ hv₀
 
 /-! ## One fully explicit run -/
 
@@ -171,7 +189,8 @@ theorem illustrative_scenario :
   have hwb : ∀ t ∈ Icc (0 : ℝ) 10, |wSin t| ≤ illustrative.eps := fun t _ => by
     simpa [illustrative] using abs_wSin_le t
   have hv₀ : (1 : ℝ) ∈ illustrative.Safe := by norm_num [Design.Safe, illustrative]
-  obtain ⟨v, hv0, hsafe, hode⟩ := exists_solution hadm nominal_inBox hC1 continuous_uRamp
+  obtain ⟨v, hv0, hsafe, hode⟩ := exists_solution hadm nominal_inBox (Cf := fun _ => 10)
+    (Kc := 0) (fun _ => hC1) (fun x _ y _ => by simp) continuous_uRamp
     continuous_wSin (by norm_num : (0 : ℝ) ≤ 10) hwb hv₀
   have htraj : IsTrajectory illustrative nominal uRamp v 0 10 :=
     IsTrajectory.of_ode (Cf := fun _ => 10) (w := wSin) (fun _ => ⟨hC1, hC2⟩)

@@ -70,7 +70,7 @@ valid-high at `t = 0.038` ns. -/
 theorem early_sampling_counterexample :
     ∃ u v : ℝ → ℝ, (∀ t, u t ≤ 0.40) ∧ v 0 ≤ 0.25 ∧
       IsTrajectory illustrative nominal u v 0 10 ∧ v 0.038 < 1.35 := by
-  obtain ⟨v, hv0, htraj⟩ := illustrative_exists nominal nominal_inBox 5 (by norm_num)
+  obtain ⟨v, hv0, htraj⟩ := illustrative_exists_const nominal nominal_inBox 5 (by norm_num)
     (fun _ => 0.2) (fun _ => 0) continuous_const continuous_const 0 10 (by norm_num)
     (fun t _ => by norm_num) 0.25 (by norm_num)
   refine ⟨fun _ => 0.2, v, fun t => by norm_num, hv0.le, htraj, ?_⟩

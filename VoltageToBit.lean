@@ -9,6 +9,7 @@ import VoltageToBit.Proofs.NonVacuity
 import VoltageToBit.Proofs.Certificate
 import VoltageToBit.Proofs.ModelError
 import VoltageToBit.Proofs.Contamination
+import VoltageToBit.Proofs.Chain
 import VoltageToBit.Examples.IllustrativeDesign
 import VoltageToBit.Examples.Illustrative
 import VoltageToBit.Examples.NegativeControls
