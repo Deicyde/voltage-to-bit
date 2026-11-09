@@ -1,0 +1,55 @@
+{
+ "adaptive_solver_error_vs_quadrature_ns_at_rtol_1e-12": {
+  "fall/BDF": 3.823985572637412e-11,
+  "fall/DOP853": 6.042943923034727e-12,
+  "fall/LSODA": 9.722889160457271e-12,
+  "fall/RK45": -1.6118661960717873e-11,
+  "fall/Radau": 9.303668946358812e-14,
+  "rise/BDF": 5.679678949377376e-11,
+  "rise/DOP853": 6.163070054299169e-12,
+  "rise/LSODA": -1.0616840739885447e-11,
+  "rise/RK45": 1.4943157822244757e-11,
+  "rise/Radau": -4.0900616227190767e-13
+ },
+ "batch_engine_error_vs_quadrature_ns_at_production_step": {
+  "fall": 5.0106585547382565e-12,
+  "rise": -2.589040093425865e-13
+ },
+ "batch_halving": {
+  "dt_half_ns": 0.00025,
+  "dt_ns": 0.0005,
+  "max_abs_d_vfinal_V": 0.0001109464141144257,
+  "max_abs_d_vmax_V": 0.00011016199095159607,
+  "max_abs_d_vmin_V": 3.0193995079780267e-05,
+  "max_abs_dt_cross_ns": 4.49696304229974e-05,
+  "max_abs_dt_cross_ns_discontinuous_feedback": 4.49696304229974e-05,
+  "max_abs_dt_cross_ns_envelope_selections": 1.3094955222392457e-06,
+  "max_abs_dt_cross_ns_time_only_disturbances": 3.796992387172793e-09,
+  "n_runs": 26936,
+  "violations_at_dt": {
+   "n_runs": 26936,
+   "viol_cross": 0,
+   "viol_persist": 0,
+   "viol_recross": 0,
+   "viol_safe": 0
+  },
+  "violations_at_dt_half": {
+   "n_runs": 26936,
+   "viol_cross": 0,
+   "viol_persist": 0,
+   "viol_recross": 0,
+   "viol_safe": 0
+  }
+ },
+ "note": "observed RK4 orders are irregular because psq has a discontinuous second derivative; errors, not orders, are the evidence",
+ "reference": {
+  "fall": {
+   "corner": "HLHHL",
+   "reference_quadrature_ns": 1.3923521586515486
+  },
+  "rise": {
+   "corner": "LLLHH",
+   "reference_quadrature_ns": 2.2511899869450582
+  }
+ }
+}

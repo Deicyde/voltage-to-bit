@@ -1,0 +1,17 @@
+# Workstream D (numerical experiments). Pinned; installed into R/.venv with
+#   uv venv .venv --python 3.14
+#   uv pip install --python .venv/bin/python -r experiments/requirements.txt
+# Direct dependencies
+numpy==2.4.6
+scipy==1.18.0
+matplotlib==3.11.2
+# Transitive dependencies of matplotlib (pinned for reproducibility)
+contourpy==1.4.0
+cycler==0.12.1
+fonttools==4.68.0
+kiwisolver==1.5.1
+packaging==26.3
+pillow==13.0.0
+pyparsing==3.3.3
+python-dateutil==4.0.0
+tzdata==2026.6

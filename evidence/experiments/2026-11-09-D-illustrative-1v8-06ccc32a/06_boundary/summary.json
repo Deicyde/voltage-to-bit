@@ -1,0 +1,155 @@
+{
+ "barrier_stress": {
+  "C_fF_fixed_corner_runs": 5.0,
+  "dt_ns": 0.0005,
+  "extreme_stationary_points": {
+   "at_corner": "HLLHH",
+   "at_corner_low": "LLLHH",
+   "at_u_V": 0.62,
+   "at_u_V_low": 0.96,
+   "headroom_to_V_hi_V": 0.06829298348442059,
+   "headroom_to_V_lo_V": 0.06910359428615878,
+   "highest_stationary_output_with_w=+eps_V": 2.0117070165155795,
+   "lowest_stationary_output_with_w=-eps_V": -0.03089640571384122,
+   "note": "over the u grid and the 32 corners (the box extremes are attained at corners); every trajectory started between these two values stays between them (scalar comparison), so at this eps the model uses only this part of [V_lo, V_hi]"
+  },
+  "hold_ns": 3.0,
+  "n_corners": 32,
+  "n_runs": 19866,
+  "n_runs_box_envelope": 602,
+  "n_runs_fixed_corner": 19264,
+  "start_at_V_hi_pushing_up": {
+   "box_envelope_runs_exceeding_V_hi": 0,
+   "max_v_after_t0_V": 2.0798890920749424,
+   "max_v_over_all_runs_V": 2.08,
+   "min_distance_below_V_hi_after_one_step_V": 0.00011090792505763503,
+   "n_runs_exceeding_V_hi": 0,
+   "tightest_run": {
+    "selection": "box (any theta per instant)",
+    "u_V": 0.65
+   }
+  },
+  "start_at_V_lo_pushing_down": {
+   "box_envelope_runs_below_V_lo": 0,
+   "min_distance_above_V_lo_after_one_step_V": 9.79373131464456e-05,
+   "min_v_after_t0_V": -0.09990206268685356,
+   "min_v_over_all_runs_V": -0.1,
+   "n_runs_below_V_lo": 0,
+   "tightest_run": {
+    "selection": "box (any theta per instant)",
+    "u_V": 0.82
+   }
+  },
+  "u_grid": [
+   -0.5,
+   2.5,
+   0.01
+  ]
+ },
+ "edge_simulation_check_max_abs_sim_minus_quadrature_ns": 8.026003417427319e-09,
+ "edge_sweep": {
+  "high": {
+   "band_edge_V": 1.25,
+   "input_level_there_V": 1.154817717741484,
+   "input_level_there_V_stuck": 1.0794682655796768,
+   "offset_at_which_worst_case_delay_first_exceeds_tau_V": 0.09518228225851588,
+   "offset_at_which_worst_corner_gets_stuck_short_of_threshold_V": 0.1705317344203231,
+   "reading": "between the band edge and the first offset the model still meets the timing bound although the theorem makes no claim there; beyond the second offset an admissible trajectory never produces a valid output"
+  },
+  "low": {
+   "band_edge_V": 0.4,
+   "input_level_there_V": 0.49781931386722367,
+   "input_level_there_V_stuck": 0.6240706976045114,
+   "offset_at_which_worst_case_delay_first_exceeds_tau_V": 0.09781931386722367,
+   "offset_at_which_worst_corner_gets_stuck_short_of_threshold_V": 0.22407069760451143,
+   "reading": "between the band edge and the first offset the model still meets the timing bound although the theorem makes no claim there; beyond the second offset an admissible trajectory never produces a valid output"
+  }
+ },
+ "midrail_hold": {
+  "C_fF": 5.0,
+  "at_switching_threshold": {
+   "decode_counts": {
+    "high": 117,
+    "low": 85,
+    "undefined": 95
+   },
+   "nominal_stationary_interval_V": [
+    0.3106601717798212,
+    1.3606601717798212
+   ],
+   "nominal_w0_final_values_V": [
+    0.31046026913671254,
+    0.8,
+    1.3610599494774456
+   ]
+  },
+  "decode_counts_all": {
+   "high": 2543,
+   "low": 2332,
+   "undefined": 174
+  },
+  "decoder_property": {
+   "float_decoder_agrees_with_exact_decoder": true,
+   "n_grid": 4361,
+   "never_a_bit_strictly_between_thresholds": true
+  },
+  "dt_ns": 0.004,
+  "hold_ns": 250.0,
+  "n_runs": 5049,
+  "settled_check": {
+   "max_abs_dvdt_at_end_V_per_ns": 0.0032000000000001806,
+   "n_runs_with_abs_dvdt_above_1e-6_V_per_ns": 34,
+   "note": "near the switching threshold both devices are saturated and I_net does not depend on v over an interval of outputs: the output drifts across that interval at (I_net + w)/C, arbitrarily slowly as the input approaches the threshold, so some runs are still moving at the end of the hold (the decode reported is the one at the end of the hold). Exactly at u_M with w = 0 the whole interval is stationary, so the final value depends on the initial state; runs that start outside it approach its edge only algebraically (~1/t)."
+  }
+ },
+ "supply_relative_domain": {
+  "R_hiN_prime_uA": "2.312",
+  "all_restricted_records_admissible": true,
+  "claim": "for a run at one supply V0 in [VDD_min, VDD_max]: v stays in [V_lo, V0 + (V_hi - VDD_max)], provided eps < R_hiN'",
+  "delta_V": "0.1",
+  "eps_lt_R_hiN_prime": true,
+  "n_supply_values": 37,
+  "restricted_deadlines_no_larger": true,
+  "simulation_from_the_supply_relative_top (w = +eps at C_min for each corner, and the box_high selection)": {
+   "1.62": {
+    "max_v_after_t0_minus_top_V": -3.8981676248495134e-05,
+    "max_v_over_all_runs_V": 1.72,
+    "min_v_V": 0.004069079041686185,
+    "n_runs": 9933,
+    "n_runs_exceeding_top": 0,
+    "top_V": 1.72
+   },
+   "1.8": {
+    "max_v_after_t0_minus_top_V": -7.49512729907309e-05,
+    "max_v_over_all_runs_V": 1.9,
+    "min_v_V": 0.004069079041686185,
+    "n_runs": 9933,
+    "n_runs_exceeding_top": 0,
+    "top_V": 1.9
+   },
+   "1.98": {
+    "max_v_after_t0_minus_top_V": -0.00011090792505763503,
+    "max_v_over_all_runs_V": 2.08,
+    "min_v_V": 0.004069079041686185,
+    "n_runs": 9933,
+    "n_runs_exceeding_top": 0,
+    "top_V": 2.08
+   }
+  },
+  "smallest_model_restoring_current_at_supply_relative_top": {
+   "V0_V": "1.62",
+   "corner": "LLLHH",
+   "uA": "3.56",
+   "u_V": "0.65"
+  }
+ },
+ "transfer": {
+  "declared_V_IH": 1.25,
+  "declared_V_IL": 0.4,
+  "largest_u_with_settled_output_always_high_V": 0.6240706976045114,
+  "note": "static (settled-output) limits of the model over 32 corners and |w| <= eps; they say nothing about timing. Between the two values the settled output can be high, low or undefined depending on theta and w.",
+  "smallest_u_with_settled_output_always_low_V": 1.0794682655796768,
+  "static_slack_high_side_V": 0.1705317344203232,
+  "static_slack_low_side_V": 0.22407069760451137
+ }
+}

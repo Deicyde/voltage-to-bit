@@ -1,0 +1,403 @@
+{
+ "claim_barriers": {
+  "hi": {
+   "argmin": {
+    "theta": {
+     "VDD": "1.98",
+     "Vtn": "0.6",
+     "Vtp": "0.6",
+     "kn": "160",
+     "kp": "80"
+    },
+    "theta_set": "corner:HLLHH",
+    "u": "0.65"
+   },
+   "arithmetic": "exact int64 on the 0.1 mV lattice",
+   "claim": "for every real u: I_net(u, V_hi) <= -min(R_hiP, R_hiN)",
+   "claimed_bound_uA": {
+    "decimal": "2.312",
+    "decimal_is_exact": true,
+    "float": 2.312,
+    "fraction": "289/125"
+   },
+   "grid_u": [
+    "-3",
+    "5",
+    "0.0005"
+   ],
+   "min_inward_current_uA": {
+    "decimal": "6.44",
+    "decimal_is_exact": true,
+    "float": 6.44,
+    "fraction": "161/25"
+   },
+   "min_slack_uA": {
+    "decimal": "4.128",
+    "decimal_is_exact": true,
+    "float": 4.128,
+    "fraction": "516/125"
+   },
+   "n_points": 80517032,
+   "n_points_with_negative_slack": 0,
+   "n_theta": 5032
+  },
+  "lo": {
+   "argmin": {
+    "theta": {
+     "VDD": "1.62",
+     "Vtn": "0.6",
+     "Vtp": "0.6",
+     "kn": "160",
+     "kp": "80"
+    },
+    "theta_set": "corner:LLLHH",
+    "u": "0.82"
+   },
+   "arithmetic": "exact int64 on the 0.1 mV lattice",
+   "claim": "for every real u: I_net(u, V_lo) >= min(R_loN, R_loP)",
+   "claimed_bound_uA": {
+    "decimal": "3.04",
+    "decimal_is_exact": true,
+    "float": 3.04,
+    "fraction": "76/25"
+   },
+   "grid_u": [
+    "-3",
+    "5",
+    "0.0005"
+   ],
+   "min_inward_current_uA": {
+    "decimal": "5.92",
+    "decimal_is_exact": true,
+    "float": 5.92,
+    "fraction": "148/25"
+   },
+   "min_slack_uA": {
+    "decimal": "2.88",
+    "decimal_is_exact": true,
+    "float": 2.88,
+    "fraction": "72/25"
+   },
+   "n_points": 80517032,
+   "n_points_with_negative_slack": 0,
+   "n_theta": 5032
+  }
+ },
+ "claim_dn": {
+  "claim": "I_net(u,v;theta) <= -I_dn(c) for u >= V_IH, v >= c >= 0",
+  "exact_grid": [
+   {
+    "argmin": {
+     "c": "0",
+     "theta": {
+      "VDD": "1.98",
+      "Vtn": "0.45",
+      "Vtp": "0.45",
+      "kn": "160",
+      "kp": "120"
+     },
+     "theta_set": "corner:HLHLL",
+     "u": "1.25",
+     "v": "0"
+    },
+    "arithmetic": "exact int64 on the 0.1 mV lattice",
+    "grid": {
+     "n_u": 1501,
+     "n_v": 1201,
+     "u": [
+      "1.25",
+      "5",
+      "0.0025"
+     ],
+     "v_and_c": [
+      "0",
+      "3",
+      "0.0025"
+     ]
+    },
+    "min_slack_uA": {
+     "decimal": "0",
+     "decimal_is_exact": true,
+     "float": 0.0,
+     "fraction": "0/1"
+    },
+    "n_c_values_with_negative_min_slack": 0,
+    "n_grid_points_with_zero_slack_at_c_eq_v": 684,
+    "n_theta": 32,
+    "n_theta_with_zero_min_slack": 4,
+    "n_triples_covered": 34669545632,
+    "set": "corners_dense"
+   },
+   {
+    "argmin": {
+     "c": "0",
+     "theta": {
+      "VDD": "1.971",
+      "Vtn": "0.543",
+      "Vtp": "0.458",
+      "kn": "217",
+      "kp": "120"
+     },
+     "theta_set": "lattice:1342",
+     "u": "1.25",
+     "v": "0"
+    },
+    "arithmetic": "exact int64 on the 0.1 mV lattice",
+    "grid": {
+     "n_u": 376,
+     "n_v": 301,
+     "u": [
+      "1.25",
+      "5",
+      "0.01"
+     ],
+     "v_and_c": [
+      "0",
+      "3",
+      "0.01"
+     ]
+    },
+    "min_slack_uA": {
+     "decimal": "0.55386",
+     "decimal_is_exact": true,
+     "float": 0.55386,
+     "fraction": "27693/50000"
+    },
+    "n_c_values_with_negative_min_slack": 0,
+    "n_grid_points_with_zero_slack_at_c_eq_v": 0,
+    "n_theta": 2000,
+    "n_theta_with_zero_min_slack": 0,
+    "n_triples_covered": 34179152000,
+    "set": "lattice_interior"
+   }
+  ]
+ },
+ "claim_up": {
+  "claim": "I_net(u,v;theta) >= I_up(c) for u <= V_IL, v <= c <= VDD_min",
+  "exact_grid": [
+   {
+    "argmin": {
+     "c": "1.62",
+     "theta": {
+      "VDD": "1.62",
+      "Vtn": "0.45",
+      "Vtp": "0.45",
+      "kn": "160",
+      "kp": "80"
+     },
+     "theta_set": "corner:LLLLL",
+     "u": "0.4",
+     "v": "1.62"
+    },
+    "arithmetic": "exact int64 on the 0.1 mV lattice",
+    "grid": {
+     "n_u": 1361,
+     "n_v": 1049,
+     "u": [
+      "-3",
+      "0.4",
+      "0.0025"
+     ],
+     "v_and_c": [
+      "-1",
+      "1.62",
+      "0.0025"
+     ]
+    },
+    "min_slack_uA": {
+     "decimal": "0",
+     "decimal_is_exact": true,
+     "float": 0.0,
+     "fraction": "0/1"
+    },
+    "n_c_values_with_negative_min_slack": 0,
+    "n_grid_points_with_zero_slack_at_c_eq_v": 24568,
+    "n_theta": 32,
+    "n_theta_with_zero_min_slack": 16,
+    "n_triples_covered": 23985175200,
+    "set": "corners_dense"
+   },
+   {
+    "argmin": {
+     "c": "1.62",
+     "theta": {
+      "VDD": "1.62",
+      "Vtn": "0.545",
+      "Vtp": "0.562",
+      "kn": "233",
+      "kp": "89"
+     },
+     "theta_set": "lattice:62",
+     "u": "0.4",
+     "v": "1.62"
+    },
+    "arithmetic": "exact int64 on the 0.1 mV lattice",
+    "grid": {
+     "n_u": 341,
+     "n_v": 263,
+     "u": [
+      "-3",
+      "0.4",
+      "0.01"
+     ],
+     "v_and_c": [
+      "-1",
+      "1.62",
+      "0.01"
+     ]
+    },
+    "min_slack_uA": {
+     "decimal": "0",
+     "decimal_is_exact": true,
+     "float": 0.0,
+     "fraction": "0/1"
+    },
+    "n_c_values_with_negative_min_slack": 0,
+    "n_grid_points_with_zero_slack_at_c_eq_v": 682,
+    "n_theta": 2000,
+    "n_theta_with_zero_min_slack": 2,
+    "n_triples_covered": 23676312000,
+    "set": "lattice_interior"
+   }
+  ]
+ },
+ "de_search": {
+  "barrier_hi": {
+   "argmin_float": [
+    0.6500000929089538,
+    1.9799999999929412,
+    160.00000003793662,
+    80.00000000284149,
+    0.5999999999864838,
+    0.5999999999116757
+   ],
+   "exact_slack_at_argmin_uA": 4.128000001496706,
+   "exact_slack_sign": 1,
+   "min_float_slack_uA": 4.128000001496712,
+   "nfev": 38549,
+   "seed": 1895092847
+  },
+  "barrier_lo": {
+   "argmin_float": [
+    0.8199995549733079,
+    1.62000000000563,
+    160.0000000233592,
+    80.00000003499925,
+    0.5999999999171083,
+    0.5999999999701514
+   ],
+   "exact_slack_at_argmin_uA": 2.8800000032325346,
+   "exact_slack_sign": 1,
+   "min_float_slack_uA": 2.8800000032325332,
+   "nfev": 38549,
+   "seed": 636492276
+  },
+  "dn": {
+   "argmin_float": [
+    1.2500000005455347,
+    2.5486368571137064e-10,
+    0.6195986368671349,
+    1.9799999997950657,
+    214.10573153845326,
+    119.99999994125758,
+    0.5552883533146209,
+    0.4500000003088586
+   ],
+   "exact_slack_at_argmin_uA": 5.938200925097802e-08,
+   "exact_slack_sign": 1,
+   "min_float_slack_uA": 5.9382005090924395e-08,
+   "nfev": 77065,
+   "seed": 680996939
+  },
+  "up": {
+   "argmin_float": [
+    -2.9621978070642476,
+    1.6199999999999986,
+    0.025333917300965236,
+    1.62,
+    179.35380548741253,
+    93.25869810126433,
+    0.5524002837228568,
+    0.5589688854606574
+   ],
+   "exact_slack_at_argmin_uA": 5.131913618347029e-13,
+   "exact_slack_sign": 1,
+   "min_float_slack_uA": -8.881784197001252e-14,
+   "nfev": 77200,
+   "seed": 673512828
+  }
+ },
+ "float_rounding_noise": {
+  "min_float_slack_dn_uA": 0.0,
+  "min_float_slack_up_uA": 0.0,
+  "note": "float64 evaluation on the binding set (u at the band edge, c = v); negative values here are rounding noise iff the exact grid minimum is >= 0"
+ },
+ "hypothesis_probes_outside_claims": {
+  "dn_with_c_below_0": {
+   "conclusion": "negative => the side condition c >= 0 is necessary",
+   "corner": "LHLLL",
+   "min_slack_uA": {
+    "decimal": "-499.296",
+    "decimal_is_exact": true,
+    "float": -499.296,
+    "fraction": "-62412/125"
+   },
+   "status": "OUTSIDE THE CLAIM (hypothesis-necessity probe)",
+   "u": "5",
+   "v_eq_c": "-0.5"
+  },
+  "up_with_c_above_VDD_min": {
+   "conclusion": "negative => the side condition c <= VDD_min is necessary",
+   "corner": "LLHLL",
+   "min_slack_uA": {
+    "decimal": "-230.4",
+    "decimal_is_exact": true,
+    "float": -230.4,
+    "fraction": "-1152/5"
+   },
+   "status": "OUTSIDE THE CLAIM (hypothesis-necessity probe)",
+   "u": "-3",
+   "v_eq_c": "2.12"
+  }
+ },
+ "true_margins": {
+  "fall_min_pulldown_uA": {
+   "closed_form_I_dn(V_OL)": {
+    "decimal": "16.296",
+    "decimal_is_exact": true,
+    "float": 16.296,
+    "fraction": "2037/125"
+   },
+   "closed_form_is_attained": true,
+   "corner": "HLHHL",
+   "domain": "u >= V_IH, v in [V_OL, V_hi], 32 corners",
+   "u": "1.25",
+   "v": "0.25",
+   "value": {
+    "decimal": "16.296",
+    "decimal_is_exact": true,
+    "float": 16.296,
+    "fraction": "2037/125"
+   }
+  },
+  "rise_min_pullup_uA": {
+   "closed_form_I_up(V_OH)": {
+    "decimal": "10.476",
+    "decimal_is_exact": true,
+    "float": 10.476,
+    "fraction": "2619/250"
+   },
+   "closed_form_is_attained": true,
+   "corner": "LLLLH",
+   "domain": "u <= V_IL, v in [V_lo, V_OH], 32 corners",
+   "u": "0.4",
+   "v": "1.35",
+   "value": {
+    "decimal": "10.476",
+    "decimal_is_exact": true,
+    "float": 10.476,
+    "fraction": "2619/250"
+   }
+  }
+ }
+}

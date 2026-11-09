@@ -1,0 +1,1322 @@
+{
+ "fall": {
+  "optimized": {
+   "1": {
+    "bound_ns": {
+     "decimal": "2.560156687185227",
+     "decimal_is_exact": false,
+     "float": 2.5601566871852266,
+     "fraction": "4575/1787"
+    },
+    "breakpoints_V": [
+     "2.08",
+     "0.25"
+    ],
+    "continuous_local_optimum_ns": 2.5601566871852266,
+    "grid_cost_vs_continuous_ns": 0.0,
+    "ratio_to_tau": 1.0,
+    "ratio_to_true_worst_case": 1.835845222816502,
+    "segments": [
+     {
+      "I_bound_at_to_uA": "16.296",
+      "from": "2.08",
+      "segment_time_ns": "2.560156687185227",
+      "to": "0.25"
+     }
+    ]
+   },
+   "16": {
+    "bound_ns": {
+     "decimal": "1.424929488438125",
+     "decimal_is_exact": false,
+     "float": 1.4249294884381254,
+     "fraction": "29640510061660456216602713986244505720791658135589740552399225859705/20801387228044256973890674704085888189714609712601323215876035514196"
+    },
+    "breakpoints_V": [
+     "2.08",
+     "0.648",
+     "0.584",
+     "0.538",
+     "0.5",
+     "0.467",
+     "0.437",
+     "0.41",
+     "0.386",
+     "0.364",
+     "0.344",
+     "0.325",
+     "0.308",
+     "0.292",
+     "0.277",
+     "0.263",
+     "0.25"
+    ],
+    "continuous_local_optimum_ns": 1.4249276841434464,
+    "grid_cost_vs_continuous_ns": 1.8042946789975645e-06,
+    "ratio_to_tau": 0.5565790154839191,
+    "ratio_to_true_worst_case": 1.021792926696065,
+    "segments": [
+     {
+      "I_bound_at_to_uA": "29.09568",
+      "from": "2.08",
+      "segment_time_ns": "1.056995063419704",
+      "to": "0.648"
+     },
+     {
+      "I_bound_at_to_uA": "28.74752",
+      "from": "0.648",
+      "segment_time_ns": "0.047854903931280",
+      "to": "0.584"
+     },
+     {
+      "I_bound_at_to_uA": "28.09248",
+      "from": "0.584",
+      "segment_time_ns": "0.035259201118483",
+      "to": "0.538"
+     },
+     {
+      "I_bound_at_to_uA": "27.296",
+      "from": "0.538",
+      "segment_time_ns": "0.030044275774826",
+      "to": "0.5"
+     },
+     {
+      "I_bound_at_to_uA": "26.41688",
+      "from": "0.5",
+      "segment_time_ns": "0.027030480552798",
+      "to": "0.467"
+     },
+     {
+      "I_bound_at_to_uA": "25.46648",
+      "from": "0.467",
+      "segment_time_ns": "0.025568385203064",
+      "to": "0.437"
+     },
+     {
+      "I_bound_at_to_uA": "24.488",
+      "from": "0.437",
+      "segment_time_ns": "0.024012806830309",
+      "to": "0.41"
+     },
+     {
+      "I_bound_at_to_uA": "23.52032",
+      "from": "0.41",
+      "segment_time_ns": "0.022304501048312",
+      "to": "0.386"
+     },
+     {
+      "I_bound_at_to_uA": "22.55232",
+      "from": "0.386",
+      "segment_time_ns": "0.021408775262355",
+      "to": "0.364"
+     },
+     {
+      "I_bound_at_to_uA": "21.60512",
+      "from": "0.364",
+      "segment_time_ns": "0.020402833545523",
+      "to": "0.344"
+     },
+     {
+      "I_bound_at_to_uA": "20.646",
+      "from": "0.344",
+      "segment_time_ns": "0.020379706103186",
+      "to": "0.325"
+     },
+     {
+      "I_bound_at_to_uA": "19.73888",
+      "from": "0.325",
+      "segment_time_ns": "0.019166937258722",
+      "to": "0.308"
+     },
+     {
+      "I_bound_at_to_uA": "18.84288",
+      "from": "0.308",
+      "segment_time_ns": "0.018999126040202",
+      "to": "0.292"
+     },
+     {
+      "I_bound_at_to_uA": "17.96568",
+      "from": "0.292",
+      "segment_time_ns": "0.018790305204664",
+      "to": "0.277"
+     },
+     {
+      "I_bound_at_to_uA": "17.11448",
+      "from": "0.277",
+      "segment_time_ns": "0.018525281716606",
+      "to": "0.263"
+     },
+     {
+      "I_bound_at_to_uA": "16.296",
+      "from": "0.263",
+      "segment_time_ns": "0.018186905428092",
+      "to": "0.25"
+     }
+    ]
+   },
+   "2": {
+    "bound_ns": {
+     "decimal": "1.583096060321664",
+     "decimal_is_exact": false,
+     "float": 1.583096060321664,
+     "fraction": "233558805/147532933"
+    },
+    "breakpoints_V": [
+     "2.08",
+     "0.558",
+     "0.25"
+    ],
+    "continuous_local_optimum_ns": 1.5830960602855724,
+    "grid_cost_vs_continuous_ns": 3.609157417372444e-11,
+    "ratio_to_tau": 0.6183590513212707,
+    "ratio_to_true_worst_case": 1.1352115103534992,
+    "segments": [
+     {
+      "I_bound_at_to_uA": "28.41888",
+      "from": "2.08",
+      "segment_time_ns": "1.152206300948413",
+      "to": "0.558"
+     },
+     {
+      "I_bound_at_to_uA": "16.296",
+      "from": "0.558",
+      "segment_time_ns": "0.430889759373251",
+      "to": "0.25"
+     }
+    ]
+   },
+   "32": {
+    "bound_ns": {
+     "decimal": "1.421036352344159",
+     "decimal_is_exact": false,
+     "float": 1.421036352344159,
+     "fraction": "9719346949073644103360807916108517509643558743099766668549511643171393247581116399056012929721709148347228374870545/6839618798660913849338486721275376942403396256514152812553702653904515821068663662640986116006431594227589814099252"
+    },
+    "breakpoints_V": [
+     "2.08",
+     "0.649",
+     "0.61",
+     "0.582",
+     "0.558",
+     "0.537",
+     "0.518",
+     "0.5",
+     "0.484",
+     "0.469",
+     "0.454",
+     "0.44",
+     "0.427",
+     "0.414",
+     "0.402",
+     "0.391",
+     "0.38",
+     "0.369",
+     "0.359",
+     "0.349",
+     "0.34",
+     "0.331",
+     "0.322",
+     "0.314",
+     "0.306",
+     "0.298",
+     "0.29",
+     "0.283",
+     "0.276",
+     "0.269",
+     "0.262",
+     "0.256",
+     "0.25"
+    ],
+    "continuous_local_optimum_ns": null,
+    "grid_cost_vs_continuous_ns": null,
+    "ratio_to_tau": 0.5550583522708223,
+    "ratio_to_true_worst_case": 1.0190012244007882,
+    "segments": [
+     {
+      "I_bound_at_to_uA": "29.09592",
+      "from": "2.08",
+      "segment_time_ns": "1.056247582661892",
+      "to": "0.649"
+     },
+     {
+      "I_bound_at_to_uA": "28.968",
+      "from": "0.649",
+      "segment_time_ns": "0.028923168199347",
+      "to": "0.61"
+     },
+     {
+      "I_bound_at_to_uA": "28.72608",
+      "from": "0.61",
+      "segment_time_ns": "0.020953316011925",
+      "to": "0.582"
+     },
+     {
+      "I_bound_at_to_uA": "28.41888",
+      "from": "0.582",
+      "segment_time_ns": "0.018168824719292",
+      "to": "0.558"
+     },
+     {
+      "I_bound_at_to_uA": "28.07448",
+      "from": "0.558",
+      "segment_time_ns": "0.016107703777793",
+      "to": "0.537"
+     },
+     {
+      "I_bound_at_to_uA": "27.70208",
+      "from": "0.537",
+      "segment_time_ns": "0.014784795627436",
+      "to": "0.518"
+     },
+     {
+      "I_bound_at_to_uA": "27.296",
+      "from": "0.518",
+      "segment_time_ns": "0.014231499051233",
+      "to": "0.5"
+     },
+     {
+      "I_bound_at_to_uA": "26.89152",
+      "from": "0.5",
+      "segment_time_ns": "0.012855783817139",
+      "to": "0.484"
+     },
+     {
+      "I_bound_at_to_uA": "26.47512",
+      "from": "0.484",
+      "segment_time_ns": "0.012257345418531",
+      "to": "0.469"
+     },
+     {
+      "I_bound_at_to_uA": "26.02272",
+      "from": "0.469",
+      "segment_time_ns": "0.012488177858294",
+      "to": "0.454"
+     },
+     {
+      "I_bound_at_to_uA": "25.568",
+      "from": "0.454",
+      "segment_time_ns": "0.011880515953836",
+      "to": "0.44"
+     },
+     {
+      "I_bound_at_to_uA": "25.11768",
+      "from": "0.44",
+      "segment_time_ns": "0.011246803312443",
+      "to": "0.427"
+     },
+     {
+      "I_bound_at_to_uA": "24.64032",
+      "from": "0.427",
+      "segment_time_ns": "0.011483936622804",
+      "to": "0.414"
+     },
+     {
+      "I_bound_at_to_uA": "24.17568",
+      "from": "0.414",
+      "segment_time_ns": "0.010822666993752",
+      "to": "0.402"
+     },
+     {
+      "I_bound_at_to_uA": "23.72952",
+      "from": "0.402",
+      "segment_time_ns": "0.010124475828274",
+      "to": "0.391"
+     },
+     {
+      "I_bound_at_to_uA": "23.264",
+      "from": "0.391",
+      "segment_time_ns": "0.010346124905944",
+      "to": "0.38"
+     },
+     {
+      "I_bound_at_to_uA": "22.77912",
+      "from": "0.38",
+      "segment_time_ns": "0.010587551349624",
+      "to": "0.369"
+     },
+     {
+      "I_bound_at_to_uA": "22.32152",
+      "from": "0.369",
+      "segment_time_ns": "0.009841783488637",
+      "to": "0.359"
+     },
+     {
+      "I_bound_at_to_uA": "21.84792",
+      "from": "0.359",
+      "segment_time_ns": "0.010076622638543",
+      "to": "0.349"
+     },
+     {
+      "I_bound_at_to_uA": "21.408",
+      "from": "0.349",
+      "segment_time_ns": "0.009274525968673",
+      "to": "0.34"
+     },
+     {
+      "I_bound_at_to_uA": "20.95512",
+      "from": "0.34",
+      "segment_time_ns": "0.009496115033827",
+      "to": "0.331"
+     },
+     {
+      "I_bound_at_to_uA": "20.48928",
+      "from": "0.331",
+      "segment_time_ns": "0.009735370982537",
+      "to": "0.322"
+     },
+     {
+      "I_bound_at_to_uA": "20.06432",
+      "from": "0.322",
+      "segment_time_ns": "0.008857239021452",
+      "to": "0.314"
+     },
+     {
+      "I_bound_at_to_uA": "19.62912",
+      "from": "0.314",
+      "segment_time_ns": "0.009075892614039",
+      "to": "0.306"
+     },
+     {
+      "I_bound_at_to_uA": "19.18368",
+      "from": "0.306",
+      "segment_time_ns": "0.009311160356804",
+      "to": "0.298"
+     },
+     {
+      "I_bound_at_to_uA": "18.728",
+      "from": "0.298",
+      "segment_time_ns": "0.009564801530368",
+      "to": "0.29"
+     },
+     {
+      "I_bound_at_to_uA": "18.32088",
+      "from": "0.29",
+      "segment_time_ns": "0.008577968835014",
+      "to": "0.283"
+     },
+     {
+      "I_bound_at_to_uA": "17.90592",
+      "from": "0.283",
+      "segment_time_ns": "0.008801754315374",
+      "to": "0.276"
+     },
+     {
+      "I_bound_at_to_uA": "17.48312",
+      "from": "0.276",
+      "segment_time_ns": "0.009042105208769",
+      "to": "0.269"
+     },
+     {
+      "I_bound_at_to_uA": "17.05248",
+      "from": "0.269",
+      "segment_time_ns": "0.009300792959034",
+      "to": "0.262"
+     },
+     {
+      "I_bound_at_to_uA": "16.67712",
+      "from": "0.262",
+      "segment_time_ns": "0.008175990930101",
+      "to": "0.256"
+     },
+     {
+      "I_bound_at_to_uA": "16.296",
+      "from": "0.256",
+      "segment_time_ns": "0.008393956351427",
+      "to": "0.25"
+     }
+    ]
+   },
+   "4": {
+    "bound_ns": {
+     "decimal": "1.460968310509661",
+     "decimal_is_exact": false,
+     "float": 1.4609683105096614,
+     "fraction": "1235512503253984175/845680562929509042"
+    },
+    "breakpoints_V": [
+     "2.08",
+     "0.634",
+     "0.445",
+     "0.329",
+     "0.25"
+    ],
+    "continuous_local_optimum_ns": 1.46096709955073,
+    "grid_cost_vs_continuous_ns": 1.2109589313524793e-06,
+    "ratio_to_tau": 0.5706558187717519,
+    "ratio_to_true_worst_case": 1.0476357587645604,
+    "segments": [
+     {
+      "I_bound_at_to_uA": "29.07552",
+      "from": "2.08",
+      "segment_time_ns": "1.068123530037466",
+      "to": "0.634"
+     },
+     {
+      "I_bound_at_to_uA": "25.734",
+      "from": "0.634",
+      "segment_time_ns": "0.159265189180079",
+      "to": "0.445"
+     },
+     {
+      "I_bound_at_to_uA": "20.85272",
+      "from": "0.445",
+      "segment_time_ns": "0.123059165998328",
+      "to": "0.329"
+     },
+     {
+      "I_bound_at_to_uA": "16.296",
+      "from": "0.329",
+      "segment_time_ns": "0.110520425293788",
+      "to": "0.25"
+     }
+    ]
+   },
+   "8": {
+    "bound_ns": {
+     "decimal": "1.434202965225732",
+     "decimal_is_exact": false,
+     "float": 1.434202965225732,
+     "fraction": "1281489805565713779711245265595655/893520538331907316817392605064948"
+    },
+    "breakpoints_V": [
+     "2.08",
+     "0.646",
+     "0.539",
+     "0.464",
+     "0.405",
+     "0.356",
+     "0.315",
+     "0.28",
+     "0.25"
+    ],
+    "continuous_local_optimum_ns": 1.4342013060616607,
+    "grid_cost_vs_continuous_ns": 1.6591640712437794e-06,
+    "ratio_to_tau": 0.5602012456521056,
+    "ratio_to_true_worst_case": 1.028442780646272,
+    "segments": [
+     {
+      "I_bound_at_to_uA": "29.09472",
+      "from": "2.08",
+      "segment_time_ns": "1.058508816477897",
+      "to": "0.646"
+     },
+     {
+      "I_bound_at_to_uA": "28.11032",
+      "from": "0.646",
+      "segment_time_ns": "0.081959930020007",
+      "to": "0.539"
+     },
+     {
+      "I_bound_at_to_uA": "26.32832",
+      "from": "0.539",
+      "segment_time_ns": "0.061656538552600",
+      "to": "0.464"
+     },
+     {
+      "I_bound_at_to_uA": "24.294",
+      "from": "0.464",
+      "segment_time_ns": "0.052929039203373",
+      "to": "0.405"
+     },
+     {
+      "I_bound_at_to_uA": "22.18112",
+      "from": "0.405",
+      "segment_time_ns": "0.048560238480322",
+      "to": "0.356"
+     },
+     {
+      "I_bound_at_to_uA": "20.118",
+      "from": "0.356",
+      "segment_time_ns": "0.045258858593664",
+      "to": "0.315"
+     },
+     {
+      "I_bound_at_to_uA": "18.144",
+      "from": "0.315",
+      "segment_time_ns": "0.043359762140733",
+      "to": "0.28"
+     },
+     {
+      "I_bound_at_to_uA": "16.296",
+      "from": "0.28",
+      "segment_time_ns": "0.041969781757135",
+      "to": "0.25"
+     }
+    ]
+   }
+  },
+  "tau_ns": {
+   "decimal": "2.560156687185227",
+   "decimal_is_exact": false,
+   "float": 2.5601566871852266,
+   "fraction": "4575/1787"
+  },
+  "tightness": {
+   "limit_of_multisegment_bound_ns": 1.417563186967754,
+   "limit_over_true_worst_case": 1.016510676030745,
+   "tau_over_constant_theta_worst_case": 1.8387278471738513,
+   "tau_over_true_worst_case": 1.835845222816502,
+   "true_worst_case_over_tau": 0.5447082289790357
+  },
+  "true_worst_case": {
+   "constant_theta": {
+    "definition": "one parameter point per run: max over the 32 corners of C_max * Integral dv / (drive - eps)",
+    "exact_bracket": {
+     "corner": "HLHHL",
+     "lower_float": 1.3920576487944893,
+     "lower_ns": "1.392057648794489387279992",
+     "method": "exact rational lower/upper Riemann sums of C_max/(drive - eps), outward-rounded at 1e-24 ns",
+     "n_segments": 2048,
+     "theta": {
+      "VDD": "1.98",
+      "Vtn": "0.6",
+      "Vtp": "0.45",
+      "kn": "160",
+      "kp": "120"
+     },
+     "upper_float": 1.3926472721773726,
+     "upper_ns": "1.392647272177372652560604"
+    },
+    "interior_search": {
+     "argmax_corner": "HLHHL",
+     "argmax_over_box": {
+      "VDD": 1.98,
+      "Vtn": 0.6,
+      "Vtp": 0.45,
+      "kn": 160.0,
+      "kp": 120.0
+     },
+     "corners_within_1e-12_of_max": [
+      "HLHHL"
+     ],
+     "interior_exceeds_corner_by_ns": 0.0,
+     "max_found_over_box_ns": 1.3923521586515486,
+     "max_over_corners_ns": 1.3923521586515486,
+     "n_random_starts": 16,
+     "note": "local searches from seeded random interior points; finite evidence that the maximum is at a corner"
+    },
+    "quadrature_ns": 1.3923521586515486,
+    "simulated_crossing_ns (DOP853 rtol=1e-12, event)": 1.3923521586575915,
+    "simulation_minus_quadrature_ns": 6.042943923034727e-12,
+    "ties": [
+     "HLHHL"
+    ],
+    "worst_corner": "HLHHL"
+   },
+   "definition": "interface.md v1 rev. 2 trajectory notion (parameter point may change every instant): C_max * Integral dv / (min over the box of the drive - eps) at the band-edge input, from the far end of the safe domain",
+   "exact_bracket": {
+    "lower_float": 1.3942633675574365,
+    "lower_ns": "1.39426336755743644059823",
+    "method": "exact rational lower/upper Riemann sums of C_max/(min over 32 corners of the drive - eps), outward-rounded at 1e-24 ns",
+    "n_segments": 3584,
+    "upper_float": 1.3948140899813888,
+    "upper_ns": "1.394814089981388855237496"
+   },
+   "moving_minus_constant_theta_ns": 0.0021862563339511976,
+   "quadrature_ns": 1.3945384149854998,
+   "simulated_crossing_ns (DOP853 rtol=1e-12, event)": 1.3945384149840039,
+   "simulation_minus_quadrature_ns": -1.495914503379936e-12,
+   "worst_corner": "HLHHL"
+  }
+ },
+ "rise": {
+  "optimized": {
+   "1": {
+    "bound_ns": {
+     "decimal": "3.421425200566305",
+     "decimal_is_exact": false,
+     "float": 3.421425200566305,
+     "fraction": "7250/2119"
+    },
+    "breakpoints_V": [
+     "-0.1",
+     "1.35"
+    ],
+    "continuous_local_optimum_ns": 3.4214252005663015,
+    "grid_cost_vs_continuous_ns": 3.552713678800501e-15,
+    "ratio_to_tau": 1.0,
+    "ratio_to_true_worst_case": 1.519829610298372,
+    "segments": [
+     {
+      "I_bound_at_to_uA": "10.476",
+      "from": "-0.1",
+      "segment_time_ns": "3.421425200566305",
+      "to": "1.35"
+     }
+    ]
+   },
+   "16": {
+    "bound_ns": {
+     "decimal": "2.259928783283619",
+     "decimal_is_exact": false,
+     "float": 2.2599287832836192,
+     "fraction": "1023054008099565625862967059024206578666850790967047749780815429/452693029827733793510977010898810307646090598146243628598592464"
+    },
+    "breakpoints_V": [
+     "-0.1",
+     "1.001",
+     "1.055",
+     "1.094",
+     "1.126",
+     "1.154",
+     "1.18",
+     "1.203",
+     "1.224",
+     "1.244",
+     "1.262",
+     "1.279",
+     "1.295",
+     "1.31",
+     "1.324",
+     "1.337",
+     "1.35"
+    ],
+    "continuous_local_optimum_ns": 2.259925594589287,
+    "grid_cost_vs_continuous_ns": 3.188694332134645e-06,
+    "ratio_to_tau": 0.6605226333486882,
+    "ratio_to_true_worst_case": 1.0038818564355911,
+    "segments": [
+     {
+      "I_bound_at_to_uA": "15.37596",
+      "from": "-0.1",
+      "segment_time_ns": "1.646236980373745",
+      "to": "1.001"
+     },
+     {
+      "I_bound_at_to_uA": "15.255",
+      "from": "1.001",
+      "segment_time_ns": "0.081478687287816",
+      "to": "1.055"
+     },
+     {
+      "I_bound_at_to_uA": "15.02256",
+      "from": "1.055",
+      "segment_time_ns": "0.059896057303633",
+      "to": "1.094"
+     },
+     {
+      "I_bound_at_to_uA": "14.74096",
+      "from": "1.094",
+      "segment_time_ns": "0.050231693687132",
+      "to": "1.126"
+     },
+     {
+      "I_bound_at_to_uA": "14.42736",
+      "from": "1.126",
+      "segment_time_ns": "0.045061863501178",
+      "to": "1.154"
+     },
+     {
+      "I_bound_at_to_uA": "14.08",
+      "from": "1.154",
+      "segment_time_ns": "0.043046357615894",
+      "to": "1.18"
+     },
+     {
+      "I_bound_at_to_uA": "13.72764",
+      "from": "1.18",
+      "segment_time_ns": "0.039223577804230",
+      "to": "1.203"
+     },
+     {
+      "I_bound_at_to_uA": "13.36896",
+      "from": "1.203",
+      "segment_time_ns": "0.036942693087143",
+      "to": "1.224"
+     },
+     {
+      "I_bound_at_to_uA": "12.99456",
+      "from": "1.224",
+      "segment_time_ns": "0.036381628732755",
+      "to": "1.244"
+     },
+     {
+      "I_bound_at_to_uA": "12.63024",
+      "from": "1.244",
+      "segment_time_ns": "0.033865651198844",
+      "to": "1.262"
+     },
+     {
+      "I_bound_at_to_uA": "12.26236",
+      "from": "1.262",
+      "segment_time_ns": "0.033130780834038",
+      "to": "1.279"
+     },
+     {
+      "I_bound_at_to_uA": "11.895",
+      "from": "1.279",
+      "segment_time_ns": "0.032339565437089",
+      "to": "1.295"
+     },
+     {
+      "I_bound_at_to_uA": "11.532",
+      "from": "1.295",
+      "segment_time_ns": "0.031472933277381",
+      "to": "1.31"
+     },
+     {
+      "I_bound_at_to_uA": "11.17696",
+      "from": "1.31",
+      "segment_time_ns": "0.030511193249181",
+      "to": "1.324"
+     },
+     {
+      "I_bound_at_to_uA": "10.83324",
+      "from": "1.324",
+      "segment_time_ns": "0.029434273267793",
+      "to": "1.337"
+     },
+     {
+      "I_bound_at_to_uA": "10.476",
+      "from": "1.337",
+      "segment_time_ns": "0.030674846625767",
+      "to": "1.35"
+     }
+    ]
+   },
+   "2": {
+    "bound_ns": {
+     "decimal": "2.435806352665099",
+     "decimal_is_exact": false,
+     "float": 2.435806352665099,
+     "fraction": "11855905/4867343"
+    },
+    "breakpoints_V": [
+     "-0.1",
+     "1.077",
+     "1.35"
+    ],
+    "continuous_local_optimum_ns": 2.4358060972378097,
+    "grid_cost_vs_continuous_ns": 2.5542728909755397e-07,
+    "ratio_to_tau": 0.7119274015582544,
+    "ratio_to_true_worst_case": 1.0820083452710143,
+    "segments": [
+     {
+      "I_bound_at_to_uA": "15.13884",
+      "from": "-0.1",
+      "segment_time_ns": "1.791634573523995",
+      "to": "1.077"
+     },
+     {
+      "I_bound_at_to_uA": "10.476",
+      "from": "1.077",
+      "segment_time_ns": "0.644171779141104",
+      "to": "1.35"
+     }
+    ]
+   },
+   "32": {
+    "bound_ns": {
+     "decimal": "2.255318598747137",
+     "decimal_is_exact": false,
+     "float": 2.2553185987471367,
+     "fraction": "1950547448008443349806637492476397228480459838717930085094134356164936149347365102660377532808744880440828547547249649821265909/864865588876002494909815151249573635055353967795203693009065234562928982727913629662882338271583826186425610154575703108781952"
+    },
+    "breakpoints_V": [
+     "-0.1",
+     "1",
+     "1.033",
+     "1.057",
+     "1.077",
+     "1.095",
+     "1.111",
+     "1.126",
+     "1.14",
+     "1.153",
+     "1.166",
+     "1.178",
+     "1.189",
+     "1.2",
+     "1.211",
+     "1.221",
+     "1.231",
+     "1.24",
+     "1.249",
+     "1.258",
+     "1.267",
+     "1.275",
+     "1.283",
+     "1.291",
+     "1.298",
+     "1.305",
+     "1.312",
+     "1.319",
+     "1.326",
+     "1.332",
+     "1.338",
+     "1.344",
+     "1.35"
+    ],
+    "continuous_local_optimum_ns": null,
+    "grid_cost_vs_continuous_ns": null,
+    "ratio_to_tau": 0.6591751876889907,
+    "ratio_to_true_worst_case": 1.001833968623715,
+    "segments": [
+     {
+      "I_bound_at_to_uA": "15.376",
+      "from": "-0.1",
+      "segment_time_ns": "1.644736842105263",
+      "to": "1"
+     },
+     {
+      "I_bound_at_to_uA": "15.33244",
+      "from": "1",
+      "segment_time_ns": "0.049503316722220",
+      "to": "1.033"
+     },
+     {
+      "I_bound_at_to_uA": "15.24604",
+      "from": "1.033",
+      "segment_time_ns": "0.036237245244617",
+      "to": "1.057"
+     },
+     {
+      "I_bound_at_to_uA": "15.13884",
+      "from": "1.057",
+      "segment_time_ns": "0.030444087910348",
+      "to": "1.077"
+     },
+     {
+      "I_bound_at_to_uA": "15.015",
+      "from": "1.077",
+      "segment_time_ns": "0.027660391855551",
+      "to": "1.095"
+     },
+     {
+      "I_bound_at_to_uA": "14.88316",
+      "from": "1.095",
+      "segment_time_ns": "0.024838626548145",
+      "to": "1.111"
+     },
+     {
+      "I_bound_at_to_uA": "14.74096",
+      "from": "1.111",
+      "segment_time_ns": "0.023546106415843",
+      "to": "1.126"
+     },
+     {
+      "I_bound_at_to_uA": "14.592",
+      "from": "1.126",
+      "segment_time_ns": "0.022236340533672",
+      "to": "1.14"
+     },
+     {
+      "I_bound_at_to_uA": "14.43964",
+      "from": "1.14",
+      "segment_time_ns": "0.020900926393368",
+      "to": "1.153"
+     },
+     {
+      "I_bound_at_to_uA": "14.27376",
+      "from": "1.153",
+      "segment_time_ns": "0.021183402641081",
+      "to": "1.166"
+     },
+     {
+      "I_bound_at_to_uA": "14.10864",
+      "from": "1.166",
+      "segment_time_ns": "0.019820557882636",
+      "to": "1.178"
+     },
+     {
+      "I_bound_at_to_uA": "13.94716",
+      "from": "1.178",
+      "segment_time_ns": "0.018414418154607",
+      "to": "1.189"
+     },
+     {
+      "I_bound_at_to_uA": "13.776",
+      "from": "1.189",
+      "segment_time_ns": "0.018682065217391",
+      "to": "1.2"
+     },
+     {
+      "I_bound_at_to_uA": "13.59516",
+      "from": "1.2",
+      "segment_time_ns": "0.018973433743045",
+      "to": "1.211"
+     },
+     {
+      "I_bound_at_to_uA": "13.42236",
+      "from": "1.211",
+      "segment_time_ns": "0.017509516422175",
+      "to": "1.221"
+     },
+     {
+      "I_bound_at_to_uA": "13.24156",
+      "from": "1.221",
+      "segment_time_ns": "0.017791125075168",
+      "to": "1.231"
+     },
+     {
+      "I_bound_at_to_uA": "13.072",
+      "from": "1.231",
+      "segment_time_ns": "0.016257225433526",
+      "to": "1.24"
+     },
+     {
+      "I_bound_at_to_uA": "12.89596",
+      "from": "1.24",
+      "segment_time_ns": "0.016519884434231",
+      "to": "1.249"
+     },
+     {
+      "I_bound_at_to_uA": "12.71344",
+      "from": "1.249",
+      "segment_time_ns": "0.016801326184680",
+      "to": "1.258"
+     },
+     {
+      "I_bound_at_to_uA": "12.52444",
+      "from": "1.258",
+      "segment_time_ns": "0.017103047763111",
+      "to": "1.267"
+     },
+     {
+      "I_bound_at_to_uA": "12.351",
+      "from": "1.267",
+      "segment_time_ns": "0.015457443725244",
+      "to": "1.275"
+     },
+     {
+      "I_bound_at_to_uA": "12.17244",
+      "from": "1.275",
+      "segment_time_ns": "0.015728773037737",
+      "to": "1.283"
+     },
+     {
+      "I_bound_at_to_uA": "11.98876",
+      "from": "1.283",
+      "segment_time_ns": "0.016018004236762",
+      "to": "1.291"
+     },
+     {
+      "I_bound_at_to_uA": "11.82384",
+      "from": "1.291",
+      "segment_time_ns": "0.014251046433981",
+      "to": "1.298"
+     },
+     {
+      "I_bound_at_to_uA": "11.655",
+      "from": "1.298",
+      "segment_time_ns": "0.014500258933195",
+      "to": "1.305"
+     },
+     {
+      "I_bound_at_to_uA": "11.48224",
+      "from": "1.305",
+      "segment_time_ns": "0.014764443844492",
+      "to": "1.312"
+     },
+     {
+      "I_bound_at_to_uA": "11.30556",
+      "from": "1.312",
+      "segment_time_ns": "0.015044768933842",
+      "to": "1.319"
+     },
+     {
+      "I_bound_at_to_uA": "11.12496",
+      "from": "1.319",
+      "segment_time_ns": "0.015342533008364",
+      "to": "1.326"
+     },
+     {
+      "I_bound_at_to_uA": "10.96704",
+      "from": "1.326",
+      "segment_time_ns": "0.013382342445222",
+      "to": "1.332"
+     },
+     {
+      "I_bound_at_to_uA": "10.80624",
+      "from": "1.332",
+      "segment_time_ns": "0.013626701066516",
+      "to": "1.338"
+     },
+     {
+      "I_bound_at_to_uA": "10.64256",
+      "from": "1.338",
+      "segment_time_ns": "0.013884774881517",
+      "to": "1.344"
+     },
+     {
+      "I_bound_at_to_uA": "10.476",
+      "from": "1.344",
+      "segment_time_ns": "0.014157621519585",
+      "to": "1.35"
+     }
+    ]
+   },
+   "4": {
+    "bound_ns": {
+     "decimal": "2.301803904634884",
+     "decimal_is_exact": false,
+     "float": 2.3018039046348844,
+     "fraction": "1281491629362471365/556733623912130548"
+    },
+    "breakpoints_V": [
+     "-0.1",
+     "1.015",
+     "1.173",
+     "1.276",
+     "1.35"
+    ],
+    "continuous_local_optimum_ns": 2.301802070039753,
+    "grid_cost_vs_continuous_ns": 1.8345951313669673e-06,
+    "ratio_to_tau": 0.6727617205408717,
+    "ratio_to_true_worst_case": 1.0224831835532953,
+    "segments": [
+     {
+      "I_bound_at_to_uA": "15.367",
+      "from": "-0.1",
+      "segment_time_ns": "1.668287573875963",
+      "to": "1.015"
+     },
+     {
+      "I_bound_at_to_uA": "14.17884",
+      "from": "1.015",
+      "segment_time_ns": "0.259466418805075",
+      "to": "1.173"
+     },
+     {
+      "I_bound_at_to_uA": "12.32896",
+      "from": "1.173",
+      "segment_time_ns": "0.199439246545635",
+      "to": "1.276"
+     },
+     {
+      "I_bound_at_to_uA": "10.476",
+      "from": "1.276",
+      "segment_time_ns": "0.174610665408211",
+      "to": "1.35"
+     }
+    ]
+   },
+   "8": {
+    "bound_ns": {
+     "decimal": "2.270837731868421",
+     "decimal_is_exact": false,
+     "float": 2.270837731868421,
+     "fraction": "3503888562562243671361535862960209365/1542993809460476796442430449145551028"
+    },
+    "breakpoints_V": [
+     "-0.1",
+     "1.004",
+     "1.093",
+     "1.157",
+     "1.208",
+     "1.251",
+     "1.288",
+     "1.321",
+     "1.35"
+    ],
+    "continuous_local_optimum_ns": 2.2708355289005127,
+    "grid_cost_vs_continuous_ns": 2.2029679085378007e-06,
+    "ratio_to_tau": 0.6637110557005771,
+    "ratio_to_true_worst_case": 1.0087277151361291,
+    "segments": [
+     {
+      "I_bound_at_to_uA": "15.37536",
+      "from": "-0.1",
+      "segment_time_ns": "1.650796688836786",
+      "to": "1.004"
+     },
+     {
+      "I_bound_at_to_uA": "15.03004",
+      "from": "1.004",
+      "segment_time_ns": "0.136607408726297",
+      "to": "1.093"
+     },
+     {
+      "I_bound_at_to_uA": "14.39004",
+      "from": "1.093",
+      "segment_time_ns": "0.103308786735152",
+      "to": "1.157"
+     },
+     {
+      "I_bound_at_to_uA": "13.64544",
+      "from": "1.157",
+      "segment_time_ns": "0.087587931413497",
+      "to": "1.208"
+     },
+     {
+      "I_bound_at_to_uA": "12.85596",
+      "from": "1.208",
+      "segment_time_ns": "0.079219157034477",
+      "to": "1.251"
+     },
+     {
+      "I_bound_at_to_uA": "12.05824",
+      "from": "1.251",
+      "segment_time_ns": "0.073571519470603",
+      "to": "1.288"
+     },
+     {
+      "I_bound_at_to_uA": "11.25436",
+      "from": "1.288",
+      "segment_time_ns": "0.071317735640282",
+      "to": "1.321"
+     },
+     {
+      "I_bound_at_to_uA": "10.476",
+      "from": "1.321",
+      "segment_time_ns": "0.068428504011326",
+      "to": "1.35"
+     }
+    ]
+   }
+  },
+  "tau_ns": {
+   "decimal": "3.421425200566305",
+   "decimal_is_exact": false,
+   "float": 3.421425200566305,
+   "fraction": "7250/2119"
+  },
+  "tightness": {
+   "limit_of_multisegment_bound_ns": 2.2511899869450605,
+   "limit_over_true_worst_case": 1.0000000000000009,
+   "tau_over_constant_theta_worst_case": 1.519829610298372,
+   "tau_over_true_worst_case": 1.519829610298372,
+   "true_worst_case_over_tau": 0.65796849411539
+  },
+  "true_worst_case": {
+   "constant_theta": {
+    "definition": "one parameter point per run: max over the 32 corners of C_max * Integral dv / (drive - eps)",
+    "exact_bracket": {
+     "corner": "LLLHH",
+     "lower_float": 2.250894845276967,
+     "lower_ns": "2.250894845276966727772424",
+     "method": "exact rational lower/upper Riemann sums of C_max/(drive - eps), outward-rounded at 1e-24 ns",
+     "n_segments": 1024,
+     "theta": {
+      "VDD": "1.62",
+      "Vtn": "0.6",
+      "Vtp": "0.6",
+      "kn": "160",
+      "kp": "80"
+     },
+     "upper_float": 2.251485735699735,
+     "upper_ns": "2.25148573569973515243887"
+    },
+    "interior_search": {
+     "argmax_corner": "LLLHH",
+     "argmax_over_box": {
+      "VDD": 1.62,
+      "Vtn": 0.6,
+      "Vtp": 0.6,
+      "kn": 160.0,
+      "kp": 80.0
+     },
+     "corners_within_1e-12_of_max": [
+      "LLLHH",
+      "LHLHH"
+     ],
+     "interior_exceeds_corner_by_ns": 0.0,
+     "max_found_over_box_ns": 2.2511899869450582,
+     "max_over_corners_ns": 2.2511899869450582,
+     "n_random_starts": 16,
+     "note": "local searches from seeded random interior points; finite evidence that the maximum is at a corner"
+    },
+    "quadrature_ns": 2.2511899869450582,
+    "simulated_crossing_ns (DOP853 rtol=1e-12, event)": 2.2511899869512213,
+    "simulation_minus_quadrature_ns": 6.163070054299169e-12,
+    "ties": [
+     "LLLHH",
+     "LHLHH"
+    ],
+    "worst_corner": "LLLHH"
+   },
+   "definition": "interface.md v1 rev. 2 trajectory notion (parameter point may change every instant): C_max * Integral dv / (min over the box of the drive - eps) at the band-edge input, from the far end of the safe domain",
+   "exact_bracket": {
+    "lower_float": 2.250894845276967,
+    "lower_ns": "2.250894845276966727771912",
+    "method": "exact rational lower/upper Riemann sums of C_max/(min over 32 corners of the drive - eps), outward-rounded at 1e-24 ns",
+    "n_segments": 2048,
+    "upper_float": 2.251485735699735,
+    "upper_ns": "2.251485735699735152439382"
+   },
+   "moving_minus_constant_theta_ns": 0.0,
+   "quadrature_ns": 2.2511899869450582,
+   "simulated_crossing_ns (DOP853 rtol=1e-12, event)": 2.2511899869512213,
+   "simulation_minus_quadrature_ns": 6.163070054299169e-12,
+   "worst_corner": "LLLHH"
+  }
+ },
+ "uniform_exact": {
+  "fall": {
+   "1": {
+    "decimal": "2.560156687185227",
+    "decimal_is_exact": false,
+    "float": 2.5601566871852266,
+    "fraction": "4575/1787"
+   },
+   "2": {
+    "decimal": "1.955454782919451",
+    "decimal_is_exact": false,
+    "float": 1.9554547829194513,
+    "fraction": "3945175/2017523"
+   },
+   "4": {
+    "decimal": "1.653103830786564",
+    "decimal_is_exact": false,
+    "float": 1.6531038307865635,
+    "fraction": "3335175/2017523"
+   },
+   "8": {
+    "decimal": "1.517933663319816",
+    "decimal_is_exact": false,
+    "float": 1.5179336633198164,
+    "fraction": "4850921768175/3195740291816"
+   }
+  },
+  "rise": {
+   "1": {
+    "decimal": "3.421425200566305",
+    "decimal_is_exact": false,
+    "float": 3.421425200566305,
+    "fraction": "7250/2119"
+   },
+   "2": {
+    "decimal": "2.794743700761621",
+    "decimal_is_exact": false,
+    "float": 2.794743700761621,
+    "fraction": "19803375/7085936"
+   },
+   "4": {
+    "decimal": "2.481402950859280",
+    "decimal_is_exact": false,
+    "float": 2.4814029508592794,
+    "fraction": "35166125/14171872"
+   },
+   "8": {
+    "decimal": "2.349959050575254",
+    "decimal_is_exact": false,
+    "float": 2.349959050575254,
+    "fraction": "6520490104875/2774724990752"
+   }
+  }
+ },
+ "worst_input_check": {
+  "I_net_nonincreasing_in_v": true,
+  "band_edge_is_pointwise_worst_input": true,
+  "corner_extremes_check": {
+   "box_extremes_attained_at_corners": true,
+   "max of [I_net(theta) - max over corners] (uA)": -0.000635665403025106,
+   "max of [min over corners - I_net(theta)] (uA)": -0.00040951793223755265,
+   "n_random_points (u, v, theta)": 400000
+  },
+  "fall: max over (corner, v) of [max_{u>=V_IH} I_net(u, v) - I_net(V_IH, v)] (uA)": 0.0,
+  "grid": {
+   "fall": [
+    1501,
+    733
+   ],
+   "n_corners": 32,
+   "rise": [
+    1701,
+    581
+   ]
+  },
+  "max d I_net / d v over wide grid and corners (uA/V)": -0.0,
+  "rise: max over (corner, v) of [I_net(V_IL, v) - min_{u<=V_IL} I_net(u, v)] (uA)": 0.0
+ }
+}

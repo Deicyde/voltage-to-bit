@@ -1,0 +1,151 @@
+{
+ "certified_restoring_current_uA": {
+  "header": [
+   "boundary",
+   "breakpoints",
+   "K",
+   "points_V",
+   "certified_minimum_restoring_current_uA"
+  ],
+  "rows": [
+   [
+    "hi",
+    "present split point",
+    1,
+    "0.77",
+    "2.312"
+   ],
+   [
+    "hi",
+    "best single split point (1 mV grid)",
+    1,
+    "0.843",
+    "4.696"
+   ],
+   [
+    "hi",
+    "uniform on [0.3, 1.3]",
+    2,
+    "0.3 .. 1.3",
+    "1.04"
+   ],
+   [
+    "hi",
+    "uniform on [0.3, 1.3]",
+    4,
+    "0.3 .. 1.3",
+    "3.795555555555556"
+   ],
+   [
+    "hi",
+    "uniform on [0.3, 1.3]",
+    8,
+    "0.3 .. 1.3",
+    "5.611428571428571"
+   ],
+   [
+    "hi",
+    "uniform on [0.3, 1.3]",
+    16,
+    "0.3 .. 1.3",
+    "5.928888888888889"
+   ],
+   [
+    "hi",
+    "uniform on [0.3, 1.3]",
+    32,
+    "0.3 .. 1.3",
+    "6.183808532778356"
+   ],
+   [
+    "hi",
+    "uniform on [0.3, 1.3]",
+    64,
+    "0.3 .. 1.3",
+    "6.313066263542454"
+   ],
+   [
+    "lo",
+    "present split point",
+    1,
+    "0.74",
+    "3.04"
+   ],
+   [
+    "lo",
+    "best single split point (1 mV grid)",
+    1,
+    "0.742",
+    "3.072"
+   ],
+   [
+    "lo",
+    "uniform on [0.3, 1.3]",
+    2,
+    "0.3 .. 1.3",
+    "0"
+   ],
+   [
+    "lo",
+    "uniform on [0.3, 1.3]",
+    4,
+    "0.3 .. 1.3",
+    "1.447111111111111"
+   ],
+   [
+    "lo",
+    "uniform on [0.3, 1.3]",
+    8,
+    "0.3 .. 1.3",
+    "3.740081632653061"
+   ],
+   [
+    "lo",
+    "uniform on [0.3, 1.3]",
+    16,
+    "0.3 .. 1.3",
+    "4.860444444444444"
+   ],
+   [
+    "lo",
+    "uniform on [0.3, 1.3]",
+    32,
+    "0.3 .. 1.3",
+    "5.404470343392300"
+   ],
+   [
+    "lo",
+    "uniform on [0.3, 1.3]",
+    64,
+    "0.3 .. 1.3",
+    "5.666612244897959"
+   ]
+  ]
+ },
+ "grid_u": [
+  "-3",
+  "5",
+  "0.0005"
+ ],
+ "lemma_checks_on_exact_grid": {
+  "hi": {
+   "L1_P_nonincreasing_in_u": true,
+   "L1_pointwise_P_ge_bound": true,
+   "L2_N_nondecreasing_in_u": true,
+   "L2_pointwise_N_ge_bound": true
+  },
+  "lo": {
+   "L1_P_nonincreasing_in_u": true,
+   "L1_pointwise_P_ge_bound": true,
+   "L2_N_nondecreasing_in_u": true,
+   "L2_pointwise_N_ge_bound": true
+  }
+ },
+ "present_formulas": {
+  "min(R_hiP, R_hiN)": "2.312",
+  "min(R_loN, R_loP)": "3.04",
+  "note": "R_hiP pairs VDD_min (overdrive) with VDD_max (excess voltage); P_hi above uses VDD_max in both places, which is the worst case because V_hi - u - V_tp does not depend on VDD"
+ },
+ "sharper_R_hiP_at_present_uHi_uA": "5.28",
+ "status": "PROPOSAL - numerically checked on a grid only; no proof"
+}

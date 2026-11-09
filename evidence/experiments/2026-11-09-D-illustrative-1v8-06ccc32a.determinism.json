@@ -1,0 +1,19 @@
+{
+ "files_that_differ": [],
+ "identical": true,
+ "n_files_compared": 46,
+ "reference_run": {
+  "jobs": 8,
+  "run_id": "2026-11-09-D-illustrative-1v8-06ccc32a",
+  "started_utc": "2026-11-09T22:14:09+00:00"
+ },
+ "same_code_and_design": true,
+ "second_run": {
+  "finished_utc": "2026-11-09T22:29:54+00:00",
+  "jobs": 4,
+  "kept": false,
+  "run_id": "determinism-rerun",
+  "started_utc": "2026-11-09T22:21:25+00:00"
+ },
+ "what": "a second complete run of experiments/run_all.py, compared file by file (SHA-256) with the run named below; manifest.json is excluded because it holds timestamps"
+}

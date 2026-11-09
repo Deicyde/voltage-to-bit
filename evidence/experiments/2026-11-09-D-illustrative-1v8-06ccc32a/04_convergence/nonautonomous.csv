@@ -1,0 +1,33 @@
+case,integrator,delay_ns,delay_minus_reference_ns,v_final_V,v_final_minus_reference_V
+L / ramp 2 V/ns to edge / 10 GHz sinusoid / worst rise corner / C_max / v0 = V_OL,DOP853 rtol=1e-13 (reference),1.7115507383477118,0.0,1.621388879046035,0.0
+L / ramp 2 V/ns to edge / 10 GHz sinusoid / worst rise corner / C_max / v0 = V_OL,DOP853 rtol=1e-10,1.711550737532269,-8.154428243756229e-10,1.6213888790477382,1.7033041643799152e-12
+L / ramp 2 V/ns to edge / 10 GHz sinusoid / worst rise corner / C_max / v0 = V_OL,RK45 rtol=1e-10,1.7115507382686448,-7.90669751893347e-11,1.6213888790292348,-1.6800116853232794e-11
+L / ramp 2 V/ns to edge / 10 GHz sinusoid / worst rise corner / C_max / v0 = V_OL,Radau rtol=1e-09,1.7115507384320123,8.430056652741769e-11,1.6213888790461266,9.170442183403793e-14
+L / ramp 2 V/ns to edge / 10 GHz sinusoid / worst rise corner / C_max / v0 = V_OL,LSODA rtol=1e-10,1.7115507397016638,1.3539520615779566e-09,1.6213888791305675,8.453260313956434e-11
+L / ramp 2 V/ns to edge / 10 GHz sinusoid / worst rise corner / C_max / v0 = V_OL,"fixed-step RK4 dt=0.001 ns, Hermite event",1.7115507384233095,7.559775028198601e-11,1.6213888790543656,8.330669487577325e-12
+L / ramp 2 V/ns to edge / 10 GHz sinusoid / worst rise corner / C_max / v0 = V_OL,"fixed-step RK4 dt=0.0005 ns, Hermite event",1.7115507383452786,-2.433164780768493e-12,1.621388879046559,5.240252676230739e-13
+L / ramp 2 V/ns to edge / 10 GHz sinusoid / worst rise corner / C_max / v0 = V_OL,"fixed-step RK4 dt=0.00025 ns, Hermite event",1.711550738348072,3.601563491884008e-13,1.6213888790460629,2.7977620220553945e-14
+"H / random PWL input / PWL(0.02 ns, extremes) disturbance / worst fall corner / C_max / v0 = V_hi",DOP853 rtol=1e-13 (reference),0.448927284444621,0.0,0.007688996498657353,0.0
+"H / random PWL input / PWL(0.02 ns, extremes) disturbance / worst fall corner / C_max / v0 = V_hi",DOP853 rtol=1e-10,0.44892728533119214,8.865711498273754e-10,0.007688996499561384,9.040303228236013e-13
+"H / random PWL input / PWL(0.02 ns, extremes) disturbance / worst fall corner / C_max / v0 = V_hi",RK45 rtol=1e-10,0.4489272813154302,-3.129190795370107e-09,0.007688996498294466,-3.6288767130132626e-13
+"H / random PWL input / PWL(0.02 ns, extremes) disturbance / worst fall corner / C_max / v0 = V_hi",Radau rtol=1e-09,0.4489272844356876,-8.933409567646322e-12,0.007688996498414502,-2.4285087829589713e-13
+"H / random PWL input / PWL(0.02 ns, extremes) disturbance / worst fall corner / C_max / v0 = V_hi",LSODA rtol=1e-10,SOLVER FAILED: Unexpected istate in LSODA.,nan,nan,nan
+"H / random PWL input / PWL(0.02 ns, extremes) disturbance / worst fall corner / C_max / v0 = V_hi","fixed-step RK4 dt=0.001 ns, Hermite event",0.44892728473152704,2.869060544696822e-10,0.007688996182712617,-3.1594473651891386e-10
+"H / random PWL input / PWL(0.02 ns, extremes) disturbance / worst fall corner / C_max / v0 = V_hi","fixed-step RK4 dt=0.0005 ns, Hermite event",0.4489272843905007,-5.412026382600743e-11,0.007688996530951014,3.229366080104157e-11
+"H / random PWL input / PWL(0.02 ns, extremes) disturbance / worst fall corner / C_max / v0 = V_hi","fixed-step RK4 dt=0.00025 ns, Hermite event",0.44892728443961366,-5.007327885664381e-12,0.007688996499237827,5.804740368930972e-13
+L / const edge / adv_outward state feedback (discontinuous at mid-domain) / worst rise corner / C_max / v0 = V_lo,two-piece quadrature (reference),2.0900842765997996,0.0,nan,nan
+L / const edge / adv_outward state feedback (discontinuous at mid-domain) / worst rise corner / C_max / v0 = V_lo,DOP853 rtol=1e-10,2.0900842765986907,-1.1088907569956064e-12,1.6587517378571488,nan
+L / const edge / adv_outward state feedback (discontinuous at mid-domain) / worst rise corner / C_max / v0 = V_lo,RK45 rtol=1e-10,2.0900842770405696,4.4077008709564325e-10,1.6587517378302599,nan
+L / const edge / adv_outward state feedback (discontinuous at mid-domain) / worst rise corner / C_max / v0 = V_lo,Radau rtol=1e-09,2.0900842763658622,-2.33937313964816e-10,1.6587517378587402,nan
+L / const edge / adv_outward state feedback (discontinuous at mid-domain) / worst rise corner / C_max / v0 = V_lo,LSODA rtol=1e-10,2.0900842761173446,-4.824549648674292e-10,1.658751737805188,nan
+L / const edge / adv_outward state feedback (discontinuous at mid-domain) / worst rise corner / C_max / v0 = V_lo,"fixed-step RK4 dt=0.001 ns, Hermite event",2.0900954746413314,1.1198041531823577e-05,1.6587517278678345,nan
+L / const edge / adv_outward state feedback (discontinuous at mid-domain) / worst rise corner / C_max / v0 = V_lo,"fixed-step RK4 dt=0.0005 ns, Hermite event",2.0901146582014403,3.038160164070547e-05,1.6587517107494882,nan
+L / const edge / adv_outward state feedback (discontinuous at mid-domain) / worst rise corner / C_max / v0 = V_lo,"fixed-step RK4 dt=0.00025 ns, Hermite event",2.0900858828775752,1.6062777756786772e-06,1.6587517364266717,nan
+H / const edge / box_high (parameter point re-chosen every instant: slowest fall of the rev. 2 inclusion) / v0 = V_hi,quadrature of the pointwise-worst drive (reference),1.3945384149854998,0.0,nan,nan
+H / const edge / box_high (parameter point re-chosen every instant: slowest fall of the rev. 2 inclusion) / v0 = V_hi,DOP853 rtol=1e-10,1.3945384169916375,2.0061377004054748e-09,0.06802529823765342,nan
+H / const edge / box_high (parameter point re-chosen every instant: slowest fall of the rev. 2 inclusion) / v0 = V_hi,RK45 rtol=1e-10,1.3945384080187369,-6.966762944315974e-09,0.06802529823870082,nan
+H / const edge / box_high (parameter point re-chosen every instant: slowest fall of the rev. 2 inclusion) / v0 = V_hi,Radau rtol=1e-09,1.3945384152600082,2.74508415998298e-10,0.06802529823761386,nan
+H / const edge / box_high (parameter point re-chosen every instant: slowest fall of the rev. 2 inclusion) / v0 = V_hi,LSODA rtol=1e-10,1.394538414788602,-1.968978313726666e-10,0.06802529823895913,nan
+H / const edge / box_high (parameter point re-chosen every instant: slowest fall of the rev. 2 inclusion) / v0 = V_hi,"fixed-step RK4 dt=0.001 ns, Hermite event",1.394538408741896,-6.2436038561486384e-09,0.06802529823736654,nan
+H / const edge / box_high (parameter point re-chosen every instant: slowest fall of the rev. 2 inclusion) / v0 = V_hi,"fixed-step RK4 dt=0.0005 ns, Hermite event",1.3945384173375706,2.3520707603807978e-09,0.06802529823755363,nan
+H / const edge / box_high (parameter point re-chosen every instant: slowest fall of the rev. 2 inclusion) / v0 = V_hi,"fixed-step RK4 dt=0.00025 ns, Hermite event",1.3945384130491798,-1.9363199932342923e-09,0.06802529823746019,nan

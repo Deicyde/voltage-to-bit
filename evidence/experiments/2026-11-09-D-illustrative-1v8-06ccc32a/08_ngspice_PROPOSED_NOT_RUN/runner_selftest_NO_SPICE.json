@@ -1,0 +1,18 @@
+{
+ "dc": {
+  "at_u_V": 2.1,
+  "at_v_V": 0.34,
+  "harness_check_passes (< 1e-3 uA)": true,
+  "max_abs_residual_uA": 1.2789769243681803e-13,
+  "n_points": 6600
+ },
+ "passes": true,
+ "status": "harness self-test only; no SPICE was run",
+ "tran": {
+  "delay_difference_ns": 1.1597861433454426e-06,
+  "max_abs_waveform_difference_V": 1.1926015730523432e-12,
+  "python_delay_ns": 0.6423627543277952,
+  "spice_delay_ns": 0.6423639141139386
+ },
+ "what_this_is": "NOT a SPICE run. The runner's parser and comparison code were fed files in the assumed ngspice wrdata layout, generated from the Python model. It shows the plumbing is self-consistent, nothing about ngspice or about any device."
+}

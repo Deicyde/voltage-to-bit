@@ -1,0 +1,27 @@
+perturbation,mode,n_runs,n_viol_safe_domain,n_viol_crossing_by_bound,n_viol_persistence,max_delay_over_tau_rise,max_delay_over_tau_fall,min_vmin_minus_Vlo_V,min_Vhi_minus_vmax_V
+formal (control),model form alone (w = 0),5376,0,0,0,0.5689080368440408,0.5046254551841418,0.0,0.0
+formal (control),model form + full disturbance allowance,32256,0,0,0,0.6579684941153144,0.5438542748676003,0.0,0.0
+CLM lambda=0.02/V,model form alone (w = 0),5376,0,0,0,0.5580656177117047,0.49376222832970634,0.0,0.0
+CLM lambda=0.02/V,model form + full disturbance allowance,32256,0,0,0,0.6436259817865833,0.5314003338039769,0.0,0.0
+CLM lambda=0.05/V,model form alone (w = 0),5376,0,0,0,0.5426877185594832,0.47861377317691767,0.0,0.0
+CLM lambda=0.05/V,model form + full disturbance allowance,32256,0,0,0,0.6234435716350065,0.5141181990229546,0.0,0.0
+CLM lambda=0.1/V,model form alone (w = 0),5376,0,0,0,0.5191530120903647,0.4559884755934555,0.0,0.0
+CLM lambda=0.1/V,model form + full disturbance allowance,32256,0,0,0,0.592904462142175,0.4884832644698591,0.0,0.0
+CLM lambda=0.2/V,model form alone (w = 0),5376,0,0,0,0.47852205432805356,0.4183935073551572,0.0,0.0
+CLM lambda=0.2/V,model form + full disturbance allowance,32256,0,0,0,0.5411139981310538,0.4463333135396605,0.0,0.0
+CLM lambda=0.3/V,model form alone (w = 0),5376,0,0,0,0.4445482522843688,0.388252706975674,0.0,0.0
+CLM lambda=0.3/V,model form + full disturbance allowance,32256,0,0,0,0.49865289934487567,0.41292037374438934,0.0,0.0
+"tail n=1, T=300.15 K",model form alone (w = 0),5376,0,0,0,0.5700435878767972,0.5048582162129063,0.0,0.0
+"tail n=1, T=300.15 K",model form + full disturbance allowance,32256,0,0,0,0.6595038625371877,0.5441277305340513,0.0,0.0
+"tail n=1.3, T=300.15 K",model form alone (w = 0),5376,0,0,0,0.5720497059894722,0.5054956214543486,0.0,0.0
+"tail n=1.3, T=300.15 K",model form + full disturbance allowance,32256,0,0,0,0.6622147109870133,0.5448781813148308,0.0,0.0
+"tail n=1.5, T=300.15 K",model form alone (w = 0),5376,0,0,0,0.5739870610418254,0.5062759510070862,0.0,0.0
+"tail n=1.5, T=300.15 K",model form + full disturbance allowance,32256,0,0,0,0.6648398810865872,0.5457981602382437,0.0,0.0
+"tail n=1.3, T=233.15 K",model form alone (w = 0),5376,0,0,0,0.570092580488636,0.504870554437436,0.0,0.0
+"tail n=1.3, T=233.15 K",model form + full disturbance allowance,32256,0,0,0,0.659569964564298,0.5441422451870696,0.0,0.0
+"tail n=1.5, T=398.15 K",model form alone (w = 0),5376,0,0,0,0.5806840611304286,0.5094731776962429,0.0,0.0
+"tail n=1.5, T=398.15 K",model form + full disturbance allowance,32256,0,0,0,0.6739626742202801,0.5495790936809428,0.0,0.0
+"CLM lambda=0.1/V + tail n=1.3, T=300.15 K",model form alone (w = 0),5376,0,0,0,0.5221440800681445,0.45690097796643747,0.0,0.0
+"CLM lambda=0.1/V + tail n=1.3, T=300.15 K",model form + full disturbance allowance,32256,0,0,0,0.5968781727088309,0.4895534860481226,0.0,0.0
+"CLM lambda=0.3/V + tail n=1.5, T=398.15 K",model form alone (w = 0),5376,0,0,0,0.45454654493183216,0.3931921740166047,0.0,0.0
+"CLM lambda=0.3/V + tail n=1.5, T=398.15 K",model form + full disturbance allowance,32256,0,0,0,0.5116500085119587,0.4187145212489708,0.0,0.0
