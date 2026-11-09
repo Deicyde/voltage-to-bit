@@ -27,10 +27,13 @@ switching margins:
 So the largest `ε_I` the present proof supports for this record is just under
 2.312 µA: a margin of 16 %, not a factor of five. The four boundary numbers are
 bounds obtained with the proof-only split points `uHi`, `uLo`; the true minima
-of the restoring current over all inputs are larger (about 5.9 µA at the bottom
-and 6.4 µA at the top by workstream B's calculation, which is not a Lean
-result). Better split points, or more of them, would raise the provable `ε_I`
-without changing the circuit.
+of the restoring current over all inputs are larger: about 5.9 µA at the bottom
+and 6.4 µA at the fixed top of 2.08 V, and about 3.6 µA at the top of the
+supply-relative domain `VDD + 0.10 V`, which is the physically relevant one
+(workstream B's calculation, `docs/model.md` §6.1; not a Lean result). Better
+split points, or a list of them with both devices counted on each piece, would
+raise the provable `ε_I` towards those values without changing the circuit.
+That is an open improvement for the search loop.
 
 ## An environment under which `ε_I = 2 µA` has a physical reading
 
