@@ -46,7 +46,7 @@ units V, µA, fF, ns):
 | Thresholds `V_tn`, `V_tp` | 0.45 to 0.60 V each |
 | `k_n`, `k_p` | 160 to 240, 80 to 120 µA/V² |
 | Load | 5 to 20 fF |
-| Unmodelled current `ε_I` | 2 µA (strictly positive) |
+| Unmodelled current `ε_I` | 2 µA (strictly positive; the proof supports just under 2.312 µA for this record) |
 | Valid input | low ≤ 0.40 V, high ≥ 1.25 V |
 | Valid output | low ≤ 0.25 V, high ≥ 1.35 V |
 | Safe domain | −0.10 to 2.08 V |
@@ -54,7 +54,11 @@ units V, µA, fF, ns):
 | Proved fall deadline | 4575/1787 ≈ 2.57 ns |
 
 These numbers are **illustrative**. They are plausible orders of magnitude and
-are not fitted to any process, device model, or measurement.
+are not fitted to any process, device model, or measurement. The notes beside
+the record ([designs/illustrative-1v8.notes.md](designs/illustrative-1v8.notes.md))
+say what caps `ε_I`, under which environment 2 µA has a physical reading (slow
+edges and almost no coupling), and how far the record is from the open SKY130
+process.
 
 ## Status, in three separate dimensions
 

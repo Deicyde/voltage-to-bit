@@ -42,7 +42,10 @@ I_net(u, v; θ) = I_p − I_n                                                 in
 for all real `u`, `v`; for `v` outside `[0, VDD]` they describe reverse
 conduction (source/drain exchange). Lean: `In`, `Ip`, `Inet` in
 `Model/Device.lean`, with lemmas `In_cutoff`, `In_triode`, `In_sat`,
-`Ip_cutoff`, `Ip_triode`, `Ip_sat` identifying the textbook regions.
+`Ip_cutoff`, `Ip_triode`, `Ip_sat` identifying the textbook regions in forward
+operation and `In_rev_*`, `Ip_rev_*` in reverse operation. This is ngspice MOS
+Level 1 with `LAMBDA = 0` and `GAMMA = 0` (hand proof and numerical sample in
+`docs/model.md` §3.2; not a Lean statement about ngspice).
 
 Parameters `θ = (VDD, k_n, k_p, V_tn, V_tp)` lie in a box given by the design
 record (`Design.InBox`). In the ODE form they are constant during a run; the
@@ -86,6 +89,35 @@ model's net current must lie between the net currents of two box members, up to
 `ε_m`, and any further disturbance must be within `ε_w`, with
 `ε_m + ε_w ≤ ε_I` (`IsTrajectory.of_sandwich`).
 
+### 4.1 Physical reading of the envelopes (not part of any theorem)
+
+These are environment restrictions and conventions. They are recorded in
+`docs/assumptions.md` (rows ENV-07 to ENV-12) and none of them is proved.
+
+- **Capacitance.** `c` is the incremental capacitance `∂Q/∂v` of the output
+  node, with every attached capacitor counted once. Currents caused by *other*
+  nodes moving (gate-drain feedthrough `C_M · du/dt`, coupling to a neighbour
+  `C_c · da/dt`, supply motion through junction capacitance) are not part of
+  `c`; they belong to `ε_I`. The first instance therefore covers an ideal
+  grounded capacitor load plus the inverter's own parasitics, not a switching
+  gate load.
+- **Additive allowance.** For `ε_I` to mean something physically, the
+  environment must bound the input slew, the gate-drain capacitance, aggressor
+  coupling, supply slew, leakage and near-threshold conduction so that their sum
+  stays below `ε_I`. Each design record has a budget table in the notes file
+  beside it. An amplitude bound is a poor description of crosstalk, which is
+  bounded in charge; that is a known limitation of this model form.
+- **Parameter box.** Process spread, supply range and allowance for model form
+  all live in the box. A box wide enough to bracket a given real device may be
+  much wider than an illustrative one, and the margins must be recomputed for
+  it.
+- **Noise.** Thermal, flicker and telegraph noise have no pointwise bound and
+  are outside the theorem. For this node thermal noise is about 0.5 to 0.9 mV
+  rms, more than a hundred standard deviations below the noise margins of the
+  illustrative record; that is a probabilistic remark, not a guarantee.
+- **Temperature** is not a parameter. A design record applies to whatever
+  temperature range its box was chosen to cover.
+
 ## 5. Digital semantics
 
 | Quantity | Meaning |
@@ -98,6 +130,14 @@ Decoding is three-valued (`decode : ℝ → ℝ → ℝ → Option Bool`); inter
 voltages are never mapped to a Boolean. Static discipline:
 `V_OL ≤ V_IL < V_IH ≤ V_OH`. Thresholds are absolute voltages, not fractions
 of `VDD`.
+
+Side conditions of absolute thresholds when the supply varies (they are where
+the physical residual concentrates; see `docs/model.md` §8.2): the opposing
+device is generally *not* off at the valid input level. In the illustrative
+record the PMOS still conducts at `u = V_IH` when the supply is high (its
+contention current is subtracted in `I_dn`), and `V_IL` sits only 0.05 V below
+the smallest NMOS threshold, where a real device conducts a little although the
+square law says zero.
 
 ## 6. What is proved
 
@@ -134,6 +174,21 @@ R_loP  = (k_p,min/2)·(psq(VDD_min − u_Lo − V_tp,max) − psq(V_lo − u_Lo 
 used to bound the restoring current at each end of the safe domain. They are
 not circuit or environment parameters.
 
+Safe-domain invariance holds because the four boundary margins exceed `ε_I`;
+that is the exact condition. A rule of thumb such as "`VDD_min` exceeds the sum
+of the largest thresholds" is neither necessary nor sufficient, but it points
+at the right quantity: the restoring current at an excursion `δ` is roughly
+`k · δ · (VDD − V_tn − V_tp)`, so it shrinks with the voltage headroom and
+vanishes when the headroom does. For a given record it is the boundary margins,
+not the switching margins, that cap the admissible `ε_I` (see the notes file
+beside each record).
+
+For a run at one supply value the safe domain can be measured from that supply:
+`Design.Admissible.atSupply` and `solution_safe_atSupply`
+(`Proofs/AtSupply.lean`) give the invariant interval
+`[V_lo, VDD + (V_hi − VDD_max)]`, under one extra numeric condition
+`ε_I < R_hiN'`. The physical claim should be read with this tighter domain.
+
 Also proved:
 
 - Existence and uniqueness (`exists_solution`, `solution_unique`,
@@ -151,6 +206,10 @@ Also proved:
 - Minimum delays in both directions (`IsTrajectory.rise_at_most`,
   `IsTrajectory.fall_at_most`).
 - Two stages in series (`Proofs/Chain.lean`).
+- Gluing of trajectories and existence for an input with one jump that takes
+  its new value at the jump instant (`Proofs/Concat.lean`). For an input that
+  keeps its old value at the jump instant there is in general no trajectory
+  across the jump, and the guarantee is then silent.
 
 ## 7. Design records
 
@@ -158,7 +217,10 @@ Machine-readable design records live in `designs/*.json` with decimal strings
 (exact rationals). They are the single source for the numbers used by the Lean
 instance and by the experiments. `scripts/gen_design.py` generates the Lean
 record; `scripts/check.sh` verifies the two are in sync. Current record:
-`designs/illustrative-1v8.json` (illustrative, not fitted).
+`designs/illustrative-1v8.json` (illustrative, not fitted). Each record has a
+notes file beside it (`designs/illustrative-1v8.notes.md`) stating its status,
+the environment budget under which its `ε_I` has a physical reading, and how
+it relates to any real process.
 
 ## 8. Experiment schema
 
@@ -174,3 +236,4 @@ completed or only proposed.
 | 2026-11-09 | v0 | Initial draft by coordinator. | Start of project. |
 | 2026-11-09 | v1 candidate | Hypothesis window is `[s, e)`; six margins written out; existence extended to voltage-dependent Lipschitz capacitance; uniqueness, certificates, minimum delay, model-error obligation and the measurable-disturbance scope limit recorded. | Bring prose in line with the Lean at commit `cac4016`. |
 | 2026-11-09 | v1 candidate (rev. 2) | `IsTrajectory` no longer takes a fixed `θ`: at each instant some point of the box must satisfy the current balance. Theorems lose their `θ` argument and are strictly more general. Model-error obligation restated as a sandwich between box members. | A fixed additive `ε_I` cannot absorb model-form error that scales with device current; the proofs only ever used bounds that hold throughout the box. Commit `eae25ed`. Statements reviewed by workstream E at `1880a36` are implied by the new ones via `IsTrajectory.of_ode`. |
+| 2026-11-09 | v1 candidate (rev. 3) | Added §4.1 (physical reading: incremental capacitance, capacitor load only, what gives `ε_I` meaning, noise, temperature), threshold side conditions, the exact invariance condition, the supply-relative safe domain, step inputs, and per-record notes files. No theorem changed. | Workstream B proposals IP-2 to IP-8 and IP-10 (`docs/model.md`). IP-9 (comparison plan) is for workstream D; IP-11 and IP-12 are deferred. |
