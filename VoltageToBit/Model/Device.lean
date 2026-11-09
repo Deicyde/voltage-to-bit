@@ -14,9 +14,9 @@ Two transistors of a static CMOS inverter, as functions of the gate voltage `u`
 
 The single expression `(k/2) * (psq (V_GS - V_t) - psq (V_GD - V_t))` equals the
 textbook piecewise cutoff / triode / saturation law in forward operation (see
-the `*_cutoff`, `*_triode`, `*_sat` lemmas below) and is antisymmetric under
-source/drain exchange, so it also defines reverse conduction when the output
-node is outside `[0, VDD]`.
+the `*_cutoff`, `*_triode`, `*_sat` lemmas below) and, with source and drain
+exchanged, in reverse operation when the output node is outside `[0, VDD]`
+(the `*_rev_*` lemmas).
 
 Omitted on purpose: channel-length modulation, body effect, subthreshold
 conduction, velocity saturation, junction diodes. See `docs/model.md`.
@@ -86,6 +86,52 @@ theorem Ip_sat {θ : Params} {u v : ℝ} (hu : u ≤ θ.VDD - θ.Vtp) (hv : v �
     Ip θ u v = θ.kp / 2 * (θ.VDD - u - θ.Vtp) ^ 2 := by
   unfold Ip
   rw [psq_of_nonneg (by linarith), psq_of_nonpos (by linarith)]
+  ring
+
+/-! ## Agreement with the textbook piecewise law (reverse operation)
+
+When the output node is below ground the NMOS terminals exchange roles: the
+output node acts as the source, with gate-source voltage `u - v` and
+drain-source voltage `-v`, and the current flows from ground into the node.
+When the output node is above the supply the same happens to the PMOS, with
+source-gate voltage `v - u` and source-drain voltage `v - VDD`. The lemmas below
+state that `In` and `Ip` are then minus the textbook forward law in the
+exchanged frame. -/
+
+theorem In_rev_cutoff {θ : Params} {u v : ℝ} (hv : v ≤ 0) (hu : u - v ≤ θ.Vtn) :
+    In θ u v = 0 := by
+  unfold In
+  rw [psq_of_nonpos (by linarith), psq_of_nonpos (by linarith)]
+  ring
+
+theorem In_rev_triode {θ : Params} {u v : ℝ} (hv : v ≤ 0) (hu : θ.Vtn ≤ u) :
+    In θ u v = -(θ.kn * ((u - v - θ.Vtn) * (-v) - (-v) ^ 2 / 2)) := by
+  unfold In
+  rw [psq_of_nonneg (by linarith), psq_of_nonneg (by linarith)]
+  ring
+
+theorem In_rev_sat {θ : Params} {u v : ℝ} (hu : u ≤ θ.Vtn) (hv : θ.Vtn ≤ u - v) :
+    In θ u v = -(θ.kn / 2 * (u - v - θ.Vtn) ^ 2) := by
+  unfold In
+  rw [psq_of_nonpos (by linarith), psq_of_nonneg (by linarith)]
+  ring
+
+theorem Ip_rev_cutoff {θ : Params} {u v : ℝ} (hv : θ.VDD ≤ v) (hu : v - u ≤ θ.Vtp) :
+    Ip θ u v = 0 := by
+  unfold Ip
+  rw [psq_of_nonpos (by linarith), psq_of_nonpos (by linarith)]
+  ring
+
+theorem Ip_rev_triode {θ : Params} {u v : ℝ} (hv : θ.VDD ≤ v) (hu : u ≤ θ.VDD - θ.Vtp) :
+    Ip θ u v = -(θ.kp * ((v - u - θ.Vtp) * (v - θ.VDD) - (v - θ.VDD) ^ 2 / 2)) := by
+  unfold Ip
+  rw [psq_of_nonneg (by linarith), psq_of_nonneg (by linarith)]
+  ring
+
+theorem Ip_rev_sat {θ : Params} {u v : ℝ} (hu : θ.VDD - θ.Vtp ≤ u) (hv : u + θ.Vtp ≤ v) :
+    Ip θ u v = -(θ.kp / 2 * (v - u - θ.Vtp) ^ 2) := by
+  unfold Ip
+  rw [psq_of_nonpos (by linarith), psq_of_nonneg (by linarith)]
   ring
 
 /-! ## Signs -/
