@@ -13,10 +13,18 @@ copies of one admissible design these hold by the static discipline
 (`chain_restores_low`, `chain_restores_high`).
 
 Modelling caveat. Each stage is still the one-node model. The gate capacitance
-of the second stage and any coupling from its output back to its input are not
-modelled as extra state; they are covered only if the first stage's
-capacitance bounds and error bound `eps` contain them. That is an assumption
-about the environment of the first stage, not something proved here.
+of the second stage and any coupling between its input and its output are not
+modelled as extra state; they are covered only if the stages' capacitance
+bounds and error bounds `eps` contain them. That is an assumption about the
+environment, not something proved here.
+
+For the illustrative record the assumption is not physically plausible: by
+`rise_at_most` and `fall_at_most` the first stage's output may slew at up to
+about 29 V/ns rising and 58 V/ns falling, so a second stage with gate-drain
+capacitance `C_M` would see a feedthrough current of up to `58 · C_M` µA, which
+stays inside the 2 µA allowance only for `C_M` below about 0.03 fF (a small
+inverter has 0.2 to 1 fF). Read the corollary as a statement about two ideal
+one-node stages. See `docs/model.md`, section 7.4.
 -/
 
 namespace VoltageToBit

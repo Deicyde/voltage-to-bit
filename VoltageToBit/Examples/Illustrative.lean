@@ -176,7 +176,13 @@ theorem abs_wSin_le (t : ℝ) : |wSin t| ≤ 2 := by
 *undefined*), horizon 10 ns. A solution of the ODE exists; it is a trajectory;
 the output is valid-low throughout `[2.57, 4]` ns (input high since `t = 0`) and
 valid-high throughout `[7.59, 10]` ns (input low since `t = 4.16`). Both windows
-have positive length. -/
+have positive length.
+
+This run is a mathematical witness, not a physically budgeted scenario. The
+input falls at 9 V/ns; in a real inverter the gate-drain capacitance `C_M`
+would inject `C_M · du/dt` into the output node during that edge, which alone
+reaches the whole 2 µA allowance at `C_M = 0.22` fF, and `wSin` already uses
+the full allowance. See `docs/model.md`, section 7.4. -/
 theorem illustrative_scenario :
     ∃ v : ℝ → ℝ, v 0 = 1 ∧
       (∀ t ∈ Icc (0 : ℝ) 10,
