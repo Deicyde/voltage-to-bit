@@ -67,18 +67,19 @@ theorem illustrative_tauDn_le : illustrative.tauDn ≤ 2.57 := by
 
 /-! ## The guarantee with explicit numbers -/
 
-/-- **Universal guarantee for the illustrative inverter.** For every parameter
-choice in the box, every input function `u`, and every trajectory `v` on
-`[a, b]` that starts in `[-0.10, 2.08]` V:
+/-- **Universal guarantee for the illustrative inverter.** For every input
+function `u` and every trajectory `v` on `[a, b]` that starts in
+`[-0.10, 2.08]` V:
 
 1. `v` stays in `[-0.10, 2.08]` V;
 2. whenever `u ≤ 0.40` V on `[s, e)`, `v ≥ 1.35` V on `[s + 3.43 ns, e]`;
 3. whenever `u ≥ 1.25` V on `[s, e)`, `v ≤ 0.25` V on `[s + 2.57 ns, e]`.
 
-The trajectory notion allows any capacitance in `[5, 20]` fF and any unmodelled
-current of magnitude at most `2` µA at each instant. -/
-theorem illustrative_guarantee (θ : Params) (hθ : illustrative.InBox θ) (u v : ℝ → ℝ)
-    (a b : ℝ) (h : IsTrajectory illustrative θ u v a b) (h0 : v a ∈ Icc (-0.10 : ℝ) 2.08) :
+The trajectory notion allows, at each instant, any capacitance in `[5, 20]` fF,
+any parameter point of the box, and any unmodelled current of magnitude at most
+`2` µA. -/
+theorem illustrative_guarantee (u v : ℝ → ℝ)
+    (a b : ℝ) (h : IsTrajectory illustrative u v a b) (h0 : v a ∈ Icc (-0.10 : ℝ) 2.08) :
     (∀ t ∈ Icc a b, v t ∈ Icc (-0.10 : ℝ) 2.08) ∧
     (∀ s e : ℝ, a ≤ s → e ≤ b → (∀ t ∈ Ico s e, u t ≤ 0.40) →
       ∀ t ∈ Icc s e, s + 3.43 ≤ t → 1.35 ≤ v t) ∧
@@ -89,18 +90,18 @@ theorem illustrative_guarantee (θ : Params) (hθ : illustrative.InBox θ) (u v 
   have h0' : v a ∈ illustrative.Safe := by rw [hsafe]; exact h0
   refine ⟨fun t ht => ?_, fun s e hs he hu t ht htime => ?_, fun s e hs he hu t ht htime => ?_⟩
   · rw [← hsafe]
-    exact h.safe illustrative_admissible hθ h0' t ht
-  · have := h.rise illustrative_admissible hθ h0' hs he
+    exact h.safe illustrative_admissible h0' t ht
+  · have := h.rise illustrative_admissible h0' hs he
       (fun x hx => by simpa [illustrative] using hu x hx) t ht
       (by linarith [illustrative_tauUp_le])
     simpa [illustrative] using this
-  · have := h.fall illustrative_admissible hθ h0' hs he
+  · have := h.fall illustrative_admissible h0' hs he
       (fun x hx => by simpa [illustrative] using hu x hx) t ht
       (by linarith [illustrative_tauDn_le])
     simpa [illustrative] using this
 
-/-- **Trajectories exist** for the illustrative inverter: for every parameter
-choice in the box, every voltage-dependent capacitance with values in
+/-- **Trajectories exist** for the illustrative inverter: for every constant
+parameter choice in the box, every voltage-dependent capacitance with values in
 `[5, 20]` fF that is Lipschitz on the safe domain, every continuous input,
 every continuous disturbance of magnitude at most `2` µA, every interval and
 every initial state in the safe domain. -/
@@ -111,7 +112,7 @@ theorem illustrative_exists (θ : Params) (hθ : illustrative.InBox θ) (Cf : �
     (u w : ℝ → ℝ) (hu : Continuous u) (hw : Continuous w)
     (a b : ℝ) (hab : a ≤ b) (hwb : ∀ t ∈ Icc a b, |w t| ≤ 2) (v₀ : ℝ)
     (hv₀ : v₀ ∈ Icc (-0.10 : ℝ) 2.08) :
-    ∃ v : ℝ → ℝ, v a = v₀ ∧ IsTrajectory illustrative θ u v a b := by
+    ∃ v : ℝ → ℝ, v a = v₀ ∧ IsTrajectory illustrative u v a b := by
   have hsafe : illustrative.Safe = Icc (-0.10 : ℝ) 2.08 := by
     norm_num [Design.Safe, illustrative]
   refine exists_trajectory illustrative_admissible hθ (Cf := Cf) (Kc := Kc) ?_ ?_ hu hw hab ?_ ?_
@@ -128,7 +129,7 @@ theorem illustrative_exists_const (θ : Params) (hθ : illustrative.InBox θ) (C
     (hC : C ∈ Icc (5 : ℝ) 20) (u w : ℝ → ℝ) (hu : Continuous u) (hw : Continuous w)
     (a b : ℝ) (hab : a ≤ b) (hwb : ∀ t ∈ Icc a b, |w t| ≤ 2) (v₀ : ℝ)
     (hv₀ : v₀ ∈ Icc (-0.10 : ℝ) 2.08) :
-    ∃ v : ℝ → ℝ, v a = v₀ ∧ IsTrajectory illustrative θ u v a b :=
+    ∃ v : ℝ → ℝ, v a = v₀ ∧ IsTrajectory illustrative u v a b :=
   illustrative_exists θ hθ (fun _ => C) (fun _ => hC) 0 (fun x _ y _ => by simp) u w hu hw
     a b hab hwb v₀ hv₀
 
@@ -179,7 +180,7 @@ theorem illustrative_scenario :
     ∃ v : ℝ → ℝ, v 0 = 1 ∧
       (∀ t ∈ Icc (0 : ℝ) 10,
         HasDerivWithinAt v ((Inet nominal (uRamp t) (v t) + wSin t) / 10) (Icc 0 10) t) ∧
-      IsTrajectory illustrative nominal uRamp v 0 10 ∧
+      IsTrajectory illustrative uRamp v 0 10 ∧
       (∀ t ∈ Icc (0 : ℝ) 10, v t ∈ Icc (-0.10 : ℝ) 2.08) ∧
       (∀ t ∈ Icc (2.57 : ℝ) 4, illustrative.decodeOut (v t) = some false) ∧
       (∀ t ∈ Icc (7.59 : ℝ) 10, illustrative.decodeOut (v t) = some true) := by
@@ -192,14 +193,14 @@ theorem illustrative_scenario :
   obtain ⟨v, hv0, hsafe, hode⟩ := exists_solution hadm nominal_inBox (Cf := fun _ => 10)
     (Kc := 0) (fun _ => hC1) (fun x _ y _ => by simp) continuous_uRamp
     continuous_wSin (by norm_num : (0 : ℝ) ≤ 10) hwb hv₀
-  have htraj : IsTrajectory illustrative nominal uRamp v 0 10 :=
-    IsTrajectory.of_ode (Cf := fun _ => 10) (w := wSin) (fun _ => ⟨hC1, hC2⟩)
+  have htraj : IsTrajectory illustrative uRamp v 0 10 :=
+    IsTrajectory.of_ode nominal_inBox (Cf := fun _ => 10) (w := wSin) (fun _ => ⟨hC1, hC2⟩)
       (fun t ht => hwb t (Ico_subset_Icc_self ht))
       (fun t ht => (hode t ht).continuousWithinAt)
       (fun t ht => ⟨_, (hode t (Ico_subset_Icc_self ht)).mono_of_mem_nhdsWithin
         (Icc_mem_nhdsGE_of_mem ht), by field_simp⟩)
   have h0 : v 0 ∈ illustrative.Safe := by rw [hv0]; exact hv₀
-  obtain ⟨hdom, hrise, hfall⟩ := illustrative_guarantee nominal nominal_inBox uRamp v 0 10 htraj
+  obtain ⟨hdom, hrise, hfall⟩ := illustrative_guarantee uRamp v 0 10 htraj
     (by simpa [Design.Safe, illustrative] using h0)
   have hoo : illustrative.VOL < illustrative.VOH := by norm_num [illustrative]
   refine ⟨v, hv0, hode, htraj, hdom, fun t ht => ?_, fun t ht => ?_⟩

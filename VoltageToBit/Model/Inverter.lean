@@ -12,7 +12,8 @@ import VoltageToBit.Model.Device
   device law really provides at least these currents.
 * `Design.Admissible`: the finite list of numeric conditions a record must
   satisfy. Nothing in it mentions trajectories or the conclusion.
-* `IsTrajectory`: the dynamics, as a differential inclusion.
+* `IsTrajectory`: the dynamics, as a differential inclusion over capacitance,
+  parameter point and current error.
 * `decode`: three-valued decoding of a voltage.
 -/
 
@@ -150,21 +151,30 @@ structure Admissible : Prop where
 end Design
 
 /-- **Dynamics.** `v` is a trajectory of the uncertain inverter on `[a, b]`
-for parameters `θ` and input `u` when it is continuous on `[a, b]` and, at each
-`t ∈ [a, b)`, has a right derivative `v'` such that for some capacitance value
-`c ∈ [Clo, Chi]` the current balance `c * v' = Inet θ (u t) (v t)` holds up to
-an error of at most `eps`.
+for input `u` when it is continuous on `[a, b]` and, at each `t ∈ [a, b)`, has a
+right derivative `v'` such that, for some capacitance value `c ∈ [Clo, Chi]`
+and some parameter point `θ` of the box, the current balance
+`c * v' = Inet θ (u t) (v t)` holds up to an error of at most `eps`.
 
-The error bound is only required while `v t` is in the safe domain. This makes
-the hypothesis weaker (the theorem stronger): a model whose error is bounded by
-`eps` only on the safe domain is still covered.
+The capacitance value and the parameter point may be different at every
+instant. So the definition covers a supply that moves within its range, device
+parameters that drift within theirs, and any device whose current, at each
+operating point, lies between the currents of two square-law devices of the
+box (see `Proofs/ModelError.lean`). A run with constant parameters is the
+special case of a constant choice (`IsTrajectory.of_ode`).
+
+The current balance is only required while `v t` is in the safe domain. This
+makes the hypothesis weaker (the theorem stronger): a model that is only known
+to be accurate on the safe domain is still covered.
 
 This is a differential inclusion. It contains every solution of
-`C (v) * dv/dt = Inet θ u v + w t` with `Clo ≤ C ≤ Chi` and `|w| ≤ eps`. -/
-structure IsTrajectory (D : Design) (θ : Params) (u v : ℝ → ℝ) (a b : ℝ) : Prop where
+`C (v) * dv/dt = Inet θ u v + w t` with `Clo ≤ C ≤ Chi`, `θ` in the box and
+`|w| ≤ eps` that has a right derivative at every instant. -/
+structure IsTrajectory (D : Design) (u v : ℝ → ℝ) (a b : ℝ) : Prop where
   cont : ContinuousOn v (Icc a b)
   incl : ∀ t ∈ Ico a b, ∃ v' c : ℝ, HasDerivWithinAt v v' (Ici t) t ∧
-    D.Clo ≤ c ∧ c ≤ D.Chi ∧ (v t ∈ D.Safe → |c * v' - Inet θ (u t) (v t)| ≤ D.eps)
+    D.Clo ≤ c ∧ c ≤ D.Chi ∧
+    (v t ∈ D.Safe → ∃ θ : Params, D.InBox θ ∧ |c * v' - Inet θ (u t) (v t)| ≤ D.eps)
 
 /-! ## Decoding -/
 

@@ -50,13 +50,13 @@ theorem badBox_empty : ∀ θ : Params, ¬ badBox.InBox θ := fun θ h => by
 
 /-- With the input in `[0, 0.40]` V and the output starting valid-low, the
 output is still below `VOH = 1.35` V at every time up to 38 ps later. -/
-theorem illustrative_no_early_high (θ : Params) (hθ : illustrative.InBox θ) (u v : ℝ → ℝ)
-    (a b : ℝ) (h : IsTrajectory illustrative θ u v a b) (h0 : v a ∈ illustrative.Safe)
+theorem illustrative_no_early_high (u v : ℝ → ℝ)
+    (a b : ℝ) (h : IsTrajectory illustrative u v a b) (h0 : v a ∈ illustrative.Safe)
     (s e : ℝ) (hs : a ≤ s) (he : e ≤ b) (hu : ∀ t ∈ Ico s e, 0 ≤ u t ∧ u t ≤ 0.40)
     (hvs : v s ≤ 0.25) :
     ∀ t ∈ Icc s e, t ≤ s + 0.038 → v t < 1.35 := by
   intro t ht htime
-  have hbound := h.rise_at_most illustrative_admissible hθ h0 hs he hu hvs t ht
+  have hbound := h.rise_at_most illustrative_admissible h0 hs he hu hvs t ht
   have hslope : (illustrative.IchargeMax 0 0.40 + illustrative.eps) / illustrative.Clo
       = 28.5508 := by
     norm_num [Design.IchargeMax, illustrative, psq_eq_ite]
@@ -69,14 +69,14 @@ valid-low input from time 0 and a valid-low initial output that is not
 valid-high at `t = 0.038` ns. -/
 theorem early_sampling_counterexample :
     ∃ u v : ℝ → ℝ, (∀ t, u t ≤ 0.40) ∧ v 0 ≤ 0.25 ∧
-      IsTrajectory illustrative nominal u v 0 10 ∧ v 0.038 < 1.35 := by
+      IsTrajectory illustrative u v 0 10 ∧ v 0.038 < 1.35 := by
   obtain ⟨v, hv0, htraj⟩ := illustrative_exists_const nominal nominal_inBox 5 (by norm_num)
     (fun _ => 0.2) (fun _ => 0) continuous_const continuous_const 0 10 (by norm_num)
     (fun t _ => by norm_num) 0.25 (by norm_num)
   refine ⟨fun _ => 0.2, v, fun t => by norm_num, hv0.le, htraj, ?_⟩
   have h0 : v 0 ∈ illustrative.Safe := by
     rw [hv0]; norm_num [Design.Safe, illustrative]
-  exact illustrative_no_early_high nominal nominal_inBox _ v 0 10 htraj h0 0 10 le_rfl le_rfl
+  exact illustrative_no_early_high _ v 0 10 htraj h0 0 10 le_rfl le_rfl
     (fun t _ => by norm_num) hv0.le 0.038 (by norm_num) (by norm_num)
 
 /-! ## 3. Miswired transistors -/
@@ -124,10 +124,11 @@ at the weak corner, with the input held valid-low at 0.40 V, the output can
 rest at 1.34 V, below `VOH = 1.35` V, forever. -/
 theorem noisy_counterexample (T : ℝ) :
     ∃ u v : ℝ → ℝ, (∀ t, u t ≤ noisy.VIL) ∧ v 0 ∈ noisy.Safe ∧
-      IsTrajectory noisy weakCorner u v 0 T ∧ ∀ t, v t < noisy.VOH := by
+      IsTrajectory noisy u v 0 T ∧ ∀ t, v t < noisy.VOH := by
   refine ⟨fun _ => 0.40, fun _ => 1.34, fun t => by norm_num [noisy, illustrative],
     by norm_num [Design.Safe, noisy, illustrative],
-    ⟨continuousOn_const, fun t _ => ⟨0, 5, hasDerivWithinAt_const t _ _, ?_, ?_, fun _ => ?_⟩⟩,
+    ⟨continuousOn_const, fun t _ => ⟨0, 5, hasDerivWithinAt_const t _ _, ?_, ?_,
+      fun _ => ⟨weakCorner, weakCorner_inBox, ?_⟩⟩⟩,
     fun t => by norm_num [noisy, illustrative]⟩
   · norm_num [noisy, illustrative]
   · norm_num [noisy, illustrative]

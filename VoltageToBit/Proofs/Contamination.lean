@@ -109,12 +109,12 @@ end Design
 
 namespace IsTrajectory
 
-variable {D : Design} {θ : Params} {u v : ℝ → ℝ} {a b : ℝ}
+variable {D : Design} {u v : ℝ → ℝ} {a b : ℝ}
 
 /-- **The output cannot rise faster than the available current allows.** With
 the input in `[ulo, uhi]` on `[s, e)` and `v s ≤ l`, the output stays below the
 line through `l` with slope `(IchargeMax ulo uhi + eps) / Clo`. -/
-theorem rise_at_most (hD : D.Admissible) (hθ : D.InBox θ) (h : IsTrajectory D θ u v a b)
+theorem rise_at_most (hD : D.Admissible) (h : IsTrajectory D u v a b)
     (h0 : v a ∈ D.Safe) {s e ulo uhi l : ℝ} (hs : a ≤ s) (he : e ≤ b)
     (hu : ∀ t ∈ Ico s e, ulo ≤ u t ∧ u t ≤ uhi) (hl : v s ≤ l) :
     ∀ t ∈ Icc s e, v t ≤ l + (D.IchargeMax ulo uhi + D.eps) / D.Clo * (t - s) := by
@@ -136,8 +136,8 @@ theorem rise_at_most (hD : D.Admissible) (hθ : D.InBox θ) (h : IsTrajectory D 
   -- slope bound at time `x`
   obtain ⟨cap, hc1, -, hb⟩ := h.balance x (hsub hx)
   have hxab : x ∈ Icc a b := ⟨(hsub hx).1, (hsub hx).2.le⟩
-  have hsafe := h.safe hD hθ h0 x hxab
-  have hb' := hb hsafe
+  have hsafe := h.safe hD h0 x hxab
+  obtain ⟨θ, hθ, hb'⟩ := hb hsafe
   have hI := Design.Inet_le_IchargeMax hD hθ (hu x hx).1 (hu x hx).2 hsafe.1
   have hcap : 0 < cap := lt_of_lt_of_le hD.C_pos hc1
   have hupper : cap * rderiv v x ≤ D.IchargeMax ulo uhi + D.eps := by
@@ -152,7 +152,7 @@ theorem rise_at_most (hD : D.Admissible) (hθ : D.InBox θ) (h : IsTrajectory D 
 /-- **The output cannot fall faster than the available current allows.** With
 the input in `[ulo, uhi]` on `[s, e)` and `h ≤ v s`, the output stays above the
 line through `h` with slope `-(IdischargeMax ulo uhi + eps) / Clo`. -/
-theorem fall_at_most (hD : D.Admissible) (hθ : D.InBox θ) (h : IsTrajectory D θ u v a b)
+theorem fall_at_most (hD : D.Admissible) (h : IsTrajectory D u v a b)
     (h0 : v a ∈ D.Safe) {s e ulo uhi l : ℝ} (hs : a ≤ s) (he : e ≤ b)
     (hu : ∀ t ∈ Ico s e, ulo ≤ u t ∧ u t ≤ uhi) (hl : l ≤ v s) :
     ∀ t ∈ Icc s e, l - (D.IdischargeMax ulo uhi + D.eps) / D.Clo * (t - s) ≤ v t := by
@@ -174,8 +174,8 @@ theorem fall_at_most (hD : D.Admissible) (hθ : D.InBox θ) (h : IsTrajectory D 
   -- slope bound at time `x`
   obtain ⟨cap, hc1, -, hb⟩ := h.balance x (hsub hx)
   have hxab : x ∈ Icc a b := ⟨(hsub hx).1, (hsub hx).2.le⟩
-  have hsafe := h.safe hD hθ h0 x hxab
-  have hb' := hb hsafe
+  have hsafe := h.safe hD h0 x hxab
+  obtain ⟨θ, hθ, hb'⟩ := hb hsafe
   have hI := Design.neg_IdischargeMax_le_Inet hD hθ (hu x hx).1 (hu x hx).2 hsafe.2
   have hcap : 0 < cap := lt_of_lt_of_le hD.C_pos hc1
   have hlower : -(D.IdischargeMax ulo uhi + D.eps) ≤ cap * rderiv v x := by

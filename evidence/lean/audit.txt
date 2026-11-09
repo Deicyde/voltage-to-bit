@@ -1,4 +1,4 @@
-declarations audited: 401 (of which theorems: 262)
+declarations audited: 411 (of which theorems: 271)
 axioms used anywhere: [Classical.choice, Quot.sound, propext]
 AUDIT OK: no declaration depends on an axiom outside [propext, Classical.choice, Quot.sound]
 'VoltageToBit.IsTrajectory.safe' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -10,7 +10,10 @@ AUDIT OK: no declaration depends on an axiom outside [propext, Classical.choice,
 'VoltageToBit.exists_trajectory_const' depends on axioms: [propext, Classical.choice, Quot.sound]
 'VoltageToBit.solution_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
 'VoltageToBit.IsTrajectory.of_ode' depends on axioms: [propext, Classical.choice, Quot.sound]
+'VoltageToBit.IsTrajectory.of_ode_varying' depends on axioms: [propext, Classical.choice, Quot.sound]
+'VoltageToBit.Design.exists_inBox_of_between' depends on axioms: [propext, Classical.choice, Quot.sound]
 'VoltageToBit.IsTrajectory.of_model_error' depends on axioms: [propext, Classical.choice, Quot.sound]
+'VoltageToBit.IsTrajectory.of_sandwich' depends on axioms: [propext, Classical.choice, Quot.sound]
 'VoltageToBit.IsTrajectory.rise_of_cert' depends on axioms: [propext, Classical.choice, Quot.sound]
 'VoltageToBit.IsTrajectory.fall_of_cert' depends on axioms: [propext, Classical.choice, Quot.sound]
 'VoltageToBit.IsTrajectory.rise_at_most' depends on axioms: [propext, Classical.choice, Quot.sound]

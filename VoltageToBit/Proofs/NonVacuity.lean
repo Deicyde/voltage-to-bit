@@ -64,11 +64,11 @@ theorem tauDn_pos (hD : D.Admissible) : 0 < D.tauDn := by
   positivity
 
 /-- **The rise guarantee is not vacuous.** For every admissible record there is
-a parameter choice in the box and a trajectory that starts valid-*low*, sees a
-valid-low input for one time unit longer than the deadline, and is valid-high
-throughout the final window `[tauUp, tauUp + 1]`. -/
+a trajectory that starts valid-*low*, sees a valid-low input for one time unit
+longer than the deadline, and is valid-high throughout the final window
+`[tauUp, tauUp + 1]`. -/
 theorem exists_rise_run (hD : D.Admissible) :
-    ∃ (θ : Params) (u v : ℝ → ℝ), D.InBox θ ∧ IsTrajectory D θ u v 0 (D.tauUp + 1) ∧
+    ∃ u v : ℝ → ℝ, IsTrajectory D u v 0 (D.tauUp + 1) ∧
       v 0 = D.VOL ∧ (∀ t, u t ≤ D.VIL) ∧
       ∀ t ∈ Icc D.tauUp (D.tauUp + 1), D.VOH ≤ v t := by
   obtain ⟨θ, hθ⟩ := hD.exists_inBox
@@ -76,16 +76,16 @@ theorem exists_rise_run (hD : D.Admissible) :
   obtain ⟨v, hv0, htraj⟩ := exists_trajectory_const hD hθ (C := D.Clo) le_rfl hD.C_le
     (u := fun _ => D.VIL) (w := fun _ => 0) continuous_const continuous_const hT
     (fun t _ => by simpa using hD.eps_nonneg) hD.VOL_mem_safe
-  refine ⟨θ, fun _ => D.VIL, v, hθ, htraj, hv0, fun _ => le_rfl, fun t ht => ?_⟩
+  refine ⟨fun _ => D.VIL, v, htraj, hv0, fun _ => le_rfl, fun t ht => ?_⟩
   have h0 : v 0 ∈ D.Safe := by rw [hv0]; exact hD.VOL_mem_safe
-  exact htraj.rise hD hθ h0 le_rfl le_rfl (fun _ _ => le_rfl) t
+  exact htraj.rise hD h0 le_rfl le_rfl (fun _ _ => le_rfl) t
     ⟨by linarith [ht.1, hD.tauUp_pos], ht.2⟩ (by linarith [ht.1])
 
 /-- **The fall guarantee is not vacuous.** Mirror image of `exists_rise_run`:
 the trajectory starts valid-*high* and is valid-low throughout
 `[tauDn, tauDn + 1]`. -/
 theorem exists_fall_run (hD : D.Admissible) :
-    ∃ (θ : Params) (u v : ℝ → ℝ), D.InBox θ ∧ IsTrajectory D θ u v 0 (D.tauDn + 1) ∧
+    ∃ u v : ℝ → ℝ, IsTrajectory D u v 0 (D.tauDn + 1) ∧
       v 0 = D.VOH ∧ (∀ t, D.VIH ≤ u t) ∧
       ∀ t ∈ Icc D.tauDn (D.tauDn + 1), v t ≤ D.VOL := by
   obtain ⟨θ, hθ⟩ := hD.exists_inBox
@@ -93,9 +93,9 @@ theorem exists_fall_run (hD : D.Admissible) :
   obtain ⟨v, hv0, htraj⟩ := exists_trajectory_const hD hθ (C := D.Clo) le_rfl hD.C_le
     (u := fun _ => D.VIH) (w := fun _ => 0) continuous_const continuous_const hT
     (fun t _ => by simpa using hD.eps_nonneg) hD.VOH_mem_safe
-  refine ⟨θ, fun _ => D.VIH, v, hθ, htraj, hv0, fun _ => le_rfl, fun t ht => ?_⟩
+  refine ⟨fun _ => D.VIH, v, htraj, hv0, fun _ => le_rfl, fun t ht => ?_⟩
   have h0 : v 0 ∈ D.Safe := by rw [hv0]; exact hD.VOH_mem_safe
-  exact htraj.fall hD hθ h0 le_rfl le_rfl (fun _ _ => le_rfl) t
+  exact htraj.fall hD h0 le_rfl le_rfl (fun _ _ => le_rfl) t
     ⟨by linarith [ht.1, hD.tauDn_pos], ht.2⟩ (by linarith [ht.1])
 
 end Design.Admissible

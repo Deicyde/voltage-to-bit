@@ -8,8 +8,10 @@ The guarantee in `Proofs/Guarantee.lean` quantifies over all trajectories. This
 file shows the quantifier is not empty.
 
 * `IsTrajectory.of_ode`: every solution of the ordinary differential equation
-  `Cf (v) * dv/dt = Inet θ u v + w t`, with a capacitance function `Cf` within
-  `[Clo, Chi]` and a disturbance `|w| ≤ eps`, is a trajectory of the inclusion.
+  `Cf (v) * dv/dt = Inet θ u v + w t`, with parameters `θ` in the box, a
+  capacitance function `Cf` within `[Clo, Chi]` and a disturbance `|w| ≤ eps`,
+  is a trajectory of the inclusion. `IsTrajectory.of_ode_varying` allows the
+  parameter point to move within the box as time passes.
 * `exists_solution`: for continuous input `u`, continuous disturbance `w` with
   `|w| ≤ eps` on `[a, b]`, a voltage-dependent capacitance `Cf` that stays in
   `[Clo, Chi]` and is Lipschitz on the safe domain, and any initial state in the
@@ -21,9 +23,10 @@ file shows the quantifier is not empty.
 * `exists_trajectory`: the combination.
 * `solution_unique`: two solutions with the same initial state coincide.
 
-Scope: existence is proved for continuous `u` and `w` and Lipschitz `Cf`. The
-guarantee itself needs none of this regularity; for less regular data it is a
-statement about whatever trajectories there are.
+Scope: existence and uniqueness are proved for constant parameters, continuous
+`u` and `w`, and Lipschitz `Cf`. The guarantee itself needs none of this; for
+less regular data, or parameters that move within the box, it is a statement
+about whatever trajectories there are.
 -/
 
 namespace VoltageToBit
@@ -32,19 +35,32 @@ open Set Metric
 open scoped NNReal Topology
 
 /-- The inclusion contains the ODE model with an arbitrary capacitance function
-within the bounds and an arbitrary disturbance within the bound. -/
-theorem IsTrajectory.of_ode {D : Design} {θ : Params} {u v : ℝ → ℝ} {a b : ℝ}
-    {Cf w : ℝ → ℝ} (hCf : ∀ x, D.Clo ≤ Cf x ∧ Cf x ≤ D.Chi)
+within the bounds, a parameter point that may move within the box as time
+passes, and an arbitrary disturbance within the bound. -/
+theorem IsTrajectory.of_ode_varying {D : Design} {θ : ℝ → Params} {u v : ℝ → ℝ} {a b : ℝ}
+    {Cf w : ℝ → ℝ} (hθ : ∀ t ∈ Ico a b, D.InBox (θ t))
+    (hCf : ∀ x, D.Clo ≤ Cf x ∧ Cf x ≤ D.Chi)
     (hw : ∀ t ∈ Ico a b, |w t| ≤ D.eps) (hcont : ContinuousOn v (Icc a b))
     (hode : ∀ t ∈ Ico a b, ∃ v' : ℝ, HasDerivWithinAt v v' (Ici t) t ∧
-      Cf (v t) * v' = Inet θ (u t) (v t) + w t) :
-    IsTrajectory D θ u v a b where
+      Cf (v t) * v' = Inet (θ t) (u t) (v t) + w t) :
+    IsTrajectory D u v a b where
   cont := hcont
   incl := fun t ht => by
     obtain ⟨v', hd, he⟩ := hode t ht
-    refine ⟨v', Cf (v t), hd, (hCf _).1, (hCf _).2, fun _ => ?_⟩
+    refine ⟨v', Cf (v t), hd, (hCf _).1, (hCf _).2, fun _ => ⟨θ t, hθ t ht, ?_⟩⟩
     rw [he, add_sub_cancel_left]
     exact hw t ht
+
+/-- The inclusion contains the ODE model with constant parameters in the box,
+an arbitrary capacitance function within the bounds and an arbitrary
+disturbance within the bound. -/
+theorem IsTrajectory.of_ode {D : Design} {θ : Params} {u v : ℝ → ℝ} {a b : ℝ}
+    {Cf w : ℝ → ℝ} (hθ : D.InBox θ) (hCf : ∀ x, D.Clo ≤ Cf x ∧ Cf x ≤ D.Chi)
+    (hw : ∀ t ∈ Ico a b, |w t| ≤ D.eps) (hcont : ContinuousOn v (Icc a b))
+    (hode : ∀ t ∈ Ico a b, ∃ v' : ℝ, HasDerivWithinAt v v' (Ici t) t ∧
+      Cf (v t) * v' = Inet θ (u t) (v t) + w t) :
+    IsTrajectory D u v a b :=
+  IsTrajectory.of_ode_varying (θ := fun _ => θ) (fun _ _ => hθ) hCf hw hcont hode
 
 /-- Clamp a real number to `[lo, hi]`. -/
 def clamp (lo hi x : ℝ) : ℝ := max (min x hi) lo
@@ -258,11 +274,11 @@ theorem exists_trajectory {D : Design} {θ : Params} (hD : D.Admissible) (hθ : 
     (hCfLip : ∀ x ∈ D.Safe, ∀ y ∈ D.Safe, |Cf x - Cf y| ≤ Kc * |x - y|)
     {u w : ℝ → ℝ} (hu : Continuous u) (hw : Continuous w) {a b : ℝ} (hab : a ≤ b)
     (hwb : ∀ t ∈ Icc a b, |w t| ≤ D.eps) {v₀ : ℝ} (hv₀ : v₀ ∈ D.Safe) :
-    ∃ v : ℝ → ℝ, v a = v₀ ∧ IsTrajectory D θ u v a b := by
+    ∃ v : ℝ → ℝ, v a = v₀ ∧ IsTrajectory D u v a b := by
   obtain ⟨v, hv0, -, hode⟩ :=
     exists_solution hD hθ (fun x => (hCf x).1) hCfLip hu hw hab hwb hv₀
   have hCpos : ∀ x, 0 < Cf x := fun x => lt_of_lt_of_le hD.C_pos (hCf x).1
-  refine ⟨v, hv0, IsTrajectory.of_ode (Cf := Cf) (w := w) hCf
+  refine ⟨v, hv0, IsTrajectory.of_ode hθ (Cf := Cf) (w := w) hCf
     (fun t ht => hwb t (Ico_subset_Icc_self ht))
     (fun t ht => (hode t ht).continuousWithinAt) (fun t ht => ?_)⟩
   refine ⟨_, (hode t (Ico_subset_Icc_self ht)).mono_of_mem_nhdsWithin
@@ -275,7 +291,7 @@ theorem exists_trajectory_const {D : Design} {θ : Params} (hD : D.Admissible)
     (hθ : D.InBox θ) {C : ℝ} (hC1 : D.Clo ≤ C) (hC2 : C ≤ D.Chi) {u w : ℝ → ℝ}
     (hu : Continuous u) (hw : Continuous w) {a b : ℝ} (hab : a ≤ b)
     (hwb : ∀ t ∈ Icc a b, |w t| ≤ D.eps) {v₀ : ℝ} (hv₀ : v₀ ∈ D.Safe) :
-    ∃ v : ℝ → ℝ, v a = v₀ ∧ IsTrajectory D θ u v a b :=
+    ∃ v : ℝ → ℝ, v a = v₀ ∧ IsTrajectory D u v a b :=
   exists_trajectory hD hθ (Cf := fun _ => C) (Kc := 0) (fun _ => ⟨hC1, hC2⟩)
     (fun x _ y _ => by simp) hu hw hab hwb hv₀
 
@@ -298,13 +314,14 @@ theorem solution_unique {D : Design} {θ : Params} (hD : D.Admissible) (hθ : D.
   -- both solutions are trajectories, hence stay in the safe domain
   have traj : ∀ v : ℝ → ℝ, (∀ t ∈ Icc a b,
       HasDerivWithinAt v ((Inet θ (u t) (v t) + w t) / Cf (v t)) (Icc a b) t) →
-      IsTrajectory D θ u v a b := fun v hv =>
-    IsTrajectory.of_ode (Cf := Cf) (w := w) hCf (fun t ht => hwb t (Ico_subset_Icc_self ht))
+      IsTrajectory D u v a b := fun v hv =>
+    IsTrajectory.of_ode hθ (Cf := Cf) (w := w) hCf
+      (fun t ht => hwb t (Ico_subset_Icc_self ht))
       (fun t ht => (hv t ht).continuousWithinAt)
       (fun t ht => ⟨_, (hv t (Ico_subset_Icc_self ht)).mono_of_mem_nhdsWithin
         (Icc_mem_nhdsGE_of_mem ht), by have := (hCpos (v t)).ne'; field_simp⟩)
-  have hsafe₁ := (traj v₁ h₁).safe hD hθ hs
-  have hsafe₂ := (traj v₂ h₂).safe hD hθ (h0 ▸ hs)
+  have hsafe₁ := (traj v₁ h₁).safe hD hs
+  have hsafe₂ := (traj v₂ h₂).safe hD (h0 ▸ hs)
   obtain ⟨K, L, hK, -, hLip, -⟩ :=
     exists_clampedField_bounds hD hθ (fun x => (hCf x).1) hCfLip hu hw a b
   -- on the safe domain the right-hand side is the clamped field

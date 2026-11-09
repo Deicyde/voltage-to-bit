@@ -59,7 +59,10 @@ open VoltageToBit VoltageToBit.Examples
 #print axioms exists_trajectory_const
 #print axioms solution_unique
 #print axioms IsTrajectory.of_ode
+#print axioms IsTrajectory.of_ode_varying
+#print axioms Design.exists_inBox_of_between
 #print axioms IsTrajectory.of_model_error
+#print axioms IsTrajectory.of_sandwich
 #print axioms IsTrajectory.rise_of_cert
 #print axioms IsTrajectory.fall_of_cert
 #print axioms IsTrajectory.rise_at_most
