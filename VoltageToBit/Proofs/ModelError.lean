@@ -48,7 +48,9 @@ not, such as conduction below threshold.
    `exists_trajectory_step` for one jump of the input). For another current
    law `J` it needs its own argument. The equation with feedthrough terms is
    covered by `exists_solution` only when `CM * du + Cc * dg + w` is a
-   continuous function of time, which a ramp input with corners does not give.
+   continuous function of time (as in
+   `Examples.illustrative_feedthrough_scenario`), which a ramp input with
+   corners does not give.
 2. **The obligation ranges over the input values that occur.** In
    `of_model_error` and `of_sandwich` the hypothesis is indexed by time and has
    to hold for the input value `u t` of each instant. The input classes of the
