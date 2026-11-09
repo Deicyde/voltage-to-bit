@@ -1,4 +1,4 @@
-declarations audited: 411 (of which theorems: 271)
+declarations audited: 414 (of which theorems: 274)
 axioms used anywhere: [Classical.choice, Quot.sound, propext]
 AUDIT OK: no declaration depends on an axiom outside [propext, Classical.choice, Quot.sound]
 'VoltageToBit.IsTrajectory.safe' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -9,6 +9,8 @@ AUDIT OK: no declaration depends on an axiom outside [propext, Classical.choice,
 'VoltageToBit.exists_trajectory' depends on axioms: [propext, Classical.choice, Quot.sound]
 'VoltageToBit.exists_trajectory_const' depends on axioms: [propext, Classical.choice, Quot.sound]
 'VoltageToBit.solution_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+'VoltageToBit.IsTrajectory.concat' depends on axioms: [propext, Classical.choice, Quot.sound]
+'VoltageToBit.exists_trajectory_step' depends on axioms: [propext, Classical.choice, Quot.sound]
 'VoltageToBit.IsTrajectory.of_ode' depends on axioms: [propext, Classical.choice, Quot.sound]
 'VoltageToBit.IsTrajectory.of_ode_varying' depends on axioms: [propext, Classical.choice, Quot.sound]
 'VoltageToBit.Design.exists_inBox_of_between' depends on axioms: [propext, Classical.choice, Quot.sound]
