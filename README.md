@@ -11,15 +11,15 @@ answer in Lean 4. It is the first milestone of the plan in
 
 **Model.** Two transistors (PMOS from supply to output, NMOS from output to
 ground, both gates on the input) following the symmetric Shichman–Hodges square
-law, a load capacitance anywhere in `[C_min, C_max]`, device and supply
-parameters anywhere in a box, and an unmodelled current into the output node of
-magnitude at most `ε_I` at every instant. The dynamics are a differential
+law. Three kinds of uncertainty are explicit: at every instant the load
+capacitance may be anywhere in `[C_min, C_max]`, the device and supply
+parameters may be anywhere in a box, and an unmodelled current of magnitude at
+most `ε_I` may flow into the output node. The dynamics are a differential
 inclusion; see [docs/interface.md](docs/interface.md) for the exact definitions.
 
 **Theorem.** For every design record whose numbers pass a finite list of
-arithmetic checks, every parameter choice in the box, every input waveform (no
-regularity assumed) and every trajectory that starts in the safe voltage
-domain:
+arithmetic checks, every input waveform (no regularity assumed) and every
+trajectory that starts in the safe voltage domain:
 
 1. the output voltage stays in the safe domain;
 2. if the input is valid-low on `[s, e)`, the output is valid-high on
@@ -29,8 +29,13 @@ domain:
 
 Voltages between the thresholds decode to *undefined*, never to a bit. The
 current margins behind `τ_up` and `τ_dn` are derived from the device law, not
-assumed. Trajectories are proved to exist (and, for the ODE form, to be
-unique), so the statement is not vacuous.
+assumed. Trajectories are proved to exist (and, for the ODE form with
+constant parameters, to be unique), so the statement is not vacuous.
+
+A different description of the same node is covered whenever, on the safe
+domain, its net current lies between the currents of two members of the
+parameter box, up to the additive allowance (`IsTrajectory.of_sandwich`). That
+is the precise obligation a device model or a measurement would have to meet.
 
 **Concrete instance** ([designs/illustrative-1v8.json](designs/illustrative-1v8.json);
 units V, µA, fF, ns):
