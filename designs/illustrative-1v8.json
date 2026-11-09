@@ -1,0 +1,35 @@
+{
+  "name": "illustrative-1v8",
+  "status": "ILLUSTRATIVE. Numbers are plausible orders of magnitude for a small 1.8 V-class inverter but are NOT fitted to any process, device model, or measurement.",
+  "units": {
+    "voltage": "V",
+    "current": "uA",
+    "capacitance": "fF",
+    "time": "ns",
+    "transconductance_k": "uA/V^2",
+    "note": "coherent: uA / fF = V / ns"
+  },
+  "box": {
+    "VDD": ["1.62", "1.98"],
+    "kn": ["160", "240"],
+    "kp": ["80", "120"],
+    "Vtn": ["0.45", "0.60"],
+    "Vtp": ["0.45", "0.60"],
+    "C": ["5", "20"]
+  },
+  "eps": "2",
+  "thresholds": {
+    "VIL": "0.40",
+    "VIH": "1.25",
+    "VOL": "0.25",
+    "VOH": "1.35"
+  },
+  "safe_domain": {
+    "Vlo": "-0.10",
+    "Vhi": "2.08"
+  },
+  "barrier_split": {
+    "uHi": "0.77",
+    "uLo": "0.74"
+  }
+}
