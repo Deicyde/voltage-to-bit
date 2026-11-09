@@ -29,6 +29,10 @@ same node (a higher-fidelity device model, or the physical device).
   `CM * Su + Cc * Sg + εw ≤ eps`, where `Su` and `Sg` bound the slew of the
   input and of the aggressor. This is the formal place where an input slew
   bound is needed.
+* `IsTrajectory.of_charge_balance`: the same conclusion from conservation of
+  the node charge, for three constant linear capacitors.
+* `Design.InBox.In_eq_zero`, `Design.InBox.Inet_ground_eq_zero`: two places
+  where all box members have the same current (limit 3 below).
 
 So a model whose current is multiplicatively off from one square law (the
 typical shape of model-form error) is covered when the parameter box is wide
@@ -59,12 +63,11 @@ not, such as conduction below threshold.
    and no wider. Two cases, with the numbers of the illustrative record
    (`Vtnlo = 0.45`, `VDDhi - Vtplo = 1.53`):
    * At a grounded node, `y = 0`, and inputs `x ≥ 1.53`, the net current of
-     every box member is exactly zero (the PMOS is cut off, `Ip_cutoff`, and
-     the NMOS carries no current at zero drain-source voltage). The sandwich
-     there says `|J x 0| ≤ εm`; the box contributes nothing.
+     every box member is exactly zero (`Design.InBox.Inet_ground_eq_zero`). The
+     sandwich there says `|J x 0| ≤ εm`; the box contributes nothing.
    * For inputs `x ≤ 0.45` and a node at or above ground, the NMOS current of
-     every box member is exactly zero (`In_cutoff`), so no box member conducts
-     below threshold. The lower side of the sandwich then reads
+     every box member is exactly zero (`Design.InBox.In_eq_zero`), so no box
+     member conducts below threshold. The lower side of the sandwich then reads
      `Ip θ₁ x y - εm ≤ J x y` for some box member `θ₁`: what the NMOS of the
      other model conducts there has to fit between that model's PMOS current
      and the smallest PMOS current of the box, or into `εm`. Conduction below
@@ -157,6 +160,28 @@ theorem exists_inBox_of_between {θ₁ θ₂ : Params} (h₁ : D.InBox θ₁) (h
     linarith
   rw [this, abs_zero]
   exact hε
+
+/-! ### Where all box members coincide -/
+
+/-- For inputs at or below the smallest NMOS threshold of the box and a node at
+or above ground, the NMOS current of every box member is exactly zero. No box
+member represents conduction below threshold there. -/
+theorem InBox.In_eq_zero {θ : Params} (hθ : D.InBox θ) {u v : ℝ} (hu : u ≤ D.Vtnlo)
+    (hv : 0 ≤ v) : In θ u v = 0 :=
+  In_cutoff (hu.trans hθ.Vtn_ge) hv
+
+/-- At a grounded node and for inputs at or above `VDDhi - Vtplo`, the net
+current of every box member is exactly zero: the PMOS is cut off, and the NMOS
+carries no current at zero drain-source voltage. A sandwich between two box
+members at such a point therefore says `|J| ≤ εm`. -/
+theorem InBox.Inet_ground_eq_zero {θ : Params} (hθ : D.InBox θ) (hD : D.Admissible) {u : ℝ}
+    (hu : D.VDDhi - D.Vtplo ≤ u) : Inet θ u 0 = 0 := by
+  have hV : 0 ≤ θ.VDD := hD.VDD_pos.le.trans hθ.VDD_ge
+  have hP : Ip θ u 0 = 0 := Ip_cutoff (by linarith [hθ.VDD_le, hθ.Vtp_ge]) hV
+  have hN : In θ u 0 = 0 := by
+    unfold In
+    rw [sub_zero, sub_self, mul_zero]
+  rw [Inet, hP, hN, sub_zero]
 
 end Design
 
@@ -257,7 +282,9 @@ neighbours respect the slew bounds, and whether one aggressor behind a linear
 capacitor describes its surroundings, is not addressed here.
 
 The hypotheses `_hu` and `_hg` are not used by the proof: they say what `du`
-and `dg` are, and the proof needs only the bounds on them. -/
+and `dg` are, and the proof needs only the bounds on them. They are needed in
+`IsTrajectory.of_charge_balance`, which derives the node equation above from
+conservation of charge. -/
 theorem IsTrajectory.of_feedthrough {D : Design} {θ : Params} {u g v du dg w : ℝ → ℝ}
     {a b : ℝ} {CM Cc Su Sg εw : ℝ} (hCM : 0 ≤ CM) (hCc : 0 ≤ Cc)
     (hbudget : CM * Su + Cc * Sg + εw ≤ D.eps) (hθ : D.InBox θ)
@@ -287,5 +314,47 @@ theorem IsTrajectory.of_feedthrough {D : Design} {θ : Params} {u g v du dg w : 
     have h5 := abs_add_le (CM * du t) (Cc * dg t)
     rw [e]
     linarith
+
+/-- **The feedthrough equation from conservation of charge.** Three constant
+linear capacitors meet at the output node: `CL` to ground, `CM` to the input
+`u`, and `Cc` to an aggressor node `g`. The charge they hold on the node is
+`CL * v + CM * (v - u) + Cc * (v - g)`, and its rate of change is the current
+delivered by the two transistors plus a residual `w` (hypothesis `hq`). If the
+input and the aggressor have right derivatives bounded by `Su` and `Sg`, the
+total capacitance `CL + CM + Cc` lies in `[Clo, Chi]`, and the budget
+`CM * Su + Cc * Sg + εw ≤ eps` holds, then `v` is a trajectory.
+
+In this form the capacitance that must lie in `[Clo, Chi]` is visibly the
+total, including `CM` and `Cc`, and the right derivatives of `u` and `g` are
+used: they turn the charge balance into the node equation of
+`IsTrajectory.of_feedthrough`. Like that lemma, this is a statement about the
+model, for constant linear capacitors only; it is not evidence about a device. -/
+theorem IsTrajectory.of_charge_balance {D : Design} {θ : Params} {u g v du dg w : ℝ → ℝ}
+    {a b : ℝ} {CL CM Cc Su Sg εw : ℝ} (hCM : 0 ≤ CM) (hCc : 0 ≤ Cc)
+    (hClo : 0 < D.Clo) (hC1 : D.Clo ≤ CL + CM + Cc) (hC2 : CL + CM + Cc ≤ D.Chi)
+    (hbudget : CM * Su + Cc * Sg + εw ≤ D.eps) (hθ : D.InBox θ)
+    (hu : ∀ t ∈ Ico a b, HasDerivWithinAt u (du t) (Ici t) t)
+    (hg : ∀ t ∈ Ico a b, HasDerivWithinAt g (dg t) (Ici t) t)
+    (hSu : ∀ t ∈ Ico a b, |du t| ≤ Su) (hSg : ∀ t ∈ Ico a b, |dg t| ≤ Sg)
+    (hw : ∀ t ∈ Ico a b, |w t| ≤ εw)
+    (hcont : ContinuousOn v (Icc a b))
+    (hq : ∀ t ∈ Ico a b, HasDerivWithinAt
+      (fun s => CL * v s + CM * (v s - u s) + Cc * (v s - g s))
+      (Inet θ (u t) (v t) + w t) (Ici t) t) :
+    IsTrajectory D u v a b := by
+  have hC : CL + CM + Cc ≠ 0 := (lt_of_lt_of_le hClo hC1).ne'
+  refine IsTrajectory.of_feedthrough hCM hCc hbudget hθ hu hg hSu hSg hw hcont
+    (fun t ht => ?_)
+  -- `v = (q + CM * u + Cc * g) / (CL + CM + Cc)`, differentiated from the right
+  have hsum := (((hq t ht).add ((hu t ht).const_mul CM)).add
+    ((hg t ht).const_mul Cc)).div_const (CL + CM + Cc)
+  have hv : ∀ s, v s = (CL * v s + CM * (v s - u s) + Cc * (v s - g s) + CM * u s
+      + Cc * g s) / (CL + CM + Cc) := fun s => by
+    field_simp
+    ring
+  refine ⟨(Inet θ (u t) (v t) + w t + CM * du t + Cc * dg t) / (CL + CM + Cc),
+    CL + CM + Cc, hsum.congr (fun s _ => hv s) (hv t), hC1, hC2, ?_⟩
+  field_simp
+  ring
 
 end VoltageToBit
