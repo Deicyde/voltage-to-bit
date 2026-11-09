@@ -1,0 +1,7 @@
+search/lean/rise-026-ctl-below-model-worst-case.claim.lean:28:16: error: unsolved goals
+case refine_3
+⊢ False
+'VoltageToBit.Search.rise_026_ctl_below_model_worst_case' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]

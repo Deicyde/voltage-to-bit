@@ -1,0 +1,4 @@
+search/lean/fall-022-ctl-final-level-short.claim.lean:24:16: error: unsolved goals
+case refine_2
+⊢ False
+'VoltageToBit.Search.fall_022_ctl_final_level_short' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

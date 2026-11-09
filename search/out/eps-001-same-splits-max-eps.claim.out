@@ -1,0 +1,3 @@
+'VoltageToBit.Search.eps_001_same_splits_max_eps' depends on axioms: [propext, Classical.choice, Quot.sound]
+'VoltageToBit.Search.eps_001_same_splits_max_eps_tauUp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'VoltageToBit.Search.eps_001_same_splits_max_eps_tauDn' depends on axioms: [propext, Classical.choice, Quot.sound]

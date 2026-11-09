@@ -1,0 +1,4 @@
+search/lean/fall-024-pred-nominal-devices.claim.lean:28:16: error: unsolved goals
+case refine_3
+⊢ False
+'VoltageToBit.Search.fall_024_pred_nominal_devices' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

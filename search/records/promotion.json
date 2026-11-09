@@ -1,0 +1,126 @@
+{
+ "deadlines": {
+  "role": "promotion",
+  "statement": "refined guarantee: same statement as illustrative_guarantee with the two deadlines replaced",
+  "lean_file_sha256": "4d11dbebc6bacef7d519c691d57410ce5141b59d1ecb01958b6c9f7d9352e7a2",
+  "command": "cd \"$FROZEN\" && lake env lean \"$R/search/promote/RefinedDeadlines.lean\"",
+  "lean_file": "search/promote/RefinedDeadlines.lean",
+  "exit_status": 0,
+  "output_file": "search/promote/RefinedDeadlines.out",
+  "output_sha256": "036106c0e879eda65b8e8539ce2499e8b5f47998927fd9fec98aaba2930480c5",
+  "error_count": 0,
+  "warning_count": 0,
+  "first_error": null,
+  "unsolved_cases": [],
+  "theorems": [
+   "illustrative_riseCert_16",
+   "illustrative_fallCert_16",
+   "illustrative_guarantee_refined"
+  ],
+  "axioms": {
+   "illustrative_riseCert_16": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ],
+   "illustrative_fallCert_16": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ],
+   "illustrative_guarantee_refined": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "passed": true,
+  "rise_record": "rise-017-dp-n16",
+  "fall_record": "fall-016-dp-n16",
+  "rise_tau": "2.26",
+  "fall_tau": "1.425"
+ },
+ "limits": {
+  "role": "promotion",
+  "statement": "floors on valid deadlines; admissibility of the larger-eps variant; ceiling on eps over all split points",
+  "lean_file_sha256": "7c938592a83b9684b1e9e9755b45639d72d2785598110a7ee320cc2a7b660810",
+  "command": "cd \"$FROZEN\" && lake env lean \"$R/search/promote/Limits.lean\"",
+  "lean_file": "search/promote/Limits.lean",
+  "exit_status": 0,
+  "output_file": "search/promote/Limits.out",
+  "output_sha256": "8d38e87c6dbe66d4a9541c5a921ecb4254f2715db8862a073e1c28b0cbe4963a",
+  "error_count": 0,
+  "warning_count": 0,
+  "first_error": null,
+  "unsolved_cases": [],
+  "theorems": [
+   "slow_rise_trajectory",
+   "rise_deadline_counterexample",
+   "riseCert_deadline_ge",
+   "slow_fall_trajectory",
+   "fall_deadline_counterexample",
+   "fallCert_deadline_ge",
+   "illustrativeEps_admissible",
+   "illustrativeEps_tauUp",
+   "illustrativeEps_tauDn",
+   "illustrative_eps_no_split_points"
+  ],
+  "axioms": {
+   "slow_rise_trajectory": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ],
+   "rise_deadline_counterexample": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ],
+   "riseCert_deadline_ge": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ],
+   "slow_fall_trajectory": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ],
+   "fall_deadline_counterexample": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ],
+   "fallCert_deadline_ge": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ],
+   "illustrativeEps_admissible": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ],
+   "illustrativeEps_tauUp": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ],
+   "illustrativeEps_tauDn": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ],
+   "illustrative_eps_no_split_points": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+   ]
+  },
+  "passed": true,
+  "eps_record": "eps-006-split-search-6dp",
+  "eps": "2.3801",
+  "uHi": "0.772486",
+  "uLo": "0.742506"
+ }
+}

@@ -1,0 +1,3 @@
+'VoltageToBit.Search.eps_000_baseline' depends on axioms: [propext, Classical.choice, Quot.sound]
+'VoltageToBit.Search.eps_000_baseline_tauUp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'VoltageToBit.Search.eps_000_baseline_tauDn' depends on axioms: [propext, Classical.choice, Quot.sound]

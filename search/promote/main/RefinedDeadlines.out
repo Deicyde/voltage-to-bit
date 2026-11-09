@@ -1,0 +1,3 @@
+'VoltageToBit.Search.illustrative_riseCert_16' depends on axioms: [propext, Classical.choice, Quot.sound]
+'VoltageToBit.Search.illustrative_fallCert_16' depends on axioms: [propext, Classical.choice, Quot.sound]
+'VoltageToBit.Search.illustrative_guarantee_refined' depends on axioms: [propext, Classical.choice, Quot.sound]

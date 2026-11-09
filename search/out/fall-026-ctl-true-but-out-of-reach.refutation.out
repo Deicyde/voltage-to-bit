@@ -1,0 +1,3 @@
+'VoltageToBit.Search.fall_026_ctl_true_but_out_of_reach_refuted' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

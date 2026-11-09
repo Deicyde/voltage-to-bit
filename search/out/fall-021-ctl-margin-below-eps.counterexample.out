@@ -1,0 +1,6 @@
+'VoltageToBit.Search.slow_fall_trajectory' depends on axioms: [propext, Classical.choice, Quot.sound]
+'VoltageToBit.Search.fall_deadline_counterexample' depends on axioms: [propext, Classical.choice, Quot.sound]
+'VoltageToBit.Search.fallCert_deadline_ge' depends on axioms: [propext, Classical.choice, Quot.sound]
+'VoltageToBit.Search.fall_021_ctl_margin_below_eps_not_a_deadline' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

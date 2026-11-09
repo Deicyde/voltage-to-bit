@@ -1,0 +1,3 @@
+'VoltageToBit.Search.rise_000_baseline' depends on axioms: [propext, Classical.choice, Quot.sound]
+'VoltageToBit.Search.rise_000_baseline_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'VoltageToBit.Search.rise_000_baseline_is_library_deadline' depends on axioms: [propext, Classical.choice, Quot.sound]

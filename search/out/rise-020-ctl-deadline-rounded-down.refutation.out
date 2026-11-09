@@ -1,0 +1,3 @@
+'VoltageToBit.Search.rise_020_ctl_deadline_rounded_down_refuted' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

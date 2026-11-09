@@ -1,0 +1,47 @@
+{
+ "note": "Compatibility probe against the working tree of the library. Not part of the frozen experiment record.",
+ "checked_against_commit": "84d9c5fd94f335d217da134509d222e42d3eb04c",
+ "library_sources_committed": true,
+ "build_up_to_date": true,
+ "frozen_commit_of_the_record": "1880a3619453d865a04f3b32d25edf69af618501",
+ "design_sha256_in_record": "06ccc32a64938f43350d6fb68d991c15e62b9d6815f0b174391be073727bc967",
+ "design_sha256_in_working_tree": "06ccc32a64938f43350d6fb68d991c15e62b9d6815f0b174391be073727bc967",
+ "rise_record": "rise-017-dp-n16",
+ "fall_record": "fall-016-dp-n16",
+ "rise_tau": "2.26",
+ "fall_tau": "1.425",
+ "lean_file_sha256": "f95db032342fef7d4aa6c778c5bb98f98c95bcdf9492829e0b07593d9545f42c",
+ "command": "cd \"$R\" && lake env lean \"$R/search/promote/main/RefinedDeadlines.lean\"",
+ "lean_file": "search/promote/main/RefinedDeadlines.lean",
+ "exit_status": 0,
+ "output_file": "search/promote/main/RefinedDeadlines.out",
+ "output_sha256": "036106c0e879eda65b8e8539ce2499e8b5f47998927fd9fec98aaba2930480c5",
+ "error_count": 0,
+ "warning_count": 0,
+ "first_error": null,
+ "unsolved_cases": [],
+ "theorems": [
+  "illustrative_riseCert_16",
+  "illustrative_fallCert_16",
+  "illustrative_guarantee_refined"
+ ],
+ "axioms": {
+  "illustrative_riseCert_16": [
+   "propext",
+   "Classical.choice",
+   "Quot.sound"
+  ],
+  "illustrative_fallCert_16": [
+   "propext",
+   "Classical.choice",
+   "Quot.sound"
+  ],
+  "illustrative_guarantee_refined": [
+   "propext",
+   "Classical.choice",
+   "Quot.sound"
+  ]
+ },
+ "passed": true,
+ "probed_utc": "2026-11-09T22:37:39Z"
+}

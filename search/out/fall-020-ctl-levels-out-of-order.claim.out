@@ -1,0 +1,7 @@
+search/lean/fall-020-ctl-levels-out-of-order.claim.lean:24:16: error: unsolved goals
+case refine_1
+⊢ False
+'VoltageToBit.Search.fall_020_ctl_levels_out_of_order' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]

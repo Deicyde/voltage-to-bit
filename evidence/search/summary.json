@@ -1,0 +1,1406 @@
+{
+ "meta": {
+  "records_sha256": "831700de44a0142b5bd7c51bc227f21633f390ba0d54780208021d01e924d666",
+  "lean_commit": "1880a3619453d865a04f3b32d25edf69af618501",
+  "design_sha256": "06ccc32a64938f43350d6fb68d991c15e62b9d6815f0b174391be073727bc967"
+ },
+ "counts": {
+  "records": 64,
+  "accepted": 21,
+  "rejected": 37,
+  "counterexample": 6,
+  "formal_checks_run": 79
+ },
+ "rise": {
+  "library_prior": {
+   "record_id": "rise-001-library-cert3",
+   "tau_ns": "2.3400",
+   "source": "VoltageToBit.Examples.illustrative_riseCert_3",
+   "reduction_percent": 3.71
+  },
+  "baseline": {
+   "record_id": "rise-000-baseline",
+   "tau_ns": "3.4215",
+   "exact_sum": "7250/2119",
+   "levels": [
+    "1.35"
+   ]
+  },
+  "best": {
+   "record_id": "rise-019-dp-n64",
+   "tau_ns": "2.2533",
+   "tau_as_fraction": "22533/10000",
+   "exact_sum": "11723381986671846179225673391679272221058989755582724994919048580681110306373445753545278397988859999942332171936777512288525118771166484852317753519917558205084288332118291541462278436020146469116060834323793/5202991386963048881181800053503453162446136752366823769615158675500380300567701570256025752557310445241935298094411628220665216336801729220307508864641088919100752891071147002510595071366412211590192954444032",
+   "exact_sum_decimal": "2.2532003447",
+   "levels": [
+    "1.0",
+    "1.02",
+    "1.035",
+    "1.047",
+    "1.058",
+    "1.068",
+    "1.078",
+    "1.087",
+    "1.096",
+    "1.104",
+    "1.112",
+    "1.119",
+    "1.126",
+    "1.133",
+    "1.14",
+    "1.147",
+    "1.153",
+    "1.159",
+    "1.165",
+    "1.171",
+    "1.177",
+    "1.183",
+    "1.189",
+    "1.194",
+    "1.199",
+    "1.204",
+    "1.209",
+    "1.214",
+    "1.219",
+    "1.224",
+    "1.229",
+    "1.234",
+    "1.239",
+    "1.244",
+    "1.248",
+    "1.252",
+    "1.256",
+    "1.26",
+    "1.264",
+    "1.268",
+    "1.272",
+    "1.276",
+    "1.28",
+    "1.284",
+    "1.288",
+    "1.292",
+    "1.296",
+    "1.3",
+    "1.304",
+    "1.308",
+    "1.311",
+    "1.314",
+    "1.317",
+    "1.32",
+    "1.323",
+    "1.326",
+    "1.329",
+    "1.332",
+    "1.335",
+    "1.338",
+    "1.341",
+    "1.344",
+    "1.347",
+    "1.35"
+   ],
+   "lean_file": "search/lean/rise-019-dp-n64.claim.lean"
+  },
+  "accepted_chain": [
+   {
+    "record_id": "rise-000-baseline",
+    "tau_ns": "3.4215",
+    "levels": 1
+   },
+   {
+    "record_id": "rise-001-library-cert3",
+    "tau_ns": "2.3400",
+    "levels": 3
+   },
+   {
+    "record_id": "rise-013-dp-n4",
+    "tau_ns": "2.3019",
+    "levels": 4
+   },
+   {
+    "record_id": "rise-015-dp-n8",
+    "tau_ns": "2.2709",
+    "levels": 8
+   },
+   {
+    "record_id": "rise-017-dp-n16",
+    "tau_ns": "2.2600",
+    "levels": 16
+   },
+   {
+    "record_id": "rise-018-dp-n32",
+    "tau_ns": "2.2554",
+    "levels": 32
+   },
+   {
+    "record_id": "rise-019-dp-n64",
+    "tau_ns": "2.2533",
+    "levels": 64
+   }
+  ],
+  "reduction_percent": 34.14,
+  "model_worst_case_delay_ns": 2.251189987,
+  "moving_parameter_worst_case_delay_ns": 2.251189987,
+  "worst_corner": {
+   "VDD": 1.62,
+   "kn": 160.0,
+   "kp": 80.0,
+   "Vtn": 0.6,
+   "Vtp": 0.6
+  },
+  "certificate_method_limit_ns": 2.251189987,
+  "best_minus_worst_case_ns": 0.002110013,
+  "method_limit_minus_worst_case_ns": 0.0,
+  "lean_floor": {
+   "record_id": "rise-024-pred-typical-simulation",
+   "lean_file": "search/lean/rise-024-pred-typical-simulation.counterexample.lean",
+   "theorems": [
+    "slow_rise_trajectory",
+    "rise_deadline_counterexample",
+    "riseCert_deadline_ge",
+    "rise_024_pred_typical_simulation_not_a_deadline"
+   ],
+   "value_ns": "2.168"
+  },
+  "series": [
+   {
+    "record_id": "rise-000-baseline",
+    "proposer": "baseline",
+    "levels": 1,
+    "tau_ns": "3.4215",
+    "exact_sum_ns": 3.421425201,
+    "decision": "accepted"
+   },
+   {
+    "record_id": "rise-001-library-cert3",
+    "proposer": "library-prior",
+    "levels": 3,
+    "tau_ns": "2.3400",
+    "exact_sum_ns": 2.338351293,
+    "decision": "accepted"
+   },
+   {
+    "record_id": "rise-010-uniform-n2",
+    "proposer": "uniform-grid",
+    "levels": 2,
+    "tau_ns": "2.7948",
+    "exact_sum_ns": 2.794743701,
+    "decision": "rejected"
+   },
+   {
+    "record_id": "rise-011-dp-n2",
+    "proposer": "dp-grid",
+    "levels": 2,
+    "tau_ns": "2.4359",
+    "exact_sum_ns": 2.435806353,
+    "decision": "rejected"
+   },
+   {
+    "record_id": "rise-012-uniform-n4",
+    "proposer": "uniform-grid",
+    "levels": 4,
+    "tau_ns": "2.4815",
+    "exact_sum_ns": 2.481402951,
+    "decision": "rejected"
+   },
+   {
+    "record_id": "rise-013-dp-n4",
+    "proposer": "dp-grid",
+    "levels": 4,
+    "tau_ns": "2.3019",
+    "exact_sum_ns": 2.301803905,
+    "decision": "accepted"
+   },
+   {
+    "record_id": "rise-014-uniform-n8",
+    "proposer": "uniform-grid",
+    "levels": 8,
+    "tau_ns": "2.3500",
+    "exact_sum_ns": 2.349959051,
+    "decision": "rejected"
+   },
+   {
+    "record_id": "rise-015-dp-n8",
+    "proposer": "dp-grid",
+    "levels": 8,
+    "tau_ns": "2.2709",
+    "exact_sum_ns": 2.270837732,
+    "decision": "accepted"
+   },
+   {
+    "record_id": "rise-016-uniform-n16",
+    "proposer": "uniform-grid",
+    "levels": 16,
+    "tau_ns": "2.2957",
+    "exact_sum_ns": 2.295656526,
+    "decision": "rejected"
+   },
+   {
+    "record_id": "rise-017-dp-n16",
+    "proposer": "dp-grid",
+    "levels": 16,
+    "tau_ns": "2.2600",
+    "exact_sum_ns": 2.259928783,
+    "decision": "accepted"
+   },
+   {
+    "record_id": "rise-018-dp-n32",
+    "proposer": "dp-grid",
+    "levels": 32,
+    "tau_ns": "2.2554",
+    "exact_sum_ns": 2.255318599,
+    "decision": "accepted"
+   },
+   {
+    "record_id": "rise-019-dp-n64",
+    "proposer": "dp-grid",
+    "levels": 64,
+    "tau_ns": "2.2533",
+    "exact_sum_ns": 2.253200345,
+    "decision": "accepted"
+   }
+  ]
+ },
+ "fall": {
+  "library_prior": null,
+  "baseline": {
+   "record_id": "fall-000-baseline",
+   "tau_ns": "2.5602",
+   "exact_sum": "4575/1787",
+   "levels": [
+    "0.25"
+   ]
+  },
+  "best": {
+   "record_id": "fall-018-dp-n64",
+   "tau_ns": "1.4193",
+   "tau_as_fraction": "14193/10000",
+   "exact_sum": "21464223994187797352476849079878022601711778067991740419128306648585665528757340044841922883922219984774826334738306227723769026490523955475583513190577680048129954514680721520340478926660171848165936775242946123048527107883382453620625662955/15123612043964766465019001929937841482610892527662772413786671911846768890940999167512902852872016066852211622863890382822315284327045522172785347386960449336599797202228244674091581515838972877953668803783988155300839382176012885641075361724",
+   "exact_sum_decimal": "1.4192524862",
+   "levels": [
+    "0.65",
+    "0.626",
+    "0.608",
+    "0.593",
+    "0.58",
+    "0.568",
+    "0.557",
+    "0.546",
+    "0.536",
+    "0.526",
+    "0.517",
+    "0.508",
+    "0.499",
+    "0.491",
+    "0.483",
+    "0.475",
+    "0.468",
+    "0.461",
+    "0.454",
+    "0.447",
+    "0.44",
+    "0.433",
+    "0.427",
+    "0.421",
+    "0.415",
+    "0.409",
+    "0.403",
+    "0.397",
+    "0.391",
+    "0.386",
+    "0.381",
+    "0.376",
+    "0.371",
+    "0.366",
+    "0.361",
+    "0.356",
+    "0.351",
+    "0.346",
+    "0.341",
+    "0.336",
+    "0.332",
+    "0.328",
+    "0.324",
+    "0.32",
+    "0.316",
+    "0.312",
+    "0.308",
+    "0.304",
+    "0.3",
+    "0.296",
+    "0.292",
+    "0.288",
+    "0.284",
+    "0.28",
+    "0.277",
+    "0.274",
+    "0.271",
+    "0.268",
+    "0.265",
+    "0.262",
+    "0.259",
+    "0.256",
+    "0.253",
+    "0.25"
+   ],
+   "lean_file": "search/lean/fall-018-dp-n64.claim.lean"
+  },
+  "accepted_chain": [
+   {
+    "record_id": "fall-000-baseline",
+    "tau_ns": "2.5602",
+    "levels": 1
+   },
+   {
+    "record_id": "fall-005-random-5",
+    "tau_ns": "1.5807",
+    "levels": 4
+   },
+   {
+    "record_id": "fall-012-dp-n4",
+    "tau_ns": "1.4610",
+    "levels": 4
+   },
+   {
+    "record_id": "fall-014-dp-n8",
+    "tau_ns": "1.4343",
+    "levels": 8
+   },
+   {
+    "record_id": "fall-016-dp-n16",
+    "tau_ns": "1.4250",
+    "levels": 16
+   },
+   {
+    "record_id": "fall-017-dp-n32",
+    "tau_ns": "1.4211",
+    "levels": 32
+   },
+   {
+    "record_id": "fall-018-dp-n64",
+    "tau_ns": "1.4193",
+    "levels": 64
+   }
+  ],
+  "reduction_percent": 44.56,
+  "model_worst_case_delay_ns": 1.392352159,
+  "moving_parameter_worst_case_delay_ns": 1.394538415,
+  "worst_corner": {
+   "VDD": 1.98,
+   "kn": 160.0,
+   "kp": 120.0,
+   "Vtn": 0.6,
+   "Vtp": 0.45
+  },
+  "certificate_method_limit_ns": 1.417563187,
+  "best_minus_worst_case_ns": 0.026947841,
+  "method_limit_minus_worst_case_ns": 0.025211028,
+  "lean_floor": {
+   "record_id": "fall-023-pred-typical-simulation",
+   "lean_file": "search/lean/fall-023-pred-typical-simulation.counterexample.lean",
+   "theorems": [
+    "slow_fall_trajectory",
+    "fall_deadline_counterexample",
+    "fallCert_deadline_ge",
+    "fall_023_pred_typical_simulation_not_a_deadline"
+   ],
+   "value_ns": "1.0234"
+  },
+  "series": [
+   {
+    "record_id": "fall-000-baseline",
+    "proposer": "baseline",
+    "levels": 1,
+    "tau_ns": "2.5602",
+    "exact_sum_ns": 2.560156687,
+    "decision": "accepted"
+   },
+   {
+    "record_id": "fall-009-uniform-n2",
+    "proposer": "uniform-grid",
+    "levels": 2,
+    "tau_ns": "1.9555",
+    "exact_sum_ns": 1.955454783,
+    "decision": "rejected"
+   },
+   {
+    "record_id": "fall-010-dp-n2",
+    "proposer": "dp-grid",
+    "levels": 2,
+    "tau_ns": "1.5831",
+    "exact_sum_ns": 1.58309606,
+    "decision": "rejected"
+   },
+   {
+    "record_id": "fall-011-uniform-n4",
+    "proposer": "uniform-grid",
+    "levels": 4,
+    "tau_ns": "1.6532",
+    "exact_sum_ns": 1.653103831,
+    "decision": "rejected"
+   },
+   {
+    "record_id": "fall-012-dp-n4",
+    "proposer": "dp-grid",
+    "levels": 4,
+    "tau_ns": "1.4610",
+    "exact_sum_ns": 1.460968311,
+    "decision": "accepted"
+   },
+   {
+    "record_id": "fall-013-uniform-n8",
+    "proposer": "uniform-grid",
+    "levels": 8,
+    "tau_ns": "1.5180",
+    "exact_sum_ns": 1.517933663,
+    "decision": "rejected"
+   },
+   {
+    "record_id": "fall-014-dp-n8",
+    "proposer": "dp-grid",
+    "levels": 8,
+    "tau_ns": "1.4343",
+    "exact_sum_ns": 1.434202965,
+    "decision": "accepted"
+   },
+   {
+    "record_id": "fall-015-uniform-n16",
+    "proposer": "uniform-grid",
+    "levels": 16,
+    "tau_ns": "1.4620",
+    "exact_sum_ns": 1.461943778,
+    "decision": "rejected"
+   },
+   {
+    "record_id": "fall-016-dp-n16",
+    "proposer": "dp-grid",
+    "levels": 16,
+    "tau_ns": "1.4250",
+    "exact_sum_ns": 1.424929488,
+    "decision": "accepted"
+   },
+   {
+    "record_id": "fall-017-dp-n32",
+    "proposer": "dp-grid",
+    "levels": 32,
+    "tau_ns": "1.4211",
+    "exact_sum_ns": 1.421036352,
+    "decision": "accepted"
+   },
+   {
+    "record_id": "fall-018-dp-n64",
+    "proposer": "dp-grid",
+    "levels": 64,
+    "tau_ns": "1.4193",
+    "exact_sum_ns": 1.419252486,
+    "decision": "accepted"
+   }
+  ]
+ },
+ "eps": {
+  "baseline": {
+   "record_id": "eps-000-baseline",
+   "eps": "2",
+   "uHi": "0.77",
+   "uLo": "0.74"
+  },
+  "best": {
+   "record_id": "eps-006-split-search-6dp",
+   "eps": "2.3801",
+   "uHi": "0.772486",
+   "uLo": "0.742506",
+   "lean_file": "search/lean/eps-006-split-search-6dp.claim.lean",
+   "variant_tauUp_ns": 3.582060055,
+   "variant_tauDn_ns": 2.630085011,
+   "closed_form_margins_uA": {
+    "up": 10.476,
+    "dn": 16.296,
+    "hiP": 2.380112,
+    "hiN": 2.380113616,
+    "loN": 3.080096,
+    "loP": 3.080116801
+   }
+  },
+  "accepted_chain": [
+   {
+    "record_id": "eps-000-baseline",
+    "eps": "2",
+    "uHi": "0.77",
+    "uLo": "0.74"
+   },
+   {
+    "record_id": "eps-001-same-splits-max-eps",
+    "eps": "2.3119",
+    "uHi": "0.77",
+    "uLo": "0.74"
+   },
+   {
+    "record_id": "eps-002-split-search-2dp",
+    "eps": "2.3199",
+    "uHi": "0.78",
+    "uLo": "0.74"
+   },
+   {
+    "record_id": "eps-003-split-search-3dp",
+    "eps": "2.3759",
+    "uHi": "0.773",
+    "uLo": "0.742"
+   },
+   {
+    "record_id": "eps-004-split-search-4dp",
+    "eps": "2.3799",
+    "uHi": "0.7725",
+    "uLo": "0.7425"
+   },
+   {
+    "record_id": "eps-005-split-search-5dp",
+    "eps": "2.38",
+    "uHi": "0.77249",
+    "uLo": "0.74251"
+   },
+   {
+    "record_id": "eps-006-split-search-6dp",
+    "eps": "2.3801",
+    "uHi": "0.772486",
+    "uLo": "0.742506"
+   }
+  ],
+  "lean_ceiling": {
+   "record_id": "eps-008-ctl-eps-one-step-more",
+   "lean_file": "search/lean/eps-008-ctl-eps-one-step-more.refutation.lean",
+   "statement": "¬ (({ illustrative with eps := 2.3802, uHi := 0.772486, uLo := 0.742506 }).Admissible); and for every uHi, uLo and every eps >= 2.3802: the variant record is not admissible"
+  },
+  "model_boundary_currents": {
+   "Vhi": {
+    "min_inward_current_uA": 6.44,
+    "at_u_V": 0.65,
+    "at_corner": {
+     "VDD": 1.98,
+     "kn": 160.0,
+     "kp": 80.0,
+     "Vtn": 0.6,
+     "Vtp": 0.6
+    },
+    "u_scan": {
+     "from_V": -1.0,
+     "to_V": 3.0,
+     "coarse_step_V": 0.001,
+     "fine_step_V": 1e-06
+    }
+   },
+   "Vlo": {
+    "min_inward_current_uA": 5.92,
+    "at_u_V": 0.82,
+    "at_corner": {
+     "VDD": 1.62,
+     "kn": 160.0,
+     "kp": 80.0,
+     "Vtn": 0.6,
+     "Vtp": 0.6
+    },
+    "u_scan": {
+     "from_V": -1.0,
+     "to_V": 3.0,
+     "coarse_step_V": 0.001,
+     "fine_step_V": 1e-06
+    }
+   },
+   "model_tolerance_uA": 5.92
+  }
+ },
+ "not_accepted": [
+  {
+   "record_id": "rise-002-random-1",
+   "proposer": "random-levels",
+   "claim": "[0.167, 0.61, 0.798, 1.35], tau = 2.6452",
+   "decision": "rejected",
+   "reason_code": "screen_invalid",
+   "rejected_by": [
+    "screen"
+   ],
+   "screen_detail": "exact sum 2.6452045291 ns exceeds claimed deadline 2.6452000000 ns",
+   "lean_error": null,
+   "refutation_proved": false,
+   "counterexample_proved": false
+  },
+  {
+   "record_id": "rise-003-random-2",
+   "proposer": "random-levels",
+   "claim": "[0.165, 1.162, 1.171, 1.33], tau = 2.3812",
+   "decision": "rejected",
+   "reason_code": "screen_invalid",
+   "rejected_by": [
+    "screen"
+   ],
+   "screen_detail": "last level 1.33 V is not the output threshold 1.35 V",
+   "lean_error": null,
+   "refutation_proved": false,
+   "counterexample_proved": false
+  },
+  {
+   "record_id": "rise-004-random-3",
+   "proposer": "random-levels",
+   "claim": "[0.134, 0.21, 1.314, 1.35], tau = 2.8894",
+   "decision": "rejected",
+   "reason_code": "valid_not_improving",
+   "rejected_by": [
+    "evaluation"
+   ],
+   "screen_detail": "",
+   "lean_error": null,
+   "refutation_proved": false,
+   "counterexample_proved": false
+  },
+  {
+   "record_id": "rise-005-random-4",
+   "proposer": "random-levels",
+   "claim": "[0.339, 1.12, 1.233, 1.35], tau = 2.3545",
+   "decision": "rejected",
+   "reason_code": "valid_not_improving",
+   "rejected_by": [
+    "evaluation"
+   ],
+   "screen_detail": "",
+   "lean_error": null,
+   "refutation_proved": false,
+   "counterexample_proved": false
+  },
+  {
+   "record_id": "rise-006-random-5",
+   "proposer": "random-levels",
+   "claim": "[0.48, 0.508, 0.739, 1.35], tau = 2.6962",
+   "decision": "rejected",
+   "reason_code": "screen_invalid",
+   "rejected_by": [
+    "screen"
+   ],
+   "screen_detail": "exact sum 2.6962034373 ns exceeds claimed deadline 2.6962000000 ns",
+   "lean_error": null,
+   "refutation_proved": false,
+   "counterexample_proved": false
+  },
+  {
+   "record_id": "rise-007-random-6",
+   "proposer": "random-levels",
+   "claim": "[0.172, 0.911, 1.308, 1.35], tau = 2.4395",
+   "decision": "rejected",
+   "reason_code": "valid_not_improving",
+   "rejected_by": [
+    "evaluation"
+   ],
+   "screen_detail": "",
+   "lean_error": null,
+   "refutation_proved": false,
+   "counterexample_proved": false
+  },
+  {
+   "record_id": "rise-008-random-7",
+   "proposer": "random-levels",
+   "claim": "[0.093, 0.359, 1.126, 1.35], tau = 2.4188",
+   "decision": "rejected",
+   "reason_code": "screen_invalid",
+   "rejected_by": [
+    "screen"
+   ],
+   "screen_detail": "exact sum 2.4188459392 ns exceeds claimed deadline 2.4188000000 ns",
+   "lean_error": null,
+   "refutation_proved": false,
+   "counterexample_proved": false
+  },
+  {
+   "record_id": "rise-009-random-8",
+   "proposer": "random-levels",
+   "claim": "[0.569, 0.701, 1.011, 1.35], tau = 2.4613",
+   "decision": "rejected",
+   "reason_code": "valid_not_improving",
+   "rejected_by": [
+    "evaluation"
+   ],
+   "screen_detail": "",
+   "lean_error": null,
+   "refutation_proved": false,
+   "counterexample_proved": false
+  },
+  {
+   "record_id": "rise-010-uniform-n2",
+   "proposer": "uniform-grid",
+   "claim": "[0.625, 1.35], tau = 2.7948",
+   "decision": "rejected",
+   "reason_code": "valid_not_improving",
+   "rejected_by": [
+    "evaluation"
+   ],
+   "screen_detail": "",
+   "lean_error": null,
+   "refutation_proved": false,
+   "counterexample_proved": false
+  },
+  {
+   "record_id": "rise-011-dp-n2",
+   "proposer": "dp-grid",
+   "claim": "[1.077, 1.35], tau = 2.4359",
+   "decision": "rejected",
+   "reason_code": "valid_not_improving",
+   "rejected_by": [
+    "evaluation"
+   ],
+   "screen_detail": "",
+   "lean_error": null,
+   "refutation_proved": false,
+   "counterexample_proved": false
+  },
+  {
+   "record_id": "rise-012-uniform-n4",
+   "proposer": "uniform-grid",
+   "claim": "[0.2625, 0.625, 0.9875, 1.35], tau = 2.4815",
+   "decision": "rejected",
+   "reason_code": "valid_not_improving",
+   "rejected_by": [
+    "evaluation"
+   ],
+   "screen_detail": "",
+   "lean_error": null,
+   "refutation_proved": false,
+   "counterexample_proved": false
+  },
+  {
+   "record_id": "rise-014-uniform-n8",
+   "proposer": "uniform-grid",
+   "claim": "[8 levels], tau = 2.3500",
+   "decision": "rejected",
+   "reason_code": "valid_not_improving",
+   "rejected_by": [
+    "evaluation"
+   ],
+   "screen_detail": "",
+   "lean_error": null,
+   "refutation_proved": false,
+   "counterexample_proved": false
+  },
+  {
+   "record_id": "rise-016-uniform-n16",
+   "proposer": "uniform-grid",
+   "claim": "[16 levels], tau = 2.2957",
+   "decision": "rejected",
+   "reason_code": "valid_not_improving",
+   "rejected_by": [
+    "evaluation"
+   ],
+   "screen_detail": "",
+   "lean_error": null,
+   "refutation_proved": false,
+   "counterexample_proved": false
+  },
+  {
+   "record_id": "rise-020-ctl-deadline-rounded-down",
+   "proposer": "adversarial-control",
+   "claim": "[64 levels], tau = 2.2532",
+   "decision": "rejected",
+   "reason_code": "lean_rejected_and_refuted",
+   "rejected_by": [
+    "screen (bypassed)",
+    "lean"
+   ],
+   "screen_detail": "exact sum 2.2532003447 ns exceeds claimed deadline 2.2532000000 ns",
+   "lean_error": "search/lean/rise-020-ctl-deadline-rounded-down.claim.lean:28:16: error: unsolved goals | case refine_3 | ⊢ False",
+   "refutation_proved": true,
+   "counterexample_proved": false
+  },
+  {
+   "record_id": "rise-021-ctl-levels-out-of-order",
+   "proposer": "adversarial-control",
+   "claim": "[1.015, 1.276, 1.173, 1.35], tau = 2.4222",
+   "decision": "rejected",
+   "reason_code": "lean_rejected_and_refuted",
+   "rejected_by": [
+    "screen (bypassed)",
+    "lean"
+   ],
+   "screen_detail": "level 3 out of order: 1.276 <= 1.173 is false",
+   "lean_error": "search/lean/rise-021-ctl-levels-out-of-order.claim.lean:24:16: error: unsolved goals | case refine_1 | ⊢ False",
+   "refutation_proved": true,
+   "counterexample_proved": false
+  },
+  {
+   "record_id": "rise-022-ctl-margin-below-eps",
+   "proposer": "adversarial-control",
+   "claim": "[1.015, 1.173, 1.276, 1.6, 1.35], tau = -4.7908",
+   "decision": "counterexample",
+   "reason_code": "claimed_bound_false",
+   "rejected_by": [
+    "screen (bypassed)",
+    "lean"
+   ],
+   "screen_detail": "level 4 (1.6 V) has slope bound -0.0512 V/ns, not positive: its current margin does not exceed eps",
+   "lean_error": "search/lean/rise-022-ctl-margin-below-eps.claim.lean:24:19: error: unsolved goals | case refine_1 | ⊢ False",
+   "refutation_proved": true,
+   "counterexample_proved": true
+  },
+  {
+   "record_id": "rise-023-ctl-final-level-short",
+   "proposer": "adversarial-control",
+   "claim": "[1.015, 1.173, 1.276, 1.3], tau = 2.1763",
+   "decision": "rejected",
+   "reason_code": "lean_rejected_and_refuted",
+   "rejected_by": [
+    "screen (bypassed)",
+    "lean"
+   ],
+   "screen_detail": "last level 1.3 V is not the output threshold 1.35 V",
+   "lean_error": "search/lean/rise-023-ctl-final-level-short.claim.lean:24:16: error: unsolved goals | case refine_2 | ⊢ False",
+   "refutation_proved": true,
+   "counterexample_proved": false
+  },
+  {
+   "record_id": "rise-024-pred-typical-simulation",
+   "proposer": "nominal-simulation-predictor",
+   "claim": "[64 levels], tau = 0.1795",
+   "decision": "counterexample",
+   "reason_code": "claimed_bound_false",
+   "rejected_by": [
+    "screen (bypassed)",
+    "lean"
+   ],
+   "screen_detail": "exact sum 2.2532003447 ns exceeds claimed deadline 0.1795000000 ns",
+   "lean_error": "search/lean/rise-024-pred-typical-simulation.claim.lean:28:16: error: unsolved goals | case refine_3 | ⊢ False",
+   "refutation_proved": true,
+   "counterexample_proved": true
+  },
+  {
+   "record_id": "rise-025-pred-nominal-devices",
+   "proposer": "nominal-simulation-predictor",
+   "claim": "[64 levels], tau = 0.7380",
+   "decision": "counterexample",
+   "reason_code": "claimed_bound_false",
+   "rejected_by": [
+    "screen (bypassed)",
+    "lean"
+   ],
+   "screen_detail": "exact sum 2.2532003447 ns exceeds claimed deadline 0.7380000000 ns",
+   "lean_error": "search/lean/rise-025-pred-nominal-devices.claim.lean:28:16: error: unsolved goals | case refine_3 | ⊢ False",
+   "refutation_proved": true,
+   "counterexample_proved": true
+  },
+  {
+   "record_id": "rise-026-ctl-below-model-worst-case",
+   "proposer": "adversarial-control",
+   "claim": "[64 levels], tau = 2.2500",
+   "decision": "rejected",
+   "reason_code": "lean_rejected_and_refuted",
+   "rejected_by": [
+    "screen (bypassed)",
+    "lean"
+   ],
+   "screen_detail": "exact sum 2.2532003447 ns exceeds claimed deadline 2.2500000000 ns",
+   "lean_error": "search/lean/rise-026-ctl-below-model-worst-case.claim.lean:28:16: error: unsolved goals | case refine_3 | ⊢ False",
+   "refutation_proved": true,
+   "counterexample_proved": false
+  },
+  {
+   "record_id": "fall-001-random-1",
+   "proposer": "random-levels",
+   "claim": "[1.761, 1.532, 0.545, 0.25], tau = 1.5702",
+   "decision": "rejected",
+   "reason_code": "screen_invalid",
+   "rejected_by": [
+    "screen"
+   ],
+   "screen_detail": "exact sum 1.5702233318 ns exceeds claimed deadline 1.5702000000 ns",
+   "lean_error": null,
+   "refutation_proved": false,
+   "counterexample_proved": false
+  },
+  {
+   "record_id": "fall-002-random-2",
+   "proposer": "random-levels",
+   "claim": "[1.75, 1.397, 0.749, 0.25], tau = 1.6805",
+   "decision": "rejected",
+   "reason_code": "screen_invalid",
+   "rejected_by": [
+    "screen"
+   ],
+   "screen_detail": "exact sum 1.6805302013 ns exceeds claimed deadline 1.6805000000 ns",
+   "lean_error": null,
+   "refutation_proved": false,
+   "counterexample_proved": false
+  },
+  {
+   "record_id": "fall-003-random-3",
+   "proposer": "random-levels",
+   "claim": "[1.661, 1.48, 1.082, 0.25], tau = 1.9006",
+   "decision": "rejected",
+   "reason_code": "screen_invalid",
+   "rejected_by": [
+    "screen"
+   ],
+   "screen_detail": "exact sum 1.9006020419 ns exceeds claimed deadline 1.9006000000 ns",
+   "lean_error": null,
+   "refutation_proved": false,
+   "counterexample_proved": false
+  },
+  {
+   "record_id": "fall-004-random-4",
+   "proposer": "random-levels",
+   "claim": "[1.436, 0.994, 0.348, 0.25], tau = 1.5912",
+   "decision": "rejected",
+   "reason_code": "screen_invalid",
+   "rejected_by": [
+    "screen"
+   ],
+   "screen_detail": "exact sum 1.5912314169 ns exceeds claimed deadline 1.5912000000 ns",
+   "lean_error": null,
+   "refutation_proved": false,
+   "counterexample_proved": false
+  },
+  {
+   "record_id": "fall-006-random-6",
+   "proposer": "random-levels",
+   "claim": "[1.703, 1.702, 0.342, 0.25], tau = 1.8021",
+   "decision": "rejected",
+   "reason_code": "valid_not_improving",
+   "rejected_by": [
+    "evaluation"
+   ],
+   "screen_detail": "",
+   "lean_error": null,
+   "refutation_proved": false,
+   "counterexample_proved": false
+  },
+  {
+   "record_id": "fall-007-random-7",
+   "proposer": "random-levels",
+   "claim": "[1.958, 0.371, 0.257, 0.25], tau = 1.7755",
+   "decision": "rejected",
+   "reason_code": "valid_not_improving",
+   "rejected_by": [
+    "evaluation"
+   ],
+   "screen_detail": "",
+   "lean_error": null,
+   "refutation_proved": false,
+   "counterexample_proved": false
+  },
+  {
+   "record_id": "fall-008-random-8",
+   "proposer": "random-levels",
+   "claim": "[1.741, 0.703, 0.358, 0.25], tau = 1.5078",
+   "decision": "rejected",
+   "reason_code": "screen_invalid",
+   "rejected_by": [
+    "screen"
+   ],
+   "screen_detail": "exact sum 1.5078000029 ns exceeds claimed deadline 1.5078000000 ns",
+   "lean_error": null,
+   "refutation_proved": false,
+   "counterexample_proved": false
+  },
+  {
+   "record_id": "fall-009-uniform-n2",
+   "proposer": "uniform-grid",
+   "claim": "[1.165, 0.25], tau = 1.9555",
+   "decision": "rejected",
+   "reason_code": "valid_not_improving",
+   "rejected_by": [
+    "evaluation"
+   ],
+   "screen_detail": "",
+   "lean_error": null,
+   "refutation_proved": false,
+   "counterexample_proved": false
+  },
+  {
+   "record_id": "fall-010-dp-n2",
+   "proposer": "dp-grid",
+   "claim": "[0.558, 0.25], tau = 1.5831",
+   "decision": "rejected",
+   "reason_code": "valid_not_improving",
+   "rejected_by": [
+    "evaluation"
+   ],
+   "screen_detail": "",
+   "lean_error": null,
+   "refutation_proved": false,
+   "counterexample_proved": false
+  },
+  {
+   "record_id": "fall-011-uniform-n4",
+   "proposer": "uniform-grid",
+   "claim": "[1.6225, 1.165, 0.7075, 0.25], tau = 1.6532",
+   "decision": "rejected",
+   "reason_code": "valid_not_improving",
+   "rejected_by": [
+    "evaluation"
+   ],
+   "screen_detail": "",
+   "lean_error": null,
+   "refutation_proved": false,
+   "counterexample_proved": false
+  },
+  {
+   "record_id": "fall-013-uniform-n8",
+   "proposer": "uniform-grid",
+   "claim": "[8 levels], tau = 1.5180",
+   "decision": "rejected",
+   "reason_code": "valid_not_improving",
+   "rejected_by": [
+    "evaluation"
+   ],
+   "screen_detail": "",
+   "lean_error": null,
+   "refutation_proved": false,
+   "counterexample_proved": false
+  },
+  {
+   "record_id": "fall-015-uniform-n16",
+   "proposer": "uniform-grid",
+   "claim": "[16 levels], tau = 1.4620",
+   "decision": "rejected",
+   "reason_code": "valid_not_improving",
+   "rejected_by": [
+    "evaluation"
+   ],
+   "screen_detail": "",
+   "lean_error": null,
+   "refutation_proved": false,
+   "counterexample_proved": false
+  },
+  {
+   "record_id": "fall-019-ctl-deadline-rounded-down",
+   "proposer": "adversarial-control",
+   "claim": "[64 levels], tau = 1.4192",
+   "decision": "rejected",
+   "reason_code": "lean_rejected_and_refuted",
+   "rejected_by": [
+    "screen (bypassed)",
+    "lean"
+   ],
+   "screen_detail": "exact sum 1.4192524862 ns exceeds claimed deadline 1.4192000000 ns",
+   "lean_error": "search/lean/fall-019-ctl-deadline-rounded-down.claim.lean:28:16: error: unsolved goals | case refine_3 | ⊢ False",
+   "refutation_proved": true,
+   "counterexample_proved": false
+  },
+  {
+   "record_id": "fall-020-ctl-levels-out-of-order",
+   "proposer": "adversarial-control",
+   "claim": "[0.634, 0.329, 0.445, 0.25], tau = 1.5668",
+   "decision": "rejected",
+   "reason_code": "lean_rejected_and_refuted",
+   "rejected_by": [
+    "screen (bypassed)",
+    "lean"
+   ],
+   "screen_detail": "level 3 out of order: 0.329 >= 0.445 is false",
+   "lean_error": "search/lean/fall-020-ctl-levels-out-of-order.claim.lean:24:16: error: unsolved goals | case refine_1 | ⊢ False",
+   "refutation_proved": true,
+   "counterexample_proved": false
+  },
+  {
+   "record_id": "fall-021-ctl-margin-below-eps",
+   "proposer": "adversarial-control",
+   "claim": "[0.634, 0.445, 0.329, 0.05, 0.25], tau = -2.2039",
+   "decision": "counterexample",
+   "reason_code": "claimed_bound_false",
+   "rejected_by": [
+    "screen (bypassed)",
+    "lean"
+   ],
+   "screen_detail": "level 4 (0.05 V) has slope bound -0.0852 V/ns, not positive: its current margin does not exceed eps",
+   "lean_error": "search/lean/fall-021-ctl-margin-below-eps.claim.lean:24:19: error: unsolved goals | case refine_1 | ⊢ False",
+   "refutation_proved": true,
+   "counterexample_proved": true
+  },
+  {
+   "record_id": "fall-022-ctl-final-level-short",
+   "proposer": "adversarial-control",
+   "claim": "[0.634, 0.445, 0.329, 0.3], tau = 1.3840",
+   "decision": "rejected",
+   "reason_code": "lean_rejected_and_refuted",
+   "rejected_by": [
+    "screen (bypassed)",
+    "lean"
+   ],
+   "screen_detail": "last level 0.3 V is not the output threshold 0.25 V",
+   "lean_error": "search/lean/fall-022-ctl-final-level-short.claim.lean:24:16: error: unsolved goals | case refine_2 | ⊢ False",
+   "refutation_proved": true,
+   "counterexample_proved": false
+  },
+  {
+   "record_id": "fall-023-pred-typical-simulation",
+   "proposer": "nominal-simulation-predictor",
+   "claim": "[64 levels], tau = 0.1158",
+   "decision": "counterexample",
+   "reason_code": "claimed_bound_false",
+   "rejected_by": [
+    "screen (bypassed)",
+    "lean"
+   ],
+   "screen_detail": "exact sum 1.4192524862 ns exceeds claimed deadline 0.1158000000 ns",
+   "lean_error": "search/lean/fall-023-pred-typical-simulation.claim.lean:28:16: error: unsolved goals | case refine_3 | ⊢ False",
+   "refutation_proved": true,
+   "counterexample_proved": true
+  },
+  {
+   "record_id": "fall-024-pred-nominal-devices",
+   "proposer": "nominal-simulation-predictor",
+   "claim": "[64 levels], tau = 0.6855",
+   "decision": "counterexample",
+   "reason_code": "claimed_bound_false",
+   "rejected_by": [
+    "screen (bypassed)",
+    "lean"
+   ],
+   "screen_detail": "exact sum 1.4192524862 ns exceeds claimed deadline 0.6855000000 ns",
+   "lean_error": "search/lean/fall-024-pred-nominal-devices.claim.lean:28:16: error: unsolved goals | case refine_3 | ⊢ False",
+   "refutation_proved": true,
+   "counterexample_proved": true
+  },
+  {
+   "record_id": "fall-025-ctl-below-model-worst-case",
+   "proposer": "adversarial-control",
+   "claim": "[64 levels], tau = 1.3900",
+   "decision": "rejected",
+   "reason_code": "lean_rejected_and_refuted",
+   "rejected_by": [
+    "screen (bypassed)",
+    "lean"
+   ],
+   "screen_detail": "exact sum 1.4192524862 ns exceeds claimed deadline 1.3900000000 ns",
+   "lean_error": "search/lean/fall-025-ctl-below-model-worst-case.claim.lean:28:16: error: unsolved goals | case refine_3 | ⊢ False",
+   "refutation_proved": true,
+   "counterexample_proved": false
+  },
+  {
+   "record_id": "fall-026-ctl-true-but-out-of-reach",
+   "proposer": "adversarial-control",
+   "claim": "[64 levels], tau = 1.4050",
+   "decision": "rejected",
+   "reason_code": "lean_rejected_and_refuted",
+   "rejected_by": [
+    "screen (bypassed)",
+    "lean"
+   ],
+   "screen_detail": "exact sum 1.4192524862 ns exceeds claimed deadline 1.4050000000 ns",
+   "lean_error": "search/lean/fall-026-ctl-true-but-out-of-reach.claim.lean:28:16: error: unsolved goals | case refine_3 | ⊢ False",
+   "refutation_proved": true,
+   "counterexample_proved": false
+  },
+  {
+   "record_id": "eps-007-ctl-eps-equals-margin",
+   "proposer": "adversarial-control",
+   "claim": "eps = 2.312, uHi = 0.77, uLo = 0.74",
+   "decision": "rejected",
+   "reason_code": "lean_rejected_and_refuted",
+   "rejected_by": [
+    "screen (bypassed)",
+    "lean"
+   ],
+   "screen_detail": "hiN: 2.312 < 2.312 is false",
+   "lean_error": "search/lean/eps-007-ctl-eps-equals-margin.claim.lean:26:91: error: unsolved goals | case hiN | ⊢ False",
+   "refutation_proved": true,
+   "counterexample_proved": false
+  },
+  {
+   "record_id": "eps-008-ctl-eps-one-step-more",
+   "proposer": "adversarial-control",
+   "claim": "eps = 2.3802, uHi = 0.772486, uLo = 0.742506",
+   "decision": "rejected",
+   "reason_code": "lean_rejected_and_refuted",
+   "rejected_by": [
+    "screen (bypassed)",
+    "lean"
+   ],
+   "screen_detail": "hiP: 2.3802 < 2.380112 is false; hiN: 2.3802 < 2.38011361568 is false",
+   "lean_error": "search/lean/eps-008-ctl-eps-one-step-more.claim.lean:26:91: error: unsolved goals | case hiP | ⊢ False | case hiN | ⊢ False",
+   "refutation_proved": true,
+   "counterexample_proved": false
+  },
+  {
+   "record_id": "eps-009-pred-model-tolerance",
+   "proposer": "boundary-scan-predictor",
+   "claim": "eps = 5.9, uHi = 0.772486, uLo = 0.742506",
+   "decision": "rejected",
+   "reason_code": "lean_rejected_and_refuted",
+   "rejected_by": [
+    "screen (bypassed)",
+    "lean"
+   ],
+   "screen_detail": "hiP: 5.9 < 2.380112 is false; hiN: 5.9 < 2.38011361568 is false; loN: 5.9 < 3.080096 is false; loP: 5.9 < 3.08011680144 is false",
+   "lean_error": "search/lean/eps-009-pred-model-tolerance.claim.lean:26:89: error: unsolved goals | case hiP | ⊢ False | case hiN | ⊢ False | case loN | ⊢ False | case loP | ⊢ False",
+   "refutation_proved": true,
+   "counterexample_proved": false
+  }
+ ],
+ "promotion_candidates": {
+  "deadlines": {
+   "statement": "refined guarantee: same statement as illustrative_guarantee with the two deadlines replaced",
+   "lean_file_sha256": "4d11dbebc6bacef7d519c691d57410ce5141b59d1ecb01958b6c9f7d9352e7a2",
+   "command": "cd \"$FROZEN\" && lake env lean \"$R/search/promote/RefinedDeadlines.lean\"",
+   "lean_file": "search/promote/RefinedDeadlines.lean",
+   "exit_status": 0,
+   "output_sha256": "036106c0e879eda65b8e8539ce2499e8b5f47998927fd9fec98aaba2930480c5",
+   "theorems": [
+    "illustrative_riseCert_16",
+    "illustrative_fallCert_16",
+    "illustrative_guarantee_refined"
+   ],
+   "axioms": {
+    "illustrative_riseCert_16": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "illustrative_fallCert_16": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "illustrative_guarantee_refined": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "passed": true,
+   "rise_record": "rise-017-dp-n16",
+   "fall_record": "fall-016-dp-n16",
+   "rise_tau": "2.26",
+   "fall_tau": "1.425"
+  },
+  "limits": {
+   "statement": "floors on valid deadlines; admissibility of the larger-eps variant; ceiling on eps over all split points",
+   "lean_file_sha256": "7c938592a83b9684b1e9e9755b45639d72d2785598110a7ee320cc2a7b660810",
+   "command": "cd \"$FROZEN\" && lake env lean \"$R/search/promote/Limits.lean\"",
+   "lean_file": "search/promote/Limits.lean",
+   "exit_status": 0,
+   "output_sha256": "8d38e87c6dbe66d4a9541c5a921ecb4254f2715db8862a073e1c28b0cbe4963a",
+   "theorems": [
+    "slow_rise_trajectory",
+    "rise_deadline_counterexample",
+    "riseCert_deadline_ge",
+    "slow_fall_trajectory",
+    "fall_deadline_counterexample",
+    "fallCert_deadline_ge",
+    "illustrativeEps_admissible",
+    "illustrativeEps_tauUp",
+    "illustrativeEps_tauDn",
+    "illustrative_eps_no_split_points"
+   ],
+   "axioms": {
+    "slow_rise_trajectory": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "rise_deadline_counterexample": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "riseCert_deadline_ge": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "slow_fall_trajectory": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "fall_deadline_counterexample": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "fallCert_deadline_ge": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "illustrativeEps_admissible": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "illustrativeEps_tauUp": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "illustrativeEps_tauDn": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ],
+    "illustrative_eps_no_split_points": [
+     "propext",
+     "Classical.choice",
+     "Quot.sound"
+    ]
+   },
+   "passed": true,
+   "eps_record": "eps-006-split-search-6dp",
+   "eps": "2.3801",
+   "uHi": "0.772486",
+   "uLo": "0.742506"
+  }
+ },
+ "predictions": {
+  "rise": {
+   "nominal_theta": {
+    "VDD": 1.8,
+    "kn": 200.0,
+    "kp": 100.0,
+    "Vtn": 0.5,
+    "Vtp": 0.5
+   },
+   "typical": {
+    "setup": {
+     "u": 0.0,
+     "C": 10.0,
+     "w": 0.0,
+     "v_from": 0.0,
+     "v_to": 1.35
+    },
+    "delay_ns": 0.179477408
+   },
+   "nominal_devices": {
+    "setup": {
+     "u": 0.4,
+     "C": 20.0,
+     "w": 0.0,
+     "v_from": -0.1,
+     "v_to": 1.35
+    },
+    "delay_ns": 0.737963225
+   }
+  },
+  "fall": {
+   "nominal_theta": {
+    "VDD": 1.8,
+    "kn": 200.0,
+    "kp": 100.0,
+    "Vtn": 0.5,
+    "Vtp": 0.5
+   },
+   "typical": {
+    "setup": {
+     "u": 1.8,
+     "C": 10.0,
+     "w": 0.0,
+     "v_from": 1.8,
+     "v_to": 0.25
+    },
+    "delay_ns": 0.115766941
+   },
+   "nominal_devices": {
+    "setup": {
+     "u": 1.25,
+     "C": 20.0,
+     "w": 0.0,
+     "v_from": 2.08,
+     "v_to": 0.25
+    },
+    "delay_ns": 0.685533768
+   }
+  }
+ }
+}

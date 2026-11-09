@@ -1,0 +1,7 @@
+search/lean/fall-026-ctl-true-but-out-of-reach.claim.lean:28:16: error: unsolved goals
+case refine_3
+⊢ False
+'VoltageToBit.Search.fall_026_ctl_true_but_out_of_reach' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]
