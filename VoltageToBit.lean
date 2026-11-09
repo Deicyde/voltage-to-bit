@@ -15,3 +15,5 @@ import VoltageToBit.Proofs.Chain
 import VoltageToBit.Examples.IllustrativeDesign
 import VoltageToBit.Examples.Illustrative
 import VoltageToBit.Examples.NegativeControls
+import VoltageToBit.Examples.RefinedDeadlines
+import VoltageToBit.Examples.Limits
