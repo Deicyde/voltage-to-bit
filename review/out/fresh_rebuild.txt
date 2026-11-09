@@ -1,0 +1,38 @@
+source files under VoltageToBit/: 14 ; modules in rebuild list: 14
+lean VoltageToBit/Model/PosSq.lean    ok
+lean VoltageToBit/Model/Device.lean   ok
+lean VoltageToBit/Model/Inverter.lean ok
+lean VoltageToBit/Proofs/Reach.lean   ok
+lean VoltageToBit/Proofs/Margins.lean ok
+lean VoltageToBit/Proofs/Guarantee.lean ok
+lean VoltageToBit/Proofs/Existence.lean ok
+lean VoltageToBit/Proofs/NonVacuity.lean ok
+lean VoltageToBit/Proofs/Certificate.lean ok
+lean VoltageToBit/Proofs/ModelError.lean ok
+lean VoltageToBit/Proofs/Contamination.lean ok
+lean VoltageToBit/Examples/IllustrativeDesign.lean ok
+lean VoltageToBit/Examples/Illustrative.lean ok
+lean VoltageToBit/Examples/NegativeControls.lean ok
+lean VoltageToBit.lean                ok
+== axiom audit against the fresh build ==
+declarations audited: 383 (of which theorems: 245)
+axioms used anywhere: [Classical.choice, Quot.sound, propext]
+AUDIT OK: no declaration depends on an axiom outside [propext, Classical.choice, Quot.sound]
+'VoltageToBit.IsTrajectory.safe' depends on axioms: [propext, Classical.choice, Quot.sound]
+== byte comparison of fresh .olean files with the frozen checkout's ==
+DIFFERENT: Model/PosSq
+DIFFERENT: Model/Device
+DIFFERENT: Model/Inverter
+DIFFERENT: Proofs/Reach
+DIFFERENT: Proofs/Margins
+DIFFERENT: Proofs/Guarantee
+DIFFERENT: Proofs/Existence
+DIFFERENT: Proofs/NonVacuity
+DIFFERENT: Proofs/Certificate
+DIFFERENT: Proofs/ModelError
+DIFFERENT: Proofs/Contamination
+DIFFERENT: Examples/IllustrativeDesign
+DIFFERENT: Examples/Illustrative
+DIFFERENT: Examples/NegativeControls
+identical: 0   different: 14
+"$R/review/tooling/fresh_rebuild.sh" "$F" "$S/fresh-build"  56.76s user 44.54s system 101% cpu 1:39.39 total

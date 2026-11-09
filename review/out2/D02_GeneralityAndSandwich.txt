@@ -1,0 +1,6 @@
+'Review.D02.new_iff_reviewer_definition' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Review.D02.fixed_implies_new' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Review.D02.supply_tracking_is_new_trajectory' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Review.D02.supply_tracking_not_fixed' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Review.D02.clm_not_within_eps_of_any_fixed_member' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Review.D02.clm_guarantee' depends on axioms: [propext, Classical.choice, Quot.sound]

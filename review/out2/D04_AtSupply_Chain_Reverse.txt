@@ -1,0 +1,6 @@
+'Review.D04.RhiN'_eq_RhiN' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Review.D04.solution_safe_atSupply_of_admissible' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Review.D04.trajectory_safe_atSupply' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Review.D04.chain_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Review.D04.In_reverse' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Review.D04.Ip_reverse' depends on axioms: [propext, Classical.choice, Quot.sound]

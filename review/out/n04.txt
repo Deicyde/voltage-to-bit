@@ -1,0 +1,4 @@
+runs: 240  (horizon 16.0 ns, step 0.0005 ns)   violations: 0
+extreme node voltages reached after t = 1 ns: min -0.0252 V, max 2.0032 V   (safe domain [-0.10, 2.08])
+longest time a valid-low  input was held with output still < 1.35 V: 1.1690 ns   (deadline 3.43)
+longest time a valid-high input was held with output still > 0.25 V: 0.9260 ns   (deadline 2.57)

@@ -1,0 +1,16 @@
+sha256(json) = 06ccc32a64938f43350d6fb68d991c15e62b9d6815f0b174391be073727bc967
+Iup(VOH)  mine =     2619/250 = 10.476000   Lean theorem value = 10.476000   ok
+Idn(VOL)  mine =     2037/125 = 16.296000   Lean theorem value = 16.296000   ok
+RhiP      mine =         12/5 = 2.400000   Lean theorem value = 2.400000   ok
+RhiN      mine =      289/125 = 2.312000   Lean theorem value = 2.312000   ok
+RloN      mine =        76/25 = 3.040000   Lean theorem value = 3.040000   ok
+RloP      mine =      392/125 = 3.136000   Lean theorem value = 3.136000   ok
+tauUp     mine =    7250/2119 = 3.421425   Lean theorem value = 3.421425   ok
+tauDn     mine =    4575/1787 = 2.560157   Lean theorem value = 2.560157   ok
+tauUp <= 3.43: True   tauDn <= 2.57: True
+admissibility fields all true: True []
+margin minus eps (uA): {'up': 8.476, 'dn': 14.296, 'hiP': 0.4, 'hiN': 0.312, 'loN': 1.04, 'loP': 1.136}
+largest eps for which the record stays Admissible: eps < 2.312 (binding field: hiN)
+riseTime of certificate [1.0,1.2,1.35] = 2.338351293138359  <= 2.34: True   <= 2.0: False
+(IchargeMax 0 0.40 + eps)/Clo = 28.5508  == 28.5508: True   0.25 + slope*0.038 = 1.3349304
+ALL EXACT VALUES MATCH

@@ -1,0 +1,6 @@
+'Review.P03.rise_deadline_2p16_is_false' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Review.P03.no_riseCert_at_2p16' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Review.P03.rise_deadline_1p64_is_false_from_valid_low' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Review.P03.fall_deadline_1p0_is_false' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Review.P03.illustrative_fallCert_3' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Review.P03.valid_low_input_can_give_valid_high_within_38ps' depends on axioms: [propext, Classical.choice, Quot.sound]

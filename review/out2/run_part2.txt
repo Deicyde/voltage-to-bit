@@ -1,0 +1,27 @@
+== frozen checkout: 9b13e95c8c158a1790b57548acdd680069aa60d5 ==
+== Lean probes against 9b13e95 ==
+ok    D01_JumpInput_PerInstant  (3 axiom reports, all standard: yes)
+ok    D02_GeneralityAndSandwich  (6 axiom reports, all standard: yes)
+ok    D03_ExplicitWellPosedness  (1 axiom reports, all standard: yes)
+ok    D04_AtSupply_Chain_Reverse  (6 axiom reports, all standard: yes)
+ok    D05_Part1Ports  (8 axiom reports, all standard: yes)
+ok    P07_LeanConventions  (4 axiom reports, all standard: yes)
+ok    P08_MiswiredUniversal  (1 axiom reports, all standard: yes)
+== sources: forbidden tokens and meaning-changing constructs ==
+forbidden tokens: none found
+set_option / instance / notation / macro / elab / run_cmd / attribute / local: none
+== design record in sync ==
+ok: VoltageToBit/Examples/IllustrativeDesign.lean matches designs/illustrative-1v8.json
+== prose: quoted Lean names resolve ==
+names quoted in the prose that resolve to a declaration: 74
+== prose: paths named in README.md ==
+MISSING  docs/discrepancy-report.md (at this commit)
+MISSING  docs/experiment-loop.md (at this commit)
+MISSING  docs/adversarial-review.md (at this commit)
+MISSING  experiments (at this commit)
+MISSING  search (at this commit)
+== numeric probe ==
+    all six margins of atSupply(V0) exceed eps for 361 values of V0, and are >= those of the record (hiN: >= RhiN'): True
+(b) true minimum inward current at v = VDD + 0.10: 3.5600 uA at u = 0.6500, theta = (1.62, 160.0, 80.0, 0.6, 0.6)
+== checkout still clean: 0 changed paths ==
+ALL PART 2 PROBES RAN AS RECORDED

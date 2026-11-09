@@ -1,0 +1,27 @@
+@IsTrajectory.rise : ∀ {D : Design} {θ : Params} {u v : ℝ → ℝ} {a b : ℝ},
+  D.Admissible →
+    D.InBox θ →
+      IsTrajectory D θ u v a b →
+        v a ∈ D.Safe →
+          ∀ {s e : ℝ},
+            a ≤ s → e ≤ b → (∀ t ∈ Set.Ico s e, u t ≤ D.VIL) → ∀ t ∈ Set.Icc s e, s + D.tauUp ≤ t → D.VOH ≤ v t
+@IsTrajectory.safe : ∀ {D : Design} {θ : Params} {u v : ℝ → ℝ} {a b : ℝ},
+  D.Admissible → D.InBox θ → IsTrajectory D θ u v a b → v a ∈ D.Safe → ∀ t ∈ Set.Icc a b, v t ∈ D.Safe
+@exists_solution : ∀ {D : Design} {θ : Params},
+  D.Admissible →
+    D.InBox θ →
+      ∀ {C : ℝ},
+        D.Clo ≤ C →
+          ∀ {u w : ℝ → ℝ},
+            Continuous u →
+              Continuous w →
+                ∀ {a b : ℝ},
+                  a ≤ b →
+                    (∀ t ∈ Set.Icc a b, |w t| ≤ D.eps) →
+                      ∀ {v₀ : ℝ},
+                        v₀ ∈ D.Safe →
+                          ∃ v,
+                            v a = v₀ ∧
+                              (∀ t ∈ Set.Icc a b, v t ∈ D.Safe) ∧
+                                ∀ t ∈ Set.Icc a b, HasDerivWithinAt v ((Inet θ (u t) (v t) + w t) / C) (Set.Icc a b) t
+'VoltageToBit.Examples.illustrative_scenario' depends on axioms: [propext, Classical.choice, Quot.sound]

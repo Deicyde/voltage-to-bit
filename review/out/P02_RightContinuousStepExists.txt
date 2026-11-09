@@ -1,0 +1,2 @@
+'Review.P02.IsTrajectory.concat' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Review.P02.stepR_has_trajectory' depends on axioms: [propext, Classical.choice, Quot.sound]

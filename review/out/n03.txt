@@ -1,0 +1,19 @@
+== rising output (input valid-low) ==
+infimum over all certificates = integral of Chi/(Iup(c)-eps) over [Vlo,VOH]      : 2.251190 ns
+slowest trajectory, start Vlo = -0.10 V (ODE)                                     : 2.251190 ns
+slowest trajectory, start VOL =  0.25 V (ODE)                                     : 1.727865 ns
+proved: tauUp = 3.421425 ns ; certificate [1.0,1.2,1.35] = 2.338351 ns
+ratio tauUp / slowest-from-Vlo = 1.520 ; certificate / slowest = 1.0387
+a 2.0 ns deadline is FALSE in the model (slowest run needs 2.2512 ns)
+== falling output (input valid-high) ==
+integral of Chi/(Idn(c)-eps) over [VOL,Vhi]                                        : 1.417563 ns
+slowest trajectory, start Vhi = 2.08 V (ODE)                                       : 1.392352 ns
+slowest trajectory, start VOH = 1.35 V (ODE)                                       : 0.878738 ns
+proved: tauDn = 2.560157 ns ; ratio tauDn / slowest-from-Vhi = 1.839
+== fastest rise (contamination) ==
+fast corner, C = Clo, w = +eps, constant input u =    0.40 V, start 0.25 V: reaches 1.35 V at   72.2534 ps
+fast corner, C = Clo, w = +eps, constant input u =    0.00 V, start 0.25 V: reaches 1.35 V at   43.1821 ps
+fast corner, C = Clo, w = +eps, constant input u =   -1.00 V, start 0.25 V: reaches 1.35 V at   21.1653 ps
+fast corner, C = Clo, w = +eps, constant input u =  -10.00 V, start 0.25 V: reaches 1.35 V at    3.8264 ps
+fast corner, C = Clo, w = +eps, constant input u = -100.00 V, start 0.25 V: reaches 1.35 V at    0.4167 ps
+contamination bound of illustrative_no_early_high: 38 ps, stated for inputs in [0, 0.40] V only

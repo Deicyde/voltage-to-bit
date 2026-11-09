@@ -1,0 +1,6 @@
+'Review.P04.clm_not_within_eps' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Review.P04.clm_is_pointwise_square_law' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Review.P04.IsTrajectoryPW.safe' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Review.P04.IsTrajectoryPW.rise' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Review.P04.IsTrajectoryPW.fall' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Review.P04.clm_guarantee' depends on axioms: [propext, Classical.choice, Quot.sound]

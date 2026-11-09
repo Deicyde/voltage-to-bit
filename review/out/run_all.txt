@@ -1,0 +1,43 @@
+== frozen checkout: 1880a3619453d865a04f3b32d25edf69af618501 ==
+tracked changes: 0 ; untracked: 0
+== Lean probes (each must print only standard axioms, no errors) ==
+ok    P00_Smoke  (1 axiom reports, all [propext, Classical.choice, Quot.sound]: yes)
+ok    P01_JumpInputVacuity  (5 axiom reports, all [propext, Classical.choice, Quot.sound]: yes)
+ok    P02_RightContinuousStepExists  (2 axiom reports, all [propext, Classical.choice, Quot.sound]: yes)
+ok    P03_DeadlineBrackets  (6 axiom reports, all [propext, Classical.choice, Quot.sound]: yes)
+ok    P04_ModelErrorScope  (6 axiom reports, all [propext, Classical.choice, Quot.sound]: yes)
+ok    P05_HypothesesAndDegeneracy  (9 axiom reports, all [propext, Classical.choice, Quot.sound]: yes)
+ok    P06_ExplicitRestatement  (4 axiom reports, all [propext, Classical.choice, Quot.sound]: yes)
+ok    P07_LeanConventions  (4 axiom reports, all [propext, Classical.choice, Quot.sound]: yes)
+ok    P08_MiswiredUniversal  (1 axiom reports, all [propext, Classical.choice, Quot.sound]: yes)
+== project audit script, run against the frozen build (output kept outside the checkout) ==
+declarations audited: 383 (of which theorems: 245)
+axioms used anywhere: [Classical.choice, Quot.sound, propext]
+AUDIT OK: no declaration depends on an axiom outside [propext, Classical.choice, Quot.sound]
+identical to the committed evidence/lean/audit.txt
+== steps 1 and 2 of scripts/check.sh, read-only ==
+ok: VoltageToBit/Examples/IllustrativeDesign.lean matches designs/illustrative-1v8.json
+forbidden tokens: none found
+other meaning-changing constructs in the sources (set_option / instance / notation / macro / elab / run_cmd / attribute / local):
+  none
+== environment inventory of the frozen build ==
+## kinds: [(ctor, 5), (def, 123), (thm, 245), (rec, 5), (induct, 5)]
+## instances declared by the library: #[VoltageToBit.Design._sizeOf_inst, VoltageToBit.Params._sizeOf_inst]
+## simp lemmas declared by the library: #[VoltageToBit.Design.mk.injEq, VoltageToBit.Design.mk.sizeOf_spec, VoltageToBit.Params.mk.injEq, VoltageToBit.Params.mk.sizeOf_spec]
+## constants with non-default reducibility: #[VoltageToBit.Design.Admissible.casesOn, VoltageToBit.Design.Admissible.recOn, VoltageToBit.Design.Chi, VoltageToBit.Design.Clo, VoltageToBit.Design.InBox.casesOn, VoltageToBit.Design.InBox.recOn
+== numeric probes ==
+ALL EXACT VALUES MATCH
+n02: margin inequalities without violation: 8
+slowest trajectory, start Vlo = -0.10 V (ODE)                                     : 2.251190 ns
+slowest trajectory, start VOL =  0.25 V (ODE)                                     : 1.727865 ns
+slowest trajectory, start Vhi = 2.08 V (ODE)                                       : 1.392352 ns
+slowest trajectory, start VOH = 1.35 V (ODE)                                       : 0.878738 ns
+runs: 240  (horizon 16.0 ns, step 0.0005 ns)   violations: 0
+== tooling probes ==
+gen_design_probe: malformed inputs accepted by the generator: 5
+'AuditGapDemo.bad' does not depend on any axioms
+'AuditGapDemo.oops' does not depend on any axioms
+none found
+leanchecker found a problem in AuditGapDemo
+== frozen checkout still clean: 0 changed paths ==
+ALL REVIEW PROBES RAN AS RECORDED

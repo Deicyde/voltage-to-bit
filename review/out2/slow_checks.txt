@@ -1,0 +1,16 @@
+== fresh rebuild of 9b13e95 from source ==
+source files under VoltageToBit/: 17 ; modules in rebuild list: 17
+declarations audited: 433 (of which theorems: 291)
+AUDIT OK: no declaration depends on an axiom outside [propext, Classical.choice, Quot.sound]
+fresh build and frozen build: identical declaration inventory (433 constants)
+## kinds: [(ctor, 5), (def, 127), (thm, 291), (rec, 5), (induct, 5)]
+## instances declared by the library: #[VoltageToBit.Design._sizeOf_inst, VoltageToBit.Params._sizeOf_inst]
+## simp lemmas declared by the library: #[VoltageToBit.Design.mk.injEq, VoltageToBit.Design.mk.sizeOf_spec, VoltageToBit.Params.mk.injEq, VoltageToBit.Params.mk.sizeOf_spec]
+== project audit against the frozen build ==
+declarations audited: 433 (of which theorems: 291)
+axioms used anywhere: [Classical.choice, Quot.sound, propext]
+AUDIT OK: no declaration depends on an axiom outside [propext, Classical.choice, Quot.sound]
+identical to the committed evidence/lean/audit.txt
+== kernel replay of the frozen build (leanchecker) ==
+leanchecker exit=0
+== checkout still clean: 0 changed paths ==

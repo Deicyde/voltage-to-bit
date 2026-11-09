@@ -1,0 +1,3 @@
+'Review.D01.stepL_no_trajectory' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Review.D01.spike_no_trajectory' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Review.D01.stepR_has_trajectory' depends on axioms: [propext, Classical.choice, Quot.sound]

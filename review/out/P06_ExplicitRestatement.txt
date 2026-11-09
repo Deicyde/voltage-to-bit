@@ -1,0 +1,4 @@
+'Review.P06.explicit_inclusion_guarantee' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Review.P06.explicit_end_to_end' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Review.P06.explicit_decoding' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Review.P06.Ip_eq_Ich' depends on axioms: [propext, Classical.choice, Quot.sound]

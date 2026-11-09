@@ -1,0 +1,4 @@
+'Review.P07.noisy_tauUp_negative' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Review.P07.zeroMargin_tauUp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Review.P07.decode_inverted_never_undefined' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Review.P07.nominal_not_centre' depends on axioms: [propext, Classical.choice, Quot.sound]

@@ -1,0 +1,6 @@
+0. --check on the frozen record: 0 ok: VoltageToBit/Examples/IllustrativeDesign.lean matches designs/illustrative-1v8.json
+1. eps = '2\n'      -> exit 0 ['wrote /var/folders/z5/8hn9kdzd5cx9gkfmtbl45xk80000gn/T/tmp.m83ckr3TE0/case1.lean'] | generated line: ['  eps := 2']
+2. eps = U+0662      -> exit 0 ['wrote /var/folders/z5/8hn9kdzd5cx9gkfmtbl45xk80000gn/T/tmp.m83ckr3TE0/case2.lean'] | generated line: ['  eps := ٢']
+3. status with '-/'  -> exit 0 ['wrote /var/folders/z5/8hn9kdzd5cx9gkfmtbl45xk80000gn/T/tmp.m83ckr3TE0/case3.lean'] | Lean code injected outside the comment: ['theorem injected_from_json : True := trivial']
+4. duplicate key eps -> exit 0 ['wrote /var/folders/z5/8hn9kdzd5cx9gkfmtbl45xk80000gn/T/tmp.m83ckr3TE0/case4.lean'] | generated line: ['  eps := 1']
+5. kn = [300, 240]   -> exit 0 ['wrote /var/folders/z5/8hn9kdzd5cx9gkfmtbl45xk80000gn/T/tmp.m83ckr3TE0/case5.lean']

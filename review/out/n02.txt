@@ -1,0 +1,20 @@
+(a) max |textbook - closed form| over 200000 points, u,v in [-1,3]:  NMOS 3.979e-13  PMOS 2.274e-13
+    nominal: In(u=1.8,v=0.9) = 153.00000000000003  In(u=0,v=0.9) = 0.0  Ip(u=0,v=0.9) = 76.50000000000001  Ip(u=1.8,v=0.9) = 0.0
+(b) minimum slack found over 2000000 samples per theorem (a negative number would contradict a Lean theorem):
+    Inet_ge_Iup        (Iup c <= Inet)     +0.000000  ok
+    Inet_le_neg_Idn    (Inet <= -Idn c)    +0.000000  ok
+    Inet_Vhi_le_neg_RhiP (u <= uHi)        +4.040000  ok
+    Inet_Vhi_le_neg_RhiN (uHi <= u)        +5.280000  ok
+    RloN_le_Inet_Vlo     (uLo <= u)        +2.880000  ok
+    RloP_le_Inet_Vlo     (u <= uLo)        +3.040000  ok
+    Inet_Vhi_lt          (all u)           +4.440001  ok
+    Inet_Vlo_gt          (all u)           +3.920037  ok
+(c) true minimum inward device current at the safe-domain ends (32 corners x dense grid in u):
+    at Vhi: 6.4400 uA at u = 0.6500, theta = [  1.98 160.    80.     0.6    0.6 ]   proved bound min(RhiP, RhiN) = 2.3120
+    at Vlo: 5.9200 uA at u = 0.8200, theta = [  1.62 160.    80.     0.6    0.6 ]   proved bound min(RloN, RloP) = 3.0400
+    => by this enumeration the node cannot leave the safe domain for any eps below 5.9200 uA;
+       largest eps accepted by Admissible: 2.3120 uA  (ratio 2.56)
+    Iup(VOH) = 10.4760 ; Inet at (weak pull-up corner, u = VIL, v = VOH) = 10.4760
+    Idn(VOL) = 16.2960 ; -Inet at (weak pull-down corner, u = VIH, v = VOL) = 16.2960
+    best achievable min(RhiP,RhiN) over uHi: 2.3801 at uHi = 0.7725
+    best achievable min(RloN,RloP) over uLo: 3.0800 at uLo = 0.7425

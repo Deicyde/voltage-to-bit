@@ -1,0 +1,2 @@
+lake env "$T/leanchecker" "${MODS[@]}"  32.41s user 243.16s system 59% cpu 7:46.20 total
+exit=0

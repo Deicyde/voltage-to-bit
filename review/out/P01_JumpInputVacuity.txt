@@ -1,0 +1,5 @@
+'Review.P01.rderiv_ge_of_right_nhd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Review.P01.stepL_no_trajectory' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Review.P01.stepL_guarantee_proves_anything' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Review.P01.spike_no_trajectory' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Review.P01.const_low_has_trajectory' depends on axioms: [propext, Classical.choice, Quot.sound]

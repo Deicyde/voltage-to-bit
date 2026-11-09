@@ -1,0 +1,14 @@
+== 1. compile AuditGapDemo.lean ==
+'AuditGapDemo.bad' does not depend on any axioms
+'AuditGapDemo.oops' does not depend on any axioms
+lean exit=0
+== 2. token grep of scripts/check.sh applied to it ==
+none found
+== 3. kernel replay with leanchecker ==
+leanchecker found a problem in AuditGapDemo
+uncaught exception: while replaying declaration 'AuditGapDemo.bad':
+(kernel) declaration type mismatch, 'AuditGapDemo.bad' has type
+  True
+but it is expected to have type
+  False
+(leanchecker rejects the file: see message above)

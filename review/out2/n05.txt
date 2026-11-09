@@ -1,0 +1,12 @@
+(a) RhiN' = 2.312  RhiN = 2.312  equal: True
+    all six margins of atSupply(V0) exceed eps for 361 values of V0, and are >= those of the record (hiN: >= RhiN'): True
+    smallest value of each margin over V0: {'up': 10.476, 'dn': 16.296, 'hiP': 2.4, 'hiN': 2.312, 'loN': 3.04, 'loP': 3.136}
+    deadlines of the restricted record at V0 = VDDlo: tauUp = 3.421425200566305 tauDn = 1.5473684210526315
+(b) true minimum inward current at v = VDD + 0.10: 3.5600 uA at u = 0.6500, theta = (1.62, 160.0, 80.0, 0.6, 0.6)
+    (notes file: 'about 3.6 uA'; proved bound for the restricted record: RhiN' = 2.312, RhiP >= 2.4)
+(c) (IchargeMax 0 0.40 + eps)/Clo = 28.5508  == 28.5508: True
+    (IdischargeMax 1.25 1.98 + eps)/Clo = 58.3144  == 58.3144: True
+    true supremum of the rising slew for u in [0, 0.40]: 28.4908 V/ns (bound 28.5508)
+    true supremum of the falling slew for u in [1.25, 1.98]: 56.5816 V/ns (bound 58.3144)
+    both bounds are for restricted input ranges; for u <= VIL or u >= VIH without range the slew is unbounded
+(d) slowest rise from Vlo with a per-instant choice of the box point: 2.251190 ns (fixed worst corner, Part 1: 2.251190 ns)
