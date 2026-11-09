@@ -63,6 +63,7 @@ open VoltageToBit VoltageToBit.Examples
 #print axioms IsTrajectory.rise_of_cert
 #print axioms IsTrajectory.fall_of_cert
 #print axioms IsTrajectory.rise_at_most
+#print axioms IsTrajectory.fall_at_most
 #print axioms Design.Admissible.exists_rise_run
 #print axioms Design.Admissible.exists_fall_run
 #print axioms chain_restores_low
