@@ -73,8 +73,14 @@ There is deliberately no single badge.
 - Anything about inputs that are neither valid-low nor valid-high for the whole
   window: then only the safe-domain statement applies.
 - Anything about trajectories that start outside the safe domain.
-- Metastability, interconnect, more than one dynamic node, time-varying supply,
-  or noise with unbounded tails. See [docs/model.md](docs/model.md).
+- Metastability, interconnect, more than one dynamic node, ground bounce, a
+  supply that leaves its stated range, or noise with unbounded tails (thermal
+  noise is about 0.5 to 0.9 mV rms on this node and is outside any
+  deterministic bound). A supply that moves *within* its range is covered as a
+  parameter choice per instant, but the displacement current it injects has to
+  fit inside `ε_I`. See [docs/model.md](docs/model.md).
+- A switching gate as the load. The load is an ideal grounded capacitance;
+  currents caused by other nodes moving belong to `ε_I`.
 
 ## Reproduce
 

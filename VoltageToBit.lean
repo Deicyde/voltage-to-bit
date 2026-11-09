@@ -6,6 +6,7 @@ import VoltageToBit.Proofs.Margins
 import VoltageToBit.Proofs.Guarantee
 import VoltageToBit.Proofs.Existence
 import VoltageToBit.Proofs.Concat
+import VoltageToBit.Proofs.AtSupply
 import VoltageToBit.Proofs.NonVacuity
 import VoltageToBit.Proofs.Certificate
 import VoltageToBit.Proofs.ModelError

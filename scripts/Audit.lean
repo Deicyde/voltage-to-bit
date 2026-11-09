@@ -60,6 +60,8 @@ open VoltageToBit VoltageToBit.Examples
 #print axioms solution_unique
 #print axioms IsTrajectory.concat
 #print axioms exists_trajectory_step
+#print axioms Design.Admissible.atSupply
+#print axioms solution_safe_atSupply
 #print axioms IsTrajectory.of_ode
 #print axioms IsTrajectory.of_ode_varying
 #print axioms Design.exists_inBox_of_between
@@ -78,6 +80,7 @@ open VoltageToBit VoltageToBit.Examples
 #print axioms illustrative_exists
 #print axioms illustrative_exists_const
 #print axioms illustrative_scenario
+#print axioms illustrative_safe_atSupply
 #print axioms illustrative_riseCert_3
 #print axioms badBox_empty
 #print axioms early_sampling_counterexample

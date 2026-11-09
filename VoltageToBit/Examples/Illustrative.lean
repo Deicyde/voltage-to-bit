@@ -1,6 +1,7 @@
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import VoltageToBit.Examples.IllustrativeDesign
 import VoltageToBit.Proofs.Existence
+import VoltageToBit.Proofs.AtSupply
 import VoltageToBit.Proofs.Certificate
 
 /-!
@@ -219,6 +220,32 @@ decode to a bit. -/
 theorem illustrative_initial_undefined : illustrative.decodeOut 1 = none := by
   rw [Design.decodeOut, decode_eq_none_iff]
   norm_num [illustrative]
+
+/-! ## The safe domain measured from the actual supply -/
+
+theorem illustrative_RhiN' : illustrative.RhiN' = 2.312 := by
+  norm_num [illustrative, Design.RhiN', psq_eq_ite]
+
+/-- For a run at constant parameters, the output of the illustrative inverter
+stays within 0.10 V of its own rails: a solution of the node equation that
+starts in `[-0.10, θ.VDD + 0.10]` V stays there. (The fixed safe domain of the
+record reaches 2.08 V whatever the supply is.) -/
+theorem illustrative_safe_atSupply (θ : Params) (hθ : illustrative.InBox θ)
+    (Cf w u v : ℝ → ℝ) (a b : ℝ) (hCf : ∀ x, Cf x ∈ Icc (5 : ℝ) 20)
+    (hw : ∀ t ∈ Ico a b, |w t| ≤ 2) (hcont : ContinuousOn v (Icc a b))
+    (hode : ∀ t ∈ Ico a b, ∃ v' : ℝ, HasDerivWithinAt v v' (Ici t) t ∧
+      Cf (v t) * v' = Inet θ (u t) (v t) + w t)
+    (h0 : v a ∈ Icc (-0.10 : ℝ) (θ.VDD + 0.10)) :
+    ∀ t ∈ Icc a b, v t ∈ Icc (-0.10 : ℝ) (θ.VDD + 0.10) := by
+  have key := solution_safe_atSupply (D := illustrative) illustrative_admissible
+    (by rw [illustrative_RhiN']; norm_num [illustrative]) hθ (Cf := Cf) (w := w)
+    (by intro x; simpa [illustrative] using hCf x) (by simpa [illustrative] using hw)
+    hcont hode
+  have e : θ.VDD + (illustrative.Vhi - illustrative.VDDhi) = θ.VDD + 0.10 := by
+    norm_num [illustrative]
+  have e2 : illustrative.Vlo = -0.10 := by norm_num [illustrative]
+  rw [e, e2] at key
+  exact key h0
 
 /-! ## A refined, still fully proved, rise deadline -/
 
