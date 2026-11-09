@@ -136,7 +136,10 @@ theorem illustrative_exists_const (θ : Params) (hθ : illustrative.InBox θ) (C
 
 /-! ## One fully explicit run -/
 
-/-- Nominal parameters: the centre of the box. -/
+/-- Nominal parameters, a point of the box (`nominal_inBox`). The supply
+(1.8 V) and the two transconductances (200 and 100 µA/V²) are the centres of
+their ranges. The two thresholds (0.5 V) are not: their ranges are
+`[0.45, 0.60]` V, with centre 0.525 V. -/
 def nominal : Params := ⟨1.8, 200, 100, 0.5, 0.5⟩
 
 theorem nominal_inBox : illustrative.InBox nominal := by
@@ -229,13 +232,12 @@ theorem illustrative_initial_undefined : illustrative.decodeOut 1 = none := by
 
 /-! ## The safe domain measured from the actual supply -/
 
-theorem illustrative_RhiN' : illustrative.RhiN' = 2.312 := by
-  norm_num [illustrative, Design.RhiN', psq_eq_ite]
-
 /-- For a run at constant parameters, the output of the illustrative inverter
 stays within 0.10 V of its own rails: a solution of the node equation that
 starts in `[-0.10, θ.VDD + 0.10]` V stays there. (The fixed safe domain of the
-record reaches 2.08 V whatever the supply is.) -/
+record reaches 2.08 V whatever the supply is.) This is a statement about a run
+at one supply value; for a supply that moves in time only the fixed domain is
+proved (`Proofs/AtSupply.lean`). -/
 theorem illustrative_safe_atSupply (θ : Params) (hθ : illustrative.InBox θ)
     (Cf w u v : ℝ → ℝ) (a b : ℝ) (hCf : ∀ x, Cf x ∈ Icc (5 : ℝ) 20)
     (hw : ∀ t ∈ Ico a b, |w t| ≤ 2) (hcont : ContinuousOn v (Icc a b))
@@ -243,8 +245,8 @@ theorem illustrative_safe_atSupply (θ : Params) (hθ : illustrative.InBox θ)
       Cf (v t) * v' = Inet θ (u t) (v t) + w t)
     (h0 : v a ∈ Icc (-0.10 : ℝ) (θ.VDD + 0.10)) :
     ∀ t ∈ Icc a b, v t ∈ Icc (-0.10 : ℝ) (θ.VDD + 0.10) := by
-  have key := solution_safe_atSupply (D := illustrative) illustrative_admissible
-    (by rw [illustrative_RhiN']; norm_num [illustrative]) hθ (Cf := Cf) (w := w)
+  have key := solution_safe_atSupply (D := illustrative) illustrative_admissible hθ
+    (Cf := Cf) (w := w)
     (by intro x; simpa [illustrative] using hCf x) (by simpa [illustrative] using hw)
     hcont hode
   have e : θ.VDD + (illustrative.Vhi - illustrative.VDDhi) = θ.VDD + 0.10 := by

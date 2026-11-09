@@ -79,14 +79,22 @@ structure InBox (θ : Params) : Prop where
 /-- The safe voltage domain of the output node. -/
 def Safe : Set ℝ := Icc D.Vlo D.Vhi
 
-/-- Worst-corner net pull-up current available whenever `u ≤ VIL` and `v ≤ c`
-(weakest PMOS at the lowest supply, strongest NMOS). -/
+/-- Worst-corner net pull-up current (weakest PMOS at the lowest supply,
+strongest NMOS). It is a lower bound on the net current into the node for
+`u ≤ VIL` and `v ≤ c`, provided `c ≤ VDDlo`: that is what `Inet_ge_Iup`
+(`Proofs/Margins.lean`) proves, for an admissible record and every parameter
+point of the box. Without the proviso the bound fails: a node above the supply
+is discharged through the PMOS conducting in reverse. -/
 noncomputable def Iup (c : ℝ) : ℝ :=
   D.kplo / 2 * (psq (D.VDDlo - D.VIL - D.Vtphi) - psq (c - D.VIL - D.Vtphi))
     - D.knhi / 2 * psq (D.VIL - D.Vtnlo)
 
-/-- Worst-corner net pull-down current available whenever `VIH ≤ u` and `c ≤ v`
-(weakest NMOS, strongest PMOS at the highest supply). -/
+/-- Worst-corner net pull-down current (weakest NMOS, strongest PMOS at the
+highest supply). It is a lower bound on the net current out of the node for
+`VIH ≤ u` and `c ≤ v`, provided `0 ≤ c`: that is what `Inet_le_neg_Idn`
+(`Proofs/Margins.lean`) proves, for an admissible record and every parameter
+point of the box. Without the proviso the bound fails: a node below ground is
+charged through the NMOS conducting in reverse. -/
 noncomputable def Idn (c : ℝ) : ℝ :=
   D.knlo / 2 * (psq (D.VIH - D.Vtnhi) - psq (D.VIH - c - D.Vtnhi))
     - D.kphi / 2 * psq (D.VDDhi - D.VIH - D.Vtplo)
@@ -108,10 +116,24 @@ noncomputable def RloN : ℝ :=
 noncomputable def RloP : ℝ :=
   D.kplo / 2 * (psq (D.VDDlo - D.uLo - D.Vtphi) - psq (D.Vlo - D.uLo - D.Vtphi))
 
-/-- Deadline for the output to become valid-high after the input becomes valid-low. -/
+/-- Deadline for the output to become valid-high after the input becomes valid-low.
+
+Meaningful only for an admissible record. The formula returns a number for
+every record: outside admissibility it can be negative (pull-up margin below
+the disturbance bound, `Iup VOH < eps`) or, through Lean's convention
+`x / 0 = 0`, zero (`Iup VOH = eps`). The theorems that use it as a deadline
+(`IsTrajectory.rise` and its consequences) all assume `Admissible`. Any tool
+that compares or ranks records by this number must check admissibility first. -/
 noncomputable def tauUp : ℝ := D.Chi * (D.VOH - D.Vlo) / (D.Iup D.VOH - D.eps)
 
-/-- Deadline for the output to become valid-low after the input becomes valid-high. -/
+/-- Deadline for the output to become valid-low after the input becomes valid-high.
+
+Meaningful only for an admissible record. The formula returns a number for
+every record: outside admissibility it can be negative (pull-down margin below
+the disturbance bound, `Idn VOL < eps`) or, through Lean's convention
+`x / 0 = 0`, zero (`Idn VOL = eps`). The theorems that use it as a deadline
+(`IsTrajectory.fall` and its consequences) all assume `Admissible`. Any tool
+that compares or ranks records by this number must check admissibility first. -/
 noncomputable def tauDn : ℝ := D.Chi * (D.Vhi - D.VOL) / (D.Idn D.VOL - D.eps)
 
 /-- The numeric conditions a design record must satisfy. Every field is an
@@ -125,6 +147,10 @@ structure Admissible : Prop where
   kp_le : D.kplo ≤ D.kphi
   Vtn_le : D.Vtnlo ≤ D.Vtnhi
   Vtp_le : D.Vtplo ≤ D.Vtphi
+  /-- the NMOS threshold is nonnegative for every parameter point of the box -/
+  Vtn_nonneg : 0 ≤ D.Vtnlo
+  /-- the PMOS threshold magnitude is nonnegative for every parameter point of the box -/
+  Vtp_nonneg : 0 ≤ D.Vtplo
   C_pos : 0 < D.Clo
   C_le : D.Clo ≤ D.Chi
   eps_nonneg : 0 ≤ D.eps
@@ -180,7 +206,13 @@ structure IsTrajectory (D : Design) (u v : ℝ → ℝ) (a b : ℝ) : Prop where
 
 /-- Three-valued decoding of a voltage `x` against a low threshold `lo` and a
 high threshold `hi`: `some false` at or below `lo`, `some true` at or above
-`hi`, and `none` (undefined) strictly in between. -/
+`hi`, and `none` (undefined) strictly in between.
+
+Meaningful only for ordered thresholds, `lo < hi`, which admissibility provides
+for the thresholds of a design record. The definition accepts any two numbers:
+with `hi ≤ lo` (inverted or equal thresholds) there is no undefined band and
+every voltage decodes to a bit (`decode_eq_none_iff`). Any tool that compares
+or ranks records by decoded values must check admissibility first. -/
 noncomputable def decode (lo hi x : ℝ) : Option Bool :=
   if x ≤ lo then some false else if hi ≤ x then some true else none
 
@@ -213,14 +245,24 @@ namespace Design
 
 variable (D : Design)
 
-/-- Decoding of the input voltage. -/
+/-- Decoding of the input voltage.
+
+Meaningful only for an admissible record, where `VIL < VIH`. For a record with
+`VIH ≤ VIL` the decoder has no undefined band (see `decode`). -/
 noncomputable def decodeIn (x : ℝ) : Option Bool := decode D.VIL D.VIH x
 
-/-- Decoding of the output voltage. -/
+/-- Decoding of the output voltage.
+
+Meaningful only for an admissible record, where `VOL < VOH`. For a record with
+`VOH ≤ VOL` the decoder has no undefined band (see `decode`). -/
 noncomputable def decodeOut (x : ℝ) : Option Bool := decode D.VOL D.VOH x
 
 /-- Deadline for an input bit: a low input drives the output high (`tauUp`),
-a high input drives the output low (`tauDn`). -/
+a high input drives the output low (`tauDn`).
+
+Meaningful only for an admissible record: outside admissibility `tauUp` and
+`tauDn` can be negative or zero (see their doc comments), and any tool that
+compares or ranks records by a deadline must check admissibility first. -/
 noncomputable def tau (inBit : Bool) : ℝ := if inBit then D.tauDn else D.tauUp
 
 end Design

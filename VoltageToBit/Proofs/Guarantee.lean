@@ -4,9 +4,9 @@ import VoltageToBit.Proofs.Margins
 /-!
 # The digital guarantee for every trajectory
 
-For an admissible design `D`, every input `u : ℝ → ℝ` (no regularity assumed)
-and every trajectory `v` of the differential inclusion on `[a, b]` that starts
-in the safe domain:
+For an admissible design `D`, every input function `u : ℝ → ℝ` and every
+trajectory `v` of the differential inclusion on `[a, b]` that starts in the
+safe domain:
 
 * `IsTrajectory.safe`: `v` stays in the safe domain;
 * `IsTrajectory.rise`: if `u ≤ VIL` on `[s, e)` then `VOH ≤ v t` for all
@@ -19,8 +19,17 @@ The trajectory notion already quantifies over the capacitance, the parameter
 point of the box and the current error at each instant, so there is no
 separate parameter argument here.
 
-These are statements about *all* trajectories. That trajectories exist is
-proved separately in `Proofs/Existence.lean`.
+Scope of "every input function". No regularity of `u` is assumed, but these
+are statements about *all* trajectories for that input, so they have instances
+only for inputs for which trajectories exist. Existence is proved separately,
+and for two classes of inputs only: continuous inputs (`Proofs/Existence.lean`)
+and an input with one jump that takes its new value at the jump instant
+(`Proofs/Concat.lean`). The trajectory notion evaluates the input pointwise in
+time, so the value at a jump instant matters. For an input that keeps its old
+value at a jump instant a trajectory need not exist: for the illustrative
+record and a full-swing step of that kind there is provably no trajectory at
+all (`Examples/InputClass.lean`), and for such an input the statements here
+are vacuously true.
 -/
 
 namespace VoltageToBit
