@@ -19,6 +19,7 @@ file shows the quantifier is not empty.
   whole interval at once) and then uses the boundary margins to show that the
   solution never leaves the safe domain, where clamping does nothing.
 * `exists_trajectory`: the combination.
+* `solution_unique`: two solutions with the same initial state coincide.
 
 Scope: existence is proved for continuous `u` and `w` and Lipschitz `Cf`. The
 guarantee itself needs none of this regularity; for less regular data it is a
@@ -65,19 +66,16 @@ theorem abs_clamp_sub_le (lo hi x y : ℝ) : |clamp lo hi x - clamp lo hi y| ≤
 noncomputable def clampedField (D : Design) (θ : Params) (Cf u w : ℝ → ℝ) (t x : ℝ) : ℝ :=
   (Inet θ (u t) (clamp D.Vlo D.Vhi x) + w t) / Cf (clamp D.Vlo D.Vhi x)
 
-/-- **Existence.** For continuous input and disturbance, a capacitance function
-that stays in range and is Lipschitz on the safe domain, and an initial state
-in the safe domain, the ODE `Cf (v) * dv/dt = Inet θ u v + w` has a solution on
-the whole interval `[a, b]`, and it stays in the safe domain. -/
-theorem exists_solution {D : Design} {θ : Params} (hD : D.Admissible) (hθ : D.InBox θ)
-    {Cf : ℝ → ℝ} (hCf : ∀ x, D.Clo ≤ Cf x) {Kc : ℝ}
+/-- The clamped right-hand side is Lipschitz in the state and bounded,
+uniformly in time on a compact interval. -/
+theorem exists_clampedField_bounds {D : Design} {θ : Params} (hD : D.Admissible)
+    (hθ : D.InBox θ) {Cf : ℝ → ℝ} (hCf : ∀ x, D.Clo ≤ Cf x) {Kc : ℝ}
     (hCfLip : ∀ x ∈ D.Safe, ∀ y ∈ D.Safe, |Cf x - Cf y| ≤ Kc * |x - y|)
-    {u w : ℝ → ℝ} (hu : Continuous u) (hw : Continuous w)
-    {a b : ℝ} (hab : a ≤ b) (hwb : ∀ t ∈ Icc a b, |w t| ≤ D.eps) {v₀ : ℝ}
-    (hv₀ : v₀ ∈ D.Safe) :
-    ∃ v : ℝ → ℝ, v a = v₀ ∧ (∀ t ∈ Icc a b, v t ∈ D.Safe) ∧
-      ∀ t ∈ Icc a b,
-        HasDerivWithinAt v ((Inet θ (u t) (v t) + w t) / Cf (v t)) (Icc a b) t := by
+    {u w : ℝ → ℝ} (hu : Continuous u) (hw : Continuous w) (a b : ℝ) :
+    ∃ K L : ℝ, 0 ≤ K ∧ 0 ≤ L ∧
+      (∀ t ∈ Icc a b, ∀ x y : ℝ,
+        |clampedField D θ Cf u w t x - clampedField D θ Cf u w t y| ≤ K * |x - y|) ∧
+      (∀ t ∈ Icc a b, ∀ x : ℝ, |clampedField D θ Cf u w t x| ≤ L) := by
   have hClo : 0 < D.Clo := hD.C_pos
   have hCpos : ∀ x, 0 < Cf x := fun x => lt_of_lt_of_le hClo (hCf x)
   have hdom : D.Vlo ≤ D.Vhi := by linarith [hD.Vlo_le, hD.VDD_pos, hD.VDD_le, hD.Vhi_ge]
@@ -134,12 +132,9 @@ theorem exists_solution {D : Design} {θ : Params} (hD : D.Admissible) (hθ : D.
       rw [hK₀def]
       linarith
     exact h1.trans (mul_le_mul hmod h2 (abs_nonneg _) hK₀)
-  -- Lipschitz constant of the clamped field in the state
-  set K : ℝ := K₀ / D.Clo + |M₀| * |Kc| / (D.Clo * D.Clo) with hKdef
-  have hK : 0 ≤ K := by positivity
-  have hLip : ∀ t ∈ Icc a b, ∀ x y : ℝ,
-      |clampedField D θ Cf u w t x - clampedField D θ Cf u w t y| ≤ K * |x - y| := by
-    intro t ht x y
+  refine ⟨K₀ / D.Clo + |M₀| * |Kc| / (D.Clo * D.Clo), |M₀| / D.Clo, by positivity, by positivity,
+    fun t ht x y => ?_, fun t ht x => ?_⟩
+  · -- Lipschitz in the state
     have hx := clamp_mem hdom x
     have hy := clamp_mem hdom y
     have hCx := hCf (clamp D.Vlo D.Vhi x)
@@ -173,22 +168,37 @@ theorem exists_solution {D : Design} {θ : Params} (hD : D.Admissible) (hθ : D.
       exact div_le_div₀ (by positivity)
         (mul_le_mul (hNbound t ht y) hC (abs_nonneg _) (abs_nonneg _)) (mul_pos hClo hClo)
         (mul_le_mul hCx hCy hClo.le hCxpos.le)
-    have e : K * |x - y| = K₀ * |x - y| / D.Clo + |M₀| * (|Kc| * |x - y|) / (D.Clo * D.Clo) := by
-      rw [hKdef]; ring
+    have e : (K₀ / D.Clo + |M₀| * |Kc| / (D.Clo * D.Clo)) * |x - y|
+        = K₀ * |x - y| / D.Clo + |M₀| * (|Kc| * |x - y|) / (D.Clo * D.Clo) := by
+      ring
     rw [e]
     exact add_le_add t1 t2
-  -- a bound on the clamped field
-  have hnorm : ∀ t ∈ Icc a b, ∀ x : ℝ, |clampedField D θ Cf u w t x| ≤ |M₀| / D.Clo := by
-    intro t ht x
+  · -- bounded
     unfold clampedField
     rw [abs_div, abs_of_pos (hCpos _)]
     exact div_le_div₀ (abs_nonneg _) (hNbound t ht x) hClo (hCf _)
+
+/-- **Existence.** For continuous input and disturbance, a capacitance function
+that stays at or above `Clo` and is Lipschitz on the safe domain, and an
+initial state in the safe domain, the ODE `Cf (v) * dv/dt = Inet θ u v + w` has
+a solution on the whole interval `[a, b]`, and it stays in the safe domain. -/
+theorem exists_solution {D : Design} {θ : Params} (hD : D.Admissible) (hθ : D.InBox θ)
+    {Cf : ℝ → ℝ} (hCf : ∀ x, D.Clo ≤ Cf x) {Kc : ℝ}
+    (hCfLip : ∀ x ∈ D.Safe, ∀ y ∈ D.Safe, |Cf x - Cf y| ≤ Kc * |x - y|)
+    {u w : ℝ → ℝ} (hu : Continuous u) (hw : Continuous w)
+    {a b : ℝ} (hab : a ≤ b) (hwb : ∀ t ∈ Icc a b, |w t| ≤ D.eps) {v₀ : ℝ}
+    (hv₀ : v₀ ∈ D.Safe) :
+    ∃ v : ℝ → ℝ, v a = v₀ ∧ (∀ t ∈ Icc a b, v t ∈ D.Safe) ∧
+      ∀ t ∈ Icc a b,
+        HasDerivWithinAt v ((Inet θ (u t) (v t) + w t) / Cf (v t)) (Icc a b) t := by
+  have hCpos : ∀ x, 0 < Cf x := fun x => lt_of_lt_of_le hD.C_pos (hCf x)
+  have hdom : D.Vlo ≤ D.Vhi := by linarith [hD.Vlo_le, hD.VDD_pos, hD.VDD_le, hD.Vhi_ge]
+  obtain ⟨K, L, hK, hL, hLip, hnorm⟩ := exists_clampedField_bounds hD hθ hCf hCfLip hu hw a b
   -- Picard–Lindelöf on the whole interval
-  have hL : 0 ≤ |M₀| / D.Clo := by positivity
   have hPL : IsPicardLindelof (clampedField D θ Cf u w) (tmin := a) (tmax := b)
       ⟨a, left_mem_Icc.mpr hab⟩ v₀
-      (⟨|M₀| / D.Clo * (b - a), mul_nonneg hL (sub_nonneg.mpr hab)⟩ : ℝ≥0) 0
-      (⟨|M₀| / D.Clo, hL⟩ : ℝ≥0) (⟨K, hK⟩ : ℝ≥0) :=
+      (⟨L * (b - a), mul_nonneg hL (sub_nonneg.mpr hab)⟩ : ℝ≥0) 0
+      (⟨L, hL⟩ : ℝ≥0) (⟨K, hK⟩ : ℝ≥0) :=
     { lipschitzOnWith := fun t ht => by
         refine LipschitzWith.lipschitzOnWith ?_
         refine LipschitzWith.of_dist_le_mul fun x y => ?_
@@ -207,7 +217,7 @@ theorem exists_solution {D : Design} {θ : Params} (hD : D.Admissible) (hθ : D.
         have hmax : max (b - a) (a - a) = b - a := by
           rw [sub_self]
           exact max_eq_left (sub_nonneg.mpr hab)
-        show |M₀| / D.Clo * max (b - a) (a - a) ≤ |M₀| / D.Clo * (b - a) - 0
+        show L * max (b - a) (a - a) ≤ L * (b - a) - 0
         rw [hmax, sub_zero] }
   obtain ⟨α, hα0, hα⟩ := hPL.exists_eq_forall_mem_Icc_hasDerivWithinAt₀
   have hα0' : α a = v₀ := hα0
@@ -268,5 +278,52 @@ theorem exists_trajectory_const {D : Design} {θ : Params} (hD : D.Admissible)
     ∃ v : ℝ → ℝ, v a = v₀ ∧ IsTrajectory D θ u v a b :=
   exists_trajectory hD hθ (Cf := fun _ => C) (Kc := 0) (fun _ => ⟨hC1, hC2⟩)
     (fun x _ y _ => by simp) hu hw hab hwb hv₀
+
+/-- **Uniqueness.** Two solutions of the ODE on `[a, b]` that start at the same
+point of the safe domain coincide on `[a, b]`. Together with `exists_solution`
+this makes the ODE model well posed: for given continuous input and
+disturbance and a Lipschitz capacitance in range, the output waveform is a
+function of the initial state. -/
+theorem solution_unique {D : Design} {θ : Params} (hD : D.Admissible) (hθ : D.InBox θ)
+    {Cf : ℝ → ℝ} (hCf : ∀ x, D.Clo ≤ Cf x ∧ Cf x ≤ D.Chi) {Kc : ℝ}
+    (hCfLip : ∀ x ∈ D.Safe, ∀ y ∈ D.Safe, |Cf x - Cf y| ≤ Kc * |x - y|)
+    {u w : ℝ → ℝ} (hu : Continuous u) (hw : Continuous w) {a b : ℝ}
+    (hwb : ∀ t ∈ Icc a b, |w t| ≤ D.eps) {v₁ v₂ : ℝ → ℝ}
+    (h₁ : ∀ t ∈ Icc a b,
+      HasDerivWithinAt v₁ ((Inet θ (u t) (v₁ t) + w t) / Cf (v₁ t)) (Icc a b) t)
+    (h₂ : ∀ t ∈ Icc a b,
+      HasDerivWithinAt v₂ ((Inet θ (u t) (v₂ t) + w t) / Cf (v₂ t)) (Icc a b) t)
+    (h0 : v₁ a = v₂ a) (hs : v₁ a ∈ D.Safe) : EqOn v₁ v₂ (Icc a b) := by
+  have hCpos : ∀ x, 0 < Cf x := fun x => lt_of_lt_of_le hD.C_pos (hCf x).1
+  -- both solutions are trajectories, hence stay in the safe domain
+  have traj : ∀ v : ℝ → ℝ, (∀ t ∈ Icc a b,
+      HasDerivWithinAt v ((Inet θ (u t) (v t) + w t) / Cf (v t)) (Icc a b) t) →
+      IsTrajectory D θ u v a b := fun v hv =>
+    IsTrajectory.of_ode (Cf := Cf) (w := w) hCf (fun t ht => hwb t (Ico_subset_Icc_self ht))
+      (fun t ht => (hv t ht).continuousWithinAt)
+      (fun t ht => ⟨_, (hv t (Ico_subset_Icc_self ht)).mono_of_mem_nhdsWithin
+        (Icc_mem_nhdsGE_of_mem ht), by have := (hCpos (v t)).ne'; field_simp⟩)
+  have hsafe₁ := (traj v₁ h₁).safe hD hθ hs
+  have hsafe₂ := (traj v₂ h₂).safe hD hθ (h0 ▸ hs)
+  obtain ⟨K, L, hK, -, hLip, -⟩ :=
+    exists_clampedField_bounds hD hθ (fun x => (hCf x).1) hCfLip hu hw a b
+  -- on the safe domain the right-hand side is the clamped field
+  have conv : ∀ v : ℝ → ℝ, (∀ t ∈ Icc a b,
+      HasDerivWithinAt v ((Inet θ (u t) (v t) + w t) / Cf (v t)) (Icc a b) t) →
+      (∀ t ∈ Icc a b, v t ∈ D.Safe) →
+      ∀ t ∈ Ico a b, HasDerivWithinAt v (clampedField D θ Cf u w t (v t)) (Ici t) t := by
+    intro v hv hsafe t ht
+    have h := (hv t (Ico_subset_Icc_self ht)).mono_of_mem_nhdsWithin (Icc_mem_nhdsGE_of_mem ht)
+    unfold clampedField
+    rwa [clamp_of_mem (hsafe t (Ico_subset_Icc_self ht))]
+  exact ODE_solution_unique_of_mem_Icc_right (K := ⟨K, hK⟩) (s := fun _ => univ)
+    (v := clampedField D θ Cf u w)
+    (fun t ht => by
+      refine LipschitzWith.lipschitzOnWith ?_
+      refine LipschitzWith.of_dist_le_mul fun x y => ?_
+      rw [Real.dist_eq, Real.dist_eq]
+      exact hLip t (Ico_subset_Icc_self ht) x y)
+    (fun t ht => (h₁ t ht).continuousWithinAt) (conv v₁ h₁ hsafe₁) (fun _ _ => mem_univ _)
+    (fun t ht => (h₂ t ht).continuousWithinAt) (conv v₂ h₂ hsafe₂) (fun _ _ => mem_univ _) h0
 
 end VoltageToBit
