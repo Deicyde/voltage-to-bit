@@ -37,8 +37,9 @@
 #                      Every command and every syntax node is of a kind on the
 #                      allow-list scripts/allowlist.txt, which holds the kinds
 #                      the library uses; every file is in the import closure of
-#                      VoltageToBit.lean. The head of scripts/SourceScan.lean
-#                      lists the rules
+#                      VoltageToBit.lean; every file was compiled with
+#                      `autoImplicit = false` and `relaxedAutoImplicit = false`.
+#                      The head of scripts/SourceScan.lean lists the rules
 #   5 axiom-audit      over every declaration stored in the compiled files of
 #                      the library, not over a list of names
 #                      (scripts/Audit.lean): none depends on an axiom other than

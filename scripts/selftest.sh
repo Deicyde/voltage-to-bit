@@ -34,6 +34,9 @@
 #   (b1) sources that do not compile cannot pass on compiled files left by an
 #       earlier build, also when lakefile.toml names no default target or
 #       another one and the pin is changed to accept that (B1)
+#   (s5) with the autoImplicit lines deleted and the pin changed to accept
+#       that, a statement with a misspelt name still does not pass: the scan
+#       reads the options that the build passed to the compiler (S5)
 #   (e) a design file that no longer matches the generated Lean file
 #   (d) a failing build makes check.sh exit non-zero, at the build step
 #   (src) one copy with several modules, each with one defect, and a full list
@@ -61,7 +64,7 @@
 #
 # SELFTEST_KEEP=1 keeps the temporary directory and prints its path.
 # SELFTEST_ONLY="<tags>" runs only the named groups of controls (static, control,
-# s6, cfg, b1, e, d, src, m9, bypass, g), for work on this script; the copies are then
+# s6, cfg, b1, s5, e, d, src, m9, bypass, g), for work on this script; the copies are then
 # made from the build products of this checkout when the positive control is not
 # among them, and the last line says that the self-test was partial.
 set -u
@@ -357,6 +360,40 @@ else
   printf '\n[[lean_lib]]\nname = "Other"\n' >>"$TMP/b1b/lakefile.toml"
   : >"$TMP/b1b/Other.lean"
   b1_control b1b "a file that no longer compiles, lakefile.toml with another default target"
+fi
+fi
+
+# ---------------------------------------------------------------------------
+if want s5; then
+echo "== (s5) a build without autoImplicit = false, and names that are bound nowhere =="
+# As in (b1), the pin of the copy is changed to accept its lakefile: then the scan and the audit
+# are what stands between a misspelt name and a theorem about an arbitrary variable.
+copy_project s5 "$BASE"
+grep -v 'utoImplicit' lakefile.toml >"$TMP/s5/lakefile.toml"
+if cmp -s lakefile.toml "$TMP/s5/lakefile.toml"; then
+  flunk "(s5) lakefile.toml has no autoImplicit lines; update this control"
+else
+  repin s5
+  add_module s5 Auto yes <<'EOF'
+namespace VoltageToBit.Selftest
+
+theorem thresholds_agree (h : VDDmin = VDDmxa) : VDDmxa = VDDmin := h.symm
+
+theorem concrete_one (h : n + 0 = 1) : n = 1 := h
+
+end VoltageToBit.Selftest
+EOF
+  run_check s5 --quick --keep-going
+  if [ "$CHECK_STATUS" = 1 ] && present "$LOG" "RESULT config: ok" && present "$LOG" "RESULT build: ok"; then
+    verdict "(s5) lakefile.toml without the autoImplicit lines, the pin changed to accept it, and two statements with names that are bound nowhere: the build accepts them; the scan reports that the file was compiled without the options, and the audit names the theorem that got a universe parameter" "$LOG" \
+      "$LIBRARY/Selftest/Auto.lean: [options] the build did not pass \`autoImplicit = false\` and \`relaxedAutoImplicit = false\`" \
+      "RESULT source-scan: FAILED" \
+      "$LIBRARY.Selftest.thresholds_agree: [universes] it has the universe parameters" \
+      "RESULT axiom-audit: FAILED"
+  else
+    flunk "(s5) the control is not valid: exit status $CHECK_STATUS, or the configuration or the build of the copy was refused"
+    show_tail "$LOG"
+  fi
 fi
 fi
 

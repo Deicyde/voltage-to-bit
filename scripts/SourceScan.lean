@@ -41,6 +41,10 @@ Rules. A finding is printed for each violation, with file, line and column.
            tab, carriage return, byte-order mark or bidirectional control).
 * header   No `module` and no `prelude` line; every import is a plain
            `import M` with `M` a module of Mathlib or of the library.
+* options  The build passed `autoImplicit = false` and `relaxedAutoImplicit =
+           false` to the compiler for the file (read from the setup file that
+           Lake wrote for it). With either option on, a name that is bound
+           nowhere becomes a variable of the statement instead of an error.
 * parse    Lean's parser reports no error, and reads the file to its end.
 * scope    The commands `namespace`, `end` and `open` elaborate without error.
 * command  Every command is of a kind on the allow-list.
@@ -392,6 +396,7 @@ unsafe def scanFile (allow : AllowList) (args : FileArgs) : IO Nat := do
   let (headerFindings, _) := checkHeader args.root header inputCtx
   findings := findings ++ headerFindings
   let mut state : FileState := {}
+  let mut optionsOk := false
   -- the body is read even when an import is refused: the build has loaded the same modules
   if !messages.hasErrors then
     -- the environment of the file's own imports, as the compiler builds it
@@ -410,6 +415,15 @@ unsafe def scanFile (allow : AllowList) (args : FileArgs) : IO Nat := do
           findings := findings.push (Finding.mk 0 0 "parse"
             s!"{setupPath} is not what this scan expects of the build (module name, \
               `isModule`, imports, plugins or dynlibs)")
+        let isFalse (n : Name) : Bool := match setup.options.values.get? n with
+          | some (.ofBool false) => true
+          | _ => false
+        if isFalse `autoImplicit && isFalse `relaxedAutoImplicit then
+          optionsOk := true
+        else
+          findings := findings.push (Finding.mk 0 0 "options"
+            "the build did not pass `autoImplicit = false` and `relaxedAutoImplicit = false` to the \
+             compiler for this file: a name that is bound nowhere becomes a variable, not an error")
         opts := opts.mergeBy (fun _ _ hOpt => hOpt) setup.options.toOptions
         imports := setup.imports?.getD (HeaderSyntax.imports header)
         isModule := strictOr setup.isModule (HeaderSyntax.isModule header)
@@ -438,6 +452,7 @@ unsafe def scanFile (allow : AllowList) (args : FileArgs) : IO Nat := do
         findings := findings ++ st.findings
   let lineCount := if text.endsWith "\n" then lines.size - 1 else lines.size
   emit "STAT" s!"{lineCount} {state.commands} {state.maxColumn}"
+  if optionsOk then emit "OPTIONS" "ok"
   for (k, n) in state.commandKinds.toArray do emit "CMD" s!"{n} {k}"
   for (k, n) in state.nodeKinds.toArray do emit "KIND" s!"{n} {k}"
   for o in state.opens do emit "OPEN" o
@@ -492,6 +507,7 @@ structure ChildResult where
   nodeKinds    : Array (String × Nat) := #[]
   opens        : Array String := #[]
   findings     : Array String := #[]
+  optionsOk    : Bool := false
   complete     : Bool := false
 
 def splitCount (s : String) : Option (Nat × String) := do
@@ -510,6 +526,8 @@ def parseChild (file : SourceFile) (out : IO.Process.Output) : ChildResult := Id
       if let some (n, k) := splitCount rest.toString then r := { r with commandKinds := r.commandKinds.push (k, n) }
     else if let some rest := line.dropPrefix? "KIND " then
       if let some (n, k) := splitCount rest.toString then r := { r with nodeKinds := r.nodeKinds.push (k, n) }
+    else if line == "OPTIONS ok" then
+      r := { r with optionsOk := true }
     else if let some rest := line.dropPrefix? "OPEN " then
       r := { r with opens := r.opens.push rest.toString }
     else if let some rest := line.dropPrefix? "FINDING+ " then
@@ -614,6 +632,8 @@ def report (a : ScanArgs) (allow : AllowList) (inventory : Bool) (treeFindings :
   IO.println s!"files: {results.size} ({lines} lines, {commands} commands with the end-of-file markers); {closureNote}"
   for r in results do
     IO.println s!"  {r.file.path}: {r.lines} lines, {r.commands} commands"
+  IO.println s!"files for which the build passed `autoImplicit = false` and `relaxedAutoImplicit = false` to \
+    the compiler: {(results.filter (·.optionsOk)).size} of {results.size}"
   IO.println "commands by kind:"
   for (k, n) in sortedPairs commandKinds do IO.println s!"  {k}: {n}"
   -- what a reader finds declared in the text: a declaration command declares one name; a structure
