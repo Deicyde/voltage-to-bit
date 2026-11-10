@@ -22,8 +22,7 @@ process, device model or measurement.
 * `illustrative_feedthrough_scenario`: one explicit run in which the output
   node has a gate-drain capacitance and one aggressor, the input keeps moving,
   and the displacement currents fit the allowance. It is the witness that the
-  hypotheses of `IsTrajectory.of_charge_balance` and
-  `IsTrajectory.of_feedthrough` can be met.
+  hypotheses of `IsTrajectory.of_charge_balance` can be met.
 -/
 
 namespace VoltageToBit.Examples
@@ -284,9 +283,11 @@ output is valid-high throughout `[3.43, 10]` ns (input valid-low since `t = 0`).
 The budget is `0.5 fF · 2 V/ns + 0.1 fF · 5 V/ns + 0.5 µA = 2 µA`, the whole
 allowance. The coefficients are those of the illustrative budget in
 `designs/illustrative-1v8.notes.md`, with its remaining shares (0.5 µA in
-total) represented by the residual. So the hypotheses of
-`IsTrajectory.of_charge_balance` and of `IsTrajectory.of_feedthrough` can be
-met with nonzero coupling and a moving input, and the guarantee then applies.
+total) represented by the residual. The input and the aggressor are continuous
+with derivatives of magnitude at most 2 V/ns and 5 V/ns, and the node charge
+is continuous because `v`, `uFeed` and `gFeed` are. So the hypotheses of
+`IsTrajectory.of_charge_balance` can be met with nonzero coupling and a moving
+input, and the guarantee then applies.
 
 This is a mathematical witness inside an assumed budget. No coefficient is
 taken from a device, an input that slews at no more than 2 V/ns is slow (a
@@ -330,6 +331,16 @@ theorem illustrative_feedthrough_scenario :
       ((hv.sub hg).const_mul (0.1 : ℝ))
     refine (h.congr (fun s _ => rfl) rfl).congr_deriv ?_
     ring
+  -- continuity of the node voltage, of the input and of the aggressor, hence of the charge
+  have hvcont : ContinuousOn v (Icc (0 : ℝ) 10) := fun t ht => (hode t ht).continuousWithinAt
+  have hucont : ContinuousOn uFeed (Icc (0 : ℝ) 10) := continuous_uFeed.continuousOn
+  have hgcont : ContinuousOn gFeed (Icc (0 : ℝ) 10) := by
+    unfold gFeed
+    fun_prop
+  have hqcont : ContinuousOn
+      (fun s => 9.4 * v s + 0.5 * (v s - uFeed s) + 0.1 * (v s - gFeed s)) (Icc (0 : ℝ) 10) :=
+    ((hvcont.const_mul 9.4).add ((hvcont.sub hucont).const_mul 0.5)).add
+      ((hvcont.sub hgcont).const_mul 0.1)
   have htraj : IsTrajectory illustrative uFeed v 0 10 :=
     IsTrajectory.of_charge_balance (θ := nominal) (g := gFeed)
       (du := fun t => 2 * Real.cos (10 * t)) (dg := fun t => 5 * Real.cos (10 * t))
@@ -348,7 +359,7 @@ theorem illustrative_feedthrough_scenario :
       (fun t _ => by
         rw [abs_mul, abs_of_pos (by norm_num : (0 : ℝ) < 0.5)]
         linarith [Real.abs_sin_le_one t])
-      (fun t ht => (hode t ht).continuousWithinAt) hq
+      hqcont hucont hgcont hq
   have h0 : v 0 ∈ Icc (-0.10 : ℝ) 2.08 := by
     rw [hv0]; norm_num
   obtain ⟨-, hrise, -⟩ := illustrative_guarantee uFeed v 0 10 htraj h0

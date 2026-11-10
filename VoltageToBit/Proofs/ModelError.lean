@@ -23,16 +23,29 @@ same node (a higher-fidelity device model, or the physical device).
   only, and an explicit set `U` of input values. The sandwich is required for
   `x ∈ U` and `y` in the safe domain, and the input waveform is required to
   stay in `U`.
-* `IsTrajectory.of_feedthrough`: the node equation with the displacement
-  currents through a gate-drain capacitance `CM` and one coupling capacitance
-  `Cc` written out. Its solutions are trajectories when
-  `CM * Su + Cc * Sg + εw ≤ eps`, where `Su` and `Sg` bound the slew of the
-  input and of the aggressor. This is the formal place where an input slew
-  bound is needed.
-* `IsTrajectory.of_charge_balance`: the same conclusion from conservation of
-  the node charge, for three constant linear capacitors.
-* `Design.InBox.In_eq_zero`, `Design.InBox.Inet_ground_eq_zero`: two places
-  where all box members have the same current (limit 3 below).
+* `slew_bound_of_rderiv`: a waveform that is continuous on `[a, b]` and has at
+  every instant of `[a, b)` a right derivative of magnitude at most `S` moves
+  by at most `S * (t - s)` between two instants `s ≤ t` of `[a, b]`. The
+  continuity is needed: a bound on the right derivative alone is not a slew
+  bound.
+* `IsTrajectory.of_charge_balance`: gate-drain feedthrough and coupling, from
+  conservation of the node charge. Three constant linear capacitors meet at
+  the output node: `CL` to ground, `CM` to the input and `Cc` to one aggressor.
+  If the node charge is continuous and its right derivative is the current
+  delivered to the node (the net current of one box member plus a residual of
+  magnitude at most `εw`), the input and the aggressor are continuous with
+  right derivatives of magnitude at most `Su` and `Sg`, the total capacitance
+  `CL + CM + Cc` lies in `[Clo, Chi]`, and `CM * Su + Cc * Sg + εw ≤ eps`,
+  then the node voltage is a trajectory. This is the formal place where an
+  input slew bound is needed. Inputs with a jump are outside this lemma
+  (limit 4 below).
+* `Design.InBox.In_eq_zero`: for inputs at or below `Vtnlo` and a node at or
+  above ground, the NMOS current of every box member is zero. This is about
+  the NMOS current only: the net currents of the box members can still differ
+  there, through the PMOS.
+* `Design.InBox.Inet_ground_eq_zero`: for an admissible record, at a grounded
+  node and for inputs at or above `VDDhi - Vtplo`, the net current of every
+  box member is zero. (Both lemmas are used in limit 3 below.)
 
 So a model whose current is multiplicatively off from one square law (the
 typical shape of model-form error) is covered when the parameter box is wide
@@ -46,9 +59,11 @@ not, such as conduction below threshold.
    this repository only for the square law with constant parameters and a
    disturbance that is continuous in time (`exists_solution`, and
    `exists_trajectory_step` for one jump of the input). For another current
-   law `J` it needs its own argument. The equation with feedthrough terms is
-   covered by `exists_solution` only when `CM * du + Cc * dg + w` is a
-   continuous function of time (as in
+   law `J` it needs its own argument. The same holds for the charge balance of
+   `of_charge_balance`. For the node voltage it is the equation
+   `(CL + CM + Cc) * v' = Inet θ u v + CM * du + Cc * dg + w`, and
+   `exists_solution` provides a solution of it only when
+   `CM * du + Cc * dg + w` is a continuous function of time (as in
    `Examples.illustrative_feedthrough_scenario`), which a ramp input with
    corners does not give.
 2. **The obligation ranges over the input values that occur.** In
@@ -61,9 +76,10 @@ not, such as conduction below threshold.
    comparison is a statement about `U` and the safe domain alone, and the
    restriction of the input to `U` is a visible hypothesis.
 3. **Where all box members coincide, the other model must agree in absolute
-   terms.** The sandwich is as wide as the spread of the currents over the box,
-   and no wider. Two cases, with the numbers of the illustrative record
-   (`Vtnlo = 0.45`, `VDDhi - Vtplo = 1.53`):
+   terms.** The sandwich is as wide as the spread of the net currents over the
+   box, and no wider. One case in which the net currents of all box members
+   coincide, and one in which only their NMOS currents do, with the numbers of
+   the illustrative record (`Vtnlo = 0.45`, `VDDhi - Vtplo = 1.53`):
    * At a grounded node, `y = 0`, and inputs `x ≥ 1.53`, the net current of
      every box member is exactly zero (`Design.InBox.Inet_ground_eq_zero`). The
      sandwich there says `|J x 0| ≤ εm`; the box contributes nothing.
@@ -74,11 +90,18 @@ not, such as conduction below threshold.
      other model conducts there has to fit between that model's PMOS current
      and the smallest PMOS current of the box, or into `εm`. Conduction below
      threshold at a valid-low input (`VIL = 0.40`) is the case in point.
+4. **Nothing about the feedthrough of an input jump.** `of_charge_balance`
+   assumes that the input and the aggressor are continuous. With `CM > 0` and
+   a continuous aggressor, a continuous node voltage cannot conserve charge
+   across a jump of the input, so inputs with a jump are outside that lemma.
+   The trajectory notion itself still admits them (existence for one jump is
+   `exists_trajectory_step`). For such an input the model therefore leaves the
+   feedthrough at the jump out.
 
 These are statements about mathematics only. Whether a physical inverter, or a
-SPICE model of one, satisfies the sandwich hypothesis, the slew bounds or the
-capacitance bounds is an empirical question that this repository does not
-settle. See `docs/assumptions.md`.
+SPICE model of one, satisfies the sandwich hypothesis, the continuity and slew
+hypotheses or the capacitance bounds is an empirical question that this
+repository does not settle. See `docs/assumptions.md`.
 
 The hypothesis is needed only on the safe domain: `IsTrajectory.safe` shows the
 solution never leaves it, so no bound outside the safe domain is ever used.
@@ -163,7 +186,11 @@ theorem exists_inBox_of_between {θ₁ θ₂ : Params} (h₁ : D.InBox θ₁) (h
   rw [this, abs_zero]
   exact hε
 
-/-! ### Where all box members coincide -/
+/-! ### Two currents that are zero for every box member
+
+`InBox.In_eq_zero` is about the NMOS current only: the net currents of the box
+members can still differ there, through the PMOS. `InBox.Inet_ground_eq_zero`
+is about the net current. -/
 
 /-- For inputs at or below the smallest NMOS threshold of the box and a node at
 or above ground, the NMOS current of every box member is exactly zero. No box
@@ -257,54 +284,123 @@ theorem IsTrajectory.of_static_sandwich {D : Design} {u v : ℝ → ℝ} {a b : 
   IsTrajectory.of_sandwich (J := fun t y => J (u t) y) hεm hbudget
     (fun t ht y hy => hJ (u t) (hU t ht) y hy) hw hcont hode
 
-/-- **Feedthrough and coupling: where an input slew bound is needed.** The
-output node of an inverter is coupled to its input through the gate-drain
-capacitance `CM`, and to a neighbouring (aggressor) node `g` through a coupling
-capacitance `Cc`. The node equation then reads
+/-- **A continuous waveform with a bounded right derivative has a slew bound.**
+If `u` is continuous on `[a, b]` and has at every instant `t` of `[a, b)` a
+right derivative `du t` with `|du t| ≤ S`, then `|u t - u s| ≤ S * (t - s)` for
+all `a ≤ s ≤ t ≤ b`: between two instants the waveform moves by at most `S`
+times the elapsed time. This is the mean value inequality for right
+derivatives (`norm_image_sub_le_of_norm_deriv_right_le_segment` in Mathlib).
 
-`c * v' = Inet θ (u t) (v t) + CM * du t + Cc * dg t + w t`,
+The continuity hypothesis cannot be dropped. A bound on the right derivative
+alone is not a slew bound: the ideal step that takes its new value at the jump
+instant has right derivative zero at every instant, the jump instant included,
+and is not continuous (`uStepR_hasDerivWithinAt_zero` and
+`uStepR_not_continuousOn` in `Examples/InputClass.lean`). -/
+theorem slew_bound_of_rderiv {u du : ℝ → ℝ} {a b S : ℝ}
+    (hucont : ContinuousOn u (Icc a b))
+    (hu : ∀ t ∈ Ico a b, HasDerivWithinAt u (du t) (Ici t) t)
+    (hS : ∀ t ∈ Ico a b, |du t| ≤ S) {s t : ℝ} (has : a ≤ s) (hst : s ≤ t) (htb : t ≤ b) :
+    |u t - u s| ≤ S * (t - s) := by
+  have h := norm_image_sub_le_of_norm_deriv_right_le_segment (f := u) (f' := du) (C := S)
+    (hucont.mono (Icc_subset_Icc has le_rfl))
+    (fun x hx => hu x ⟨has.trans hx.1, hx.2⟩)
+    (fun x hx => by rw [Real.norm_eq_abs]; exact hS x ⟨has.trans hx.1, hx.2⟩) t ⟨hst, htb⟩
+  rwa [Real.norm_eq_abs] at h
 
-where `du t` and `dg t` are the right derivatives of the input and of the
-aggressor, and `w` collects whatever else flows into the node. Here `c` is the
-*total* incremental capacitance of the node: it includes `CM` and `Cc` as well
-as the load, and it is this total that has to lie in `[Clo, Chi]`.
+/-- **Feedthrough and coupling, from conservation of charge: where an input
+slew bound is needed.** Three constant linear capacitors meet at the output
+node: `CL` to ground, `CM` to the input `u` (the gate-drain capacitance), and
+`Cc` to a neighbouring (aggressor) node `g`. The charge they hold on the node
+is `q = CL * v + CM * (v - u) + Cc * (v - g)`.
 
-If the slews are bounded, `|du| ≤ Su` and `|dg| ≤ Sg`, the residual is bounded,
-`|w| ≤ εw`, and the budget `CM * Su + Cc * Sg + εw ≤ eps` holds, then every
-solution is a trajectory, and the guarantee applies to it.
+What is assumed:
 
-This lemma is the formal place where an input slew bound is needed. The
-guarantee itself takes every input function; over that class the term
-`CM * du` has no bound, so the feedthrough current is covered by `eps` only
-under a slew bound such as `Su`.
+* **Conservation of charge** (`hqcont`, `hq`, with `hθ` and `hw`). The charge
+  `q` is continuous on `[a, b]`, and at every instant `t` of `[a, b)` its
+  right derivative is the current delivered to the node: the net current
+  `Inet θ (u t) (v t)` of the two transistors, for one parameter point `θ` of
+  the box, plus a residual `w t` with `|w t| ≤ εw`. The continuity is what
+  excludes an impulsive current. A continuous function is determined by its
+  initial value and its right derivative (`eq_of_has_deriv_right_eq` in
+  Mathlib), so with both hypotheses the delivered current accounts for every
+  change of the charge. The right derivative alone would not: a function with
+  a jump can have right derivative zero at every instant.
+* **Slew bounds** (`hucont`, `hu`, `hSu` for the input; `hgcont`, `hg`, `hSg`
+  for the aggressor). Each of the two waveforms is continuous on `[a, b]` and
+  has at every instant of `[a, b)` a right derivative, of magnitude at most
+  `Su`, respectively `Sg`. (The derivatives are one-sided so that a waveform
+  with corners, such as a ramp, is admitted.) By `slew_bound_of_rderiv` this
+  is a slew bound in the ordinary sense, `|u t - u s| ≤ Su * (t - s)` for
+  `a ≤ s ≤ t ≤ b`. Here too the continuity cannot be dropped. A bound on the
+  right derivative alone is not a slew bound, because the ideal step that
+  takes its new value at the jump instant has right derivative zero at every
+  instant (`uStepR_hasDerivWithinAt_zero` and `uStepR_not_continuousOn` in
+  `Examples/InputClass.lean`).
+* **Capacitances and budget** (`hCM`, `hCc`, `hClo`, `hC1`, `hC2`, `hbudget`).
+  `CM` and `Cc` are nonnegative, the total capacitance `CL + CM + Cc` lies in
+  `[Clo, Chi]` with `0 < Clo`, and `CM * Su + Cc * Sg + εw ≤ eps`.
 
-It is a statement about the model, not evidence about a device. Whether a
-device has a gate-drain capacitance of at most `CM`, whether its input and its
-neighbours respect the slew bounds, and whether one aggressor behind a linear
-capacitor describes its surroundings, is not addressed here.
+Then `v` is a trajectory, and the guarantee applies to it. The proof solves
+the definition of the charge for the node voltage,
+`v = (q + CM * u + Cc * g) / (CL + CM + Cc)`. The three continuity hypotheses
+give the continuity of `v` that a trajectory must have. (Given the continuity
+of `u` and `g`, the charge is continuous exactly when `v` is.) The right
+derivatives give the node equation
 
-The hypotheses `_hu` and `_hg` are not used by the proof: they say what `du`
-and `dg` are, and the proof needs only the bounds on them. They are needed in
-`IsTrajectory.of_charge_balance`, which derives the node equation above from
-conservation of charge. -/
-theorem IsTrajectory.of_feedthrough {D : Design} {θ : Params} {u g v du dg w : ℝ → ℝ}
-    {a b : ℝ} {CM Cc Su Sg εw : ℝ} (hCM : 0 ≤ CM) (hCc : 0 ≤ Cc)
+`(CL + CM + Cc) * v' = Inet θ (u t) (v t) + CM * du t + Cc * dg t + w t`,
+
+in which the two displacement currents and the residual form one disturbance
+of magnitude at most `CM * Su + Cc * Sg + εw` (`IsTrajectory.of_model_error`).
+
+What the statement says and does not say:
+
+* The capacitance that must lie in `[Clo, Chi]` is the *total* incremental
+  capacitance of the node, `CL + CM + Cc`. It includes `CM` and `Cc` as well
+  as the load.
+* This lemma is the formal place where an input slew bound is needed. The
+  guarantee itself takes every input function; over that class the term
+  `CM * du` has no bound, so the feedthrough current is covered by `eps` only
+  under a slew bound such as `Su`.
+* Inputs with a jump are outside this lemma. With `CM > 0` a continuous `v`
+  cannot conserve charge across a jump of the input: with `v` and `g`
+  continuous, the charge changes at the jump by `CM` times its height.
+  Conserving the charge would take a jump of `v`, and a trajectory is
+  continuous. The trajectory notion itself still admits inputs with a jump
+  (existence for one jump is `exists_trajectory_step`), which means that for
+  such an input the model leaves the feedthrough at the jump out. (With
+  `CM = 0` there is no feedthrough from the input, and
+  `IsTrajectory.of_model_error` asks nothing about its regularity.)
+* Only constant linear capacitors are covered, and one aggressor.
+* It is a statement about the model, not evidence about a device. Whether the
+  capacitances at the output node of a device are constant and have these
+  values, whether its input and its neighbours are continuous and respect the
+  slew bounds, and whether one aggressor behind a linear capacitor describes
+  its surroundings, is not addressed here. -/
+theorem IsTrajectory.of_charge_balance {D : Design} {θ : Params} {u g v du dg w : ℝ → ℝ}
+    {a b : ℝ} {CL CM Cc Su Sg εw : ℝ} (hCM : 0 ≤ CM) (hCc : 0 ≤ Cc)
+    (hClo : 0 < D.Clo) (hC1 : D.Clo ≤ CL + CM + Cc) (hC2 : CL + CM + Cc ≤ D.Chi)
     (hbudget : CM * Su + Cc * Sg + εw ≤ D.eps) (hθ : D.InBox θ)
-    (_hu : ∀ t ∈ Ico a b, HasDerivWithinAt u (du t) (Ici t) t)
-    (_hg : ∀ t ∈ Ico a b, HasDerivWithinAt g (dg t) (Ici t) t)
+    (hu : ∀ t ∈ Ico a b, HasDerivWithinAt u (du t) (Ici t) t)
+    (hg : ∀ t ∈ Ico a b, HasDerivWithinAt g (dg t) (Ici t) t)
     (hSu : ∀ t ∈ Ico a b, |du t| ≤ Su) (hSg : ∀ t ∈ Ico a b, |dg t| ≤ Sg)
     (hw : ∀ t ∈ Ico a b, |w t| ≤ εw)
-    (hcont : ContinuousOn v (Icc a b))
-    (hode : ∀ t ∈ Ico a b, ∃ v' c : ℝ, HasDerivWithinAt v v' (Ici t) t ∧
-      D.Clo ≤ c ∧ c ≤ D.Chi ∧
-      c * v' = Inet θ (u t) (v t) + CM * du t + Cc * dg t + w t) :
-    IsTrajectory D u v a b where
-  cont := hcont
-  incl := fun t ht => by
-    obtain ⟨v', c, hd, hc1, hc2, he⟩ := hode t ht
-    refine ⟨v', c, hd, hc1, hc2, fun _ => ⟨θ, hθ, ?_⟩⟩
-    have e : c * v' - Inet θ (u t) (v t) = CM * du t + Cc * dg t + w t := by
-      rw [he]; ring
+    (hqcont : ContinuousOn (fun s => CL * v s + CM * (v s - u s) + Cc * (v s - g s)) (Icc a b))
+    (hucont : ContinuousOn u (Icc a b)) (hgcont : ContinuousOn g (Icc a b))
+    (hq : ∀ t ∈ Ico a b, HasDerivWithinAt
+      (fun s => CL * v s + CM * (v s - u s) + Cc * (v s - g s))
+      (Inet θ (u t) (v t) + w t) (Ici t) t) :
+    IsTrajectory D u v a b := by
+  have hC : CL + CM + Cc ≠ 0 := (lt_of_lt_of_le hClo hC1).ne'
+  -- the definition of the charge, solved for the node voltage
+  have hv : ∀ s, v s = (CL * v s + CM * (v s - u s) + Cc * (v s - g s) + CM * u s
+      + Cc * g s) / (CL + CM + Cc) := fun s => by
+    field_simp
+    ring
+  -- the displacement currents and the residual are one disturbance of the square law of `θ`
+  refine IsTrajectory.of_model_error (J := fun t x => Inet θ (u t) x)
+    (w := fun t => CM * du t + Cc * dg t + w t) (εm := 0) (εw := CM * Su + Cc * Sg + εw)
+    (by linarith) (fun t _ x _ => ⟨θ, hθ, by simp⟩) (fun t ht => ?_) ?_ (fun t ht => ?_)
+  · -- the disturbance is within `CM * Su + Cc * Sg + εw`
     have h1 : |CM * du t| ≤ CM * Su := by
       rw [abs_mul, abs_of_nonneg hCM]
       exact mul_le_mul_of_nonneg_left (hSu t ht) hCM
@@ -314,49 +410,16 @@ theorem IsTrajectory.of_feedthrough {D : Design} {θ : Params} {u g v du dg w : 
     have h3 := hw t ht
     have h4 := abs_add_le (CM * du t + Cc * dg t) (w t)
     have h5 := abs_add_le (CM * du t) (Cc * dg t)
-    rw [e]
     linarith
-
-/-- **The feedthrough equation from conservation of charge.** Three constant
-linear capacitors meet at the output node: `CL` to ground, `CM` to the input
-`u`, and `Cc` to an aggressor node `g`. The charge they hold on the node is
-`CL * v + CM * (v - u) + Cc * (v - g)`, and its rate of change is the current
-delivered by the two transistors plus a residual `w` (hypothesis `hq`). If the
-input and the aggressor have right derivatives bounded by `Su` and `Sg`, the
-total capacitance `CL + CM + Cc` lies in `[Clo, Chi]`, and the budget
-`CM * Su + Cc * Sg + εw ≤ eps` holds, then `v` is a trajectory.
-
-In this form the capacitance that must lie in `[Clo, Chi]` is visibly the
-total, including `CM` and `Cc`, and the right derivatives of `u` and `g` are
-used: they turn the charge balance into the node equation of
-`IsTrajectory.of_feedthrough`. Like that lemma, this is a statement about the
-model, for constant linear capacitors only; it is not evidence about a device. -/
-theorem IsTrajectory.of_charge_balance {D : Design} {θ : Params} {u g v du dg w : ℝ → ℝ}
-    {a b : ℝ} {CL CM Cc Su Sg εw : ℝ} (hCM : 0 ≤ CM) (hCc : 0 ≤ Cc)
-    (hClo : 0 < D.Clo) (hC1 : D.Clo ≤ CL + CM + Cc) (hC2 : CL + CM + Cc ≤ D.Chi)
-    (hbudget : CM * Su + Cc * Sg + εw ≤ D.eps) (hθ : D.InBox θ)
-    (hu : ∀ t ∈ Ico a b, HasDerivWithinAt u (du t) (Ici t) t)
-    (hg : ∀ t ∈ Ico a b, HasDerivWithinAt g (dg t) (Ici t) t)
-    (hSu : ∀ t ∈ Ico a b, |du t| ≤ Su) (hSg : ∀ t ∈ Ico a b, |dg t| ≤ Sg)
-    (hw : ∀ t ∈ Ico a b, |w t| ≤ εw)
-    (hcont : ContinuousOn v (Icc a b))
-    (hq : ∀ t ∈ Ico a b, HasDerivWithinAt
-      (fun s => CL * v s + CM * (v s - u s) + Cc * (v s - g s))
-      (Inet θ (u t) (v t) + w t) (Ici t) t) :
-    IsTrajectory D u v a b := by
-  have hC : CL + CM + Cc ≠ 0 := (lt_of_lt_of_le hClo hC1).ne'
-  refine IsTrajectory.of_feedthrough hCM hCc hbudget hθ hu hg hSu hSg hw hcont
-    (fun t ht => ?_)
-  -- `v = (q + CM * u + Cc * g) / (CL + CM + Cc)`, differentiated from the right
-  have hsum := (((hq t ht).add ((hu t ht).const_mul CM)).add
-    ((hg t ht).const_mul Cc)).div_const (CL + CM + Cc)
-  have hv : ∀ s, v s = (CL * v s + CM * (v s - u s) + Cc * (v s - g s) + CM * u s
-      + Cc * g s) / (CL + CM + Cc) := fun s => by
+  · -- `v` is continuous because the charge, the input and the aggressor are
+    exact (((hqcont.add (hucont.const_mul CM)).add (hgcont.const_mul Cc)).div_const
+      (CL + CM + Cc)).congr (fun s _ => hv s)
+  · -- the node equation, by differentiating from the right
+    have hsum := (((hq t ht).add ((hu t ht).const_mul CM)).add
+      ((hg t ht).const_mul Cc)).div_const (CL + CM + Cc)
+    refine ⟨(Inet θ (u t) (v t) + w t + CM * du t + Cc * dg t) / (CL + CM + Cc),
+      CL + CM + Cc, hsum.congr (fun s _ => hv s) (hv t), hC1, hC2, ?_⟩
     field_simp
     ring
-  refine ⟨(Inet θ (u t) (v t) + w t + CM * du t + Cc * dg t) / (CL + CM + Cc),
-    CL + CM + Cc, hsum.congr (fun s _ => hv s) (hv t), hC1, hC2, ?_⟩
-  field_simp
-  ring
 
 end VoltageToBit
