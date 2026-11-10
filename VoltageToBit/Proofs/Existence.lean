@@ -27,6 +27,19 @@ Scope: existence and uniqueness are proved for constant parameters, continuous
 `u` and `w`, and Lipschitz `Cf`. The guarantee itself needs none of this; for
 less regular data, or parameters that move within the box, it is a statement
 about whatever trajectories there are.
+
+The capacitance bounds are required for all real arguments. In every lemma of
+this file that takes a capacitance function `Cf`, the hypothesis reads
+`∀ x, D.Clo ≤ Cf x` (with `Cf x ≤ D.Chi` where the upper bound is needed), for
+every real `x` and not only for `x` in the safe domain; only the Lipschitz
+condition is restricted to the safe domain. A capacitance model that is known
+only on the safe domain therefore has to be extended to all of `ℝ` before
+these lemmas apply, for example by clamping its argument:
+`fun x => Cf (clamp D.Vlo D.Vhi x)` agrees with `Cf` on the safe domain and
+takes no other values. The lemmas then speak about solutions of the extended
+model. For an admissible record such a solution stays in the safe domain if it
+starts there (`exists_solution`, `IsTrajectory.safe`), and there the extended
+model is the original one.
 -/
 
 namespace VoltageToBit
@@ -53,7 +66,12 @@ theorem IsTrajectory.of_ode_varying {D : Design} {θ : ℝ → Params} {u v : �
 
 /-- The inclusion contains the ODE model with constant parameters in the box,
 an arbitrary capacitance function within the bounds and an arbitrary
-disturbance within the bound. -/
+disturbance within the bound.
+
+The bounds on `Cf` are required for all real arguments (`hCf`), not only on the
+safe domain. A capacitance model known only on the safe domain has to be
+extended first, for example by clamping its argument
+(`fun x => Cf (clamp D.Vlo D.Vhi x)`); see the header of this file. -/
 theorem IsTrajectory.of_ode {D : Design} {θ : Params} {u v : ℝ → ℝ} {a b : ℝ}
     {Cf w : ℝ → ℝ} (hθ : D.InBox θ) (hCf : ∀ x, D.Clo ≤ Cf x ∧ Cf x ≤ D.Chi)
     (hw : ∀ t ∈ Ico a b, |w t| ≤ D.eps) (hcont : ContinuousOn v (Icc a b))
@@ -197,7 +215,14 @@ theorem exists_clampedField_bounds {D : Design} {θ : Params} (hD : D.Admissible
 /-- **Existence.** For continuous input and disturbance, a capacitance function
 that stays at or above `Clo` and is Lipschitz on the safe domain, and an
 initial state in the safe domain, the ODE `Cf (v) * dv/dt = Inet θ u v + w` has
-a solution on the whole interval `[a, b]`, and it stays in the safe domain. -/
+a solution on the whole interval `[a, b]`, and it stays in the safe domain.
+
+The bound `Clo ≤ Cf x` is required for all real `x` (`hCf`), not only on the
+safe domain; only the Lipschitz condition `hCfLip` is restricted to the safe
+domain. A capacitance model known only on the safe domain has to be extended
+first, for example by clamping its argument
+(`fun x => Cf (clamp D.Vlo D.Vhi x)`). The solution obtained stays in the safe
+domain, where the extension agrees with the model. -/
 theorem exists_solution {D : Design} {θ : Params} (hD : D.Admissible) (hθ : D.InBox θ)
     {Cf : ℝ → ℝ} (hCf : ∀ x, D.Clo ≤ Cf x) {Kc : ℝ}
     (hCfLip : ∀ x ∈ D.Safe, ∀ y ∈ D.Safe, |Cf x - Cf y| ≤ Kc * |x - y|)
