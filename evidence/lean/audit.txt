@@ -18,10 +18,10 @@ project modules in the audited environment: 18
   VoltageToBit.Proofs.NonVacuity: 9 declarations
   VoltageToBit.Proofs.Reach: 61 declarations
 imported environment: 5220 modules, 457119 declarations
-of these, marked unsafe or partial (they exist for the compiler; no kernel checks them and no definition or theorem may refer to them): 4544
+of these, marked unsafe or partial (they exist for the compiler; the replay tools leave them out, and the kernel lets no safe definition or theorem refer to them): 4544
 declarations audited: 433 (of which theorems: 291)
 kinds: constructor: 5, definition: 127, inductive type: 5, recursor: 5, theorem: 291
-declarations a kernel can check: 430; compiler auxiliaries marked partial, which no kernel checks and no definition or theorem may refer to: 3
+declarations that the replay steps re-check: 430; compiler auxiliaries marked partial, which they leave out and to which the kernel lets no safe definition or theorem refer: 3
   VoltageToBit.FallSegs._unsafe_rec
   VoltageToBit.RiseSegs._unsafe_rec
   VoltageToBit.finalLevel._unsafe_rec
