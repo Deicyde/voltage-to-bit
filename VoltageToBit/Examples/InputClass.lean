@@ -7,18 +7,19 @@ import VoltageToBit.Proofs.Contamination
 
 `illustrative_guarantee` and the general theorems `IsTrajectory.safe`, `.rise`,
 `.fall`, `.decoded` are stated for every input function `u : ℝ → ℝ` and every
-trajectory `v` for that input. Such a statement says something about an input
-only if a trajectory exists for it. This file shows, with compiled statements
+trajectory `v` for that input that starts in the safe domain. Such a statement
+says something about an input on an interval only if a trajectory from the
+safe domain exists for it there. This file shows, with compiled statements
 about the illustrative record, that this is a real restriction.
 
 Two inputs that differ at a single instant:
 
 * `uStepL` is 1.8 V for `t ≤ 4` and 0 V afterwards. At the jump instant `t = 4`
   it still has its **old** value.
-  `stepL_no_trajectory`: there is **no** trajectory for it on `[0, 10]`, from
-  any initial state in the safe domain. So on `[0, 10]` the hypotheses of the
-  guarantee cannot be met for this input: the guarantee holds vacuously there
-  and says nothing.
+  `stepL_no_trajectory`: there is **no** trajectory for it on `[0, 10]` from
+  any initial state in the safe domain. So for this input the hypotheses of
+  the guarantee cannot be met with `a = 0` and `b = 10`: there the guarantee
+  holds vacuously and says nothing.
 * `uStepR` is 1.8 V for `t < 4` and 0 V from `t = 4` on. At the jump instant it
   already has its **new** value.
   `stepR_has_trajectory`: trajectories exist on `[0, 10]` from every initial
@@ -28,25 +29,41 @@ Two inputs that differ at a single instant:
 `step_input_scope` states both facts, and that the two inputs agree at every
 `t ≠ 4`, in one statement with explicit numbers.
 
+Two qualifiers are part of the non-existence statements and cannot be dropped.
+
+* *From an initial state in the safe domain.* `IsTrajectory` asks for the
+  current balance only while the node is in the safe domain. A constant
+  outside it, 5 V for example, is therefore a trajectory for every input,
+  `uStepL` included. The guarantee does not speak about such functions,
+  because it assumes a start in the safe domain.
+* *On `[0, 10]`.* On an interval that begins after the jump, `[5, 10]` for
+  example, `uStepL` is constant, and trajectories exist from every state of
+  the safe domain (`illustrative_exists_const` and
+  `IsTrajectory.congr_input`).
+
 Both inputs take only the values 1.8 V and 0 V, so each of them is a valid
-input bit at every instant. The emptiness for `uStepL` is not caused by an
-input in the undefined band.
+input bit at every instant. That `uStepL` has no trajectory on `[0, 10]` from
+the safe domain is not caused by an input in the undefined band.
 
-## Why there is no trajectory
+## Why there is no trajectory from the safe domain
 
-`IsTrajectory` asks, at every instant, for a right derivative that satisfies
-the current balance with the input value *at that instant*. At `t = 4` the
-balance for `uStepL` refers to 1.8 V. For a node in `[-0.02, 0.25]` V every
-parameter point of the box then allows a right derivative of at most 1.72 V/ns
-(`Inet_high_le`: at most 6.6 µA, plus the 2 µA allowance, into at least 5 fF).
-Immediately after `t = 4` the input is 0 V, and while the node is at or below
-0.45 V, which it is for the next 2 ps, every parameter point forces a right
-derivative of at least 1.98 V/ns (`Inet_low_ge`: at least 41.616 µA, less
-2 µA, into at most 20 fF). A right derivative cannot be smaller than a lower
-bound that holds immediately afterwards (`rderiv_ge_of_right_nhd`), so no
-function qualifies (`no_trajectory_through_left_continuous_jump`).
-`stepL_no_trajectory` adds the global part: whatever the initial state in the
-safe domain, at `t = 4` the output is in `[-0.02, 0.25]` V.
+`IsTrajectory` asks, at every instant, for a right derivative and, while the
+node is in the safe domain, for the current balance with the input value *at
+that instant*. A trajectory that starts in the safe domain stays in it
+(`IsTrajectory.safe`), so for it the balance is in force at every instant. At
+`t = 4` the balance for `uStepL` refers to 1.8 V. For a node in
+`[-0.02, 0.25]` V every parameter point of the box then allows a right
+derivative of at most 1.72 V/ns (`Inet_high_le`: at most 6.6 µA, plus the 2 µA
+allowance, into at least 5 fF). Immediately after `t = 4` the input is 0 V,
+and while the node is at or below 0.45 V, which it is for the next 2 ps, every
+parameter point forces a right derivative of at least 1.98 V/ns
+(`Inet_low_ge`: at least 41.616 µA, less 2 µA, into at most 20 fF). A right
+derivative cannot be smaller than a lower bound that holds immediately
+afterwards (`rderiv_ge_of_right_nhd`), so no trajectory that starts in the
+safe domain passes through such a point
+(`no_trajectory_through_left_continuous_jump`). `stepL_no_trajectory` adds the
+global part: whatever the initial state in the safe domain, at `t = 4` the
+output is in `[-0.02, 0.25]` V.
 
 `spike_no_trajectory` is the same obstruction for the input that is 0 V except
 at the single instant `t = 0`, where it is 1.8 V: no trajectory on `[0, 10]`
@@ -57,23 +74,33 @@ starts with an output in `[-0.02, 0.25]` V, although for the constant input
 ## What this delimits
 
 The guarantee quantifies over all input functions, but it has instances only
-where trajectories exist.
+where trajectories from the safe domain exist.
 
 * `exists_trajectory` proves existence for continuous inputs (only the input
   values on `[a, b)` matter, `IsTrajectory.congr_input`), and
   `exists_trajectory_step` for an input with one jump that takes its new value
-  at the jump instant. Both are for constant parameters, a Lipschitz
-  capacitance in range and a continuous disturbance within the bound.
-* For `uStepL` on `[0, 10]` non-existence is proved here.
+  at the jump instant. Both give a trajectory from every initial state in the
+  safe domain, and both are for constant parameters, a Lipschitz capacitance
+  in range and a continuous disturbance within the bound.
+* For `uStepL` on `[0, 10]`, non-existence from an initial state in the safe
+  domain is proved here.
 * For an input that no existence theorem reaches, the guarantee is a statement
-  about whatever trajectories there are, possibly none.
+  about whatever trajectories from the safe domain there are, possibly none.
 
 The obstruction belongs to the pointwise trajectory notion, not to a circuit:
 the two step inputs differ at one instant only. It is proved here for one jump
 of the illustrative record (from 1.8 V to 0 V, with the node in
-`[-0.02, 0.25]` V); nothing is proved here about other jumps or other states.
-An ideal digital edge has instances in this model when it takes its new value
-at the jump instant.
+`[-0.02, 0.25]` V) and, for `uStepL`, on the interval `[0, 10]`; nothing is
+stated here about other jumps or other states, or about `uStepL` on other
+intervals. An ideal digital edge has instances in this model when it takes its
+new value at the jump instant.
+
+## A step and its right derivative
+
+`uStepR_hasDerivWithinAt_zero`, `uStepR_not_continuousOn`: the ideal edge
+`uStepR` has right derivative zero at every instant, the jump instant
+included, and it is not continuous. So a bound on the right derivative of an
+input is not a slew bound unless the input is also continuous.
 
 Provenance. The content of this file was contributed by workstream E's review
 probes (`review/D01_JumpInput_PerInstant.lean`, with
@@ -82,7 +109,8 @@ probes (`review/D01_JumpInput_PerInstant.lean`, with
 of `docs/adversarial-review.md`) and ported into the library. Added in the
 port: `step_input_scope`. `uStepL_eq_uStepR_of_ne` restates
 `uStepR_eq_off_jump` of P02, and `illustrative_box_bounds` is `box_bounds` of
-D01 under a more specific name.
+D01 under a more specific name. Added later: the two statements about the
+right derivative of `uStepR`.
 -/
 
 namespace VoltageToBit.Examples
@@ -287,9 +315,11 @@ theorem uStepL_eq_uStepR_of_ne {t : ℝ} (ht : t ≠ 4) : uStepL t = uStepR t :=
   · simp [uStepL, uStepR, h, h.le]
   · simp [uStepL, uStepR, not_lt.mpr h.le, not_le.mpr h]
 
-/-- **No trajectory at all.** For the illustrative record and the input
-`uStepL` there is no trajectory on `[0, 10]` from any initial state in the safe
-domain. -/
+/-- **No trajectory from the safe domain.** For the illustrative record and the
+input `uStepL` there is no trajectory on `[0, 10]` from any initial state in
+the safe domain. Both qualifiers are needed: a constant outside the safe
+domain is a trajectory for every input, and on an interval that begins after
+the jump `uStepL` is constant and trajectories from the safe domain exist. -/
 theorem stepL_no_trajectory (v : ℝ → ℝ) (h : IsTrajectory illustrative uStepL v 0 10)
     (h0 : v 0 ∈ illustrative.Safe) : False := by
   have hadm := illustrative_admissible
@@ -349,9 +379,9 @@ instant `t = 4`:
 2. for the one that keeps its old value at the jump instant there is no
    trajectory of the illustrative record on `[0, 10]` from any initial state in
    `[-0.10, 2.08]` V, so the hypotheses of `illustrative_guarantee` cannot be
-   met and the guarantee says nothing;
-3. for the one that takes its new value at the jump instant a trajectory exists
-   from every initial state in `[-0.10, 2.08]` V. -/
+   met with `a = 0` and `b = 10`, and there the guarantee says nothing;
+3. for the one that takes its new value at the jump instant a trajectory on
+   `[0, 10]` exists from every initial state in `[-0.10, 2.08]` V. -/
 theorem step_input_scope :
     (uStepL 4 = 1.8 ∧ uStepR 4 = 0 ∧ ∀ t : ℝ, t ≠ 4 → uStepL t = uStepR t) ∧
     (¬ ∃ v : ℝ → ℝ, v 0 ∈ Icc (-0.10 : ℝ) 2.08 ∧ IsTrajectory illustrative uStepL v 0 10) ∧
@@ -363,6 +393,44 @@ theorem step_input_scope :
     fun v₀ hv₀ => stepR_has_trajectory v₀ (by rw [hsafe]; exact hv₀)⟩
   rintro ⟨v, h0, h⟩
   exact stepL_no_trajectory v h (by rw [hsafe]; exact h0)
+
+/-! ## A step and its right derivative -/
+
+/-- **The ideal step has right derivative zero at every instant**, the jump
+instant `t = 4` included: just after any instant `uStepR` is constant. So a
+bound on the right derivative of an input is not a slew bound unless the input
+is also continuous. `uStepR` swings by 1.8 V in no time, it meets the bound
+zero, and it is not continuous (`uStepR_not_continuousOn`). This is why the
+charge-balance lemma in `Proofs/ModelError.lean` assumes a continuous input. -/
+theorem uStepR_hasDerivWithinAt_zero : ∀ t : ℝ, HasDerivWithinAt uStepR 0 (Ici t) t := by
+  intro t
+  rcases lt_or_ge t 4 with ht | ht
+  · -- just after an instant `t < 4` the input is still 1.8 V
+    refine (hasDerivWithinAt_const t (Ici t) (1.8 : ℝ)).congr_of_eventuallyEq ?_ ?_
+    · filter_upwards [Ico_mem_nhdsGE ht] with x hx
+      simp [uStepR, hx.2]
+    · simp [uStepR, ht]
+  · -- from an instant `t ≥ 4` on the input is 0 V
+    refine (hasDerivWithinAt_const t (Ici t) (0 : ℝ)).congr ?_ ?_
+    · intro x hx
+      simp [uStepR, not_lt.mpr (le_trans ht hx)]
+    · simp [uStepR, not_lt.mpr ht]
+
+/-- **The ideal step is not continuous on `[0, 10]`.** It is 1.8 V at `t = 0`
+and 0 V at `t = 10` and takes no value in between. Together with
+`uStepR_hasDerivWithinAt_zero`: a function whose right derivative is zero at
+every instant need not be constant, so a bound on the right derivative alone
+does not bound how fast an input changes. -/
+theorem uStepR_not_continuousOn : ¬ ContinuousOn uStepR (Icc (0 : ℝ) 10) := by
+  intro h
+  -- a continuous function on `[0, 10]` that is 1.8 at 0 and 0 at 10 takes the value 1
+  have h0 : uStepR 0 = 1.8 := by simp [uStepR]
+  have h10 : uStepR 10 = 0 := by norm_num [uStepR]
+  have hmem : (1 : ℝ) ∈ Icc (uStepR 10) (uStepR 0) := by
+    rw [h0, h10]; constructor <;> norm_num
+  obtain ⟨t, -, ht⟩ := intermediate_value_Icc' (by norm_num : (0 : ℝ) ≤ 10) h hmem
+  unfold uStepR at ht
+  split_ifs at ht <;> norm_num at ht
 
 /-! ## A single-instant change of the input -/
 
