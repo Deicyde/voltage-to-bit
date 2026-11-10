@@ -4,9 +4,9 @@ import VoltageToBit.Proofs.Margins
 /-!
 # The digital guarantee for every trajectory
 
-For an admissible design `D`, every input `u : ℝ → ℝ` (no regularity assumed)
-and every trajectory `v` of the differential inclusion on `[a, b]` that starts
-in the safe domain:
+For an admissible design `D`, every input function `u : ℝ → ℝ` and every
+trajectory `v` of the differential inclusion on `[a, b]` that starts in the
+safe domain:
 
 * `IsTrajectory.safe`: `v` stays in the safe domain;
 * `IsTrajectory.rise`: if `u ≤ VIL` on `[s, e)` then `VOH ≤ v t` for all
@@ -19,8 +19,26 @@ The trajectory notion already quantifies over the capacitance, the parameter
 point of the box and the current error at each instant, so there is no
 separate parameter argument here.
 
-These are statements about *all* trajectories. That trajectories exist is
-proved separately in `Proofs/Existence.lean`.
+Scope of "every input function". No regularity of `u` is assumed, but these
+are statements about *all* trajectories for that input that start in the safe
+domain, so they have instances only where such trajectories exist. Existence
+is proved separately, and for two classes of inputs only: continuous inputs
+(`Proofs/Existence.lean`) and an input with one jump that takes its new value
+at the jump instant (`Proofs/Concat.lean`). The trajectory notion evaluates the
+input pointwise in time, so the value at a jump instant matters.
+`Examples/InputClass.lean` shows this in one case, for the illustrative
+record. For the step `uStepL`, which keeps its old value at the jump instant
+(1.8 V for `t ≤ 4`, 0 V afterwards), no trajectory on `[0, 10]` starts in the
+safe domain (`stepL_no_trajectory`). For `uStepR`, which differs from it only
+at `t = 4`, where it already has its new value, a trajectory on `[0, 10]`
+exists from every state of the safe domain (`stepR_has_trajectory`). So for
+`uStepL` the statements here are vacuously true on `[0, 10]`. This is not the
+absence of every trajectory: for an admissible record a constant outside the
+safe domain is a trajectory for every input, because the inclusion constrains
+nothing while the node is outside the safe domain; the statements here do not
+speak about such trajectories. Nor does it hold on every interval: after the
+jump `uStepL` is constant, and there trajectories exist from every state of
+the safe domain (`exists_trajectory` with `IsTrajectory.congr_input`).
 -/
 
 namespace VoltageToBit

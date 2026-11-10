@@ -1,0 +1,7 @@
+search/lean/rise-020-ctl-deadline-rounded-down.claim.lean:28:16: error: unsolved goals
+case refine_3
+⊢ False
+'VoltageToBit.Search.rise_020_ctl_deadline_rounded_down' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]

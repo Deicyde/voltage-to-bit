@@ -1,0 +1,785 @@
+{
+ "checks": {
+  "COMPLETED": [
+   "closed-form margins and taus (exact rationals)",
+   "admissibility of the design record",
+   "four margin claims on exact integer grids + seeded global search",
+   "model worst-case delays (quadrature, exact brackets, simulation)",
+   "multi-segment bounds: uniform and optimised breakpoints",
+   "trajectory matrix: 161448 runs, three guarantee checks",
+   "convergence: tolerance sweep x 5 methods, RK4 step sweep, non-autonomous cross-checks, step halving of the batch engine",
+   "negative controls (i)-(iv), each with a rejection and/or an exhibited trajectory",
+   "boundary behaviour: edge sweep into the invalid band, barrier stress at V_lo/V_hi, long mid-rail holds, transfer curve",
+   "model-form sensitivity study (channel-length modulation, subthreshold tail, gate-drain feedthrough) - a sensitivity study, not validation"
+  ],
+  "PROPOSED_NOT_RUN": [
+   "(a) tier T1: ngspice MOS Level-1 (LAMBDA=0, GAMMA=0, IS=1e-30) DC map and transients versus the Python simulator - PROPOSED, NOT RUN",
+   "(a2) tier T2: Level-1 with one omitted effect switched back on at a time - PROPOSED, NOT RUN (decks not rendered)",
+   "(b) tier T3: SKY130 BSIM4 nfet_01v8 / pfet_01v8_hvt (workstream B's recommendation, not frozen): sandwich residual versus eps_I, the four margins on the SPICE map, transient delays versus tau, excursions versus the safe domain - PROPOSED, NOT RUN"
+  ],
+  "SKIPPED_IN_THIS_INVOCATION": []
+ },
+ "code_sha256": {
+  "experiments/ngspice/decks/level1_dc_HLHHL.cir": "f343e10080780f57262a3a0d03c88ee49d522f499c7145c858fe5a1164112118",
+  "experiments/ngspice/decks/level1_dc_LLLHH.cir": "9e61d3431a70204099ac436d4beb1331ea76b439ab6b1a35a5ec3d30e5fe5b55",
+  "experiments/ngspice/decks/level1_dc_nominal.cir": "cca9a427dc07158944a892d3d5ff03b38843d8b516fa64e9ac0cbc790365a6f6",
+  "experiments/ngspice/decks/level1_tran_fall_HLHHL.cir": "07fcdcdc4719fd995534c925cac4fc9a3cdf3680ba37f20388861edf4c616b30",
+  "experiments/ngspice/decks/level1_tran_rise_LLLHH.cir": "6a1607a4df28c192f16980861a7ec3ed1af486474ce49e11368ec3967efd5f44",
+  "experiments/ngspice/decks/sky130_T3_dc_tt_1v8_27C.cir": "b89b32c74f43a0081ccfc66fa28f948bb63ab8cc2ee4f6caaf34ba6e80f1d62a",
+  "experiments/ngspice/decks/sky130_T3_tran_fall_tt_1v8_27C.cir": "81153f580cb0016c7389d3de943c9516eb67e087098fa940ca94357fe7fe35d5",
+  "experiments/ngspice/decks/sky130_T3_tran_rise_tt_1v8_27C.cir": "8caed3bdf2c4ecf2b11d682ce118f3a7b8c883b1330704bbfc6628a4f6d5958c",
+  "experiments/ngspice/run_ngspice.py": "c69976eeac2bb2bd052adf0c2b4662b3cb79e2b54e37639f7e64cbb07c73e540",
+  "experiments/requirements.txt": "2ed87bd6da8fa5a64946c85bef5dbfe8d2d9fd6d57563364245ddfa3ce135031",
+  "experiments/run_all.py": "0a2a20d6ca2bfff6c024e2acb9b60a84ad445d833dbf74d1e1bed7a49c22e3d5",
+  "experiments/v2b/__init__.py": "e2ca43bfea90e7a4f86337338a72429b94d0370c4cc140ca85325be4c9e6d5e5",
+  "experiments/v2b/boundary.py": "36ae1362d7d148095f7aff480107001df719c8deb45b4c67fd803cab8fea22a2",
+  "experiments/v2b/common.py": "e44b5056d58d5c9fb324e2f2a0a9b0ae35aca09faa3e762d5c595bd809940937",
+  "experiments/v2b/controls.py": "a22dbc0f0ea250c7fea51a13bf7b1eb97bfa50908b9ba3550d619565cb7580cb",
+  "experiments/v2b/convergence.py": "1713a4a20a2fd19bb8a0a106c52d51c8098e418a33b98b52e2e4f7d17b10dcab",
+  "experiments/v2b/design.py": "d571516ddd83cd9094d96ca7e07494033d52bcf6a0d08e073070ccad66bb7214",
+  "experiments/v2b/laws.py": "118dca9bc395ddd56e431b587cc6fd349d6727ab83ba48ef0e351998217fa523",
+  "experiments/v2b/manifest.py": "0ccbc28cb8759de23e8c5b7877d9fc3ff644e514ef94d64cc01e52d6f50b54dd",
+  "experiments/v2b/margins.py": "bace082c150a222dc9d3c43f69ac94e7a201c59c94df3d18d5f9e466d63fae53",
+  "experiments/v2b/plots.py": "e0ddf60795c0507f07852dc7848c5d541f91f83941f0e6916b88ef0afc616773",
+  "experiments/v2b/sensitivity.py": "1a94b3e6f27cd485ee0f80c3100e1ce951c673f804d9d8af231e090bd3b91b5d",
+  "experiments/v2b/signals.py": "e495b205f4a57266811060d5402d717e4fbe4d988e94e2e451220d7bde73c52d",
+  "experiments/v2b/sim.py": "589f630de7b3fd712585729f4e712685a07996c779188c355174998338b35982",
+  "experiments/v2b/spice.py": "367bdbc72ff6f45f27079c17379319d950101a5c84bf0c8d7ce52c2d1d735521",
+  "experiments/v2b/trajectories.py": "547db665b77db23d418b525d32337daf0db5c6896598fbdd491c780b4c3746f6",
+  "experiments/v2b/worstcase.py": "3e9985adf2fac29ce34cc8df73282c2065fcf4fc7dc9a170f8874d2095301067"
+ },
+ "command": [
+  "run_all.py"
+ ],
+ "design": {
+  "name": "illustrative-1v8",
+  "path": "designs/illustrative-1v8.json",
+  "sha256": "06ccc32a64938f43350d6fb68d991c15e62b9d6815f0b174391be073727bc967",
+  "status": "ILLUSTRATIVE. Numbers are plausible orders of magnitude for a small 1.8 V-class inverter but are NOT fitted to any process, device model, or measurement."
+ },
+ "documents_note": "hashes at the end of this run. The simulator was written against interface.md DRAFT v0 and updated to the v1 candidate (rev. 2) trajectory notion (parameter point free at each instant); docs/model.md (workstream B) was read only for the comparison-model recommendation and the Level-1 deck settings.",
+ "documents_read": {
+  "HANDOFF.md": "c56544e4031fffa982402ef146e53f939d9dbfd662fb561f374be237a9ba261f",
+  "docs/interface.md": "b2b16db13080fb42117324092871359bad77d7d434c9dcfa3a280b8d6936d7f7",
+  "docs/model.md": "5550139b536c5042e14ed1f2e800b3257e41188254cd51eff8dc061674ec0a78"
+ },
+ "environment": {
+  "machine": "arm64",
+  "packages": {
+   "matplotlib": "3.11.2",
+   "numpy": "2.4.6",
+   "scipy": "1.18.0"
+  },
+  "platform": "macOS-14.4-arm64-arm-64bit-Mach-O",
+  "python": "3.14.0 (v3.14.0:ebf955df7a8, Oct  7 2025, 08:20:14) [Clang 16.0.0 (clang-1600.0.26.6)]",
+  "python_executable": "<repo>/.venv/bin/python",
+  "uv": "uv 0.11.8 (Homebrew 2026-04-27 aarch64-apple-darwin)"
+ },
+ "evidence_status": {
+  "applicability": "the design record is ILLUSTRATIVE; these runs instantiate it",
+  "formal_correctness": "not addressed here (numerics are an independent check on the mathematics, not a proof)",
+  "physical_evidence": "none: no SPICE run, no measurement; the sensitivity study is not validation"
+ },
+ "git": {
+  "experiments_tree_differs_from_head": true,
+  "head_commit_at_run_time": "9b13e95c8c158a1790b57548acdd680069aa60d5",
+  "note": "workstream D does not commit; if the experiments tree differs from HEAD (untracked or modified files) the code is identified by the per-file SHA-256 list, not by the commit"
+ },
+ "jobs": 8,
+ "lean_sources_read": false,
+ "outputs": {
+  "01_margins/barrier_curves.csv": {
+   "bytes": 38440,
+   "sha256": "5c090244cf25b01cb2936a6d515058e403ffc83a35c2261f3796386d7626728f"
+  },
+  "01_margins/closed_form.json": {
+   "bytes": 6458,
+   "sha256": "e323d9b96c419330c11a7d50be4990de286cf3290500cd30a3996d3831807024"
+  },
+  "01_margins/margin_claims.json": {
+   "bytes": 8662,
+   "sha256": "66f85ba8870cded3fa158f6e444557bc03a76b9ff65df87cbd5afe040a2b33cf"
+  },
+  "01_margins/margin_curves.csv": {
+   "bytes": 33176,
+   "sha256": "68ee3a8bd9484a7bb11df562a5e8feeb002058c3adcd5e49ff71a0bae70bd3f7"
+  },
+  "01_margins/proposal_barrier_refinement.json": {
+   "bytes": 2477,
+   "sha256": "485fa65e080f671ab9f94d4f6cb0f28a0b6d15eb4b5fe33b77e12f55a38b78ce"
+  },
+  "02_trajectories/failing_cases.csv": {
+   "bytes": 250,
+   "sha256": "e58f3b2ec83d642552388aab504765cbb13fae663987413921b67d60537296e5"
+  },
+  "02_trajectories/group_summary.csv": {
+   "bytes": 43874,
+   "sha256": "6610d95f54ba447276672b586d83ca3375b683f9cb5ffce41d75fb3de0f7981e"
+  },
+  "02_trajectories/summary.json": {
+   "bytes": 5815,
+   "sha256": "09975107692e7a28bdac05984dcfe639a8d10d8b57a769c7e4ace746084b3902"
+  },
+  "02_trajectories/worst_runs.csv": {
+   "bytes": 11781,
+   "sha256": "1b211f38f406542b78793b72884c2b8404b4b285f4372a1ea780805bc4767e83"
+  },
+  "03_worstcase/breakpoints.json": {
+   "bytes": 25982,
+   "sha256": "b970307b8555cca58bdebc8aa0f9af16dda745a74b0faeba36244851b658affe"
+  },
+  "03_worstcase/corner_delays.csv": {
+   "bytes": 2304,
+   "sha256": "1977a2c908bcf53b7f6e9abd94a1d42146f74fc563ef697550643c68fb29e3fe"
+  },
+  "03_worstcase/multisegment_convergence.csv": {
+   "bytes": 2206,
+   "sha256": "283f836f0e1d0bc1c209dc1d53b7772489070dd1d462cc6cc87562b6a4b8f5dc"
+  },
+  "03_worstcase/worst_case.json": {
+   "bytes": 33073,
+   "sha256": "494da140507460e1a09d7f5aed4760ebb79122ab5db35e310fa706377286ef57"
+  },
+  "03_worstcase/worst_case_trajectories.csv": {
+   "bytes": 39620,
+   "sha256": "948bc3b8c14d60183b68e29f5673812d16c3380c3269bbb97ad17f86f03e4af3"
+  },
+  "04_convergence/batch_halving.csv": {
+   "bytes": 29539,
+   "sha256": "67be7a5a43753d181549ebd5dd3ce858febad5dcb992b942922453c9b215da8a"
+  },
+  "04_convergence/nonautonomous.csv": {
+   "bytes": 6572,
+   "sha256": "e520ed90ac64f89d8217d1f66a32bf3d589e720c92e4786d33766ad0a5751353"
+  },
+  "04_convergence/rk4_step_sweep.csv": {
+   "bytes": 2527,
+   "sha256": "22bed076e8c770193211ce2a73ebc9ae2c12c37993fd94c70850c5b7b201ec68"
+  },
+  "04_convergence/summary.json": {
+   "bytes": 1668,
+   "sha256": "b516a9899112dc3b745ff40b7edc26da040d9be0bce5b4e80710504532d4626c"
+  },
+  "04_convergence/tolerance_sweep.csv": {
+   "bytes": 7549,
+   "sha256": "8cffc9a31db7b2208a5ac85d0b42cbb455f696ae3ffe71af40ab60a8c2f5eb88"
+  },
+  "05_negative_controls/controls.json": {
+   "bytes": 17455,
+   "sha256": "c9b8b801c9e6b268431515aac54f61e1d220f4b89e9ac24e1bddbd811e0e6a63"
+  },
+  "05_negative_controls/trajectories.csv": {
+   "bytes": 276722,
+   "sha256": "f7672e779f3736bb789ae223646edee86c1c56338df956ac514893f51fa3c72e"
+  },
+  "06_boundary/edge_simulation_check.csv": {
+   "bytes": 1914,
+   "sha256": "92157f82a11e0d6079484ec49a30827821848c55783a2db33cb03ab060a584f4"
+  },
+  "06_boundary/edge_sweep.csv": {
+   "bytes": 8016,
+   "sha256": "aa25d990cefebd21a9c05d7c6d48d304e0b78fc17ddfb5dfe99e68f7bfadac8b"
+  },
+  "06_boundary/midrail_at_switching_threshold.csv": {
+   "bytes": 10044,
+   "sha256": "dffb9711f9890106a2957ebc7e5b39a734f538e645c524b85969c6eb871033b2"
+  },
+  "06_boundary/midrail_fixed_levels.csv": {
+   "bytes": 1124,
+   "sha256": "c657c7408503fb922c78f43d2eb74b9f9511867a35fc861e1f77c5bdd16917b8"
+  },
+  "06_boundary/summary.json": {
+   "bytes": 5770,
+   "sha256": "e26210e4c41be5e0b8f2add99680dbe8d1492dd239c0cbeba5007e88908a3c5c"
+  },
+  "06_boundary/supply_relative_domain.csv": {
+   "bytes": 3058,
+   "sha256": "163380194824144a581cfeb8f51b1513b569930698ea4861120eb039024044dd"
+  },
+  "06_boundary/transfer_curves.csv": {
+   "bytes": 31931,
+   "sha256": "5772a9e5ecc368734a6981f015dba49f9d9d688d2a493d72d76154df5c5b9e4e"
+  },
+  "07_sensitivity/fixed_theta_refit.csv": {
+   "bytes": 5916,
+   "sha256": "a78b8bba655e1ff78ccedb4a5ce2eb85b5e56496664139f86a73b8aa1f8ea9e0"
+  },
+  "07_sensitivity/fixed_theta_residual.csv": {
+   "bytes": 2505,
+   "sha256": "0e2658c5cf0f4d7b756e882ca22a88e13cadd97d4a6abfae3761917a8f16acce"
+  },
+  "07_sensitivity/miller.csv": {
+   "bytes": 1724,
+   "sha256": "d210970bb6341b0c10ccc25cf46b2944c2a0c951799ae10718072c1976e7202e"
+  },
+  "07_sensitivity/sandwich_residual.csv": {
+   "bytes": 9206,
+   "sha256": "2e07756826c45087a0d1c2a596378f621d9feac8cab83f3c68c684e6382b5ae1"
+  },
+  "07_sensitivity/summary.json": {
+   "bytes": 5195,
+   "sha256": "40d8d061c87d1da40079fcceed8d9abf10e61c4782528c6875d788b2c5f93541"
+  },
+  "07_sensitivity/trajectories.csv": {
+   "bytes": 3150,
+   "sha256": "f8294c7fe39de22072a7302db01ff6337edfce39bde74bbc9bdec803f20421a7"
+  },
+  "08_ngspice_PROPOSED_NOT_RUN/compare_plan.json": {
+   "bytes": 5579,
+   "sha256": "ede6c48cceee3f67078c76751d387a4340fbf8fcfc4622c4b4200fb18214aa04"
+  },
+  "08_ngspice_PROPOSED_NOT_RUN/runner_selftest_NO_SPICE.json": {
+   "bytes": 686,
+   "sha256": "8017776bd0e172bdd490c268d404a06a8cd39561c29345628694f16dce51a92e"
+  },
+  "plots/fig1_current_margins.png": {
+   "bytes": 107453,
+   "sha256": "b43518d2c896b089824e1018cc5c8165d388612fbf26bd0a4d4d9f4b0f85d62b"
+  },
+  "plots/fig2_barrier_margins.png": {
+   "bytes": 120054,
+   "sha256": "b253be26c00f40e035736d56285425adbc345cbaa68b7bdb7925d1c2826da3e4"
+  },
+  "plots/fig3_worst_case_transitions.png": {
+   "bytes": 113820,
+   "sha256": "2a657259797ad1427f121cc2b8093324526365c98e2af0658b672e127f347332"
+  },
+  "plots/fig4_crossing_time_ratio.png": {
+   "bytes": 81152,
+   "sha256": "c50e5051c700205005fd43d0d61f6407a2bb08308940ba1dfce54c5c6507efd8"
+  },
+  "plots/fig5_multisegment_bounds.png": {
+   "bytes": 135651,
+   "sha256": "13f0831f37c28a3cb954331d8d571bdd89bd44cfb8dbb13357527d089b695531"
+  },
+  "plots/fig6_convergence.png": {
+   "bytes": 143691,
+   "sha256": "62e8e508983da163b2c00bee154f1e214030eda50e89fbbc2c1660a26c78cab1"
+  },
+  "plots/fig7_negative_controls.png": {
+   "bytes": 189064,
+   "sha256": "3c7ac8818f7a234d81c6cea34e6c54fcd9e2bff01b24ec831e1e06f2cbad678b"
+  },
+  "plots/fig8_transfer_characteristic.png": {
+   "bytes": 76586,
+   "sha256": "df2edacacc6cd198801b906e4cdb551852abc842ddb1e520ae4e614d2ba0c443"
+  },
+  "plots/fig9_model_form_sensitivity.png": {
+   "bytes": 134878,
+   "sha256": "35b1f715152303cfab8f4c7b1b9d6e580b3faab547342e0aae0451fadfe2d1b9"
+  },
+  "summary.json": {
+   "bytes": 24427,
+   "sha256": "e5f077c1aff23f94b778b82e0c0b11df2b647637a835913aa509fbd4186ddd5e"
+  }
+ },
+ "run_id": "2026-11-09-D-illustrative-1v8-06ccc32a",
+ "seeds": {
+  "master_seed": 20261109,
+  "rule": "numpy PCG64(SeedSequence([master_seed, crc32(stream name)]))",
+  "streams": {
+   "margins/barrier/theta": [
+    20261109,
+    3960945261
+   ],
+   "margins/de/barrier_hi": [
+    20261109,
+    1822621887
+   ],
+   "margins/de/barrier_lo": [
+    20261109,
+    3786170510
+   ],
+   "margins/de/dn": [
+    20261109,
+    2251482432
+   ],
+   "margins/de/up": [
+    20261109,
+    803535667
+   ],
+   "margins/dn/theta": [
+    20261109,
+    477329966
+   ],
+   "margins/up/theta": [
+    20261109,
+    2609097736
+   ],
+   "sens/fit/CLM lambda=0.02/V/nominal": [
+    20261109,
+    3723053242
+   ],
+   "sens/fit/CLM lambda=0.02/V/worst fall corner HLHHL": [
+    20261109,
+    3348004763
+   ],
+   "sens/fit/CLM lambda=0.02/V/worst rise corner LLLHH": [
+    20261109,
+    2610706417
+   ],
+   "sens/fit/CLM lambda=0.05/V/nominal": [
+    20261109,
+    4107427129
+   ],
+   "sens/fit/CLM lambda=0.05/V/worst fall corner HLHHL": [
+    20261109,
+    358299933
+   ],
+   "sens/fit/CLM lambda=0.05/V/worst rise corner LLLHH": [
+    20261109,
+    1229549943
+   ],
+   "sens/fit/CLM lambda=0.1/V + tail n=1.3, T=300.15 K/nominal": [
+    20261109,
+    20753698
+   ],
+   "sens/fit/CLM lambda=0.1/V + tail n=1.3, T=300.15 K/worst fall corner HLHHL": [
+    20261109,
+    586734050
+   ],
+   "sens/fit/CLM lambda=0.1/V + tail n=1.3, T=300.15 K/worst rise corner LLLHH": [
+    20261109,
+    2129301896
+   ],
+   "sens/fit/CLM lambda=0.1/V/nominal": [
+    20261109,
+    930821664
+   ],
+   "sens/fit/CLM lambda=0.1/V/worst fall corner HLHHL": [
+    20261109,
+    4070660680
+   ],
+   "sens/fit/CLM lambda=0.1/V/worst rise corner LLLHH": [
+    20261109,
+    2930971170
+   ],
+   "sens/fit/CLM lambda=0.2/V/nominal": [
+    20261109,
+    2929283105
+   ],
+   "sens/fit/CLM lambda=0.2/V/worst fall corner HLHHL": [
+    20261109,
+    1094023051
+   ],
+   "sens/fit/CLM lambda=0.2/V/worst rise corner LLLHH": [
+    20261109,
+    489111521
+   ],
+   "sens/fit/CLM lambda=0.3/V + tail n=1.5, T=398.15 K/nominal": [
+    20261109,
+    1136266966
+   ],
+   "sens/fit/CLM lambda=0.3/V + tail n=1.5, T=398.15 K/worst fall corner HLHHL": [
+    20261109,
+    68022112
+   ],
+   "sens/fit/CLM lambda=0.3/V + tail n=1.5, T=398.15 K/worst rise corner LLLHH": [
+    20261109,
+    1478469386
+   ],
+   "sens/fit/CLM lambda=0.3/V/nominal": [
+    20261109,
+    1863815137
+   ],
+   "sens/fit/CLM lambda=0.3/V/worst fall corner HLHHL": [
+    20261109,
+    800681162
+   ],
+   "sens/fit/CLM lambda=0.3/V/worst rise corner LLLHH": [
+    20261109,
+    1940595872
+   ],
+   "sens/fit/formal (control)/nominal": [
+    20261109,
+    746598944
+   ],
+   "sens/fit/formal (control)/worst fall corner HLHHL": [
+    20261109,
+    221724952
+   ],
+   "sens/fit/formal (control)/worst rise corner LLLHH": [
+    20261109,
+    1361381746
+   ],
+   "sens/fit/tail n=1, T=300.15 K/nominal": [
+    20261109,
+    1158631030
+   ],
+   "sens/fit/tail n=1, T=300.15 K/worst fall corner HLHHL": [
+    20261109,
+    2312575090
+   ],
+   "sens/fit/tail n=1, T=300.15 K/worst rise corner LLLHH": [
+    20261109,
+    3586478104
+   ],
+   "sens/fit/tail n=1.3, T=233.15 K/nominal": [
+    20261109,
+    770662491
+   ],
+   "sens/fit/tail n=1.3, T=233.15 K/worst fall corner HLHHL": [
+    20261109,
+    2840227397
+   ],
+   "sens/fit/tail n=1.3, T=233.15 K/worst rise corner LLLHH": [
+    20261109,
+    4116194863
+   ],
+   "sens/fit/tail n=1.3, T=300.15 K/nominal": [
+    20261109,
+    4003184232
+   ],
+   "sens/fit/tail n=1.3, T=300.15 K/worst fall corner HLHHL": [
+    20261109,
+    253327236
+   ],
+   "sens/fit/tail n=1.3, T=300.15 K/worst rise corner LLLHH": [
+    20261109,
+    1393246190
+   ],
+   "sens/fit/tail n=1.5, T=300.15 K/nominal": [
+    20261109,
+    413580206
+   ],
+   "sens/fit/tail n=1.5, T=300.15 K/worst fall corner HLHHL": [
+    20261109,
+    3151694148
+   ],
+   "sens/fit/tail n=1.5, T=300.15 K/worst rise corner LLLHH": [
+    20261109,
+    3888726318
+   ],
+   "sens/fit/tail n=1.5, T=398.15 K/nominal": [
+    20261109,
+    1569567479
+   ],
+   "sens/fit/tail n=1.5, T=398.15 K/worst fall corner HLHHL": [
+    20261109,
+    4202019100
+   ],
+   "sens/fit/tail n=1.5, T=398.15 K/worst rise corner LLLHH": [
+    20261109,
+    2791829878
+   ],
+   "traj/C": [
+    20261109,
+    2574297868
+   ],
+   "traj/input/pwl/H": [
+    20261109,
+    1014526397
+   ],
+   "traj/input/pwl/L": [
+    20261109,
+    991278500
+   ],
+   "traj/theta": [
+    20261109,
+    3392855998
+   ],
+   "traj/v0/H/const_beyond_rail": [
+    20261109,
+    1886673541
+   ],
+   "traj/v0/H/const_edge": [
+    20261109,
+    3039402545
+   ],
+   "traj/v0/H/ramp_0.4V_per_ns_full_swing": [
+    20261109,
+    2298939639
+   ],
+   "traj/v0/H/ramp_20V_per_ns_to_edge": [
+    20261109,
+    1195244464
+   ],
+   "traj/v0/H/ramp_2V_per_ns_to_edge": [
+    20261109,
+    2973110137
+   ],
+   "traj/v0/H/wander_pwl": [
+    20261109,
+    3081453926
+   ],
+   "traj/v0/H/wander_sine": [
+    20261109,
+    2106021472
+   ],
+   "traj/v0/L/const_beyond_rail": [
+    20261109,
+    2568771431
+   ],
+   "traj/v0/L/const_edge": [
+    20261109,
+    3056574798
+   ],
+   "traj/v0/L/ramp_0.4V_per_ns_full_swing": [
+    20261109,
+    3731450406
+   ],
+   "traj/v0/L/ramp_20V_per_ns_to_edge": [
+    20261109,
+    3162550603
+   ],
+   "traj/v0/L/ramp_2V_per_ns_to_edge": [
+    20261109,
+    3627061542
+   ],
+   "traj/v0/L/wander_pwl": [
+    20261109,
+    3031267865
+   ],
+   "traj/v0/L/wander_sine": [
+    20261109,
+    3174972662
+   ],
+   "traj/v0box/H/const_beyond_rail": [
+    20261109,
+    4061003486
+   ],
+   "traj/v0box/H/const_edge": [
+    20261109,
+    3086338378
+   ],
+   "traj/v0box/H/ramp_0.4V_per_ns_full_swing": [
+    20261109,
+    3710769096
+   ],
+   "traj/v0box/H/ramp_20V_per_ns_to_edge": [
+    20261109,
+    1347754538
+   ],
+   "traj/v0box/H/ramp_2V_per_ns_to_edge": [
+    20261109,
+    1852430055
+   ],
+   "traj/v0box/H/wander_pwl": [
+    20261109,
+    3044479517
+   ],
+   "traj/v0box/H/wander_sine": [
+    20261109,
+    3125944967
+   ],
+   "traj/v0box/L/const_beyond_rail": [
+    20261109,
+    459666236
+   ],
+   "traj/v0box/L/const_edge": [
+    20261109,
+    3035886133
+   ],
+   "traj/v0box/L/ramp_0.4V_per_ns_full_swing": [
+    20261109,
+    2319693081
+   ],
+   "traj/v0box/L/ramp_20V_per_ns_to_edge": [
+    20261109,
+    2884128977
+   ],
+   "traj/v0box/L/ramp_2V_per_ns_to_edge": [
+    20261109,
+    124733624
+   ],
+   "traj/v0box/L/wander_pwl": [
+    20261109,
+    3060869474
+   ],
+   "traj/v0box/L/wander_sine": [
+    20261109,
+    2062239761
+   ],
+   "traj/w/pwl/0.02/extremes": [
+    20261109,
+    1915810864
+   ],
+   "traj/w/pwl/0.02/uniform": [
+    20261109,
+    62203994
+   ],
+   "traj/w/pwl/0.2/extremes": [
+    20261109,
+    3632637887
+   ],
+   "traj/w/pwl/0.2/uniform": [
+    20261109,
+    3165321268
+   ],
+   "traj/w/sin/phase": [
+    20261109,
+    868529016
+   ],
+   "worst/corner-extremes": [
+    20261109,
+    156558918
+   ],
+   "worst/interior/H": [
+    20261109,
+    581024393
+   ],
+   "worst/interior/L": [
+    20261109,
+    634158736
+   ]
+  }
+ },
+ "solver_settings": {
+  "batch_integrator": "fixed-step classical RK4, cubic-Hermite event location, statistics on the step grid",
+  "boundary": {
+   "barrier_hold_ns": 3.0,
+   "barrier_u_hi": 2.5,
+   "barrier_u_lo": -0.5,
+   "barrier_u_step": 0.01,
+   "edge_sim_hold_ns": 8.0,
+   "edge_sim_offsets": [
+    0.0,
+    0.001,
+    0.01,
+    0.05,
+    0.09,
+    0.11,
+    0.15
+   ],
+   "edge_sweep_max": 0.4,
+   "edge_sweep_step": 0.01,
+   "hold_dt": 0.004,
+   "hold_ns": 250.0,
+   "supply_step": "0.01"
+  },
+  "comparison_tolerances": {
+   "TOL_T": 1e-09,
+   "TOL_V": 1e-09
+  },
+  "controls": {
+   "eps_between": [
+    "3",
+    "4",
+    "5"
+   ]
+  },
+  "margins": {
+   "de_maxiter": 300,
+   "de_popsize": 20,
+   "h_barrier": "1/2000",
+   "h_coarse": "1/100",
+   "h_dense": "1/400",
+   "n_random": 2000,
+   "n_random_barrier": 5000,
+   "u_far_hi": "5",
+   "u_far_lo": "-3",
+   "v_far_hi": "3",
+   "v_far_lo": "-1"
+  },
+  "reference_integrator": "scipy solve_ivp DOP853, rtol 1e-11..1e-13, atol rtol*1e-2, restarted at input/disturbance kinks, event-located crossings",
+  "sensitivity": {
+   "combined": [
+    [
+     0.1,
+     1.3,
+     300.15
+    ],
+    [
+     0.3,
+     1.5,
+     398.15
+    ]
+   ],
+   "fit_random_starts": 2,
+   "fit_step": 0.02,
+   "lambdas": [
+    0.02,
+    0.05,
+    0.1,
+    0.2,
+    0.3
+   ],
+   "miller_cgd_fF": [
+    0.1,
+    0.25,
+    0.5,
+    1.0
+   ],
+   "miller_dt": 0.00025,
+   "miller_ramp_ns": [
+    1.0,
+    0.1,
+    0.02
+   ],
+   "residual_step": 0.01,
+   "tails": [
+    [
+     1.0,
+     300.15
+    ],
+    [
+     1.3,
+     300.15
+    ],
+    [
+     1.5,
+     300.15
+    ],
+    [
+     1.3,
+     233.15
+    ],
+    [
+     1.5,
+     398.15
+    ]
+   ]
+  },
+  "sim": {
+   "dt": 0.0005,
+   "horizon_extra": 0.5,
+   "horizon_factor": 1.25,
+   "n_interior": 32
+  },
+  "worstcase": {
+   "breakpoint_grid": "0.001",
+   "n_bracket": 512,
+   "n_corner_extreme_samples": 400000,
+   "n_interior_starts": 16,
+   "optimized_Ns": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32
+   ],
+   "u_far_hi": "5",
+   "u_far_lo": "-3",
+   "uniform_Ns": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32,
+    64,
+    128,
+    256,
+    512,
+    1024
+   ]
+  }
+ },
+ "timestamps": {
+  "finished_utc": "2026-11-09T22:21:24+00:00",
+  "stage_seconds": {
+   "01_margins": 11.73,
+   "02_trajectories": 23.73,
+   "03_worstcase": 4.68,
+   "04_convergence": 28.97,
+   "05_negative_controls": 27.04,
+   "06_boundary": 43.98,
+   "07_sensitivity": 291.71,
+   "08_ngspice_render_only": 0.18,
+   "plots": 3.17
+  },
+  "started_utc": "2026-11-09T22:14:09+00:00"
+ },
+ "workstream": "D (numerical experiments and model comparison)"
+}

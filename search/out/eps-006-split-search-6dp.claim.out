@@ -1,0 +1,3 @@
+'VoltageToBit.Search.eps_006_split_search_6dp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'VoltageToBit.Search.eps_006_split_search_6dp_tauUp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'VoltageToBit.Search.eps_006_split_search_6dp_tauDn' depends on axioms: [propext, Classical.choice, Quot.sound]

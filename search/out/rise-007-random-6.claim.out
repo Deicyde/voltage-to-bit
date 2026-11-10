@@ -1,0 +1,2 @@
+'VoltageToBit.Search.rise_007_random_6' depends on axioms: [propext, Classical.choice, Quot.sound]
+'VoltageToBit.Search.rise_007_random_6_sum' depends on axioms: [propext, Classical.choice, Quot.sound]

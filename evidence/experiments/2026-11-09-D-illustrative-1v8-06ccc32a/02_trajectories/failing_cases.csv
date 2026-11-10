@@ -1,0 +1,1 @@
+polarity,input,set,v0_kind,disturbance,VDD,kn,kp,Vtn,Vtp,C,v0,s_ns,tau_ns,t_cross_ns,delay_ns,ratio,vmin,vmax,v_at_deadline,min_valid_margin_after_deadline,min_valid_margin_after_cross,n_recross,v_final,viol_safe,viol_cross,viol_persist,viol_recross

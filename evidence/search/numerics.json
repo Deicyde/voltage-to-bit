@@ -1,0 +1,803 @@
+{
+ "note": "Floating-point numerical evidence. Not a proof; never used to accept a proposal. Produced by search/v2bsearch/numeric.py.",
+ "design_sha256": "06ccc32a64938f43350d6fb68d991c15e62b9d6815f0b174391be073727bc967",
+ "rise": {
+  "worst_case": {
+   "direction": "rise",
+   "stimulus": {
+    "u": 0.4,
+    "C": 20.0,
+    "w": -2.0,
+    "v_from": -0.1,
+    "v_to": 1.35
+   },
+   "worst_corner": {
+    "VDD": 1.62,
+    "kn": 160.0,
+    "kp": 80.0,
+    "Vtn": 0.6,
+    "Vtp": 0.6
+   },
+   "worst_case_delay_ns": 2.251189987,
+   "rk4_crossing_time_ns": 2.251189987,
+   "abs_diff_quadrature_vs_rk4_ns": 0.0,
+   "corner_delays_ns": [
+    {
+     "theta": {
+      "VDD": 1.62,
+      "kn": 160.0,
+      "kp": 80.0,
+      "Vtn": 0.6,
+      "Vtp": 0.6
+     },
+     "delay_ns": 2.251189987
+    },
+    {
+     "theta": {
+      "VDD": 1.62,
+      "kn": 240.0,
+      "kp": 80.0,
+      "Vtn": 0.6,
+      "Vtp": 0.6
+     },
+     "delay_ns": 2.251189987
+    },
+    {
+     "theta": {
+      "VDD": 1.62,
+      "kn": 160.0,
+      "kp": 80.0,
+      "Vtn": 0.45,
+      "Vtp": 0.6
+     },
+     "delay_ns": 2.250820683
+    },
+    {
+     "theta": {
+      "VDD": 1.62,
+      "kn": 240.0,
+      "kp": 80.0,
+      "Vtn": 0.45,
+      "Vtp": 0.6
+     },
+     "delay_ns": 2.250638473
+    },
+    {
+     "theta": {
+      "VDD": 1.62,
+      "kn": 160.0,
+      "kp": 80.0,
+      "Vtn": 0.6,
+      "Vtp": 0.45
+     },
+     "delay_ns": 1.435791361
+    },
+    {
+     "theta": {
+      "VDD": 1.62,
+      "kn": 240.0,
+      "kp": 80.0,
+      "Vtn": 0.6,
+      "Vtp": 0.45
+     },
+     "delay_ns": 1.435791361
+    },
+    {
+     "theta": {
+      "VDD": 1.62,
+      "kn": 160.0,
+      "kp": 80.0,
+      "Vtn": 0.45,
+      "Vtp": 0.45
+     },
+     "delay_ns": 1.43565077
+    },
+    {
+     "theta": {
+      "VDD": 1.62,
+      "kn": 240.0,
+      "kp": 80.0,
+      "Vtn": 0.45,
+      "Vtp": 0.45
+     },
+     "delay_ns": 1.435581051
+    },
+    {
+     "theta": {
+      "VDD": 1.62,
+      "kn": 160.0,
+      "kp": 120.0,
+      "Vtn": 0.6,
+      "Vtp": 0.6
+     },
+     "delay_ns": 1.426288929
+    },
+    {
+     "theta": {
+      "VDD": 1.62,
+      "kn": 240.0,
+      "kp": 120.0,
+      "Vtn": 0.6,
+      "Vtp": 0.6
+     },
+     "delay_ns": 1.426288929
+    },
+    {
+     "theta": {
+      "VDD": 1.62,
+      "kn": 160.0,
+      "kp": 120.0,
+      "Vtn": 0.45,
+      "Vtp": 0.6
+     },
+     "delay_ns": 1.426139525
+    },
+    {
+     "theta": {
+      "VDD": 1.62,
+      "kn": 240.0,
+      "kp": 120.0,
+      "Vtn": 0.45,
+      "Vtp": 0.6
+     },
+     "delay_ns": 1.426065454
+    },
+    {
+     "theta": {
+      "VDD": 1.62,
+      "kn": 160.0,
+      "kp": 120.0,
+      "Vtn": 0.6,
+      "Vtp": 0.45
+     },
+     "delay_ns": 0.925905856
+    },
+    {
+     "theta": {
+      "VDD": 1.62,
+      "kn": 240.0,
+      "kp": 120.0,
+      "Vtn": 0.6,
+      "Vtp": 0.45
+     },
+     "delay_ns": 0.925905856
+    },
+    {
+     "theta": {
+      "VDD": 1.62,
+      "kn": 160.0,
+      "kp": 120.0,
+      "Vtn": 0.45,
+      "Vtp": 0.45
+     },
+     "delay_ns": 0.925846924
+    },
+    {
+     "theta": {
+      "VDD": 1.62,
+      "kn": 240.0,
+      "kp": 120.0,
+      "Vtn": 0.45,
+      "Vtp": 0.45
+     },
+     "delay_ns": 0.925817614
+    },
+    {
+     "theta": {
+      "VDD": 1.98,
+      "kn": 160.0,
+      "kp": 80.0,
+      "Vtn": 0.6,
+      "Vtp": 0.6
+     },
+     "delay_ns": 0.805745687
+    },
+    {
+     "theta": {
+      "VDD": 1.98,
+      "kn": 240.0,
+      "kp": 80.0,
+      "Vtn": 0.6,
+      "Vtp": 0.6
+     },
+     "delay_ns": 0.805745687
+    },
+    {
+     "theta": {
+      "VDD": 1.98,
+      "kn": 160.0,
+      "kp": 80.0,
+      "Vtn": 0.45,
+      "Vtp": 0.6
+     },
+     "delay_ns": 0.80569558
+    },
+    {
+     "theta": {
+      "VDD": 1.98,
+      "kn": 240.0,
+      "kp": 80.0,
+      "Vtn": 0.45,
+      "Vtp": 0.6
+     },
+     "delay_ns": 0.80567065
+    },
+    {
+     "theta": {
+      "VDD": 1.98,
+      "kn": 160.0,
+      "kp": 80.0,
+      "Vtn": 0.6,
+      "Vtp": 0.45
+     },
+     "delay_ns": 0.60674561
+    },
+    {
+     "theta": {
+      "VDD": 1.98,
+      "kn": 240.0,
+      "kp": 80.0,
+      "Vtn": 0.6,
+      "Vtp": 0.45
+     },
+     "delay_ns": 0.60674561
+    },
+    {
+     "theta": {
+      "VDD": 1.98,
+      "kn": 160.0,
+      "kp": 80.0,
+      "Vtn": 0.45,
+      "Vtp": 0.45
+     },
+     "delay_ns": 0.606717997
+    },
+    {
+     "theta": {
+      "VDD": 1.98,
+      "kn": 240.0,
+      "kp": 80.0,
+      "Vtn": 0.45,
+      "Vtp": 0.45
+     },
+     "delay_ns": 0.606704241
+    },
+    {
+     "theta": {
+      "VDD": 1.98,
+      "kn": 160.0,
+      "kp": 120.0,
+      "Vtn": 0.6,
+      "Vtp": 0.6
+     },
+     "delay_ns": 0.527386337
+    },
+    {
+     "theta": {
+      "VDD": 1.98,
+      "kn": 240.0,
+      "kp": 120.0,
+      "Vtn": 0.6,
+      "Vtp": 0.6
+     },
+     "delay_ns": 0.527386337
+    },
+    {
+     "theta": {
+      "VDD": 1.98,
+      "kn": 160.0,
+      "kp": 120.0,
+      "Vtn": 0.45,
+      "Vtp": 0.6
+     },
+     "delay_ns": 0.527364837
+    },
+    {
+     "theta": {
+      "VDD": 1.98,
+      "kn": 240.0,
+      "kp": 120.0,
+      "Vtn": 0.45,
+      "Vtp": 0.6
+     },
+     "delay_ns": 0.527354121
+    },
+    {
+     "theta": {
+      "VDD": 1.98,
+      "kn": 160.0,
+      "kp": 120.0,
+      "Vtn": 0.6,
+      "Vtp": 0.45
+     },
+     "delay_ns": 0.398916117
+    },
+    {
+     "theta": {
+      "VDD": 1.98,
+      "kn": 240.0,
+      "kp": 120.0,
+      "Vtn": 0.6,
+      "Vtp": 0.45
+     },
+     "delay_ns": 0.398916117
+    },
+    {
+     "theta": {
+      "VDD": 1.98,
+      "kn": 160.0,
+      "kp": 120.0,
+      "Vtn": 0.45,
+      "Vtp": 0.45
+     },
+     "delay_ns": 0.398904162
+    },
+    {
+     "theta": {
+      "VDD": 1.98,
+      "kn": 240.0,
+      "kp": 120.0,
+      "Vtn": 0.45,
+      "Vtp": 0.45
+     },
+     "delay_ns": 0.398898198
+    }
+   ],
+   "random_sample": {
+    "count": 400,
+    "seed": 20261109,
+    "slowest_delay_ns": 2.089443636,
+    "none_slower_than_worst_corner": true
+   }
+  },
+  "moving_parameter_worst_case_delay_ns": 2.251189987,
+  "certificate_infimum_ns": 2.251189987,
+  "predictions": {
+   "nominal_theta": {
+    "VDD": 1.8,
+    "kn": 200.0,
+    "kp": 100.0,
+    "Vtn": 0.5,
+    "Vtp": 0.5
+   },
+   "typical": {
+    "setup": {
+     "u": 0.0,
+     "C": 10.0,
+     "w": 0.0,
+     "v_from": 0.0,
+     "v_to": 1.35
+    },
+    "delay_ns": 0.179477408
+   },
+   "nominal_devices": {
+    "setup": {
+     "u": 0.4,
+     "C": 20.0,
+     "w": 0.0,
+     "v_from": -0.1,
+     "v_to": 1.35
+    },
+    "delay_ns": 0.737963225
+   }
+  }
+ },
+ "fall": {
+  "worst_case": {
+   "direction": "fall",
+   "stimulus": {
+    "u": 1.25,
+    "C": 20.0,
+    "w": 2.0,
+    "v_from": 2.08,
+    "v_to": 0.25
+   },
+   "worst_corner": {
+    "VDD": 1.98,
+    "kn": 160.0,
+    "kp": 120.0,
+    "Vtn": 0.6,
+    "Vtp": 0.45
+   },
+   "worst_case_delay_ns": 1.392352159,
+   "rk4_crossing_time_ns": 1.392352159,
+   "abs_diff_quadrature_vs_rk4_ns": 0.0,
+   "corner_delays_ns": [
+    {
+     "theta": {
+      "VDD": 1.98,
+      "kn": 160.0,
+      "kp": 120.0,
+      "Vtn": 0.6,
+      "Vtp": 0.45
+     },
+     "delay_ns": 1.392352159
+    },
+    {
+     "theta": {
+      "VDD": 1.98,
+      "kn": 160.0,
+      "kp": 80.0,
+      "Vtn": 0.6,
+      "Vtp": 0.45
+     },
+     "delay_ns": 1.319126874
+    },
+    {
+     "theta": {
+      "VDD": 1.98,
+      "kn": 160.0,
+      "kp": 120.0,
+      "Vtn": 0.6,
+      "Vtp": 0.6
+     },
+     "delay_ns": 1.232998142
+    },
+    {
+     "theta": {
+      "VDD": 1.98,
+      "kn": 160.0,
+      "kp": 80.0,
+      "Vtn": 0.6,
+      "Vtp": 0.6
+     },
+     "delay_ns": 1.220448543
+    },
+    {
+     "theta": {
+      "VDD": 1.62,
+      "kn": 160.0,
+      "kp": 80.0,
+      "Vtn": 0.6,
+      "Vtp": 0.6
+     },
+     "delay_ns": 1.193209237
+    },
+    {
+     "theta": {
+      "VDD": 1.62,
+      "kn": 160.0,
+      "kp": 120.0,
+      "Vtn": 0.6,
+      "Vtp": 0.6
+     },
+     "delay_ns": 1.191751839
+    },
+    {
+     "theta": {
+      "VDD": 1.62,
+      "kn": 160.0,
+      "kp": 80.0,
+      "Vtn": 0.6,
+      "Vtp": 0.45
+     },
+     "delay_ns": 1.183223039
+    },
+    {
+     "theta": {
+      "VDD": 1.62,
+      "kn": 160.0,
+      "kp": 120.0,
+      "Vtn": 0.6,
+      "Vtp": 0.45
+     },
+     "delay_ns": 1.177567982
+    },
+    {
+     "theta": {
+      "VDD": 1.98,
+      "kn": 160.0,
+      "kp": 120.0,
+      "Vtn": 0.45,
+      "Vtp": 0.45
+     },
+     "delay_ns": 0.88213765
+    },
+    {
+     "theta": {
+      "VDD": 1.98,
+      "kn": 240.0,
+      "kp": 120.0,
+      "Vtn": 0.6,
+      "Vtp": 0.45
+     },
+     "delay_ns": 0.858417623
+    },
+    {
+     "theta": {
+      "VDD": 1.98,
+      "kn": 160.0,
+      "kp": 80.0,
+      "Vtn": 0.45,
+      "Vtp": 0.45
+     },
+     "delay_ns": 0.851680297
+    },
+    {
+     "theta": {
+      "VDD": 1.98,
+      "kn": 240.0,
+      "kp": 80.0,
+      "Vtn": 0.6,
+      "Vtp": 0.45
+     },
+     "delay_ns": 0.830430326
+    },
+    {
+     "theta": {
+      "VDD": 1.98,
+      "kn": 160.0,
+      "kp": 120.0,
+      "Vtn": 0.45,
+      "Vtp": 0.6
+     },
+     "delay_ns": 0.814182993
+    },
+    {
+     "theta": {
+      "VDD": 1.98,
+      "kn": 160.0,
+      "kp": 80.0,
+      "Vtn": 0.45,
+      "Vtp": 0.6
+     },
+     "delay_ns": 0.808573326
+    },
+    {
+     "theta": {
+      "VDD": 1.62,
+      "kn": 160.0,
+      "kp": 80.0,
+      "Vtn": 0.45,
+      "Vtp": 0.6
+     },
+     "delay_ns": 0.796339334
+    },
+    {
+     "theta": {
+      "VDD": 1.98,
+      "kn": 240.0,
+      "kp": 120.0,
+      "Vtn": 0.6,
+      "Vtp": 0.6
+     },
+     "delay_ns": 0.795717936
+    },
+    {
+     "theta": {
+      "VDD": 1.62,
+      "kn": 160.0,
+      "kp": 120.0,
+      "Vtn": 0.45,
+      "Vtp": 0.6
+     },
+     "delay_ns": 0.795710001
+    },
+    {
+     "theta": {
+      "VDD": 1.62,
+      "kn": 160.0,
+      "kp": 80.0,
+      "Vtn": 0.45,
+      "Vtp": 0.45
+     },
+     "delay_ns": 0.7919943
+    },
+    {
+     "theta": {
+      "VDD": 1.98,
+      "kn": 240.0,
+      "kp": 80.0,
+      "Vtn": 0.6,
+      "Vtp": 0.6
+     },
+     "delay_ns": 0.790502343
+    },
+    {
+     "theta": {
+      "VDD": 1.62,
+      "kn": 160.0,
+      "kp": 120.0,
+      "Vtn": 0.45,
+      "Vtp": 0.45
+     },
+     "delay_ns": 0.789430753
+    },
+    {
+     "theta": {
+      "VDD": 1.62,
+      "kn": 240.0,
+      "kp": 80.0,
+      "Vtn": 0.6,
+      "Vtp": 0.6
+     },
+     "delay_ns": 0.77899492
+    },
+    {
+     "theta": {
+      "VDD": 1.62,
+      "kn": 240.0,
+      "kp": 120.0,
+      "Vtn": 0.6,
+      "Vtp": 0.6
+     },
+     "delay_ns": 0.778353003
+    },
+    {
+     "theta": {
+      "VDD": 1.62,
+      "kn": 240.0,
+      "kp": 80.0,
+      "Vtn": 0.6,
+      "Vtp": 0.45
+     },
+     "delay_ns": 0.774563668
+    },
+    {
+     "theta": {
+      "VDD": 1.62,
+      "kn": 240.0,
+      "kp": 120.0,
+      "Vtn": 0.6,
+      "Vtp": 0.45
+     },
+     "delay_ns": 0.77195135
+    },
+    {
+     "theta": {
+      "VDD": 1.98,
+      "kn": 240.0,
+      "kp": 120.0,
+      "Vtn": 0.45,
+      "Vtp": 0.45
+     },
+     "delay_ns": 0.558810257
+    },
+    {
+     "theta": {
+      "VDD": 1.98,
+      "kn": 240.0,
+      "kp": 80.0,
+      "Vtn": 0.45,
+      "Vtp": 0.45
+     },
+     "delay_ns": 0.546587617
+    },
+    {
+     "theta": {
+      "VDD": 1.98,
+      "kn": 240.0,
+      "kp": 120.0,
+      "Vtn": 0.45,
+      "Vtp": 0.6
+     },
+     "delay_ns": 0.53100375
+    },
+    {
+     "theta": {
+      "VDD": 1.98,
+      "kn": 240.0,
+      "kp": 80.0,
+      "Vtn": 0.45,
+      "Vtp": 0.6
+     },
+     "delay_ns": 0.528623699
+    },
+    {
+     "theta": {
+      "VDD": 1.62,
+      "kn": 240.0,
+      "kp": 80.0,
+      "Vtn": 0.45,
+      "Vtp": 0.6
+     },
+     "delay_ns": 0.523374737
+    },
+    {
+     "theta": {
+      "VDD": 1.62,
+      "kn": 240.0,
+      "kp": 120.0,
+      "Vtn": 0.45,
+      "Vtp": 0.6
+     },
+     "delay_ns": 0.523096638
+    },
+    {
+     "theta": {
+      "VDD": 1.62,
+      "kn": 240.0,
+      "kp": 80.0,
+      "Vtn": 0.45,
+      "Vtp": 0.45
+     },
+     "delay_ns": 0.521444579
+    },
+    {
+     "theta": {
+      "VDD": 1.62,
+      "kn": 240.0,
+      "kp": 120.0,
+      "Vtn": 0.45,
+      "Vtp": 0.45
+     },
+     "delay_ns": 0.520274012
+    }
+   ],
+   "random_sample": {
+    "count": 400,
+    "seed": 20261109,
+    "slowest_delay_ns": 1.348373121,
+    "none_slower_than_worst_corner": true
+   }
+  },
+  "moving_parameter_worst_case_delay_ns": 1.394538415,
+  "certificate_infimum_ns": 1.417563187,
+  "predictions": {
+   "nominal_theta": {
+    "VDD": 1.8,
+    "kn": 200.0,
+    "kp": 100.0,
+    "Vtn": 0.5,
+    "Vtp": 0.5
+   },
+   "typical": {
+    "setup": {
+     "u": 1.8,
+     "C": 10.0,
+     "w": 0.0,
+     "v_from": 1.8,
+     "v_to": 0.25
+    },
+    "delay_ns": 0.115766941
+   },
+   "nominal_devices": {
+    "setup": {
+     "u": 1.25,
+     "C": 20.0,
+     "w": 0.0,
+     "v_from": 2.08,
+     "v_to": 0.25
+    },
+    "delay_ns": 0.685533768
+   }
+  }
+ },
+ "boundary_margins": {
+  "Vhi": {
+   "min_inward_current_uA": 6.44,
+   "at_u_V": 0.65,
+   "at_corner": {
+    "VDD": 1.98,
+    "kn": 160.0,
+    "kp": 80.0,
+    "Vtn": 0.6,
+    "Vtp": 0.6
+   },
+   "u_scan": {
+    "from_V": -1.0,
+    "to_V": 3.0,
+    "coarse_step_V": 0.001,
+    "fine_step_V": 1e-06
+   }
+  },
+  "Vlo": {
+   "min_inward_current_uA": 5.92,
+   "at_u_V": 0.82,
+   "at_corner": {
+    "VDD": 1.62,
+    "kn": 160.0,
+    "kp": 80.0,
+    "Vtn": 0.6,
+    "Vtp": 0.6
+   },
+   "u_scan": {
+    "from_V": -1.0,
+    "to_V": 3.0,
+    "coarse_step_V": 0.001,
+    "fine_step_V": 1e-06
+   }
+  },
+  "model_tolerance_uA": 5.92
+ }
+}

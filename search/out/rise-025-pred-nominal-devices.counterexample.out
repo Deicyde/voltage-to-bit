@@ -1,0 +1,6 @@
+'VoltageToBit.Search.slow_rise_trajectory' depends on axioms: [propext, Classical.choice, Quot.sound]
+'VoltageToBit.Search.rise_deadline_counterexample' depends on axioms: [propext, Classical.choice, Quot.sound]
+'VoltageToBit.Search.riseCert_deadline_ge' depends on axioms: [propext, Classical.choice, Quot.sound]
+'VoltageToBit.Search.rise_025_pred_nominal_devices_not_a_deadline' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

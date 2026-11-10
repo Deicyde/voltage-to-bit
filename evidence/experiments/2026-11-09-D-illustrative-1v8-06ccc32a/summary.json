@@ -1,0 +1,854 @@
+{
+ "boundary": {
+  "barrier_stress": {
+   "C_fF_fixed_corner_runs": 5.0,
+   "dt_ns": 0.0005,
+   "extreme_stationary_points": {
+    "at_corner": "HLLHH",
+    "at_corner_low": "LLLHH",
+    "at_u_V": 0.62,
+    "at_u_V_low": 0.96,
+    "headroom_to_V_hi_V": 0.06829298348442059,
+    "headroom_to_V_lo_V": 0.06910359428615878,
+    "highest_stationary_output_with_w=+eps_V": 2.0117070165155795,
+    "lowest_stationary_output_with_w=-eps_V": -0.03089640571384122,
+    "note": "over the u grid and the 32 corners (the box extremes are attained at corners); every trajectory started between these two values stays between them (scalar comparison), so at this eps the model uses only this part of [V_lo, V_hi]"
+   },
+   "hold_ns": 3.0,
+   "n_corners": 32,
+   "n_runs": 19866,
+   "n_runs_box_envelope": 602,
+   "n_runs_fixed_corner": 19264,
+   "start_at_V_hi_pushing_up": {
+    "box_envelope_runs_exceeding_V_hi": 0,
+    "max_v_after_t0_V": 2.0798890920749424,
+    "max_v_over_all_runs_V": 2.08,
+    "min_distance_below_V_hi_after_one_step_V": 0.00011090792505763503,
+    "n_runs_exceeding_V_hi": 0,
+    "tightest_run": {
+     "selection": "box (any theta per instant)",
+     "u_V": 0.65
+    }
+   },
+   "start_at_V_lo_pushing_down": {
+    "box_envelope_runs_below_V_lo": 0,
+    "min_distance_above_V_lo_after_one_step_V": 9.79373131464456e-05,
+    "min_v_after_t0_V": -0.09990206268685356,
+    "min_v_over_all_runs_V": -0.1,
+    "n_runs_below_V_lo": 0,
+    "tightest_run": {
+     "selection": "box (any theta per instant)",
+     "u_V": 0.82
+    }
+   },
+   "u_grid": [
+    -0.5,
+    2.5,
+    0.01
+   ]
+  },
+  "edge_simulation_check_max_abs_sim_minus_quadrature_ns": 8.026003417427319e-09,
+  "edge_sweep": {
+   "high": {
+    "band_edge_V": 1.25,
+    "input_level_there_V": 1.154817717741484,
+    "input_level_there_V_stuck": 1.0794682655796768,
+    "offset_at_which_worst_case_delay_first_exceeds_tau_V": 0.09518228225851588,
+    "offset_at_which_worst_corner_gets_stuck_short_of_threshold_V": 0.1705317344203231,
+    "reading": "between the band edge and the first offset the model still meets the timing bound although the theorem makes no claim there; beyond the second offset an admissible trajectory never produces a valid output"
+   },
+   "low": {
+    "band_edge_V": 0.4,
+    "input_level_there_V": 0.49781931386722367,
+    "input_level_there_V_stuck": 0.6240706976045114,
+    "offset_at_which_worst_case_delay_first_exceeds_tau_V": 0.09781931386722367,
+    "offset_at_which_worst_corner_gets_stuck_short_of_threshold_V": 0.22407069760451143,
+    "reading": "between the band edge and the first offset the model still meets the timing bound although the theorem makes no claim there; beyond the second offset an admissible trajectory never produces a valid output"
+   }
+  },
+  "midrail_hold": {
+   "C_fF": 5.0,
+   "at_switching_threshold": {
+    "decode_counts": {
+     "high": 117,
+     "low": 85,
+     "undefined": 95
+    },
+    "nominal_stationary_interval_V": [
+     0.3106601717798212,
+     1.3606601717798212
+    ],
+    "nominal_w0_final_values_V": [
+     0.31046026913671254,
+     0.8,
+     1.3610599494774456
+    ]
+   },
+   "decode_counts_all": {
+    "high": 2543,
+    "low": 2332,
+    "undefined": 174
+   },
+   "decoder_property": {
+    "float_decoder_agrees_with_exact_decoder": true,
+    "n_grid": 4361,
+    "never_a_bit_strictly_between_thresholds": true
+   },
+   "dt_ns": 0.004,
+   "hold_ns": 250.0,
+   "n_runs": 5049,
+   "settled_check": {
+    "max_abs_dvdt_at_end_V_per_ns": 0.0032000000000001806,
+    "n_runs_with_abs_dvdt_above_1e-6_V_per_ns": 34,
+    "note": "near the switching threshold both devices are saturated and I_net does not depend on v over an interval of outputs: the output drifts across that interval at (I_net + w)/C, arbitrarily slowly as the input approaches the threshold, so some runs are still moving at the end of the hold (the decode reported is the one at the end of the hold). Exactly at u_M with w = 0 the whole interval is stationary, so the final value depends on the initial state; runs that start outside it approach its edge only algebraically (~1/t)."
+   }
+  },
+  "supply_relative_domain": {
+   "R_hiN_prime_uA": "2.312",
+   "all_restricted_records_admissible": true,
+   "claim": "for a run at one supply V0 in [VDD_min, VDD_max]: v stays in [V_lo, V0 + (V_hi - VDD_max)], provided eps < R_hiN'",
+   "delta_V": "0.1",
+   "eps_lt_R_hiN_prime": true,
+   "n_supply_values": 37,
+   "restricted_deadlines_no_larger": true,
+   "simulation_from_the_supply_relative_top (w = +eps at C_min for each corner, and the box_high selection)": {
+    "1.62": {
+     "max_v_after_t0_minus_top_V": -3.8981676248495134e-05,
+     "max_v_over_all_runs_V": 1.72,
+     "min_v_V": 0.004069079041686185,
+     "n_runs": 9933,
+     "n_runs_exceeding_top": 0,
+     "top_V": 1.72
+    },
+    "1.8": {
+     "max_v_after_t0_minus_top_V": -7.49512729907309e-05,
+     "max_v_over_all_runs_V": 1.9,
+     "min_v_V": 0.004069079041686185,
+     "n_runs": 9933,
+     "n_runs_exceeding_top": 0,
+     "top_V": 1.9
+    },
+    "1.98": {
+     "max_v_after_t0_minus_top_V": -0.00011090792505763503,
+     "max_v_over_all_runs_V": 2.08,
+     "min_v_V": 0.004069079041686185,
+     "n_runs": 9933,
+     "n_runs_exceeding_top": 0,
+     "top_V": 2.08
+    }
+   },
+   "smallest_model_restoring_current_at_supply_relative_top": {
+    "V0_V": "1.62",
+    "corner": "LLLHH",
+    "uA": "3.56",
+    "u_V": "0.65"
+   }
+  },
+  "transfer": {
+   "declared_V_IH": 1.25,
+   "declared_V_IL": 0.4,
+   "largest_u_with_settled_output_always_high_V": 0.6240706976045114,
+   "note": "static (settled-output) limits of the model over 32 corners and |w| <= eps; they say nothing about timing. Between the two values the settled output can be high, low or undefined depending on theta and w.",
+   "smallest_u_with_settled_output_always_low_V": 1.0794682655796768,
+   "static_slack_high_side_V": 0.1705317344203232,
+   "static_slack_low_side_V": 0.22407069760451137
+  }
+ },
+ "checks": {
+  "COMPLETED": [
+   "closed-form margins and taus (exact rationals)",
+   "admissibility of the design record",
+   "four margin claims on exact integer grids + seeded global search",
+   "model worst-case delays (quadrature, exact brackets, simulation)",
+   "multi-segment bounds: uniform and optimised breakpoints",
+   "trajectory matrix: 161448 runs, three guarantee checks",
+   "convergence: tolerance sweep x 5 methods, RK4 step sweep, non-autonomous cross-checks, step halving of the batch engine",
+   "negative controls (i)-(iv), each with a rejection and/or an exhibited trajectory",
+   "boundary behaviour: edge sweep into the invalid band, barrier stress at V_lo/V_hi, long mid-rail holds, transfer curve",
+   "model-form sensitivity study (channel-length modulation, subthreshold tail, gate-drain feedthrough) - a sensitivity study, not validation"
+  ],
+  "PROPOSED_NOT_RUN": [
+   "(a) tier T1: ngspice MOS Level-1 (LAMBDA=0, GAMMA=0, IS=1e-30) DC map and transients versus the Python simulator - PROPOSED, NOT RUN",
+   "(a2) tier T2: Level-1 with one omitted effect switched back on at a time - PROPOSED, NOT RUN (decks not rendered)",
+   "(b) tier T3: SKY130 BSIM4 nfet_01v8 / pfet_01v8_hvt (workstream B's recommendation, not frozen): sandwich residual versus eps_I, the four margins on the SPICE map, transient delays versus tau, excursions versus the safe domain - PROPOSED, NOT RUN"
+  ],
+  "SKIPPED_IN_THIS_INVOCATION": []
+ },
+ "convergence": {
+  "adaptive_solver_error_vs_quadrature_ns_at_rtol_1e-12": {
+   "fall/BDF": 3.823985572637412e-11,
+   "fall/DOP853": 6.042943923034727e-12,
+   "fall/LSODA": 9.722889160457271e-12,
+   "fall/RK45": -1.6118661960717873e-11,
+   "fall/Radau": 9.303668946358812e-14,
+   "rise/BDF": 5.679678949377376e-11,
+   "rise/DOP853": 6.163070054299169e-12,
+   "rise/LSODA": -1.0616840739885447e-11,
+   "rise/RK45": 1.4943157822244757e-11,
+   "rise/Radau": -4.0900616227190767e-13
+  },
+  "batch_engine_error_vs_quadrature_ns_at_production_step": {
+   "fall": 5.0106585547382565e-12,
+   "rise": -2.589040093425865e-13
+  },
+  "batch_halving": {
+   "dt_half_ns": 0.00025,
+   "dt_ns": 0.0005,
+   "max_abs_d_vfinal_V": 0.0001109464141144257,
+   "max_abs_d_vmax_V": 0.00011016199095159607,
+   "max_abs_d_vmin_V": 3.0193995079780267e-05,
+   "max_abs_dt_cross_ns": 4.49696304229974e-05,
+   "max_abs_dt_cross_ns_discontinuous_feedback": 4.49696304229974e-05,
+   "max_abs_dt_cross_ns_envelope_selections": 1.3094955222392457e-06,
+   "max_abs_dt_cross_ns_time_only_disturbances": 3.796992387172793e-09,
+   "n_runs": 26936,
+   "violations_at_dt": {
+    "n_runs": 26936,
+    "viol_cross": 0,
+    "viol_persist": 0,
+    "viol_recross": 0,
+    "viol_safe": 0
+   },
+   "violations_at_dt_half": {
+    "n_runs": 26936,
+    "viol_cross": 0,
+    "viol_persist": 0,
+    "viol_recross": 0,
+    "viol_safe": 0
+   }
+  },
+  "note": "observed RK4 orders are irregular because psq has a discontinuous second derivative; errors, not orders, are the evidence",
+  "reference": {
+   "fall": {
+    "corner": "HLHHL",
+    "reference_quadrature_ns": 1.3923521586515486
+   },
+   "rise": {
+    "corner": "LLLHH",
+    "reference_quadrature_ns": 2.2511899869450582
+   }
+  }
+ },
+ "design": {
+  "name": "illustrative-1v8",
+  "sha256": "06ccc32a64938f43350d6fb68d991c15e62b9d6815f0b174391be073727bc967",
+  "status": "ILLUSTRATIVE. Numbers are plausible orders of magnitude for a small 1.8 V-class inverter but are NOT fitted to any process, device model, or measurement."
+ },
+ "margins": {
+  "admissible": true,
+  "any_negative_exact_slack": false,
+  "closed_form": {
+   "I_dn(V_OL)": "16.296",
+   "I_up(V_OH)": "10.476",
+   "R_hiN": "2.312",
+   "R_hiP": "2.4",
+   "R_loN": "3.04",
+   "R_loP": "3.136",
+   "tau_dn": "2.560156687185227",
+   "tau_up": "3.421425200566305"
+  },
+  "closed_form_fractions": {
+   "I_dn(V_OL)": "2037/125",
+   "I_up(V_OH)": "2619/250",
+   "R_hiN": "289/125",
+   "R_hiP": "12/5",
+   "R_loN": "76/25",
+   "R_loP": "392/125",
+   "tau_dn": "4575/1787",
+   "tau_up": "7250/2119"
+  },
+  "de_search_exact_sign_at_argmin": {
+   "barrier_hi": 1,
+   "barrier_lo": 1,
+   "dn": 1,
+   "up": 1
+  },
+  "de_search_min_float_slack_uA": {
+   "barrier_hi": 4.128000001496712,
+   "barrier_lo": 2.8800000032325332,
+   "dn": 5.9382005090924395e-08,
+   "up": -8.881784197001252e-14
+  },
+  "float_rounding_noise": {
+   "min_float_slack_dn_uA": 0.0,
+   "min_float_slack_up_uA": 0.0,
+   "note": "float64 evaluation on the binding set (u at the band edge, c = v); negative values here are rounding noise iff the exact grid minimum is >= 0"
+  },
+  "hypothesis_probes_outside_claims_min_slack_uA": {
+   "dn_with_c_below_0": "-499.296",
+   "up_with_c_above_VDD_min": "-230.4"
+  },
+  "min_exact_grid_slack_uA": {
+   "barrier_hi": "4.128",
+   "barrier_lo": "2.88",
+   "dn": "0",
+   "up": "0"
+  },
+  "model_min_inward_current_uA": {
+   "V_hi": "6.44",
+   "V_lo": "5.92"
+  },
+  "n_exact_grid_triples": {
+   "barrier_hi": 80517032,
+   "barrier_lo": 80517032,
+   "dn": 68848697632,
+   "up": 47661487200
+  },
+  "proposal_barrier_refinement (numerically checked only)": {
+   "certified_restoring_current_uA": [
+    [
+     "hi",
+     "present split point",
+     1,
+     "0.77",
+     "2.312"
+    ],
+    [
+     "hi",
+     "best single split point (1 mV grid)",
+     1,
+     "0.843",
+     "4.696"
+    ],
+    [
+     "hi",
+     "uniform on [0.3, 1.3]",
+     2,
+     "0.3 .. 1.3",
+     "1.04"
+    ],
+    [
+     "hi",
+     "uniform on [0.3, 1.3]",
+     4,
+     "0.3 .. 1.3",
+     "3.795555555555556"
+    ],
+    [
+     "hi",
+     "uniform on [0.3, 1.3]",
+     8,
+     "0.3 .. 1.3",
+     "5.611428571428571"
+    ],
+    [
+     "hi",
+     "uniform on [0.3, 1.3]",
+     16,
+     "0.3 .. 1.3",
+     "5.928888888888889"
+    ],
+    [
+     "hi",
+     "uniform on [0.3, 1.3]",
+     32,
+     "0.3 .. 1.3",
+     "6.183808532778356"
+    ],
+    [
+     "hi",
+     "uniform on [0.3, 1.3]",
+     64,
+     "0.3 .. 1.3",
+     "6.313066263542454"
+    ],
+    [
+     "lo",
+     "present split point",
+     1,
+     "0.74",
+     "3.04"
+    ],
+    [
+     "lo",
+     "best single split point (1 mV grid)",
+     1,
+     "0.742",
+     "3.072"
+    ],
+    [
+     "lo",
+     "uniform on [0.3, 1.3]",
+     2,
+     "0.3 .. 1.3",
+     "0"
+    ],
+    [
+     "lo",
+     "uniform on [0.3, 1.3]",
+     4,
+     "0.3 .. 1.3",
+     "1.447111111111111"
+    ],
+    [
+     "lo",
+     "uniform on [0.3, 1.3]",
+     8,
+     "0.3 .. 1.3",
+     "3.740081632653061"
+    ],
+    [
+     "lo",
+     "uniform on [0.3, 1.3]",
+     16,
+     "0.3 .. 1.3",
+     "4.860444444444444"
+    ],
+    [
+     "lo",
+     "uniform on [0.3, 1.3]",
+     32,
+     "0.3 .. 1.3",
+     "5.404470343392300"
+    ],
+    [
+     "lo",
+     "uniform on [0.3, 1.3]",
+     64,
+     "0.3 .. 1.3",
+     "5.666612244897959"
+    ]
+   ],
+   "lemma_checks_on_exact_grid": {
+    "hi": {
+     "L1_P_nonincreasing_in_u": true,
+     "L1_pointwise_P_ge_bound": true,
+     "L2_N_nondecreasing_in_u": true,
+     "L2_pointwise_N_ge_bound": true
+    },
+    "lo": {
+     "L1_P_nonincreasing_in_u": true,
+     "L1_pointwise_P_ge_bound": true,
+     "L2_N_nondecreasing_in_u": true,
+     "L2_pointwise_N_ge_bound": true
+    }
+   },
+   "sharper_R_hiP_at_present_uHi_uA": "5.28"
+  }
+ },
+ "negative_controls": {
+  "i_invalid_bounds": {
+   "a_capacitance_bounds_inverted": "REJECTED",
+   "b_kp_bounds_inverted": "REJECTED",
+   "c_float_instead_of_decimal_string": "REJECTED at load: eps: expected a decimal string, got float (2.0); binary floats are rejected so that the record stays exact"
+  },
+  "i_margins_alone_would_pass": {
+   "a_capacitance_bounds_inverted": true,
+   "b_kp_bounds_inverted": true
+  },
+  "ii_decoded_at_0.9_x_lower_bound": {
+   "fall": "undefined",
+   "rise": "undefined"
+  },
+  "ii_lower_bound_on_worst_case_delay_ns": {
+   "fall": "1.39426336755743644059823",
+   "rise": "2.250894845276966727771912"
+  },
+  "iii_miswired": {
+   "all_four_exhibited_cases_violate": true,
+   "matrix": {
+    "n_runs": 7680,
+    "n_violating_crossing_by_bound": 5462,
+    "n_violating_persistence": 7680,
+    "n_violating_safe_domain": 1492
+   }
+  },
+  "iv_between": {
+   "3": {
+    "admissible": false,
+    "violations": {
+     "viol_cross": 0,
+     "viol_persist": 0,
+     "viol_recross": 0,
+     "viol_safe": 0
+    }
+   },
+   "4": {
+    "admissible": false,
+    "violations": {
+     "viol_cross": 0,
+     "viol_persist": 0,
+     "viol_recross": 0,
+     "viol_safe": 0
+    }
+   },
+   "5": {
+    "admissible": false,
+    "violations": {
+     "viol_cross": 0,
+     "viol_persist": 0,
+     "viol_recross": 0,
+     "viol_safe": 0
+    }
+   }
+  },
+  "iv_certificate_accepts": "any eps < 2.312 uA (first to fail: R_hiN)",
+  "iv_smallest_eps_with_stationary_point_at_or_above_V_OL_uA": "16.296",
+  "iv_smallest_eps_with_stationary_point_at_or_below_V_OH_uA": "10.476"
+ },
+ "ngspice": {
+  "decks": [
+   "level1_dc_HLHHL.cir",
+   "level1_dc_LLLHH.cir",
+   "level1_dc_nominal.cir",
+   "level1_tran_fall_HLHHL.cir",
+   "level1_tran_rise_LLLHH.cir",
+   "sky130_T3_dc_tt_1v8_27C.cir",
+   "sky130_T3_tran_fall_tt_1v8_27C.cir",
+   "sky130_T3_tran_rise_tt_1v8_27C.cir"
+  ],
+  "runner_selftest_without_spice_passes": true,
+  "status": "PROPOSED, NOT RUN"
+ },
+ "sensitivity": {
+  "constants": {
+   "k_B": 1.380649e-23,
+   "phi_t(300.15 K)_V": 0.025864925786328753,
+   "q": 1.602176634e-19
+  },
+  "label": "SENSITIVITY STUDY, NOT VALIDATION. Finite grids and finite run sets; no number here is a bound.",
+  "largest_lambda_inside_tube": {
+   "nominal device, residual 0": {
+    "box_at_device_supply": 0.15314767376275995,
+    "whole_box": 0.15314767376275995
+   },
+   "nominal device, residual <= eps_I": {
+    "box_at_device_supply": 0.15712421850912506,
+    "whole_box": 0.15712421850912506
+   }
+  },
+  "max_fixed_theta_residual_over_eps_by_family (superseded v0 obligation)": {
+   "channel-length modulation": 99.47433599999982,
+   "combined": 99.4742347347912,
+   "subthreshold tail": 0.6968037576296773
+  },
+  "miller": {
+   "largest_excursion_V": 0.1976964006895253,
+   "n_runs": 13824,
+   "n_runs_leaving_safe_domain": 800,
+   "setup": "full-swing input ramps 0 <-> VDD_max, 32 corners x {C_min, C_max} x w in {0, +eps, -eps} x v0 in {rest rail, V_lo, V_hi}; C_gd values are illustrative, not extracted from any process",
+   "slew_limit": {
+    "C_gd=0.1 fF": 20.0,
+    "C_gd=0.25 fF": 8.0,
+    "C_gd=0.5 fF": 4.0,
+    "C_gd=1 fF": 2.0
+   }
+  },
+  "n_perturbations": 13,
+  "sandwich_residual_over_eps (rev. 2 obligation; whole box / box at device supply)": {
+   "CLM lambda=0.02/V | base nominal": [
+    0.0,
+    0.0
+   ],
+   "CLM lambda=0.02/V | base worst fall corner HLHHL": [
+    3.315811200000013,
+    3.315811200000013
+   ],
+   "CLM lambda=0.02/V | base worst rise corner LLLHH": [
+    0.0,
+    0.0
+   ],
+   "CLM lambda=0.05/V | base nominal": [
+    0.0,
+    0.0
+   ],
+   "CLM lambda=0.05/V | base worst fall corner HLHHL": [
+    8.289528000000004,
+    8.289528000000004
+   ],
+   "CLM lambda=0.05/V | base worst rise corner LLLHH": [
+    0.0,
+    0.0
+   ],
+   "CLM lambda=0.1/V + tail n=1.3, T=300.15 K | base nominal": [
+    6.63581983194888e-05,
+    0.021728002988546366
+   ],
+   "CLM lambda=0.1/V + tail n=1.3, T=300.15 K | base worst fall corner HLHHL": [
+    16.57905575109197,
+    16.57905575109197
+   ],
+   "CLM lambda=0.1/V + tail n=1.3, T=300.15 K | base worst rise corner LLLHH": [
+    0.002190371760814809,
+    0.002190371760814809
+   ],
+   "CLM lambda=0.1/V | base nominal": [
+    0.0,
+    0.0
+   ],
+   "CLM lambda=0.1/V | base worst fall corner HLHHL": [
+    16.579055999999994,
+    16.579055999999994
+   ],
+   "CLM lambda=0.1/V | base worst rise corner LLLHH": [
+    0.0,
+    0.0
+   ],
+   "CLM lambda=0.2/V | base nominal": [
+    11.78216999999998,
+    11.78216999999998
+   ],
+   "CLM lambda=0.2/V | base worst fall corner HLHHL": [
+    33.158112,
+    33.158112
+   ],
+   "CLM lambda=0.2/V | base worst rise corner LLLHH": [
+    0.0,
+    0.0
+   ],
+   "CLM lambda=0.3/V + tail n=1.5, T=398.15 K | base nominal": [
+    36.92961594385045,
+    36.92961594385045
+   ],
+   "CLM lambda=0.3/V + tail n=1.5, T=398.15 K | base worst fall corner HLHHL": [
+    49.737092118923314,
+    49.737092118923314
+   ],
+   "CLM lambda=0.3/V + tail n=1.5, T=398.15 K | base worst rise corner LLLHH": [
+    0.027626476149144708,
+    0.027626476149144708
+   ],
+   "CLM lambda=0.3/V | base nominal": [
+    36.92962999999992,
+    36.92962999999992
+   ],
+   "CLM lambda=0.3/V | base worst fall corner HLHHL": [
+    49.73716800000001,
+    49.73716800000001
+   ],
+   "CLM lambda=0.3/V | base worst rise corner LLLHH": [
+    0.0,
+    0.0
+   ],
+   "formal (control) | base nominal": [
+    0.0,
+    0.0
+   ],
+   "formal (control) | base worst fall corner HLHHL": [
+    0.0,
+    0.0
+   ],
+   "formal (control) | base worst rise corner LLLHH": [
+    0.0,
+    0.0
+   ],
+   "tail n=1, T=300.15 K | base nominal": [
+    3.4723311033876273e-06,
+    0.005942943931736609
+   ],
+   "tail n=1, T=300.15 K | base worst fall corner HLHHL": [
+    0.13690140759663194,
+    0.13690140759663194
+   ],
+   "tail n=1, T=300.15 K | base worst rise corner LLLHH": [
+    0.07822944676556176,
+    0.07834442465946978
+   ],
+   "tail n=1.3, T=233.15 K | base nominal": [
+    3.895394040631766e-06,
+    0.006215956742605326
+   ],
+   "tail n=1.3, T=233.15 K | base worst fall corner HLHHL": [
+    0.13955359475315277,
+    0.13955359475315277
+   ],
+   "tail n=1.3, T=233.15 K | base worst rise corner LLLHH": [
+    0.07974499602458707,
+    0.07986704511302811
+   ],
+   "tail n=1.3, T=300.15 K | base nominal": [
+    5.6235761287702385e-05,
+    0.018179641650800157
+   ],
+   "tail n=1.3, T=300.15 K | base worst fall corner HLHHL": [
+    0.23131223789753363,
+    0.23131223789753363
+   ],
+   "tail n=1.3, T=300.15 K | base worst rise corner LLLHH": [
+    0.13218485778565991,
+    0.13248831018233886
+   ],
+   "tail n=1.5, T=300.15 K | base nominal": [
+    0.00020284594258769377,
+    0.03292226698824925
+   ],
+   "tail n=1.5, T=300.15 K | base worst fall corner HLHHL": [
+    0.3079554860888365,
+    0.3079554860888365
+   ],
+   "tail n=1.5, T=300.15 K | base worst rise corner LLLHH": [
+    0.17601620739883117,
+    0.17601620739883117
+   ],
+   "tail n=1.5, T=398.15 K | base nominal": [
+    0.001721532800092421,
+    0.0903312107942586
+   ],
+   "tail n=1.5, T=398.15 K | base worst fall corner HLHHL": [
+    0.540385428094023,
+    0.540385428094023
+   ],
+   "tail n=1.5, T=398.15 K | base worst rise corner LLLHH": [
+    0.3098643372069745,
+    0.3098643372069745
+   ]
+  },
+  "trajectory_violations_total": {
+   "crossing_by_bound": 0,
+   "n_runs": 489216,
+   "persistence": 0,
+   "safe_domain": 0
+  }
+ },
+ "trajectories": {
+  "box_envelope_rows (bound every trajectory of the rev. 2 inclusion for their input and initial state)": {
+   "max_ratio_fall": 0.544708229897757,
+   "max_ratio_rise": 0.6579684941153144,
+   "n_runs": 168,
+   "violations": 0
+  },
+  "per_polarity": {
+   "H": {
+    "max_delay_ns": 1.3945384173375706,
+    "max_ratio": 0.544708229897757,
+    "min_hi_margin": 0.0,
+    "min_hi_margin_later": 0.0002356510828782632,
+    "min_lo_margin": 0.0,
+    "min_lo_margin_later": 0.0002296553799023271,
+    "min_valid_margin_after_cross": -0.0,
+    "min_valid_margin_after_deadline": 0.18103330535013384,
+    "n_already_valid_at_s": 24663,
+    "n_never_crossed": 0,
+    "n_runs": 80724
+   },
+   "L": {
+    "max_delay_ns": 2.2511899869447993,
+    "max_ratio": 0.6579684941153144,
+    "min_hi_margin": 0.0,
+    "min_hi_margin_later": 0.00015583164933463678,
+    "min_lo_margin": 0.0,
+    "min_lo_margin_later": 0.0003343999999999986,
+    "min_valid_margin_after_cross": 0.0,
+    "min_valid_margin_after_deadline": 0.20959993957752987,
+    "n_already_valid_at_s": 27124,
+    "n_never_crossed": 0,
+    "n_runs": 80724
+   }
+  },
+  "totals": {
+   "n_runs": 161448,
+   "viol_cross": 0,
+   "viol_persist": 0,
+   "viol_recross": 0,
+   "viol_safe": 0
+  }
+ },
+ "units": "V, uA, fF, ns",
+ "worst_case": {
+  "band_edge_is_pointwise_worst_input": true,
+  "corner_extremes_check": {
+   "box_extremes_attained_at_corners": true,
+   "max of [I_net(theta) - max over corners] (uA)": -0.000635665403025106,
+   "max of [min over corners - I_net(theta)] (uA)": -0.00040951793223755265,
+   "n_random_points (u, v, theta)": 400000
+  },
+  "fall": {
+   "exact_bracket_ns": [
+    "1.39426336755743644059823",
+    "1.394814089981388855237496"
+   ],
+   "limit_of_multisegment_bound_ns": 1.417563186967754,
+   "model_worst_case_delay_ns (constant theta)": 1.3923521586515486,
+   "model_worst_case_delay_ns (moving theta, interface v1 rev. 2)": 1.3945384149854998,
+   "multisegment": {
+    "2": {
+     "bound_ns": "1.583096060321664",
+     "breakpoints_V": [
+      "2.08",
+      "0.558",
+      "0.25"
+     ],
+     "over_model_worst_case": 1.1352115103534992
+    },
+    "4": {
+     "bound_ns": "1.460968310509661",
+     "breakpoints_V": [
+      "2.08",
+      "0.634",
+      "0.445",
+      "0.329",
+      "0.25"
+     ],
+     "over_model_worst_case": 1.0476357587645604
+    },
+    "8": {
+     "bound_ns": "1.434202965225732",
+     "breakpoints_V": [
+      "2.08",
+      "0.646",
+      "0.539",
+      "0.464",
+      "0.405",
+      "0.356",
+      "0.315",
+      "0.28",
+      "0.25"
+     ],
+     "over_model_worst_case": 1.028442780646272
+    }
+   },
+   "tau_ns": "2.560156687185227",
+   "tau_over_model_worst_case": 1.835845222816502,
+   "worst_corner(VDD,kn,kp,Vtn,Vtp) for constant theta": "HLHHL"
+  },
+  "rise": {
+   "exact_bracket_ns": [
+    "2.250894845276966727771912",
+    "2.251485735699735152439382"
+   ],
+   "limit_of_multisegment_bound_ns": 2.2511899869450605,
+   "model_worst_case_delay_ns (constant theta)": 2.2511899869450582,
+   "model_worst_case_delay_ns (moving theta, interface v1 rev. 2)": 2.2511899869450582,
+   "multisegment": {
+    "2": {
+     "bound_ns": "2.435806352665099",
+     "breakpoints_V": [
+      "-0.1",
+      "1.077",
+      "1.35"
+     ],
+     "over_model_worst_case": 1.0820083452710143
+    },
+    "4": {
+     "bound_ns": "2.301803904634884",
+     "breakpoints_V": [
+      "-0.1",
+      "1.015",
+      "1.173",
+      "1.276",
+      "1.35"
+     ],
+     "over_model_worst_case": 1.0224831835532953
+    },
+    "8": {
+     "bound_ns": "2.270837731868421",
+     "breakpoints_V": [
+      "-0.1",
+      "1.004",
+      "1.093",
+      "1.157",
+      "1.208",
+      "1.251",
+      "1.288",
+      "1.321",
+      "1.35"
+     ],
+     "over_model_worst_case": 1.0087277151361291
+    }
+   },
+   "tau_ns": "3.421425200566305",
+   "tau_over_model_worst_case": 1.519829610298372,
+   "worst_corner(VDD,kn,kp,Vtn,Vtp) for constant theta": "LLLHH"
+  }
+ }
+}

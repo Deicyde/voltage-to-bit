@@ -41,7 +41,7 @@ E1-05); and the checking script cannot see a kernel bypass (E1-08).
 ## Conventions
 
 ```sh
-R="/Users/jack/Library/Application Support/Claude/scratch-workspaces/1800eb1f-93f3-40f7-b22e-6338202dfb3a/2dc7650f-b160-4d12-8450-fb90bfff4ec1/scratch-2026-11-09-8b62e5/voltage-to-bit"
+R="$(git rev-parse --show-toplevel)"   # run from inside this repository
 F="${R%/*}/frozen-1880a36"     # read-only worktree at 1880a36 (Part 1)
 F2="${R%/*}/frozen-9b13e95"    # read-only worktree at 9b13e95 (Part 2)
 ```

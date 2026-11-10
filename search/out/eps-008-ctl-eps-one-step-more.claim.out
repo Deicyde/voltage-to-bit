@@ -1,0 +1,7 @@
+search/lean/eps-008-ctl-eps-one-step-more.claim.lean:26:91: error: unsolved goals
+case hiP
+⊢ False
+
+case hiN
+⊢ False
+'VoltageToBit.Search.eps_008_ctl_eps_one_step_more' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

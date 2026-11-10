@@ -1,0 +1,4 @@
+'VoltageToBit.Search.eps_008_ctl_eps_one_step_more_refuted' depends on axioms: [propext, Classical.choice, Quot.sound]
+'VoltageToBit.Search.eps_008_ctl_eps_one_step_more_no_split_points' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

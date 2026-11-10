@@ -1,0 +1,200 @@
+{
+ "constants": {
+  "k_B": 1.380649e-23,
+  "phi_t(300.15 K)_V": 0.025864925786328753,
+  "q": 1.602176634e-19
+ },
+ "label": "SENSITIVITY STUDY, NOT VALIDATION. Finite grids and finite run sets; no number here is a bound.",
+ "largest_lambda_inside_tube": {
+  "nominal device, residual 0": {
+   "box_at_device_supply": 0.15314767376275995,
+   "whole_box": 0.15314767376275995
+  },
+  "nominal device, residual <= eps_I": {
+   "box_at_device_supply": 0.15712421850912506,
+   "whole_box": 0.15712421850912506
+  }
+ },
+ "max_fixed_theta_residual_over_eps_by_family (superseded v0 obligation)": {
+  "channel-length modulation": 99.47433599999982,
+  "combined": 99.4742347347912,
+  "subthreshold tail": 0.6968037576296773
+ },
+ "miller": {
+  "largest_excursion_V": 0.1976964006895253,
+  "n_runs": 13824,
+  "n_runs_leaving_safe_domain": 800,
+  "setup": "full-swing input ramps 0 <-> VDD_max, 32 corners x {C_min, C_max} x w in {0, +eps, -eps} x v0 in {rest rail, V_lo, V_hi}; C_gd values are illustrative, not extracted from any process",
+  "slew_limit": {
+   "C_gd=0.1 fF": 20.0,
+   "C_gd=0.25 fF": 8.0,
+   "C_gd=0.5 fF": 4.0,
+   "C_gd=1 fF": 2.0
+  }
+ },
+ "n_perturbations": 13,
+ "sandwich_residual_over_eps (rev. 2 obligation; whole box / box at device supply)": {
+  "CLM lambda=0.02/V | base nominal": [
+   0.0,
+   0.0
+  ],
+  "CLM lambda=0.02/V | base worst fall corner HLHHL": [
+   3.315811200000013,
+   3.315811200000013
+  ],
+  "CLM lambda=0.02/V | base worst rise corner LLLHH": [
+   0.0,
+   0.0
+  ],
+  "CLM lambda=0.05/V | base nominal": [
+   0.0,
+   0.0
+  ],
+  "CLM lambda=0.05/V | base worst fall corner HLHHL": [
+   8.289528000000004,
+   8.289528000000004
+  ],
+  "CLM lambda=0.05/V | base worst rise corner LLLHH": [
+   0.0,
+   0.0
+  ],
+  "CLM lambda=0.1/V + tail n=1.3, T=300.15 K | base nominal": [
+   6.63581983194888e-05,
+   0.021728002988546366
+  ],
+  "CLM lambda=0.1/V + tail n=1.3, T=300.15 K | base worst fall corner HLHHL": [
+   16.57905575109197,
+   16.57905575109197
+  ],
+  "CLM lambda=0.1/V + tail n=1.3, T=300.15 K | base worst rise corner LLLHH": [
+   0.002190371760814809,
+   0.002190371760814809
+  ],
+  "CLM lambda=0.1/V | base nominal": [
+   0.0,
+   0.0
+  ],
+  "CLM lambda=0.1/V | base worst fall corner HLHHL": [
+   16.579055999999994,
+   16.579055999999994
+  ],
+  "CLM lambda=0.1/V | base worst rise corner LLLHH": [
+   0.0,
+   0.0
+  ],
+  "CLM lambda=0.2/V | base nominal": [
+   11.78216999999998,
+   11.78216999999998
+  ],
+  "CLM lambda=0.2/V | base worst fall corner HLHHL": [
+   33.158112,
+   33.158112
+  ],
+  "CLM lambda=0.2/V | base worst rise corner LLLHH": [
+   0.0,
+   0.0
+  ],
+  "CLM lambda=0.3/V + tail n=1.5, T=398.15 K | base nominal": [
+   36.92961594385045,
+   36.92961594385045
+  ],
+  "CLM lambda=0.3/V + tail n=1.5, T=398.15 K | base worst fall corner HLHHL": [
+   49.737092118923314,
+   49.737092118923314
+  ],
+  "CLM lambda=0.3/V + tail n=1.5, T=398.15 K | base worst rise corner LLLHH": [
+   0.027626476149144708,
+   0.027626476149144708
+  ],
+  "CLM lambda=0.3/V | base nominal": [
+   36.92962999999992,
+   36.92962999999992
+  ],
+  "CLM lambda=0.3/V | base worst fall corner HLHHL": [
+   49.73716800000001,
+   49.73716800000001
+  ],
+  "CLM lambda=0.3/V | base worst rise corner LLLHH": [
+   0.0,
+   0.0
+  ],
+  "formal (control) | base nominal": [
+   0.0,
+   0.0
+  ],
+  "formal (control) | base worst fall corner HLHHL": [
+   0.0,
+   0.0
+  ],
+  "formal (control) | base worst rise corner LLLHH": [
+   0.0,
+   0.0
+  ],
+  "tail n=1, T=300.15 K | base nominal": [
+   3.4723311033876273e-06,
+   0.005942943931736609
+  ],
+  "tail n=1, T=300.15 K | base worst fall corner HLHHL": [
+   0.13690140759663194,
+   0.13690140759663194
+  ],
+  "tail n=1, T=300.15 K | base worst rise corner LLLHH": [
+   0.07822944676556176,
+   0.07834442465946978
+  ],
+  "tail n=1.3, T=233.15 K | base nominal": [
+   3.895394040631766e-06,
+   0.006215956742605326
+  ],
+  "tail n=1.3, T=233.15 K | base worst fall corner HLHHL": [
+   0.13955359475315277,
+   0.13955359475315277
+  ],
+  "tail n=1.3, T=233.15 K | base worst rise corner LLLHH": [
+   0.07974499602458707,
+   0.07986704511302811
+  ],
+  "tail n=1.3, T=300.15 K | base nominal": [
+   5.6235761287702385e-05,
+   0.018179641650800157
+  ],
+  "tail n=1.3, T=300.15 K | base worst fall corner HLHHL": [
+   0.23131223789753363,
+   0.23131223789753363
+  ],
+  "tail n=1.3, T=300.15 K | base worst rise corner LLLHH": [
+   0.13218485778565991,
+   0.13248831018233886
+  ],
+  "tail n=1.5, T=300.15 K | base nominal": [
+   0.00020284594258769377,
+   0.03292226698824925
+  ],
+  "tail n=1.5, T=300.15 K | base worst fall corner HLHHL": [
+   0.3079554860888365,
+   0.3079554860888365
+  ],
+  "tail n=1.5, T=300.15 K | base worst rise corner LLLHH": [
+   0.17601620739883117,
+   0.17601620739883117
+  ],
+  "tail n=1.5, T=398.15 K | base nominal": [
+   0.001721532800092421,
+   0.0903312107942586
+  ],
+  "tail n=1.5, T=398.15 K | base worst fall corner HLHHL": [
+   0.540385428094023,
+   0.540385428094023
+  ],
+  "tail n=1.5, T=398.15 K | base worst rise corner LLLHH": [
+   0.3098643372069745,
+   0.3098643372069745
+  ]
+ },
+ "trajectory_violations_total": {
+  "crossing_by_bound": 0,
+  "n_runs": 489216,
+  "persistence": 0,
+  "safe_domain": 0
+ }
+}

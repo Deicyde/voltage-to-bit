@@ -1,0 +1,4 @@
+search/lean/eps-007-ctl-eps-equals-margin.claim.lean:26:91: error: unsolved goals
+case hiN
+⊢ False
+'VoltageToBit.Search.eps_007_ctl_eps_equals_margin' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

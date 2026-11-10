@@ -1,0 +1,230 @@
+{
+ "inputs": {
+  "H/const_beyond_rail": {
+   "T_end_ns": 3.7005,
+   "desc": "u held 0.4 V outside the safe domain (arbitrary real input)",
+   "n_steps": 7401,
+   "s_ns": 0.0,
+   "spec_kind": "const"
+  },
+  "H/const_edge": {
+   "T_end_ns": 3.7005,
+   "desc": "u held exactly at the valid-band edge",
+   "n_steps": 7401,
+   "s_ns": 0.0,
+   "spec_kind": "const"
+  },
+  "H/ramp_0.4V_per_ns_full_swing": {
+   "T_end_ns": 6.8755,
+   "desc": "finite-slew ramp from the opposite rail through the mid region, reaching the band edge at t = s, ending at 1.98 V",
+   "n_steps": 13751,
+   "s_ns": 3.1750000000000003,
+   "spec_kind": "ramp"
+  },
+  "H/ramp_20V_per_ns_to_edge": {
+   "T_end_ns": 3.813,
+   "desc": "finite-slew ramp from the opposite rail through the mid region, reaching the band edge at t = s, ending at 1.25 V",
+   "n_steps": 7626,
+   "s_ns": 0.1125,
+   "spec_kind": "ramp"
+  },
+  "H/ramp_2V_per_ns_to_edge": {
+   "T_end_ns": 4.3755,
+   "desc": "finite-slew ramp from the opposite rail through the mid region, reaching the band edge at t = s, ending at 1.25 V",
+   "n_steps": 8751,
+   "s_ns": 0.675,
+   "spec_kind": "ramp"
+  },
+  "H/wander_pwl": {
+   "T_end_ns": 3.7005,
+   "desc": "seeded random piecewise-linear input in [1.25, 2.18] V, knots every 0.1 ns, every 4th knot exactly at the band edge",
+   "n_steps": 7401,
+   "s_ns": 0.0,
+   "spec_kind": "pwl"
+  },
+  "H/wander_sine": {
+   "T_end_ns": 3.7005,
+   "desc": "sine wandering over [1.25, 2.18] V, touching the band edge every 0.7 ns",
+   "n_steps": 7401,
+   "s_ns": 0.0,
+   "spec_kind": "sin"
+  },
+  "L/const_beyond_rail": {
+   "T_end_ns": 4.777,
+   "desc": "u held 0.4 V outside the safe domain (arbitrary real input)",
+   "n_steps": 9554,
+   "s_ns": 0.0,
+   "spec_kind": "const"
+  },
+  "L/const_edge": {
+   "T_end_ns": 4.777,
+   "desc": "u held exactly at the valid-band edge",
+   "n_steps": 9554,
+   "s_ns": 0.0,
+   "spec_kind": "const"
+  },
+  "L/ramp_0.4V_per_ns_full_swing": {
+   "T_end_ns": 8.777000000000001,
+   "desc": "finite-slew ramp from the opposite rail through the mid region, reaching the band edge at t = s, ending at 0 V",
+   "n_steps": 17554,
+   "s_ns": 4.0,
+   "spec_kind": "ramp"
+  },
+  "L/ramp_20V_per_ns_to_edge": {
+   "T_end_ns": 4.906,
+   "desc": "finite-slew ramp from the opposite rail through the mid region, reaching the band edge at t = s, ending at 0.4 V",
+   "n_steps": 9812,
+   "s_ns": 0.129,
+   "spec_kind": "ramp"
+  },
+  "L/ramp_2V_per_ns_to_edge": {
+   "T_end_ns": 5.617,
+   "desc": "finite-slew ramp from the opposite rail through the mid region, reaching the band edge at t = s, ending at 0.4 V",
+   "n_steps": 11234,
+   "s_ns": 0.84,
+   "spec_kind": "ramp"
+  },
+  "L/wander_pwl": {
+   "T_end_ns": 4.777,
+   "desc": "seeded random piecewise-linear input in [-0.2, 0.4] V, knots every 0.1 ns, every 4th knot exactly at the band edge",
+   "n_steps": 9554,
+   "s_ns": 0.0,
+   "spec_kind": "pwl"
+  },
+  "L/wander_sine": {
+   "T_end_ns": 4.777,
+   "desc": "sine wandering over [-0.2, 0.4] V, touching the band edge every 0.7 ns",
+   "n_steps": 9554,
+   "s_ns": 0.0,
+   "spec_kind": "sin"
+  }
+ },
+ "label": "formal",
+ "matrix": {
+  "checks": "(a) v in [V_lo, V_hi] at every step; (b) first valid-output crossing after s no later than s + tau, and valid at every step from s + tau to the end; also recorded: any return to invalid after the first crossing",
+  "disturbances": "zero, +eps, -eps, sinusoids at 0.1, 1, 10, 50 GHz (seeded phases), seeded random PWL (knots every 0.02, 0.2 ns; uniform and +-eps extremes), adv_oppose, adv_outward, env_low, env_high",
+  "initial_states": [
+   "V_lo",
+   "V_OL",
+   "mid",
+   "V_OH",
+   "V_hi",
+   "random"
+  ],
+  "theta_C_sets": "32 corners x {C_min, C_max} + 32 seeded interior lattice points x {C_max, seeded random C}; plus the theta-free rows box_low / box_high (extremal selections of the rev. 2 inclusion, parameter point free at each instant)",
+  "tolerances": {
+   "TOL_T": 1e-09,
+   "TOL_V": 1e-09
+  }
+ },
+ "n_batches": 14,
+ "n_failing_total": 0,
+ "per_polarity": {
+  "H": {
+   "max_delay_ns": 1.3945384173375706,
+   "max_ratio": 0.544708229897757,
+   "min_hi_margin": 0.0,
+   "min_hi_margin_later": 0.0002356510828782632,
+   "min_lo_margin": 0.0,
+   "min_lo_margin_later": 0.0002296553799023271,
+   "min_valid_margin_after_cross": -0.0,
+   "min_valid_margin_after_deadline": 0.18103330535013384,
+   "n_already_valid_at_s": 24663,
+   "n_never_crossed": 0,
+   "n_runs": 80724
+  },
+  "L": {
+   "max_delay_ns": 2.2511899869447993,
+   "max_ratio": 0.6579684941153144,
+   "min_hi_margin": 0.0,
+   "min_hi_margin_later": 0.00015583164933463678,
+   "min_lo_margin": 0.0,
+   "min_lo_margin_later": 0.0003343999999999986,
+   "min_valid_margin_after_cross": 0.0,
+   "min_valid_margin_after_deadline": 0.20959993957752987,
+   "n_already_valid_at_s": 27124,
+   "n_never_crossed": 0,
+   "n_runs": 80724
+  }
+ },
+ "ratio_hist": {
+  "H": [
+   20311,
+   15446,
+   9058,
+   4348,
+   2868,
+   2272,
+   939,
+   366,
+   275,
+   142,
+   36,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "L": [
+   17284,
+   15183,
+   8979,
+   5011,
+   2577,
+   1893,
+   1136,
+   683,
+   219,
+   171,
+   229,
+   140,
+   78,
+   17,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0,
+   0
+  ],
+  "bin_edges": [
+   0.0,
+   0.05,
+   0.1,
+   0.15000000000000002,
+   0.2,
+   0.25,
+   0.30000000000000004,
+   0.35000000000000003,
+   0.4,
+   0.45,
+   0.5,
+   0.55,
+   0.6000000000000001,
+   0.65,
+   0.7000000000000001,
+   0.75,
+   0.8,
+   0.8500000000000001,
+   0.9,
+   0.9500000000000001,
+   1.0,
+   "> 1 or never crossed"
+  ],
+  "note": "runs whose output was already valid when the input became valid (delay 0) are excluded from the bins and counted in per_polarity.n_already_valid_at_s"
+ },
+ "totals": {
+  "n_runs": 161448,
+  "viol_cross": 0,
+  "viol_persist": 0,
+  "viol_recross": 0,
+  "viol_safe": 0
+ }
+}

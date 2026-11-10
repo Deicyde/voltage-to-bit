@@ -1,0 +1,2 @@
+'VoltageToBit.Search.rise_019_dp_n64' depends on axioms: [propext, Classical.choice, Quot.sound]
+'VoltageToBit.Search.rise_019_dp_n64_sum' depends on axioms: [propext, Classical.choice, Quot.sound]

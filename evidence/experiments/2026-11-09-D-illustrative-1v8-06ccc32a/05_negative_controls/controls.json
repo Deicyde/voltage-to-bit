@@ -1,0 +1,661 @@
+{
+ "i_invalid_parameter_bounds": {
+  "a_capacitance_bounds_inverted": {
+   "checker_verdict": "REJECTED",
+   "design_variant": {
+    "barrier_split": {
+     "uHi": "0.77",
+     "uLo": "0.74"
+    },
+    "box": {
+     "C": [
+      "20",
+      "5"
+     ],
+     "VDD": [
+      "1.62",
+      "1.98"
+     ],
+     "Vtn": [
+      "0.45",
+      "0.6"
+     ],
+     "Vtp": [
+      "0.45",
+      "0.6"
+     ],
+     "kn": [
+      "160",
+      "240"
+     ],
+     "kp": [
+      "80",
+      "120"
+     ]
+    },
+    "eps": "2",
+    "name": "illustrative-1v8+C-bounds-inverted",
+    "safe_domain": {
+     "Vhi": "2.08",
+     "Vlo": "-0.1"
+    },
+    "status": "ILLUSTRATIVE. Numbers are plausible orders of magnitude for a small 1.8 V-class inverter but are NOT fitted to any process, device model, or measurement.",
+    "thresholds": {
+     "VIH": "1.25",
+     "VIL": "0.4",
+     "VOH": "1.35",
+     "VOL": "0.25"
+    }
+   },
+   "exhibited_trajectory": {
+    "C_fF": 20.0,
+    "actual_crossing_ns": 2.2511899869921423,
+    "decoded_at_naive_tau": "undefined",
+    "guarantee_with_naive_tau_violated": true,
+    "note": "C lies between the two listed numbers",
+    "theta": {
+     "VDD": 1.62,
+     "Vtn": 0.6,
+     "Vtp": 0.6,
+     "kn": 160.0,
+     "kp": 80.0
+    },
+    "u": 0.4,
+    "v0": -0.1,
+    "v_at_naive_tau_V": 0.47206229353468604,
+    "w": -2.0
+   },
+   "failed_conditions": [
+    "B-C: C_lo <= C_hi (lhs 20, rhs 5)"
+   ],
+   "naive_tau_up_ns (uses the second entry as C_max)": 0.8553563001415763,
+   "six_margins_alone_would_pass": true
+  },
+  "b_kp_bounds_inverted": {
+   "checker_verdict": "REJECTED",
+   "design_variant": {
+    "barrier_split": {
+     "uHi": "0.77",
+     "uLo": "0.74"
+    },
+    "box": {
+     "C": [
+      "5",
+      "20"
+     ],
+     "VDD": [
+      "1.62",
+      "1.98"
+     ],
+     "Vtn": [
+      "0.45",
+      "0.6"
+     ],
+     "Vtp": [
+      "0.45",
+      "0.6"
+     ],
+     "kn": [
+      "160",
+      "240"
+     ],
+     "kp": [
+      "80",
+      "10"
+     ]
+    },
+    "eps": "2",
+    "name": "illustrative-1v8+kp-bounds-inverted",
+    "safe_domain": {
+     "Vhi": "2.08",
+     "Vlo": "-0.1"
+    },
+    "status": "ILLUSTRATIVE. Numbers are plausible orders of magnitude for a small 1.8 V-class inverter but are NOT fitted to any process, device model, or measurement.",
+    "thresholds": {
+     "VIH": "1.25",
+     "VIL": "0.4",
+     "VOH": "1.35",
+     "VOL": "0.25"
+    }
+   },
+   "exhibited_trajectory": {
+    "C_fF": 5.0,
+    "decoded_final": "low",
+    "ever_valid_high": false,
+    "left_safe_domain": true,
+    "t_end_ns": 60.0,
+    "theta": {
+     "VDD": 1.62,
+     "Vtn": 0.6,
+     "Vtp": 0.6,
+     "kn": 160.0,
+     "kp": 10.0
+    },
+    "u": 0.4,
+    "v0": -0.1,
+    "v_final_V": -0.23122498999222038,
+    "vmin_V": -0.23122498999264643,
+    "w": -2.0
+   },
+   "failed_conditions": [
+    "B-kp: kp_lo <= kp_hi (lhs 80, rhs 10)"
+   ],
+   "six_margins_alone_would_pass": true
+  },
+  "c_float_instead_of_decimal_string": {
+   "checker_verdict": "REJECTED at load: eps: expected a decimal string, got float (2.0); binary floats are rejected so that the record stays exact"
+  }
+ },
+ "ii_insufficient_observation_time": {
+  "fall": {
+   "observed_crossing_ns": 1.394538414682891,
+   "reading": "any observation earlier than the lower bound sees an output that is not yet valid on this admissible trajectory; between the upper bracket and tau no failing trajectory was found, but the single-segment theorem does not certify it (a failed precondition, not a failed circuit)",
+   "rigorous_lower_bound_on_this_trajectory_crossing_ns": "1.39426336755743644059823",
+   "rigorous_upper_bound_ns": "1.394814089981388855237496",
+   "samples": [
+    {
+     "decoded": "undefined",
+     "sample_time": "0.5 x lower bound",
+     "t_ns": 0.6971316837787183,
+     "theorem_window_nonempty (t >= tau)": false,
+     "v_V": 1.1043320333217068,
+     "valid_output": false
+    },
+    {
+     "decoded": "undefined",
+     "sample_time": "0.9 x lower bound",
+     "t_ns": 1.254837030801693,
+     "theorem_window_nonempty (t >= tau)": false,
+     "v_V": 0.37305636626113625,
+     "valid_output": false
+    },
+    {
+     "decoded": "undefined",
+     "sample_time": "lower bound itself",
+     "t_ns": 1.3942633675574365,
+     "theorem_window_nonempty (t >= tau)": false,
+     "v_V": 0.2501966902169209,
+     "valid_output": false
+    },
+    {
+     "decoded": "low",
+     "sample_time": "upper bracket",
+     "t_ns": 1.3948140899813888,
+     "theorem_window_nonempty (t >= tau)": false,
+     "v_V": 0.24980303420144367,
+     "valid_output": true
+    },
+    {
+     "decoded": "low",
+     "sample_time": "midway to tau",
+     "t_ns": 1.9774853885833077,
+     "theorem_window_nonempty (t >= tau)": false,
+     "v_V": 0.08214065935560294,
+     "valid_output": true
+    },
+    {
+     "decoded": "low",
+     "sample_time": "tau",
+     "t_ns": 2.5601566871852266,
+     "theorem_window_nonempty (t >= tau)": true,
+     "v_V": 0.0689682068303746,
+     "valid_output": true
+    }
+   ],
+   "tau_ns": 2.5601566871852266,
+   "trajectory": {
+    "C_fF": 20.0,
+    "selection": "box_high",
+    "theta": "weakest-drive point of the box at each instant (constant-theta worst corner: HLHHL)",
+    "u": 1.25,
+    "v0": 2.08,
+    "w": 2.0
+   }
+  },
+  "rise": {
+   "observed_crossing_ns": 2.2511899869921423,
+   "reading": "any observation earlier than the lower bound sees an output that is not yet valid on this admissible trajectory; between the upper bracket and tau no failing trajectory was found, but the single-segment theorem does not certify it (a failed precondition, not a failed circuit)",
+   "rigorous_lower_bound_on_this_trajectory_crossing_ns": "2.250894845276966727771912",
+   "rigorous_upper_bound_ns": "2.251485735699735152439382",
+   "samples": [
+    {
+     "decoded": "undefined",
+     "sample_time": "0.5 x lower bound",
+     "t_ns": 1.1254474226384834,
+     "theorem_window_nonempty (t >= tau)": false,
+     "v_V": 0.6526992362606175,
+     "valid_output": false
+    },
+    {
+     "decoded": "undefined",
+     "sample_time": "0.9 x lower bound",
+     "t_ns": 2.02580536074927,
+     "theorem_window_nonempty (t >= tau)": false,
+     "v_V": 1.2395462212494073,
+     "valid_output": false
+    },
+    {
+     "decoded": "undefined",
+     "sample_time": "lower bound itself",
+     "t_ns": 2.250894845276967,
+     "theorem_window_nonempty (t >= tau)": false,
+     "v_V": 1.3498748930989843,
+     "valid_output": false
+    },
+    {
+     "decoded": "high",
+     "sample_time": "upper bracket",
+     "t_ns": 2.251485735699735,
+     "theorem_window_nonempty (t >= tau)": false,
+     "v_V": 1.350125312354712,
+     "valid_output": true
+    },
+    {
+     "decoded": "high",
+     "sample_time": "midway to tau",
+     "t_ns": 2.8364554681330203,
+     "theorem_window_nonempty (t >= tau)": false,
+     "v_V": 1.5092072834457213,
+     "valid_output": true
+    },
+    {
+     "decoded": "high",
+     "sample_time": "tau",
+     "t_ns": 3.421425200566305,
+     "theorem_window_nonempty (t >= tau)": true,
+     "v_V": 1.5595967606502614,
+     "valid_output": true
+    }
+   ],
+   "tau_ns": 3.421425200566305,
+   "trajectory": {
+    "C_fF": 20.0,
+    "selection": "box_low",
+    "theta": "weakest-drive point of the box at each instant (constant-theta worst corner: LLLHH)",
+    "u": 0.4,
+    "v0": -0.1,
+    "w": -2.0
+   }
+  }
+ },
+ "iii_miswired_transistor_roles": {
+  "dead_zone_note": "with w = 0 every v in [u - V_tn, u + V_tp] is stationary (both devices off): the miswired pair is a follower with a dead zone, not an inverter",
+  "exhibited_trajectories": [
+   {
+    "C_fF": 5.0,
+    "case": "input low, start low",
+    "decoded_final": "low",
+    "guarantee_violated": true,
+    "inverter_requires": "high",
+    "t_end_ns": 40.0,
+    "theta": "nominal (box centre)",
+    "u_V": 0.4,
+    "v0_V": -0.1,
+    "v_final_V": -0.1,
+    "w": 0.0
+   },
+   {
+    "C_fF": 5.0,
+    "case": "input low, start high",
+    "decoded_final": "undefined",
+    "guarantee_violated": true,
+    "inverter_requires": "high",
+    "t_end_ns": 40.0,
+    "theta": "nominal (box centre)",
+    "u_V": 0.4,
+    "v0_V": 2.08,
+    "v_final_V": 0.9274946004320059,
+    "w": 0.0
+   },
+   {
+    "C_fF": 5.0,
+    "case": "input high, start high",
+    "decoded_final": "high",
+    "guarantee_violated": true,
+    "inverter_requires": "low",
+    "t_end_ns": 40.0,
+    "theta": "nominal (box centre)",
+    "u_V": 1.25,
+    "v0_V": 2.08,
+    "v_final_V": 1.7774796747968096,
+    "w": 0.0
+   },
+   {
+    "C_fF": 5.0,
+    "case": "input high, start low",
+    "decoded_final": "undefined",
+    "guarantee_violated": true,
+    "inverter_requires": "low",
+    "t_end_ns": 40.0,
+    "theta": "nominal (box centre)",
+    "u_V": 1.25,
+    "v0_V": -0.1,
+    "v_final_V": 0.7237518910740998,
+    "w": 0.0
+   }
+  ],
+  "margin_analogue": {
+   "eps_uA": 2.0,
+   "min pull-down at u = V_IH over v in [V_OL, V_hi], 32 corners (uA)": -36.300000000000004,
+   "min pull-up at u = V_IL over v in [V_lo, V_OH], 32 corners (uA)": -15.0,
+   "verdict": "REJECTED: no positive current margin"
+  },
+  "matrix": {
+   "n_runs": 7680,
+   "n_violating_crossing_by_bound": 5462,
+   "n_violating_persistence": 7680,
+   "n_violating_safe_domain": 1492,
+   "note": "same harness and checks as task 3, miswired law, corners x {C_min, C_max} x 6 initial states x 5 disturbances x 2 inputs",
+   "per_polarity": {
+    "H": {
+     "max_delay_ns": 0.0,
+     "max_ratio": 0.0,
+     "min_hi_margin": 0.0,
+     "min_hi_margin_later": 2.899333105155222e-06,
+     "min_lo_margin": -0.11820000100328673,
+     "min_lo_margin_later": -0.11820000100328673,
+     "min_valid_margin_after_cross": -1.7828644643702725,
+     "min_valid_margin_after_deadline": -1.8242458865065494,
+     "n_already_valid_at_s": 899,
+     "n_never_crossed": 2941,
+     "n_runs": 3840
+    },
+    "L": {
+     "max_delay_ns": 0.0,
+     "max_ratio": 0.0,
+     "min_hi_margin": -0.1257386769416695,
+     "min_hi_margin_later": -0.1257386769416695,
+     "min_lo_margin": -0.2581138829727345,
+     "min_lo_margin_later": -0.2581138829727345,
+     "min_valid_margin_after_cross": -1.708014933007246,
+     "min_valid_margin_after_deadline": -1.7081138829727345,
+     "n_already_valid_at_s": 1319,
+     "n_never_crossed": 2521,
+     "n_runs": 3840
+    }
+   }
+  }
+ },
+ "iv_disturbance_destroys_margin": {
+  "barriers": {
+   "hi": {
+    "C_fF": 5.0,
+    "admissible": false,
+    "certificate_bound_uA": "2.312",
+    "eps_used_uA": "6.762",
+    "excursion_beyond_boundary_V": 0.004835313124598617,
+    "left_safe_domain": true,
+    "model_min_inward_current_at_boundary_uA": "6.44",
+    "stationary_point_V": 2.084835313100734,
+    "theta": {
+     "VDD": 1.98,
+     "Vtn": 0.6,
+     "Vtp": 0.6,
+     "kn": 160.0,
+     "kp": 80.0
+    },
+    "u_V": 0.65,
+    "v0_V": 2.08,
+    "v_final_V": 2.0848353131013226,
+    "vmax_V": 2.0848353131245987,
+    "vmin_V": 2.08,
+    "w_uA": 6.762
+   },
+   "lo": {
+    "C_fF": 5.0,
+    "admissible": false,
+    "certificate_bound_uA": "3.04",
+    "eps_used_uA": "6.216",
+    "excursion_beyond_boundary_V": 0.005729949499818976,
+    "left_safe_domain": true,
+    "model_min_inward_current_at_boundary_uA": "5.92",
+    "stationary_point_V": -0.1057299494980465,
+    "theta": {
+     "VDD": 1.62,
+     "Vtn": 0.6,
+     "Vtp": 0.6,
+     "kn": 160.0,
+     "kp": 80.0
+    },
+    "u_V": 0.82,
+    "v0_V": -0.1,
+    "v_final_V": -0.10572994949784166,
+    "vmax_V": -0.1,
+    "vmin_V": -0.10572994949981898,
+    "w_uA": -6.216
+   }
+  },
+  "between_certificate_and_model_limits": {
+   "reading": "the certificate rejects these eps (barrier margins), yet no violating trajectory was found in the reduced matrix: a failed sufficient precondition, not a demonstrated failure (finite evidence)",
+   "runs": {
+    "3": {
+     "admissible": false,
+     "failed_conditions": [
+      "M-3",
+      "M-4"
+     ],
+     "max_ratio": {
+      "H": 0.526344115127917,
+      "L": 0.629773269775127
+     },
+     "min_safe_margin_after_t0_V": {
+      "H": 0.00020469283520214987,
+      "L": 0.00013085862751838206
+     },
+     "n_runs": 32256,
+     "tau_dn_ns": 2.752707581227437,
+     "tau_up_ns": 3.879079721776351,
+     "violations": {
+      "viol_cross": 0,
+      "viol_persist": 0,
+      "viol_recross": 0,
+      "viol_safe": 0
+     }
+    },
+    "4": {
+     "admissible": false,
+     "failed_conditions": [
+      "M-3",
+      "M-4",
+      "M-5",
+      "M-6"
+     ],
+     "max_ratio": {
+      "H": 0.5074165476473781,
+      "L": 0.5964840121735623
+     },
+     "min_safe_margin_after_t0_V": {
+      "H": 0.00017973029133282192,
+      "L": 0.00010588560611823894
+     },
+     "n_runs": 32256,
+     "tau_dn_ns": 2.9765777488614185,
+     "tau_up_ns": 4.478072884496603,
+     "violations": {
+      "viol_cross": 0,
+      "viol_persist": 0,
+      "viol_recross": 0,
+      "viol_safe": 0
+     }
+    },
+    "5": {
+     "admissible": false,
+     "failed_conditions": [
+      "M-3",
+      "M-4",
+      "M-5",
+      "M-6"
+     ],
+     "max_ratio": {
+      "H": 0.4868887387457651,
+      "L": 0.5565692763366593
+     },
+     "min_safe_margin_after_t0_V": {
+      "H": 0.00015476774829432938,
+      "L": 8.091258513376332e-05
+     },
+     "n_runs": 32256,
+     "tau_dn_ns": 3.240084985835694,
+     "tau_up_ns": 5.295836376917458,
+     "violations": {
+      "viol_cross": 0,
+      "viol_persist": 0,
+      "viol_recross": 0,
+      "viol_safe": 0
+     }
+    }
+   }
+  },
+  "certificate_limits": {
+   "largest_eps_the_certificate_accepts": "any eps < 2.312 uA (first to fail: R_hiN)",
+   "margins_sorted_uA": [
+    {
+     "margin": "R_hiN",
+     "value": "2.312"
+    },
+    {
+     "margin": "R_hiP",
+     "value": "2.4"
+    },
+    {
+     "margin": "R_loN",
+     "value": "3.04"
+    },
+    {
+     "margin": "R_loP",
+     "value": "3.136"
+    },
+    {
+     "margin": "I_up(V_OH)",
+     "value": "10.476"
+    },
+    {
+     "margin": "I_dn(V_OL)",
+     "value": "16.296"
+    }
+   ]
+  },
+  "fall": {
+   "runs": [
+    {
+     "admissible": false,
+     "decoded_final": "undefined",
+     "eps_over_eps_crit": "1.05",
+     "eps_uA": "17.1108",
+     "ever_reached_V_OL_numerically": false,
+     "stationary_minus_V_OL_V": 0.012940573038196124,
+     "stationary_point_V": 0.2629405730381961,
+     "v_final_after_120ns_V": 0.2629405730393914
+    }
+   ],
+   "smallest_eps_with_stationary_point_at_or_above_V_OL_uA": {
+    "decimal": "16.296",
+    "decimal_is_exact": true,
+    "float": 16.296,
+    "fraction": "2037/125"
+   },
+   "worst_corner": "HLHHL"
+  },
+  "rise": {
+   "C_fF": 20.0,
+   "numerical_min_pullup_over_grid_uA": 10.47600000000001,
+   "runs": [
+    {
+     "admissible": false,
+     "decoded_final": "undefined",
+     "eps_over_eps_crit": "1",
+     "eps_uA": "10.476",
+     "ever_reached_V_OH_numerically": true,
+     "failed_conditions": [
+      "M-1",
+      "M-3",
+      "M-4",
+      "M-5",
+      "M-6"
+     ],
+     "left_safe_domain": false,
+     "note": "KNIFE EDGE: the stationary point is V_OH itself; the exact solution approaches it but never reaches it, which float64 cannot resolve",
+     "stationary_minus_V_OH_V": 2.220446049250313e-16,
+     "stationary_point_V": 1.3500000000000003,
+     "v_final_after_120ns_V": 1.3499999999903713,
+     "v_final_minus_V_OH_V": -9.628742247969058e-12,
+     "vmin_V": -0.1
+    },
+    {
+     "admissible": false,
+     "decoded_final": "undefined",
+     "eps_over_eps_crit": "1.01",
+     "eps_uA": "10.58076",
+     "ever_reached_V_OH_numerically": false,
+     "failed_conditions": [
+      "M-1",
+      "M-3",
+      "M-4",
+      "M-5",
+      "M-6"
+     ],
+     "left_safe_domain": false,
+     "note": "stuck strictly below V_OH: guarantee 2 fails for every deadline",
+     "stationary_minus_V_OH_V": -0.0037616427950244447,
+     "stationary_point_V": 1.3462383572049756,
+     "v_final_after_120ns_V": 1.346238357205292,
+     "v_final_minus_V_OH_V": -0.003761642794708031,
+     "vmin_V": -0.1
+    },
+    {
+     "admissible": false,
+     "decoded_final": "undefined",
+     "eps_over_eps_crit": "1.05",
+     "eps_uA": "10.9998",
+     "ever_reached_V_OH_numerically": false,
+     "failed_conditions": [
+      "M-1",
+      "M-3",
+      "M-4",
+      "M-5",
+      "M-6"
+     ],
+     "left_safe_domain": false,
+     "note": "stuck strictly below V_OH: guarantee 2 fails for every deadline",
+     "stationary_minus_V_OH_V": -0.019235733489845863,
+     "stationary_point_V": 1.3307642665101542,
+     "v_final_after_120ns_V": 1.3307642665086714,
+     "v_final_minus_V_OH_V": -0.019235733491328677,
+     "vmin_V": -0.1
+    },
+    {
+     "admissible": false,
+     "decoded_final": "low",
+     "eps_over_eps_crit": "1.5",
+     "eps_uA": "15.714",
+     "ever_reached_V_OH_numerically": false,
+     "failed_conditions": [
+      "M-1",
+      "M-3",
+      "M-4",
+      "M-5",
+      "M-6"
+     ],
+     "left_safe_domain": true,
+     "note": "stuck strictly below V_OH: guarantee 2 fails for every deadline",
+     "stationary_minus_V_OH_V": -1.6149999999999989,
+     "stationary_point_V": -0.26499999999999885,
+     "v_final_after_120ns_V": -0.264999999999905,
+     "v_final_minus_V_OH_V": -1.6149999999999052,
+     "vmin_V": -0.26500000000038426
+    }
+   ],
+   "sharpness": "at this corner the pull-up at V_OH equals I_up(V_OH) exactly, so eps < I_up(V_OH) is necessary as well as sufficient for guarantee 2 in this design",
+   "smallest_eps_with_stationary_point_at_or_below_V_OH_uA": {
+    "decimal": "10.476",
+    "decimal_is_exact": true,
+    "float": 10.476,
+    "fraction": "2619/250"
+   },
+   "u": 0.4,
+   "v0": -0.1,
+   "w": "-eps'",
+   "worst_corner": "LLLHH"
+  }
+ }
+}

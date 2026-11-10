@@ -1,0 +1,13 @@
+search/lean/eps-009-pred-model-tolerance.claim.lean:26:89: error: unsolved goals
+case hiP
+⊢ False
+
+case hiN
+⊢ False
+
+case loN
+⊢ False
+
+case loP
+⊢ False
+'VoltageToBit.Search.eps_009_pred_model_tolerance' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]

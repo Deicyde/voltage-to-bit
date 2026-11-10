@@ -1,0 +1,57 @@
+{
+ "a2_level1_one_effect_at_a_time (tier T2 of docs/model.md 9.4)": {
+  "decks": "not rendered yet: one-line edits of the Level-1 .model/.instance lines",
+  "purpose": "attribute the residual to named mechanisms by switching one omitted effect back on at a time in the Level-1 deck: LAMBDA; CGDO and CGSO; CJ; default IS",
+  "report": "for each: the sandwich residual against the box tube, the four margins, min/max of v(out) and the delays; to be compared with the Python sensitivity study (07_sensitivity), which predicts the LAMBDA and gate-drain results"
+ },
+ "a_level1_matched": {
+  "dc": {
+   "quantity": "r(u, v) = 1e6 * i(VOUT) [uA] - I_net(u, v; theta) from experiments/v2b/laws.py",
+   "report": "max |r| over the grid per corner; pass criterion (harness check): max |r| < 1e-3 uA; any larger value means a units or sign error, a non-zero LAMBDA/GAMMA, or junction/GMIN leakage and must be explained before anything else is compared",
+   "sweep": "v in [-0.1, 2.08] step 0.02 V; u in [-0.5, 2.48] step 0.05 V; all 32 corners"
+  },
+  "purpose": "units, sign-convention and harness cross-check of the Python simulator against an independent implementation of the same equations; not physical evidence",
+  "transient": {
+   "cases": "all 32 corners at C = C_max, both transitions, constant disturbance at the adverse bound (w = -eps for the rise, +eps for the fall), input ramp 2 V/ns from the opposite rail to the band edge, start at the far end of the safe domain",
+   "quantity": "crossing time of V_OH (rise) / V_OL (fall) after s, by linear interpolation of the 1 ps output samples, minus the Python reference (DOP853, rtol 1e-12); max |v_spice(t) - v_python(t)| on the sample grid",
+   "report": "difference in ns and in V; expected at the level of the SPICE tolerances (RELTOL 1e-6). The device capacitances must be confirmed zero first (`show`)."
+  }
+ },
+ "b_higher_fidelity (tier T3)": {
+  "conditions": "process corners tt, ss, ff, sf, fs; supply at VDD_min, nominal, VDD_max; -40, 27, 100 C (docs/model.md 9.4)",
+  "dc": {
+   "quantities": [
+    "sandwich residual r(u, v) = distance of I_spice(u, v) from [min_theta I_net(u, v; theta), max_theta I_net(u, v; theta)] over the box (and over the box members at the run's own supply); max over the grid versus eps_I",
+    "the four margins directly on the SPICE map: min net pull-up for u <= V_IL, v <= V_OH (versus I_up(V_OH) and eps_I); min net pull-down for u >= V_IH, v >= V_OL (versus I_dn(V_OL)); min restoring current over u at v = V_lo and at v = V_hi (versus the R bounds and eps_I)",
+    "square-law extractions of docs/model.md 9.5 items 1-3 (saturation extrapolation, linear extrapolation, envelope fits), each reported separately"
+   ],
+   "report": "each quantity with the grid point and condition that is worst. These are statistics of a finite grid: a grid can refute a bound, it cannot establish one between grid points, corners or temperatures.",
+   "sweep": "(u, v) in [-0.1, 2.08]^2 step 0.02 V for every condition"
+  },
+  "device_model": "RECOMMENDED BY WORKSTREAM B, NOT FROZEN: SKY130 BSIM4 sky130_fd_pr__nfet_01v8 (0.65/0.15 um) and sky130_fd_pr__pfet_01v8_hvt (1.0/0.15 um), source and commit as in docs/model.md 9.2; second case sky130_fd_pr__pfet_01v8",
+  "purpose": "physical-evidence dimension: does a separately sourced transistor model satisfy the obligation of interface.md v1 (rev. 2), i.e. lie inside the tube spanned by the parameter box up to eps_m, with eps_m + eps_w <= eps_I and C in [C_min, C_max]?",
+  "transient": {
+   "cases": "full-swing input ramps at several slew rates, external load at C_min and C_max, both polarities, every condition",
+   "quantities": [
+    "delay from the input crossing V_IL / V_IH to the output crossing V_OH / V_OL, versus tau_up / tau_dn",
+    "min and max of v(out) versus [V_lo, V_hi] (gate-drain feedthrough overshoot is expected at fast edges; the formal model has no such coupling)",
+    "inclusion residual along the waveform: distance of dv/dt from the set {(I_net(u, v; theta) + w) / c : theta in the box, |w| <= eps_I, c in [C_min, C_max]}",
+    "incremental capacitances dQ/dv and dQ/du at the output (docs/model.md 9.5 item 5) versus [C_min, C_max] and the feedthrough budget"
+   ],
+   "report": "each quantity with the run that maximises it; a violation here is a finding about model fidelity or about the design record, not about the Lean theorem"
+  }
+ },
+ "blocked_on": "ngspice is not installed (owner decision); for (b) also freezing workstream B's model recommendation in the interface and obtaining the pinned model files",
+ "decks": "experiments/ngspice/decks/*.cir (rendered examples); experiments/ngspice/run_ngspice.py renders every corner into a work directory",
+ "rendered_decks": {
+  "level1_dc_HLHHL.cir": "f343e10080780f57262a3a0d03c88ee49d522f499c7145c858fe5a1164112118",
+  "level1_dc_LLLHH.cir": "9e61d3431a70204099ac436d4beb1331ea76b439ab6b1a35a5ec3d30e5fe5b55",
+  "level1_dc_nominal.cir": "cca9a427dc07158944a892d3d5ff03b38843d8b516fa64e9ac0cbc790365a6f6",
+  "level1_tran_fall_HLHHL.cir": "07fcdcdc4719fd995534c925cac4fc9a3cdf3680ba37f20388861edf4c616b30",
+  "level1_tran_rise_LLLHH.cir": "6a1607a4df28c192f16980861a7ec3ed1af486474ce49e11368ec3967efd5f44",
+  "sky130_T3_dc_tt_1v8_27C.cir": "b89b32c74f43a0081ccfc66fa28f948bb63ab8cc2ee4f6caaf34ba6e80f1d62a",
+  "sky130_T3_tran_fall_tt_1v8_27C.cir": "81153f580cb0016c7389d3de943c9516eb67e087098fa940ca94357fe7fe35d5",
+  "sky130_T3_tran_rise_tt_1v8_27C.cir": "8caed3bdf2c4ecf2b11d682ce118f3a7b8c883b1330704bbfc6628a4f6d5958c"
+ },
+ "status": "PROPOSED, NOT RUN"
+}

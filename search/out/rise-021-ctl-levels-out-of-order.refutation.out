@@ -1,0 +1,3 @@
+'VoltageToBit.Search.rise_021_ctl_levels_out_of_order_refuted' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

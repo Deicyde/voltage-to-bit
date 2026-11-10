@@ -1,0 +1,3 @@
+'VoltageToBit.Search.rise_026_ctl_below_model_worst_case_refuted' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]

@@ -1,0 +1,325 @@
+{
+ "admissibility": {
+  "admissible": true,
+  "conditions": [
+   {
+    "group": "box",
+    "holds": true,
+    "id": "B-VDD",
+    "lhs": "1.62",
+    "rel": "<=",
+    "rhs": "1.98",
+    "source": "interface.md s6 (box consistency)",
+    "statement": "VDD_lo <= VDD_hi"
+   },
+   {
+    "group": "box",
+    "holds": true,
+    "id": "B-kn",
+    "lhs": "160",
+    "rel": "<=",
+    "rhs": "240",
+    "source": "interface.md s6 (box consistency)",
+    "statement": "kn_lo <= kn_hi"
+   },
+   {
+    "group": "box",
+    "holds": true,
+    "id": "B-kp",
+    "lhs": "80",
+    "rel": "<=",
+    "rhs": "120",
+    "source": "interface.md s6 (box consistency)",
+    "statement": "kp_lo <= kp_hi"
+   },
+   {
+    "group": "box",
+    "holds": true,
+    "id": "B-Vtn",
+    "lhs": "0.45",
+    "rel": "<=",
+    "rhs": "0.6",
+    "source": "interface.md s6 (box consistency)",
+    "statement": "Vtn_lo <= Vtn_hi"
+   },
+   {
+    "group": "box",
+    "holds": true,
+    "id": "B-Vtp",
+    "lhs": "0.45",
+    "rel": "<=",
+    "rhs": "0.6",
+    "source": "interface.md s6 (box consistency)",
+    "statement": "Vtp_lo <= Vtp_hi"
+   },
+   {
+    "group": "box",
+    "holds": true,
+    "id": "B-C",
+    "lhs": "5",
+    "rel": "<=",
+    "rhs": "20",
+    "source": "interface.md s6 (box consistency)",
+    "statement": "C_lo <= C_hi"
+   },
+   {
+    "group": "box",
+    "holds": true,
+    "id": "B-Cpos",
+    "lhs": "0",
+    "rel": "<",
+    "rhs": "5",
+    "source": "HANDOFF s2 (0 < C_min)",
+    "statement": "0 < C_lo"
+   },
+   {
+    "group": "box",
+    "holds": true,
+    "id": "B-knpos",
+    "lhs": "0",
+    "rel": "<",
+    "rhs": "160",
+    "source": "implied (k is a transconductance)",
+    "statement": "0 < kn_lo"
+   },
+   {
+    "group": "box",
+    "holds": true,
+    "id": "B-kppos",
+    "lhs": "0",
+    "rel": "<",
+    "rhs": "80",
+    "source": "implied (k is a transconductance)",
+    "statement": "0 < kp_lo"
+   },
+   {
+    "group": "box",
+    "holds": true,
+    "id": "B-Vtppos",
+    "lhs": "0",
+    "rel": "<",
+    "rhs": "0.45",
+    "source": "interface.md s3 (V_tp > 0)",
+    "statement": "0 < Vtp_lo"
+   },
+   {
+    "group": "box",
+    "holds": true,
+    "id": "B-eps",
+    "lhs": "0",
+    "rel": "<=",
+    "rhs": "2",
+    "source": "implied (eps bounds an absolute value)",
+    "statement": "0 <= eps"
+   },
+   {
+    "group": "order",
+    "holds": true,
+    "id": "O-1",
+    "lhs": "0.25",
+    "rel": "<=",
+    "rhs": "0.4",
+    "source": "interface.md s5 (static discipline)",
+    "statement": "V_OL <= V_IL"
+   },
+   {
+    "group": "order",
+    "holds": true,
+    "id": "O-2",
+    "lhs": "0.4",
+    "rel": "<",
+    "rhs": "1.25",
+    "source": "interface.md s5 (static discipline)",
+    "statement": "V_IL < V_IH"
+   },
+   {
+    "group": "order",
+    "holds": true,
+    "id": "O-3",
+    "lhs": "1.25",
+    "rel": "<=",
+    "rhs": "1.35",
+    "source": "interface.md s5 (static discipline)",
+    "statement": "V_IH <= V_OH"
+   },
+   {
+    "group": "order",
+    "holds": true,
+    "id": "O-4",
+    "lhs": "-0.1",
+    "rel": "<=",
+    "rhs": "0",
+    "source": "interface.md s5 (safe domain contains [0, VDD])",
+    "statement": "V_lo <= 0"
+   },
+   {
+    "group": "order",
+    "holds": true,
+    "id": "O-5",
+    "lhs": "1.98",
+    "rel": "<=",
+    "rhs": "2.08",
+    "source": "interface.md s5 (safe domain contains [0, VDD])",
+    "statement": "VDD_hi <= V_hi"
+   },
+   {
+    "group": "margin",
+    "holds": true,
+    "id": "M-1",
+    "lhs": "2",
+    "rel": "<",
+    "rhs": "10.476",
+    "source": "interface.md s6 (current margin)",
+    "statement": "eps < I_up(V_OH)"
+   },
+   {
+    "group": "margin",
+    "holds": true,
+    "id": "M-2",
+    "lhs": "2",
+    "rel": "<",
+    "rhs": "16.296",
+    "source": "interface.md s6 (current margin)",
+    "statement": "eps < I_dn(V_OL)"
+   },
+   {
+    "group": "margin",
+    "holds": true,
+    "id": "M-3",
+    "lhs": "2",
+    "rel": "<",
+    "rhs": "2.4",
+    "source": "interface.md s6 (current margin)",
+    "statement": "eps < R_hiP"
+   },
+   {
+    "group": "margin",
+    "holds": true,
+    "id": "M-4",
+    "lhs": "2",
+    "rel": "<",
+    "rhs": "2.312",
+    "source": "interface.md s6 (current margin)",
+    "statement": "eps < R_hiN"
+   },
+   {
+    "group": "margin",
+    "holds": true,
+    "id": "M-5",
+    "lhs": "2",
+    "rel": "<",
+    "rhs": "3.04",
+    "source": "interface.md s6 (current margin)",
+    "statement": "eps < R_loN"
+   },
+   {
+    "group": "margin",
+    "holds": true,
+    "id": "M-6",
+    "lhs": "2",
+    "rel": "<",
+    "rhs": "3.136",
+    "source": "interface.md s6 (current margin)",
+    "statement": "eps < R_loP"
+   }
+  ]
+ },
+ "closed_form": {
+  "I_dn(V_OL)": {
+   "decimal": "16.296",
+   "decimal_is_exact": true,
+   "float": 16.296,
+   "fraction": "2037/125"
+  },
+  "I_up(V_OH)": {
+   "decimal": "10.476",
+   "decimal_is_exact": true,
+   "float": 10.476,
+   "fraction": "2619/250"
+  },
+  "R_hiN": {
+   "decimal": "2.312",
+   "decimal_is_exact": true,
+   "float": 2.312,
+   "fraction": "289/125"
+  },
+  "R_hiP": {
+   "decimal": "2.4",
+   "decimal_is_exact": true,
+   "float": 2.4,
+   "fraction": "12/5"
+  },
+  "R_loN": {
+   "decimal": "3.04",
+   "decimal_is_exact": true,
+   "float": 3.04,
+   "fraction": "76/25"
+  },
+  "R_loP": {
+   "decimal": "3.136",
+   "decimal_is_exact": true,
+   "float": 3.136,
+   "fraction": "392/125"
+  },
+  "tau_dn": {
+   "decimal": "2.560156687185227",
+   "decimal_is_exact": false,
+   "float": 2.5601566871852266,
+   "fraction": "4575/1787"
+  },
+  "tau_up": {
+   "decimal": "3.421425200566305",
+   "decimal_is_exact": false,
+   "float": 3.421425200566305,
+   "fraction": "7250/2119"
+  }
+ },
+ "margin_minus_eps_uA": {
+  "I_dn(V_OL)": {
+   "decimal": "14.296",
+   "decimal_is_exact": true,
+   "float": 14.296,
+   "fraction": "1787/125"
+  },
+  "I_up(V_OH)": {
+   "decimal": "8.476",
+   "decimal_is_exact": true,
+   "float": 8.476,
+   "fraction": "2119/250"
+  },
+  "R_hiN": {
+   "decimal": "0.312",
+   "decimal_is_exact": true,
+   "float": 0.312,
+   "fraction": "39/125"
+  },
+  "R_hiP": {
+   "decimal": "0.4",
+   "decimal_is_exact": true,
+   "float": 0.4,
+   "fraction": "2/5"
+  },
+  "R_loN": {
+   "decimal": "1.04",
+   "decimal_is_exact": true,
+   "float": 1.04,
+   "fraction": "26/25"
+  },
+  "R_loP": {
+   "decimal": "1.136",
+   "decimal_is_exact": true,
+   "float": 1.136,
+   "fraction": "142/125"
+  }
+ },
+ "units": {
+  "I_dn(V_OL)": "uA",
+  "I_up(V_OH)": "uA",
+  "R_hiN": "uA",
+  "R_hiP": "uA",
+  "R_loN": "uA",
+  "R_loP": "uA",
+  "tau_dn": "ns",
+  "tau_up": "ns"
+ }
+}
