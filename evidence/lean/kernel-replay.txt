@@ -1,0 +1,97 @@
+Kernel replay record. Written by scripts/check.sh; do not edit.
+It has no dates or timings: a run on the same sources with the same tools reproduces it.
+
+What was checked
+  sources:   the files listed in evidence/lean/sources.sha256 (sha256 of the list: 95914295e4ea40e0fc71edfcf21a62b843d03fc9d429608bdf5c94ec3858d927)
+  toolchain: Lean (version 4.35.0, arm64-apple-darwin24.6.0, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)
+  mathlib:   56a005855ea17e0b0958f73ec801ae140b0a1679
+  library:   18 modules; 430 declarations that a kernel can check, and
+             3 compiler auxiliaries that none checks (named in evidence/lean/audit.txt)
+
+1. Compiled modules replayed against the imported environment
+  tool:    leanchecker, in the bin directory of the toolchain (sha256 of the executable: d70e645ea2b0e597d0ff4cf67aa0c268483fac0b5b2b991ca2d4cd7fb78ab73c)
+  command: LEAN_NUM_THREADS=<jobs> lake env leanchecker -v VoltageToBit
+  does:    for every module whose name starts with VoltageToBit, sends each declaration
+           stored in the module's compiled file to Lean's kernel, on top of the environment
+           formed by the module's imports. The imports themselves (other modules of the
+           library, Mathlib, Lean core) are loaded as compiled; they are not re-checked
+           by this step.
+  modules replayed (18):
+    VoltageToBit
+    VoltageToBit.Examples.Illustrative
+    VoltageToBit.Examples.IllustrativeDesign
+    VoltageToBit.Examples.NegativeControls
+    VoltageToBit.Model.Device
+    VoltageToBit.Model.Inverter
+    VoltageToBit.Model.PosSq
+    VoltageToBit.Proofs.AtSupply
+    VoltageToBit.Proofs.Certificate
+    VoltageToBit.Proofs.Chain
+    VoltageToBit.Proofs.Concat
+    VoltageToBit.Proofs.Contamination
+    VoltageToBit.Proofs.Existence
+    VoltageToBit.Proofs.Guarantee
+    VoltageToBit.Proofs.Margins
+    VoltageToBit.Proofs.ModelError
+    VoltageToBit.Proofs.NonVacuity
+    VoltageToBit.Proofs.Reach
+  exit status: 0
+
+2. Export of the declarations of the library with everything they depend on
+  tool:    leanexport, in the bin directory of the toolchain (sha256 of the executable: 01327b83d6a69dbc84fa04fd671c61068b2f074e51d1bf607bf6a6b9aed5339e)
+  command: lake env leanexport VoltageToBit -- <the 430 declaration names>
+  does:    writes the named declarations, and every declaration that occurs in the type or
+           in the value of one already written, to one file (so the file contains the part
+           of Mathlib and of Lean core that the library depends on, proofs included).
+  exit status: 0
+  contents, as read by scripts/export_census.py (exit status 0):
+    written by: lean4export 3.1.0, format 3.1.0, Lean 4.35.0 (eb6cafb7290e8bd5f2937522d8d804f58f02bafc)
+    sha256: ab559d860745a1a86c8ae1b00941870a21b3757233e626562cea06d0acdb0cae
+    declaration records: 42935 (axiom: 3, definition: 9036, inductive block: 912, opaque: 37, quotient primitive: 4, theorem: 32943)
+    constants declared (an inductive block declares its types, constructors and recursors): 44849
+    axioms declared: Classical.choice, Quot.sound, propext
+    declarations of the library present in the export: 430 of 430
+    declarations from outside the library (Mathlib, Lean core, other dependencies): 44419
+
+3. The export re-checked from an empty environment
+  Each tool reads the export file and nothing else: no compiled file of the library, of
+  Mathlib or of Lean core. Every declaration in the file is checked again, in the order
+  of its dependencies.
+  leanchecker: Lean's own kernel, the one that also checks declarations when a file is compiled
+    tool:        leanchecker, in the bin directory of the toolchain (sha256 of the executable: d70e645ea2b0e597d0ff4cf67aa0c268483fac0b5b2b991ca2d4cd7fb78ab73c)
+    command:     leanchecker --from-export <export>
+    exit status: 0
+    it printed:  Lean default kernel accepts the solution
+  leanchecker-paranoid: the same program in a separate, statically linked build; its output does not say what the build changes, so it is not counted as independent
+    tool:        leanchecker-paranoid, in the bin directory of the toolchain (sha256 of the executable: 85be1ed043c3eb92e5260126eeb6c1b7129757dde1280a390e2c39a538cc85b5)
+    command:     leanchecker-paranoid --from-export <export>
+    exit status: 0
+    it printed:  Lean default kernel accepts the solution
+  lean4lean: a kernel written in Lean by Mario Carneiro, independent of the kernel above
+    tool:        lean4lean, in the bin directory of the toolchain (sha256 of the executable: 5d9522abac7f701e7b5324c96b0be5b0091d5d557b558d2a023d950688eccdea)
+    command:     lean4lean --import <export>
+    exit status: 0
+    it printed:  checked 42932 declarations
+  nanoda: a kernel written in Rust by Chris Bailey, independent of the kernel above
+    tool:        nanoda_bin, in the bin directory of the toolchain (sha256 of the executable: b5a75a50d07b06a25b3ddb9519144ebdeed8e0f3489222c88ba4049dfe8ce627)
+    command:     nanoda_bin <configuration naming the export; axioms permitted: "propext", "Classical.choice", "Quot.sound";
+                 an axiom outside that list is a hard error: true>
+    version:     nanoda_bin 0.4.19
+    exit status: 0
+    it printed:  Checked 44849 declarations with no errors
+  con-leche: a checker by the Lean FRO, written in Lean (see its --help), independent of the kernel above
+    tool:        con-leche, in the bin directory of the toolchain (sha256 of the executable: 4dc91239adc01a07a8d974bad720d68a316ed21aef73847bb74a191696304e34)
+    command:     con-leche --jobs=4 <export>
+    exit status: 0
+    it printed:  con-leche: accepted 42935 declarations (--verified)
+  con-ron: a checker by the Lean FRO, written in Rust (see its --help), independent of the kernel above
+    tool:        con-ron, in the bin directory of the toolchain (sha256 of the executable: ea4213f72b8c124c1fe1802ae85a16fe60f6cdd73c3ede7bd38d07fdbab924b8)
+    command:     con-ron --jobs=4 <export>
+    exit status: 0
+    it printed:  con-ron: accepted 42935 declarations (--verified)
+
+4. The whole imported environment (optional, scripts/check.sh --whole-env)
+  not run. Declarations of Mathlib and of Lean core that the library does not depend on
+  were not re-checked.
+
+Outcome of the run of scripts/check.sh that wrote this record: every step passed.

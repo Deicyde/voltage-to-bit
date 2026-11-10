@@ -1,0 +1,7 @@
+scanned: 18 Lean files (2977 lines) and lakefile.toml
+allowed, for the record: `open Set` (11 time(s))
+allowed, for the record: `open Set Filter` (1 time(s))
+allowed, for the record: `open Set Metric` (1 time(s))
+allowed, for the record: `open scoped NNReal Topology` (1 time(s))
+allowed, for the record: `open scoped Topology` (1 time(s))
+no forbidden construct found
