@@ -25,7 +25,7 @@ circuit fails, so the controls exhibit trajectories wherever possible.
    (`valid_low_input_can_give_valid_high_within_38ps`).
    This control is far from the proved deadline: 38 ps against a rise deadline
    of 3.43 ns in closed form and 2.26 ns with a certificate
-   (`Examples/RefinedDeadlines.lean`). The controls close to the proved
+   (`Examples/RefinedDeadlines.lean`). The controls nearest to the proved
    deadlines, in both directions, are in `Examples/Limits.lean`: every rise
    deadline below 2.168 ns and every fall deadline below 1.0234 ns is false.
    `Examples/DeadlineBrackets.lean` states these limits together with the

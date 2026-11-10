@@ -19,8 +19,11 @@ takes *at* a jump instant matters: the step above is right-continuous (it takes
 the new value at `c`). For an input that keeps its old value at the jump
 instant and takes the new value only strictly after it, the right derivative
 of any candidate output is dictated by the new value while the inclusion at
-that instant refers to the old one, so in general no trajectory exists on an
-interval containing the jump and the guarantee says nothing. Existence is
+that instant refers to the old one. A trajectory that starts in the safe
+domain then need not exist on an interval containing the jump, and where none
+exists the guarantee says nothing. For the illustrative record, such a step
+from 1.8 V to 0 V at `t = 4` and the interval `[0, 10]`, none exists
+(`Examples.stepL_no_trajectory` in `Examples/InputClass.lean`). Existence is
 proved here only for continuous inputs and for right-continuous steps.
 -/
 

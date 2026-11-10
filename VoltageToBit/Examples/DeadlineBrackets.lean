@@ -100,8 +100,9 @@ open Set
 /-- **Rise bracket.** The rise claim of the guarantee with deadline `τ` (item 2
 of `illustrative_guarantee`, with `τ` in place of 3.43 ns) is false for every
 `τ < 2.168` ns and true for every `τ ≥ 2.26` ns. For `2.168 ≤ τ < 2.26` this
-statement says nothing, and no other statement of the library decides the
-claim.
+statement says nothing, and the library has no statement there in either
+direction. (The module header says what the slow run gives beyond the rounded
+end 2.168.)
 
 The false end is `rise_deadline_counterexample` (the slow run from -0.10 V);
 the true end is `illustrative_guarantee_refined` (a 16-level certificate). -/
@@ -130,8 +131,9 @@ theorem rise_deadline_bracket (τ : ℝ) :
 /-- **Fall bracket.** The fall claim of the guarantee with deadline `τ` (item 3
 of `illustrative_guarantee`, with `τ` in place of 2.57 ns) is false for every
 `τ < 1.0234` ns and true for every `τ ≥ 1.425` ns. For `1.0234 ≤ τ < 1.425`
-this statement says nothing, and no other statement of the library decides the
-claim.
+this statement says nothing, and the library has no statement there in either
+direction. (The module header says what the slow run gives beyond the rounded
+end 1.0234.)
 
 The false end is `fall_deadline_counterexample` (the slow run from 2.08 V);
 the true end is `illustrative_guarantee_refined` (a 16-level certificate). -/

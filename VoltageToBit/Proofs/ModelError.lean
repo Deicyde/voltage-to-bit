@@ -34,11 +34,11 @@ same node (a higher-fidelity device model, or the physical device).
   If the node charge is continuous and its right derivative is the current
   delivered to the node (the net current of one box member plus a residual of
   magnitude at most `εw`), the input and the aggressor are continuous with
-  right derivatives of magnitude at most `Su` and `Sg`, the total capacitance
-  `CL + CM + Cc` lies in `[Clo, Chi]`, and `CM * Su + Cc * Sg + εw ≤ eps`,
-  then the node voltage is a trajectory. This is the formal place where an
-  input slew bound is needed. Inputs with a jump are outside this lemma
-  (limit 4 below).
+  right derivatives of magnitude at most `Su` and `Sg`, `CM` and `Cc` are
+  nonnegative, the total capacitance `CL + CM + Cc` lies in `[Clo, Chi]` with
+  `0 < Clo`, and `CM * Su + Cc * Sg + εw ≤ eps`, then the node voltage is a
+  trajectory. This is the formal place where an input slew bound is needed.
+  Inputs with a jump are outside this lemma (limit 4 below).
 * `Design.InBox.In_eq_zero`: for inputs at or below `Vtnlo` and a node at or
   above ground, the NMOS current of every box member is zero. This is about
   the NMOS current only: the net currents of the box members can still differ
@@ -340,8 +340,9 @@ What is assumed:
   `CM` and `Cc` are nonnegative, the total capacitance `CL + CM + Cc` lies in
   `[Clo, Chi]` with `0 < Clo`, and `CM * Su + Cc * Sg + εw ≤ eps`.
 
-Then `v` is a trajectory, and the guarantee applies to it. The proof solves
-the definition of the charge for the node voltage,
+Then `v` is a trajectory. (The guarantee applies to it when, in addition, the
+record is admissible and `v` starts in the safe domain; this lemma assumes
+neither.) The proof solves the definition of the charge for the node voltage,
 `v = (q + CM * u + Cc * g) / (CL + CM + Cc)`. The three continuity hypotheses
 give the continuity of `v` that a trajectory must have. (Given the continuity
 of `u` and `g`, the charge is continuous exactly when `v` is.) The right
