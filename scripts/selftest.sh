@@ -12,14 +12,18 @@
 #
 # One line is printed per control: PASS if check.sh reported the defect at the
 # step that is meant to catch it, FAIL otherwise. Exit status 1 if any line is
-# FAIL. The build and evidence/lean/ must be up to date (run scripts/check.sh
-# first). check.sh is run six times, five of them with --quick and one in
-# full; the output has no dates or timings, so it can be kept as a record.
+# FAIL. The build of this checkout must be up to date (run scripts/check.sh
+# first). check.sh is run with --quick for the defects that the first five
+# steps catch and in full twice: on the unmodified copy and on the copy with a
+# kernel bypass. The output has no dates or timings. Expect it to take several
+# times as long as one full run of check.sh.
 #
 #   (a) a declaration added with the kernel check switched off, as in
-#       review/tooling/AuditGapDemo.lean, is rejected by the replay step
-#       (one line for leanchecker on the compiled files, one line for each
-#       tool that checks the export)
+#       review/tooling/AuditGapDemo.lean, passes the build and the axiom audit
+#       and is rejected by the replay steps: one line for leanchecker on the
+#       compiled files, and one line for each tool that checks the export and
+#       is installed. A line says PASS only if the same tool accepted the
+#       unmodified copy.
 #   (b) the forbidden-construct scan flags that file
 #   (c) a source file outside the import closure is detected
 #   (d) a failing build makes check.sh exit non-zero, at the build step
@@ -28,10 +32,11 @@
 #   and two sets of small cases for the source scan and for the design
 #   generator (scripts/selftest_static.py).
 #
-# A positive control comes first: an unmodified copy must pass, so that a
-# failure below is due to the defect and not to the copying; and the records
-# check.sh writes for that copy must be the ones in evidence/lean/ of this
-# checkout, which shows that those records can be reproduced from the sources.
+# A positive control comes first: an unmodified copy must pass a full run, so
+# that a failure below is due to the defect and not to the copying; and the
+# records check.sh writes for that copy must be the ones in evidence/lean/ of
+# this checkout, which shows that those records can be reproduced from the
+# files.
 #
 # SELFTEST_KEEP=1 keeps the temporary directory and prints its path.
 set -u
@@ -48,6 +53,7 @@ trap 'exit 130' INT TERM
 STATUS=0
 pass() { echo "PASS $1"; }
 flunk() { echo "FAIL $1"; STATUS=1; }
+show_tail() { tail -n 8 "$1" | cut -c1-300 | sed 's/^/         /'; }
 # verdict <description> <log> <pattern>...: PASS if every fixed string occurs in the log
 verdict() {
   v_what="$1"; v_log="$2"; shift 2
@@ -61,12 +67,11 @@ verdict() {
     flunk "$v_what"
     echo "       not found in the output of check.sh:$v_missing"
     echo "       last lines of that output:"
-    tail -n 8 "$v_log" | cut -c1-300 | sed 's/^/         /'
+    show_tail "$v_log"
   fi
 }
-absent() {   # absent <log> <fixed string>: true if the string does not occur
-  ! grep -q -F -- "$2" "$1"
-}
+present() { grep -q -F -- "$2" "$1"; }   # present <log> <fixed string>
+absent() { ! grep -q -F -- "$2" "$1"; }
 
 tree_digest() {   # one hash over every file of this checkout that a control could have touched
   python3 -c 'import hashlib, pathlib
@@ -95,6 +100,7 @@ copy_project() {   # copy_project <name>: a throwaway copy in $TMP/<name>
   c_dir="$TMP/$1"
   mkdir -p "$c_dir/.lake"
   cp -R VoltageToBit VoltageToBit.lean scripts designs lakefile.toml lake-manifest.json lean-toolchain "$c_dir/"
+  rm -rf "$c_dir/scripts/__pycache__"
   cp -R .lake/build "$c_dir/.lake/build"
   if [ -d .lake/config ]; then cp -R .lake/config "$c_dir/.lake/config"; fi
   ln -s "$PACKAGES" "$c_dir/.lake/packages"
@@ -115,29 +121,33 @@ run_check() {      # run_check <copy> <options>...: output in $TMP/<copy>.log, e
 
 # ---------------------------------------------------------------------------
 echo "== small cases for the source scan and for the design generator =="
-python3 scripts/selftest_static.py "$ROOT" "$TMP/static" || STATUS=1
+python3 -B scripts/selftest_static.py "$ROOT" "$TMP/static" || STATUS=1
 
 # ---------------------------------------------------------------------------
-echo "== positive control: an unmodified copy =="
+echo "== positive control: an unmodified copy (a full run of check.sh) =="
 copy_project control
-run_check control --quick
+run_check control
+CONTROL="$LOG"
 if [ "$CHECK_STATUS" = 0 ]; then
-  verdict "control: an unmodified copy of the project passes check.sh --quick" "$LOG" \
+  verdict "control: an unmodified copy of the project passes a full run of check.sh" "$CONTROL" \
     "RESULT design-record: ok" "RESULT source-scan: ok" "RESULT build: ok" \
-    "RESULT axiom-audit: ok" "RESULT import-closure: ok" "QUICK CHECK PASSED"
+    "RESULT axiom-audit: ok" "RESULT import-closure: ok" "RESULT replay-modules: ok" \
+    "PASSED" "Kernel replay: (1) the compiled files of the"
 else
-  flunk "control: an unmodified copy of the project passes check.sh --quick (exit status $CHECK_STATUS)"
-  tail -n 8 "$LOG" | cut -c1-300 | sed 's/^/         /'
+  flunk "control: an unmodified copy of the project passes a full run of check.sh (exit status $CHECK_STATUS)"
+  show_tail "$CONTROL"
 fi
 DIFFER=""
-for record in audit.txt versions.txt sources.sha256 source-scan.txt; do
+for record in audit.txt versions.txt sources.sha256 source-scan.txt kernel-replay.txt; do
   cmp -s "evidence/lean/$record" "$TMP/control/evidence/lean/$record" || DIFFER="$DIFFER $record"
 done
 if [ -z "$DIFFER" ]; then
-  pass "control: the records that run wrote (audit.txt, versions.txt, sources.sha256, source-scan.txt) are byte for byte those in evidence/lean/ of this checkout"
+  pass "control: the records that run wrote (audit.txt, versions.txt, sources.sha256, source-scan.txt, kernel-replay.txt) are byte for byte those in evidence/lean/ of this checkout"
 else
-  flunk "control: records in evidence/lean/ of this checkout are not what check.sh writes for an unmodified copy:$DIFFER (run scripts/check.sh to bring them up to date)"
+  flunk "control: records in evidence/lean/ of this checkout are not what a full run of check.sh writes for an unmodified copy:$DIFFER (run scripts/check.sh, without --whole-env, to bring them up to date)"
 fi
+grep '^RESULT replay-export/' "$CONTROL" | sed 's|^RESULT replay-export/||; s|:.*||' >"$TMP/export-tools.txt"
+grep '^RESULT .*: NOT RUN' "$CONTROL" | sed 's/^/     note: /'
 
 # ---------------------------------------------------------------------------
 echo "== (e) stale design record =="
@@ -152,6 +162,7 @@ else
       "$LOG" "STALE:" "RESULT design-record: FAILED" "CHECK FAILED: design-record"
   else
     flunk "(e) stale design record: exit status $CHECK_STATUS, or check.sh went on after the failure"
+    show_tail "$LOG"
   fi
 fi
 
@@ -167,7 +178,7 @@ if [ "$CHECK_STATUS" = 1 ] && absent "$LOG" "RESULT axiom-audit:"; then
     "$LOG" "RESULT source-scan: ok" "RESULT build: FAILED (lake build exited with status" "CHECK FAILED: build"
 else
   flunk "(d) failing build: exit status $CHECK_STATUS, or check.sh went on after the failure"
-  tail -n 8 "$LOG" | cut -c1-300 | sed 's/^/         /'
+  show_tail "$LOG"
 fi
 
 # ---------------------------------------------------------------------------
@@ -184,7 +195,7 @@ if [ "$CHECK_STATUS" = 1 ]; then
     "RESULT import-closure: FAILED" "CHECK FAILED: import-closure"
 else
   flunk "(c) source file outside the import closure: exit status $CHECK_STATUS"
-  tail -n 8 "$LOG" | cut -c1-300 | sed 's/^/         /'
+  show_tail "$LOG"
 fi
 
 # ---------------------------------------------------------------------------
@@ -208,11 +219,12 @@ if [ "$CHECK_STATUS" = 1 ]; then
     "VoltageToBit/Selftest/ExtraAxiom.lean:3:1: [forbidden] \`axiom\`" "RESULT source-scan: FAILED"
 else
   flunk "(f) declared axiom: exit status $CHECK_STATUS"
-  tail -n 8 "$LOG" | cut -c1-300 | sed 's/^/         /'
+  show_tail "$LOG"
 fi
 
 # ---------------------------------------------------------------------------
 echo "== (a), (b) declaration added with the kernel check switched off (a full run of check.sh) =="
+BAD=VoltageToBit.Selftest.bad
 copy_project bypass
 add_module bypass KernelBypass yes <<'EOF'
 import Lean
@@ -229,18 +241,45 @@ EOF
 run_check bypass --keep-going
 if [ "$CHECK_STATUS" != 1 ]; then
   flunk "(a) kernel check switched off: check.sh exited with status $CHECK_STATUS, expected 1"
-  tail -n 8 "$LOG" | cut -c1-300 | sed 's/^/         /'
+  show_tail "$LOG"
 elif absent "$LOG" "RESULT build: ok" || absent "$LOG" "RESULT axiom-audit: ok" \
-    || absent "$LOG" "RESULT import-closure: ok" || absent "$LOG" "RESULT export: ok"; then
-  flunk "(a) kernel check switched off: the control is not valid, because the build, the axiom audit, the import closure or the export failed on the copy"
+    || absent "$LOG" "RESULT import-closure: ok"; then
+  flunk "(a) kernel check switched off: the control is not valid, because the build, the axiom audit or the import closure failed on the copy"
   grep -F "RESULT " "$LOG" | cut -c1-300 | sed 's/^/         /'
 else
   echo "     the build and the axiom audit accept the file (RESULT build: ok, RESULT axiom-audit: ok): this is the gap of finding E1-08"
-  verdict "(a) a declaration of False added with the kernel check switched off: rejected by leanchecker on the compiled files" \
-    "$LOG" "VoltageToBit.Selftest.bad" "(kernel) declaration type mismatch" "RESULT replay-modules: FAILED"
-  for tool in leanchecker leanchecker-paranoid lean4lean nanoda con-leche con-ron; do
-    verdict "(a) the same declaration, in the export: rejected by $tool" "$LOG" "RESULT replay-export/$tool: FAILED"
-  done
+  if present "$CONTROL" "RESULT replay-modules: ok"; then
+    verdict "(a) a declaration of False added with the kernel check switched off: leanchecker accepts the compiled files of the unmodified copy and rejects those of the copy with the declaration, naming it" \
+      "$LOG" "leanchecker found a problem in VoltageToBit.Selftest.KernelBypass" "$BAD" \
+      "(kernel) declaration type mismatch" "RESULT replay-modules: FAILED"
+  else
+    flunk "(a) leanchecker on the compiled files: it did not pass on the unmodified copy, so its failure here shows nothing"
+  fi
+  if [ ! -s "$TMP/export-tools.txt" ]; then
+    echo "     note: no tool checked an export of the unmodified copy (see the notes above), so there is nothing to test for the export"
+  elif absent "$LOG" "RESULT export: ok"; then
+    flunk "(a) the export of the copy with the declaration was not written, so no tool was tested on it"
+  fi
+  while IFS= read -r tool; do
+    [ -n "$tool" ] || continue
+    if present "$CONTROL" "RESULT replay-export/$tool: NOT RUN"; then
+      echo "     note: $tool is not installed; nothing to test"
+      continue
+    fi
+    sed -n "/^-- $tool --\$/,/^RESULT replay-export\/$tool:/p" "$LOG" >"$TMP/tool.log"
+    if grep -q -F -- "$BAD" "$TMP/tool.log"; then
+      named="its output names the declaration"
+    else
+      # the first line that says why, without thread or process numbers
+      named="its output does not name the declaration; it says: $(sed -n '3,$p' "$TMP/tool.log" \
+        | grep -i -E 'assert|reject|invalid|mismatch|error' | head -n 1 | sed 's/^ *//' | cut -c1-100)"
+    fi
+    if present "$CONTROL" "RESULT replay-export/$tool: ok" && present "$LOG" "RESULT replay-export/$tool: FAILED"; then
+      pass "(a) the same declaration, in the export: $tool accepts the export of the unmodified copy and does not accept the export of the copy with the declaration ($named)"
+    else
+      flunk "(a) the same declaration, in the export: $tool (control: $(grep -F "RESULT replay-export/$tool:" "$CONTROL" | cut -c1-80); with the declaration: $(grep -F "RESULT replay-export/$tool:" "$LOG" | cut -c1-80))"
+    fi
+  done <"$TMP/export-tools.txt"
   verdict "(b) the source scan flags the file that switches the kernel check off" "$LOG" \
     "VoltageToBit/Selftest/KernelBypass.lean:5:1: [forbidden] \`set_option\`" \
     "VoltageToBit/Selftest/KernelBypass.lean:6:1: [forbidden] \`run_cmd\`" \

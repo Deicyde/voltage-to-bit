@@ -89,10 +89,13 @@ elab "#audit_library" : command => do
     kinds := kinds.insert kind (kinds.getD kind 0 + 1)
     if kind == "axiom" || kind == "opaque" || kind == "quotient primitive" then
       refused := refused.push s!"{name} is declared as: {kind}"
-    -- Lean compiles a recursive definition `f` through an auxiliary `f._unsafe_rec`
-    -- that it marks `partial`. The kernel refuses any reference to such a constant
-    -- from a definition or theorem, and no checker replays it. Anything else that
-    -- is `unsafe` or `partial` is refused here.
+    -- For a definition by recursion `f` Lean also stores an auxiliary `f._unsafe_rec`,
+    -- marked `partial`, which exists for the compiler. Lean's kernel refuses a safe
+    -- definition or a theorem that refers to a `partial` or `unsafe` constant ("safe
+    -- declaration must not contain partial declaration", "it uses unsafe declaration"),
+    -- and `leanchecker` leaves such constants out of its replay. So an auxiliary of
+    -- this form belonging to a safe definition is listed, by name, as not re-checked;
+    -- anything else that is `unsafe` or `partial` is refused here.
     if info.isUnsafe then
       refused := refused.push s!"{name} is unsafe"
     else if info.isPartial then
@@ -137,13 +140,14 @@ elab "#audit_library" : command => do
   let compilerOnly : Nat := env.constants.map₁.fold
     (fun n _ c => if c.isUnsafe || c.isPartial then n + 1 else n) 0
   logInfo m!"imported environment: {env.header.moduleNames.size} modules, {total} declarations"
-  logInfo m!"of these, marked unsafe or partial (they exist for the compiler; no kernel checks \
-    them and no definition or theorem may refer to them): {compilerOnly}"
+  logInfo m!"of these, marked unsafe or partial (they exist for the compiler; the replay tools \
+    leave them out, and the kernel lets no safe definition or theorem refer to them): {compilerOnly}"
   logInfo m!"declarations audited: {count} (of which theorems: {thmCount})"
   let kindLines := (kinds.toArray.qsort (·.1 < ·.1)).toList.map fun (k, v) => s!"{k}: {v}"
   logInfo m!"kinds: {", ".intercalate kindLines}"
-  logInfo m!"declarations a kernel can check: {checkable.size}; compiler auxiliaries marked \
-    partial, which no kernel checks and no definition or theorem may refer to: {partials.size}\
+  logInfo m!"declarations that the replay steps re-check: {checkable.size}; compiler auxiliaries \
+    marked partial, which they leave out and to which the kernel lets no safe definition or \
+    theorem refer: {partials.size}\
     {String.join (partials.toList.map fun n => s!"\n  {n}")}"
   logInfo m!"axioms used anywhere: {used.qsort (·.toString < ·.toString)}"
   unless refused.isEmpty do

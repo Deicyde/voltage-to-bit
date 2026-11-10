@@ -9,7 +9,9 @@ NAMES is the file `constants.jsonl` written by `scripts/Audit.lean`: one
 declaration name per line, as a JSON array of its components.
 
 Printed: the SHA-256 of the export, the number of declaration records of each
-kind, the axioms it declares, and how many of the names in NAMES it declares.
+kind, the number of constants they declare, the axioms among them, and how
+many of the names in NAMES the export declares. `scripts/check.sh` compares
+the number of declarations that each checker reports with these numbers.
 
 Exit status 1 if
 * a line is not one of the record kinds this script knows (so a change of the
@@ -104,6 +106,10 @@ def main(argv):
     total = sum(records.values())
     detail = ", ".join(f"{kind}: {records[kind]}" for kind in sorted(records))
     print(f"declaration records: {total} ({detail})")
+    # the checkers count in three ways; scripts/check.sh compares what each one
+    # reports with the matching number here
+    quotient = records.get("quotient primitive", 0)
+    print(f"declaration records, the quotient records counted as one: {total - max(quotient - 1, 0)}")
     print(f"constants declared (an inductive block declares its types, constructors and "
           f"recursors): {len(declared)}")
     print("axioms declared: " + (", ".join(sorted(show(a) for a in axioms)) or "none"))

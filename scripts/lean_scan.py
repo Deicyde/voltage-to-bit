@@ -14,10 +14,11 @@ nesting; `/--` and `/-!` documentation blocks), so prose that mentions a
 keyword is not flagged and code hidden behind a comment-like trick is.
 
 What this is not: a proof that the sources contain nothing harmful. It is a
-deny-list of known constructs plus three allow-lists (how a line may start at
-column 0, which modules may be imported, what `lakefile.toml` may contain).
-The checks that do not depend on a list are the axiom audit and the kernel
-replay in `scripts/check.sh`.
+deny-list of known constructs plus three allow-lists (how a command may
+start, which modules may be imported, what `lakefile.toml` may contain). It
+does not parse Lean: a construct that is on no list is not seen. The checks
+that do not depend on a list are the axiom audit and the kernel replay in
+`scripts/check.sh`.
 
 Rules.
 
@@ -29,11 +30,14 @@ Rules.
 2. Deny-list (whole words anywhere in code): see `FORBIDDEN_WORDS`. Also
    `@[` (an attribute), `#` followed by a letter (a command such as `#eval`
    that runs code or stops elaboration), and `+native`.
-3. Column 0. A line that starts in column 0 must start with one of
-   `ALLOWED_COMMAND_STARTS`. The library is written with every command in
-   column 0, so this lists every kind of command it contains; a command of
-   another kind, for instance one of Mathlib's many macro commands, is
-   reported even though no deny-list names it.
+3. Commands. The library is written with every command starting in column 0.
+   So (a) a line that starts in column 0 must start with one of
+   `ALLOWED_COMMAND_STARTS`: a command of another kind, for instance one of
+   Mathlib's many macro commands, is reported even though no deny-list names
+   it; and (b) each of those words, wherever it occurs in code, must stand at
+   the start of a line in column 0, or after nothing but the modifiers
+   `COMMAND_MODIFIERS` that do. Without (b) an indented command, or a second
+   command on the same line, would escape (a) and rules 4 and 5.
 4. `variable` commands must not bind an instance-implicit argument `[...]`.
    Lean adds such a variable to later theorems whose text does not mention it.
 5. Imports must be modules of Mathlib or of the library itself.
@@ -44,6 +48,10 @@ Rules.
 `open` and `open scoped` are allowed and are reported as an inventory, because
 they bring Mathlib's names and notation into scope and a reader should know
 which.
+
+When the library legitimately needs something this scan refuses (a new kind
+of command, a string literal, an attribute), the scan fails and names it;
+the lists below are then edited by hand, in a commit that says why.
 """
 import re
 import sys
@@ -57,6 +65,8 @@ ALLOWED_COMMAND_STARTS = (
     "theorem", "lemma", "def", "structure", "inductive", "example",
     "noncomputable", "private", "protected",
 )
+# the words of ALLOWED_COMMAND_STARTS that may stand in front of another one
+COMMAND_MODIFIERS = ("noncomputable", "private", "protected")
 
 # word -> why it is refused
 FORBIDDEN_WORDS = {}
@@ -254,16 +264,30 @@ def words(code):
             i += 1
 
 
+def split_run(run):
+    """Where Lean starts a word inside a maximal run of identifier characters.
+
+    Lean does not start an identifier with `'`, `!`, `?` or a subscript: in
+    `!sorry` the `!` is a token of its own and `sorry` is the keyword. Returns
+    (number of such leading characters, the rest of the run). The rest starts
+    with a letter, `_` or a digit, or is empty."""
+    k = 0
+    while k < len(run) and not is_id_first(run[k]) and not "0" <= run[k] <= "9":
+        k += 1
+    return k, run[k:]
+
+
 def scan_code(code):
     findings = []
-    for offset, word in words(code):
+    for offset, run in words(code):
+        skipped, word = split_run(run)
         if word in FORBIDDEN_WORDS:
-            findings.append((offset, "forbidden", f"`{word}`: {FORBIDDEN_WORDS[word]}"))
-        elif "0" <= word[0] <= "9":
+            findings.append((offset + skipped, "forbidden", f"`{word}`: {FORBIDDEN_WORDS[word]}"))
+        elif word and "0" <= word[0] <= "9":
             # a numeral directly followed by a keyword is two tokens for Lean
             for bad, reason in FORBIDDEN_WORDS.items():
                 if bad in word:
-                    findings.append((offset, "forbidden",
+                    findings.append((offset + skipped, "forbidden",
                                      f"`{bad}` glued to a numeral in `{word}`: {reason}"))
                     break
     for match in re.finditer(r"@\[", code):
@@ -324,6 +348,21 @@ def scan_commands(code, opens):
         if head == "open":
             first_line = " ".join(text.split("\n", 1)[0].split())
             opens[first_line] = opens.get(first_line, 0) + 1
+    # rule 3 (b): a word that starts a command must not occur anywhere else
+    for offset, run in words(code):
+        skipped, word = split_run(run)
+        if word not in ALLOWED_COMMAND_STARTS:
+            continue
+        start = offset + skipped
+        before = code[code.rfind("\n", 0, start) + 1:start]
+        if before == "":
+            continue
+        if not before.startswith(" ") and all(w in COMMAND_MODIFIERS for w in before.split()):
+            continue
+        findings.append((start, "command",
+                         f"`{word}` is not at the start of a line: the library is written with "
+                         "every command starting in column 0, and only such commands are "
+                         "looked at by the rules on commands, variables and imports"))
     return findings
 
 

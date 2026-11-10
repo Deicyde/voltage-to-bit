@@ -1,71 +1,127 @@
 #!/bin/sh
 # Reproduce every formal check of this repository.
 #
-#   scripts/check.sh               all steps below except 9
-#   scripts/check.sh --quick       steps 1 to 5 only: no kernel replay
-#   scripts/check.sh --whole-env   all steps, including 9
-#   --fresh        delete this project's own build products first, so every
-#                  file of this project is recompiled (.lake/packages, the
-#                  prebuilt Mathlib, is kept)
+#   scripts/check.sh               steps 1 to 8
+#   scripts/check.sh --quick       steps 1 to 5: nothing is re-checked by a kernel
+#   scripts/check.sh --whole-env   steps 1 to 9
+#   --fresh        delete this project's own build products first, so that
+#                  every file of this project is recompiled (.lake/packages,
+#                  the prebuilt Mathlib, is kept)
 #   --keep-going   do not stop at the first failing step: run every step whose
 #                  inputs exist and report each one
 #
-# Steps. Each prints one line "RESULT <step>: ok" or "RESULT <step>: FAILED".
-#   1 design-record   the generated Lean design record matches its JSON file
-#   2 source-scan     no construct in the library sources or in lakefile.toml
-#                     that can bypass the kernel or change how later text is
-#                     elaborated (scripts/lean_scan.py: a deny-list, a tripwire)
+# Steps. Each prints "RESULT <step>: ok" or "RESULT <step>: FAILED"; a tool
+# that is not installed prints "RESULT <step>: NOT RUN" (see Tools).
+#   1 design-record   every generated Lean design record is what its JSON file
+#                     generates, and every JSON file in designs/ has one
+#   2 source-scan     the library sources and lakefile.toml contain no
+#                     construct that can bypass the kernel or change how later
+#                     text is elaborated (scripts/lean_scan.py: a deny-list
+#                     and allow-lists over the text; a tripwire, not a proof)
 #   3 build           `lake build` exits with status 0
 #   4 axiom-audit     no declaration of the library depends on an axiom beyond
 #                     propext, Classical.choice, Quot.sound; the library
 #                     declares no axiom, opaque or unsafe constant, instance
-#                     or simp lemma of its own (scripts/Audit.lean)
-#   5 import-closure  every .lean file of the library is a module of the
-#                     audited environment, and the other way round
-#   6 replay-modules  `leanchecker` re-checks, in Lean's kernel, the
-#                     declarations stored in the compiled file of every module
-#                     of the library, on top of that module's imports
-#   7 export          `leanexport` writes every declaration of the library and
-#                     everything those declarations depend on (the part of
-#                     Mathlib and of Lean core that the library uses) to one
+#                     or simp lemma of its own (scripts/Audit.lean, which
+#                     looks at every declaration, not at a list of names)
+#   5 import-closure  the .lean files of the library are exactly the modules
+#                     of the library in the audited environment
+#   6 replay-modules  `leanchecker` sends the declarations stored in the
+#                     compiled file of every module of the library to Lean's
+#                     kernel again, on top of that module's imports as they
+#                     are compiled (Mathlib is loaded, not re-checked)
+#   7 export          `leanexport` writes every declaration of the library,
+#                     and every declaration those depend on, directly or not
+#                     (the part of Mathlib, of its dependencies and of Lean
+#                     core that the library uses, proofs included), to one
 #                     file; scripts/export_census.py confirms that every
 #                     declaration of the library is in it
-#   8 replay-export   that file is checked from an empty environment by Lean's
-#                     kernel (leanchecker, leanchecker-paranoid) and by four
-#                     other checkers (lean4lean, nanoda, con-leche, con-ron);
-#                     none of them reads a compiled file
-#   9 whole-env       (--whole-env only) `leanchecker --fresh` re-checks, in
-#                     Lean's kernel and from an empty environment, every
-#                     declaration of every imported module, used by the
-#                     library or not: all of the imported Mathlib and Lean core
+#   8 replay-export   that file is checked from an empty environment by each
+#                     of the six checkers listed under Tools
+#   9 whole-env       (--whole-env only) `leanchecker --fresh` sends every
+#                     declaration of every module that the library imports,
+#                     directly or not, to Lean's kernel, from an empty
+#                     environment, whether the library uses the declaration
+#                     or not. That is the part of Mathlib that the library
+#                     imports, its dependencies and Lean core; modules of
+#                     Mathlib that the library does not import are not
+#                     compiled here and are never looked at
 #
-# What a pass of steps 1 to 8 establishes: the declarations of this library,
-# and every declaration of Mathlib and of Lean core that they depend on, are
-# accepted, when replayed from an empty environment, by Lean's kernel and by
-# the four other checkers of step 8; none of them depends on an axiom beyond
-# the three named in step 4; the compiled files are up to date with the files
-# on disk (Lake's own check, step 3) and every .lean file of the library is
-# among them; and the Lean design record matches the JSON design file.
+# Tools. Every executable is taken from the bin directory of the toolchain
+# that lean-toolchain pins (the directory of `lake env which lean`) and from
+# nowhere else. `lake help check` of that toolchain names the checkers it
+# bundles; the record quotes the sentence. A tool that is not in that
+# directory (another toolchain version, a toolchain built from source) is
+# reported as NOT RUN, by name, in the output, in the record and in the last
+# line, and is not counted; the last line then begins differently (see Exit
+# status). Only leanchecker is required: without it steps 6 and 9 fail.
+#   leanchecker           Lean's own kernel (steps 6, 8 and 9). Its source is
+#                         in the toolchain: src/lean/LeanChecker.lean.
+#   leanchecker-paranoid  Lean's own kernel again, in an executable of its
+#                         own with the same options and messages; not counted
+#                         as an independent implementation (step 8).
+#   lean4lean, nanoda_bin, con-leche, con-ron
+#                         four programs that are not Lean's kernel, according
+#                         to `lake help check`, to the toolchain's LICENSES
+#                         file and, where a tool has one, to its --help
+#                         (step 8). Their sources are not in the toolchain
+#                         and were not read; the record says of each what is
+#                         known and where from. Where a tool reports how many
+#                         declarations it checked, the number must be the one
+#                         that scripts/export_census.py finds in the export.
+#   leanexport            writes the export (step 7); it checks nothing.
+# These descriptions were written for the toolchain named in DESCRIBED_FOR
+# below; with another one the script says so and they have to be re-read.
+#
+# What a pass establishes. The last line of output says which parts apply.
+#   steps 1 to 5 (all that --quick does): the library compiles; no declaration
+#     in the compiled files depends on an axiom beyond the three of step 4;
+#     every .lean file of the library is part of what was compiled and
+#     audited; the design records match their JSON files. Nothing has been
+#     re-checked: a declaration that was added with the kernel check switched
+#     off passes steps 3 and 4 (scripts/selftest.sh demonstrates it), and
+#     step 2 is only a scan of the text.
+#   step 6: every declaration in the compiled files of the library (the
+#     compiler auxiliaries named in the audit excepted) is accepted by Lean's
+#     kernel on top of the compiled Mathlib.
+#   steps 7 and 8: the declarations of the library, together with every
+#     declaration of Mathlib, its dependencies and Lean core that they depend
+#     on, are accepted from an empty environment by each checker that the last
+#     line names.
+#   step 9: every declaration of every module that the library imports is
+#     accepted by Lean's kernel from an empty environment.
 # What it does not establish: that the statements mean what the prose says
-# (read them), or that any physical device obeys the model. The checkers of
-# step 8 read what `leanexport` wrote, so its faithfulness to the compiled
-# files is trusted; so is the Lean elaborator's reading of the source text.
-# Without --whole-env, declarations of Mathlib that the library does not
-# depend on are not re-checked; with it they are, by Lean's own kernel only.
+# (read them), or that any physical device obeys the model. Nor
+#   - that the export is faithful: the checkers of step 8 read what
+#     `leanexport` wrote, not the compiled files (step 6 reads those, for the
+#     library's own declarations);
+#   - anything about how Lean turned the source text into those declarations;
+#   - anything about declarations of Mathlib that the library does not depend
+#     on, unless --whole-env is given (then those in imported modules are
+#     re-checked, by Lean's own kernel only);
+#   - that the four other checkers are sound, or independent of each other:
+#     they are run as shipped.
 #
-# Records are written to evidence/lean/. They contain no dates or timings, so
-# a second run on the same sources reproduces them byte for byte. --quick does
-# not touch kernel-replay.txt.
+# Records are written to evidence/lean/: audit.txt, source-scan.txt,
+# versions.txt and sources.sha256 by every run, kernel-replay.txt by every run
+# without --quick. They contain no dates or timings, so a run with the same
+# options on the same files with the same tools reproduces them byte for byte.
 #
-# Time, measured on an 18 GB laptop that was busy with other work: about one
-# minute for --quick, five minutes for the default, six more for --whole-env,
-# plus the time to recompile with --fresh.
-# Environment: CHECK_REPLAY_JOBS (default 2) is the number of modules
-# `leanchecker` replays at a time in step 6; each needs about 2 GB of memory.
+# Each step prints the seconds it took. Step 6 takes time in proportion to the
+# number of modules, steps 7 and 8 to the size of what the library depends on,
+# step 9 to the size of the whole imported environment.
+#
+# Environment: CHECK_REPLAY_JOBS (default 1) is the number of modules that
+# `leanchecker` replays at a time in step 6. Every job beyond the first was
+# measured to need several GB of memory of its own, and on a machine short of
+# memory two jobs were no faster than one.
 #
 # Exit status: 0 every step that was run passed; 1 a step failed; 2 usage.
-# The last line of output says which of the two happened and, on success,
-# exactly what was replayed and by which tool, or that nothing was.
+# The last line of output says which happened. On success it begins with
+# "ALL FORMAL CHECKS PASSED." if every tool was installed, with "THE FORMAL
+# CHECKS THAT WERE RUN PASSED; NOT EVERY TOOL IS INSTALLED." otherwise, with
+# "QUICK CHECK PASSED" for --quick, and goes on to say exactly what was
+# replayed and by which tools, or that nothing was.
 #
 # Negative controls for this script: scripts/selftest.sh.
 set -u
@@ -85,20 +141,24 @@ done
 if [ "$QUICK" = 1 ] && [ "$WHOLE" = 1 ]; then
   echo "check.sh: --quick and --whole-env exclude each other" >&2; exit 2
 fi
+JOBS="${CHECK_REPLAY_JOBS:-1}"
+case "$JOBS" in
+  ''|0*|*[!0-9]*)
+    echo "check.sh: CHECK_REPLAY_JOBS must be a whole number, 1 or more; got '$JOBS'" >&2; exit 2 ;;
+esac
 
-JOBS="${CHECK_REPLAY_JOBS:-2}"
-DESIGN_JSON=designs/illustrative-1v8.json
-DESIGN_LEAN=VoltageToBit/Examples/IllustrativeDesign.lean
-DESIGN_NAME=illustrative
+DESCRIBED_FOR="leanprover/lean4:v4.35.0"   # the toolchain whose tools are described here
 EVIDENCE=evidence/lean
 STANDARD_AXIOMS='"propext", "Classical.choice", "Quot.sound"'
 
 TMP="$(mktemp -d "${TMPDIR:-/tmp}/vtb-check.XXXXXX")" || exit 2
 trap 'rm -rf "$TMP"' EXIT
 trap 'exit 130' INT TERM
-mkdir -p "$TMP/lists" "$EVIDENCE"
+mkdir -p "$TMP/lists" "$TMP/empty" "$EVIDENCE"
 
-FAILED=""
+T0="$(date +%s)"
+FAILED=""            # steps that failed
+NOTRUN=""            # tools that are not installed, by name
 REPLAYED=""          # what the last line reports
 
 filter() { grep -v "designed for use with the module system" || true; }
@@ -112,28 +172,35 @@ with open(sys.argv[1], "rb") as f:
 print(h.hexdigest())' "$1"
 }
 count_lines() { wc -l <"$1" | tr -d ' '; }
+since() { echo "$(( $(date +%s) - $1 )) s"; }
 
 last_line() {
   if [ -f "$TMP/kernel-replay.txt" ]; then
     {
       echo
+      echo "Summary"
+      echo "  tools not run because they are not installed: ${NOTRUN:-none}"
       if [ -n "$FAILED" ]; then
-        echo "Outcome of the run of scripts/check.sh that wrote this record: FAILED:$FAILED"
+        echo "  outcome of the run of scripts/check.sh that wrote this record: FAILED:$FAILED"
       else
-        echo "Outcome of the run of scripts/check.sh that wrote this record: every step passed."
+        echo "  outcome of the run of scripts/check.sh that wrote this record: every step that was run passed."
+        echo "  kernel replay: $REPLAYED"
       fi
     } >>"$TMP/kernel-replay.txt"
     cp "$TMP/kernel-replay.txt" "$EVIDENCE/kernel-replay.txt"
     echo "record written to $EVIDENCE/kernel-replay.txt"
   fi
+  echo "elapsed: $(since "$T0")"
   if [ -n "$FAILED" ]; then
     echo "CHECK FAILED:$FAILED"
     exit 1
   fi
   if [ "$QUICK" = 1 ]; then
     echo "QUICK CHECK PASSED (steps 1 to 5). THE KERNEL REPLAY WAS SKIPPED (--quick): no declaration was re-checked by any kernel in this run."
-  else
+  elif [ -z "$NOTRUN" ]; then
     echo "ALL FORMAL CHECKS PASSED. Kernel replay: $REPLAYED"
+  else
+    echo "THE FORMAL CHECKS THAT WERE RUN PASSED; NOT EVERY TOOL IS INSTALLED. Kernel replay: $REPLAYED"
   fi
   exit 0
 }
@@ -142,6 +209,11 @@ fail() {
   echo "RESULT $1: FAILED ($2)"
   FAILED="$FAILED $1"
   if [ "$KEEP" = 0 ]; then last_line; fi
+}
+# notrun <step> <tool>: the tool is not installed; it is named and not counted
+notrun() {
+  echo "RESULT $1: NOT RUN ($2 is not in the bin directory of the toolchain, $TCBIN; it is not counted)"
+  NOTRUN="$NOTRUN${NOTRUN:+, }$2"
 }
 # failed <step>: has this step, or a step whose name starts with it, failed?
 failed() { case " $FAILED " in *" $1"*) return 0 ;; *) return 1 ;; esac; }
@@ -152,11 +224,11 @@ if [ "$FRESH" = 1 ]; then
 fi
 
 # ---------------------------------------------------------------------------
-echo "== 1. design record in sync with its JSON file =="
-if python3 scripts/gen_design.py --check "$DESIGN_JSON" "$DESIGN_LEAN" "$DESIGN_NAME"; then
+echo "== 1. design records in sync with their JSON files =="
+if python3 scripts/gen_design.py --check-all designs VoltageToBit; then
   ok design-record
 else
-  fail design-record "$DESIGN_LEAN is stale or $DESIGN_JSON was rejected; see the message above"
+  fail design-record "a generated design record is stale, a JSON design file was rejected or has no generated record; see the message above"
 fi
 
 # ---------------------------------------------------------------------------
@@ -169,10 +241,12 @@ if [ "$status" = 0 ]; then ok source-scan; else fail source-scan "see the findin
 
 # ---------------------------------------------------------------------------
 echo "== 3. build =="
+START="$(date +%s)"
 lake build >"$TMP/build.log" 2>&1
 status=$?
 if [ "$status" = 0 ]; then
   filter <"$TMP/build.log" | tail -n 3
+  echo "$(since "$START")"
   ok build
 else
   filter <"$TMP/build.log" | cut -c1-600 | tail -n 60
@@ -185,10 +259,12 @@ if failed build; then
   echo "not run: the build failed"
   fail axiom-audit "not run: the build failed"
 else
+  START="$(date +%s)"
   VTB_AUDIT_LISTS="$TMP/lists" lake env lean scripts/Audit.lean >"$TMP/audit.log" 2>&1
   status=$?
   filter <"$TMP/audit.log" >"$EVIDENCE/audit.txt"
   sed '/^theorems with a name of their own/,$d' "$EVIDENCE/audit.txt" | cut -c1-2000
+  echo "$(since "$START")"
   if [ "$status" = 0 ] && grep -q "^AUDIT OK" "$EVIDENCE/audit.txt"; then
     grep "^theorems with a name of their own" "$EVIDENCE/audit.txt" | sed "s|:\$| are listed in $EVIDENCE/audit.txt|"
     ok axiom-audit
@@ -236,20 +312,28 @@ for p in json.load(open("lake-manifest.json"))["packages"]:
 python3 -c 'import hashlib, pathlib
 files = ["lean-toolchain", "lakefile.toml", "lake-manifest.json", "VoltageToBit.lean"]
 files += sorted(p.as_posix() for p in pathlib.Path("VoltageToBit").rglob("*.lean"))
+files += sorted(p.as_posix() for p in pathlib.Path("designs").glob("*.json"))
+files += sorted(p.as_posix() for p in pathlib.Path("scripts").iterdir()
+                if p.is_file() and p.suffix in (".sh", ".py", ".lean"))
 for f in files:
     print(hashlib.sha256(pathlib.Path(f).read_bytes()).hexdigest() + "  " + f)' >"$EVIDENCE/sources.sha256"
 SOURCES_DIGEST="$(sha256_of "$EVIDENCE/sources.sha256")"
 echo "== versions =="
 cat "$EVIDENCE/versions.txt"
-echo "sources: $(count_lines "$EVIDENCE/sources.sha256") files listed in $EVIDENCE/sources.sha256 (sha256 of the list: $SOURCES_DIGEST)"
+echo "files: $(count_lines "$EVIDENCE/sources.sha256") (library sources, build configuration, design files, checking scripts) listed in $EVIDENCE/sources.sha256 (sha256 of the list: $SOURCES_DIGEST)"
+TOOLCHAIN_NOTE=""
+if [ "$(cat lean-toolchain)" != "$DESCRIBED_FOR" ]; then
+  TOOLCHAIN_NOTE="NOTE: lean-toolchain says $(cat lean-toolchain), but the descriptions of the tools in scripts/check.sh were written for $DESCRIBED_FOR; re-read them (--help of each tool) before relying on them."
+  echo "$TOOLCHAIN_NOTE"
+fi
 
 if [ "$QUICK" = 1 ]; then
   echo "== 6 to 8. kernel replay: SKIPPED (--quick) =="
   if [ -f "$EVIDENCE/kernel-replay.txt" ]; then
     if grep -q "sha256 of the list: $SOURCES_DIGEST" "$EVIDENCE/kernel-replay.txt"; then
-      echo "the record $EVIDENCE/kernel-replay.txt of an earlier full run is for these same sources"
+      echo "the record $EVIDENCE/kernel-replay.txt of an earlier full run is for these same files"
     else
-      echo "the record $EVIDENCE/kernel-replay.txt of an earlier full run is for DIFFERENT sources"
+      echo "the record $EVIDENCE/kernel-replay.txt of an earlier full run is for DIFFERENT files"
     fi
   fi
   last_line
@@ -269,35 +353,53 @@ N_MODULES="$(count_lines "$TMP/env-modules.txt")"
 N_CHECKABLE="$(count_lines "$TMP/lists/constants.txt")"
 N_SKIPPED="$(count_lines "$TMP/lists/skipped.txt")"
 ENVIRONMENT="$(sed -n 's/^imported environment: //p' "$EVIDENCE/audit.txt")"
+BUNDLED="$(lake help check 2>/dev/null \
+  | awk '/^  --paranoid/{p=1; print; next} p && /^  --/{p=0} p && NF{print}' \
+  | sed 's/^ *//' | tr '\n' ' ' | sed 's/  */ /g; s/ $//')"
 
-tool_id() {   # tool_id <executable name>: how the record names the tool
+tool_id() {   # tool_id <executable name>: how the record identifies the executable
   if [ -x "$TCBIN/$1" ]; then
     echo "$1, in the bin directory of the toolchain (sha256 of the executable: $(sha256_of "$TCBIN/$1"))"
   else
-    echo "$1: NOT FOUND in $TCBIN"
+    echo "$1: not in the bin directory of the toolchain"
   fi
 }
 
 {
   echo "Kernel replay record. Written by scripts/check.sh; do not edit."
-  echo "It has no dates or timings: a run on the same sources with the same tools reproduces it."
+  echo "It has no dates or timings: a run with the same options on the same files with the same"
+  echo "tools reproduces it."
   echo
   echo "What was checked"
-  echo "  sources:   the files listed in $EVIDENCE/sources.sha256 (sha256 of the list: $SOURCES_DIGEST)"
+  echo "  files:     the library sources, build configuration, design files and checking scripts"
+  echo "             listed in $EVIDENCE/sources.sha256 (sha256 of the list: $SOURCES_DIGEST)"
   echo "  toolchain: $(lean --version)"
   echo "  mathlib:   $MATHLIB_REV"
-  echo "  library:   $N_MODULES modules; $N_CHECKABLE declarations that a kernel can check, and"
-  echo "             $N_SKIPPED compiler auxiliaries that none checks (named in $EVIDENCE/audit.txt)"
+  echo "  library:   $N_MODULES modules; $N_CHECKABLE declarations that the replay steps re-check, and"
+  echo "             $N_SKIPPED compiler auxiliaries that they leave out (named in $EVIDENCE/audit.txt)"
   echo "  imported environment, of which the library is a part: $ENVIRONMENT"
+  echo
+  echo "Where the tools come from"
+  echo "  Every executable named below was looked for in the bin directory of the toolchain that"
+  echo "  lean-toolchain pins (the directory of \`lake env which lean\`) and nowhere else. A tool that"
+  echo "  is not there is reported as NOT RUN and is not counted."
+  if [ -n "$BUNDLED" ]; then
+    echo "  \`lake help check\` of this toolchain says about the checkers it bundles:"
+    echo "    $BUNDLED"
+  else
+    echo "  \`lake help check\` of this toolchain does not name any bundled checker."
+  fi
+  if [ -n "$TOOLCHAIN_NOTE" ]; then echo "  $TOOLCHAIN_NOTE"; fi
 } >"$RECORD"
 
 # --- step 6 ---------------------------------------------------------------
-echo "== 6. leanchecker: compiled modules replayed against their imports (up to $JOBS at a time) =="
+echo "== 6. leanchecker: compiled modules replayed against their imports ($JOBS at a time) =="
 START="$(date +%s)"
 {
   echo
   echo "1. Compiled modules replayed against the imported environment"
   echo "  tool:    $(tool_id leanchecker)"
+  echo "  kind:    Lean's own kernel, the one that also checks declarations when a file is compiled"
   echo "  command: LEAN_NUM_THREADS=<jobs> lake env leanchecker -v VoltageToBit"
   echo "  does:    for every module whose name starts with VoltageToBit, sends each declaration"
   echo "           stored in the module's compiled file (the compiler auxiliaries excepted) to"
@@ -307,7 +409,7 @@ START="$(date +%s)"
 } >>"$RECORD"
 if [ ! -x "$TCBIN/leanchecker" ]; then
   echo "  result:  not run, the tool is missing" >>"$RECORD"
-  fail replay-modules "leanchecker not found in $TCBIN"
+  fail replay-modules "leanchecker is not in $TCBIN, and this step needs it (--quick skips the replay)"
 else
   LEAN_ABORT_ON_PANIC=1 LEAN_NUM_THREADS="$JOBS" lake env "$TCBIN/leanchecker" -v VoltageToBit \
     >"$TMP/leanchecker.log" 2>&1
@@ -320,25 +422,32 @@ else
     indent <"$TMP/replayed-modules.txt"
     echo "  exit status: $status"
   } >>"$RECORD"
-  echo "modules replayed: $n_rep; exit status $status; $(( $(date +%s) - START )) s"
+  echo "modules replayed: $n_rep; exit status $status; $(since "$START")"
   if [ "$status" != 0 ]; then
-    fail replay-modules "leanchecker exited with status $status: the kernel rejects a declaration, see above"
+    echo "  RESULT replay-modules: FAILED" >>"$RECORD"
+    fail replay-modules "leanchecker exited with status $status; its message is above (a declaration that the kernel rejects is named there)"
   elif ! cmp -s "$TMP/replayed-modules.txt" "$TMP/env-modules.txt"; then
     LC_ALL=C comm -3 "$TMP/replayed-modules.txt" "$TMP/env-modules.txt"
+    echo "  RESULT replay-modules: FAILED" >>"$RECORD"
     fail replay-modules "the modules replayed are not the modules of the audited environment (a compiled file without a source? try --fresh)"
   else
+    echo "  RESULT replay-modules: ok" >>"$RECORD"
     ok replay-modules "$n_rep modules"
-    REPLAYED="the compiled files of $n_rep modules of the library, against their imports, by leanchecker"
+    REPLAYED="(1) the compiled files of the $n_rep modules of the library, each on top of its imports as compiled, by leanchecker (Lean's own kernel)."
   fi
 fi
 
 # --- steps 7 and 8 --------------------------------------------------------
 # check_export <step prefix> <export file> <hard error on unexpected axiom: true|false>
-# Runs the six checkers on an export and appends to the record. Sets ACCEPTED
-# to the names of the tools that accepted it.
+# Runs the checkers on an export and appends to the record. Sets
+# ACCEPTED_KERNEL and ACCEPTED_SEPARATE to the names of the tools that accepted it.
+# Each tool is started in an empty directory with an empty environment, and is
+# given the export (for nanoda: a configuration naming it) and nothing else.
+# Needs N_RECORDS, N_RECORDS_QUOT and N_CONSTANTS, the contents of the export
+# as counted by scripts/export_census.py.
 check_export() {
   ce_step="$1"; ce_file="$2"; ce_hard="$3"
-  ACCEPTED=""
+  ACCEPTED_KERNEL=""; ACCEPTED_SEPARATE=""
   cat >"$TMP/nanoda.json" <<EOF
 {
   "export_file_path": "$ce_file",
@@ -352,55 +461,99 @@ check_export() {
   "print_success_message": true
 }
 EOF
-  # name | executable | arguments before the file | pattern of the success line | description
-  while IFS='|' read -r ce_name ce_exe ce_args ce_pattern ce_what; do
+  # name | executable | kind | what the number in its success line counts | arguments before
+  # the file | pattern of the success line | what is known of it
+  while IFS='|' read -r ce_name ce_exe ce_kind ce_count ce_args ce_pattern ce_what; do
     [ -n "$ce_name" ] || continue
     ce_start="$(date +%s)"
+    case "$ce_count" in
+      records)
+        ce_expected="$N_RECORDS"
+        ce_counted="one per declaration record of the export, which is what its --help says it counts" ;;
+      records-quot)
+        ce_expected="$N_RECORDS_QUOT"
+        ce_counted="one per declaration record of the export with the quotient records as one; seen on small exports, not documented" ;;
+      constants)
+        ce_expected="$N_CONSTANTS"
+        ce_counted="one per constant that the export declares; seen on small exports, not documented" ;;
+      *)
+        ce_expected=""; ce_counted="" ;;
+    esac
+    if [ "$ce_kind" = kernel ]; then
+      ce_kind_text="Lean's own kernel"
+    else
+      ce_kind_text="a separate program, not Lean's kernel, as far as the following says"
+    fi
     {
-      echo "  $ce_name: $ce_what"
+      echo "  $ce_name"
+      echo "    kind:        $ce_kind_text"
+      echo "    known of it: $ce_what"
       echo "    tool:        $(tool_id "$ce_exe")"
     } >>"$RECORD"
+    echo "-- $ce_name --"
     if [ ! -x "$TCBIN/$ce_exe" ]; then
-      echo "    result:      not run, the tool is missing" >>"$RECORD"
-      fail "$ce_step/$ce_name" "$ce_exe not found in $TCBIN"
+      echo "    RESULT $ce_step/$ce_name: NOT RUN" >>"$RECORD"
+      notrun "$ce_step/$ce_name" "$ce_exe"
       continue
     fi
     if [ "$ce_name" = nanoda ]; then
-      echo "    command:     nanoda_bin <configuration naming the export; axioms permitted: $STANDARD_AXIOMS;" >>"$RECORD"
-      echo "                 an axiom outside that list is a hard error: $ce_hard>" >>"$RECORD"
-      ce_version="$("$TCBIN/$ce_exe" --help 2>/dev/null | head -n 1)"
-      echo "    version:     $ce_version" >>"$RECORD"
-      (cd "$TMP" && LEAN_ABORT_ON_PANIC=1 "$TCBIN/$ce_exe" "$TMP/nanoda.json") </dev/null >"$TMP/checker.log" 2>&1
-      ce_status=$?
+      ce_version="$(cd "$TMP/empty" && env -i "$TCBIN/$ce_exe" --help 2>/dev/null </dev/null | head -n 1)"
+      {
+        echo "    it calls itself: $ce_version"
+        echo "    command:     nanoda_bin <configuration naming the export; axioms permitted: $STANDARD_AXIOMS;"
+        echo "                 an axiom outside that list is a hard error: $ce_hard>"
+      } >>"$RECORD"
+      set -- "$TMP/nanoda.json"
     else
       echo "    command:     $ce_exe $ce_args <export>" >>"$RECORD"
       # shellcheck disable=SC2086
-      (cd "$TMP" && LEAN_ABORT_ON_PANIC=1 "$TCBIN/$ce_exe" $ce_args "$ce_file") </dev/null >"$TMP/checker.log" 2>&1
-      ce_status=$?
+      set -- $ce_args "$ce_file"
     fi
+    # "; exit $?" keeps the shell's own report of a tool killed by a signal in the tool's log
+    (cd "$TMP/empty" && env -i LEAN_ABORT_ON_PANIC=1 "$TCBIN/$ce_exe" "$@"; exit $?) </dev/null >"$TMP/checker.log" 2>&1
+    ce_status=$?
     ce_line="$(grep -E "$ce_pattern" "$TMP/checker.log" | tail -n 1)"
+    ce_reported="$(printf '%s\n' "$ce_line" | sed -n 's/^[^0-9]*\([0-9][0-9]*\).*/\1/p')"
     {
       echo "    exit status: $ce_status"
       echo "    it printed:  ${ce_line:-<no line of the expected form>}"
+      if [ -n "$ce_expected" ]; then
+        echo "    the export has: $ce_expected, counted its way ($ce_counted)"
+      fi
     } >>"$RECORD"
-    echo "$ce_name: exit status $ce_status; ${ce_line:-no line of the expected form}; $(( $(date +%s) - ce_start )) s"
-    if [ "$ce_status" = 0 ] && [ -n "$ce_line" ]; then
+    echo "$ce_name: exit status $ce_status; ${ce_line:-no line of the expected form}; $(since "$ce_start")"
+    if [ "$ce_status" = 0 ] && [ -n "$ce_line" ] && [ -n "$ce_expected" ] && [ "$ce_reported" != "$ce_expected" ]; then
+      echo "    RESULT $ce_step/$ce_name: FAILED" >>"$RECORD"
+      fail "$ce_step/$ce_name" "it reports ${ce_reported:-no number of} declarations, but the export has $ce_expected ($ce_counted)"
+    elif [ "$ce_status" = 0 ] && [ -n "$ce_line" ]; then
+      echo "    RESULT $ce_step/$ce_name: ok" >>"$RECORD"
       ok "$ce_step/$ce_name"
-      ACCEPTED="$ACCEPTED${ACCEPTED:+, }$ce_name"
+      if [ "$ce_kind" = kernel ]; then
+        ACCEPTED_KERNEL="$ACCEPTED_KERNEL${ACCEPTED_KERNEL:+, }$ce_name"
+      else
+        ACCEPTED_SEPARATE="$ACCEPTED_SEPARATE${ACCEPTED_SEPARATE:+, }$ce_name"
+      fi
     else
       # the reason is at the top for some tools and at the bottom for others
       filter <"$TMP/checker.log" | cut -c1-600 | head -n 4
       echo "    ..."
       filter <"$TMP/checker.log" | cut -c1-600 | tail -n 8
+      if grep -q '^PANIC at ' "$TMP/checker.log"; then
+        # A Lean program that panics is stopped at once by LEAN_ABORT_ON_PANIC=1, before it can
+        # say what it objects to. The verdict above stands; this only shows the message.
+        echo "    the same command without LEAN_ABORT_ON_PANIC=1, for its message only (the result is not used):"
+        (cd "$TMP/empty" && env -i "$TCBIN/$ce_exe" "$@") </dev/null 2>&1 | filter | cut -c1-600 | tail -n 6
+      fi
+      echo "    RESULT $ce_step/$ce_name: FAILED" >>"$RECORD"
       fail "$ce_step/$ce_name" "exit status $ce_status"
     fi
   done <<'EOF'
-leanchecker|leanchecker|--from-export|^Lean default kernel accepts the solution$|Lean's own kernel, the one that also checks declarations when a file is compiled
-leanchecker-paranoid|leanchecker-paranoid|--from-export|^Lean default kernel accepts the solution$|the same program in a separate, statically linked build; its output does not say what the build changes, so it is not counted as an independent implementation
-lean4lean|lean4lean|--import|^checked [0-9]+ declarations$|a kernel written in Lean by Mario Carneiro: an implementation separate from Lean's own
-nanoda|nanoda_bin||^Checked [0-9]+ declarations with no errors|a kernel written in Rust by Chris Bailey: an implementation separate from Lean's own
-con-leche|con-leche|--jobs=4|^con-leche: accepted [0-9]+ declarations \(--verified\)$|a checker by the Lean FRO written in Lean; described here only from its --help, which presents it as a checker of its own with a proved soundness statement
-con-ron|con-ron|--jobs=4|^con-ron: accepted [0-9]+ declarations \(--verified\)$|a checker by the Lean FRO written in Rust; described here only from its --help, which presents it as a Rust version of con-leche
+leanchecker|leanchecker|kernel|none|--from-export|^Lean default kernel accepts the solution$|its source is in the toolchain (src/lean/LeanChecker.lean): it reads the export and sends every declaration in it to Lean's kernel, starting from an empty environment
+leanchecker-paranoid|leanchecker-paranoid|kernel|none|--from-export|^Lean default kernel accepts the solution$|an executable of its own with the same options and messages as leanchecker (on arm64 macOS it is linked statically, where leanchecker uses the toolchain's shared libraries); the toolchain does not say what else its build changes, so it is not counted as an independent implementation
+lean4lean|lean4lean|separate|records-quot|--import|^checked [0-9]+ declarations$|the toolchain's LICENSES file attributes lean4lean to Mario Carneiro; the executable contains code named Lean4Lean.TypeChecker; its source is not in the toolchain and was not read
+nanoda|nanoda_bin|separate|constants||^Checked [0-9]+ declarations with no errors|its --help calls it an external type checker for Lean 4 (nanoda_lib); the toolchain's LICENSES file attributes nanoda to Chris Bailey; its source is not in the toolchain and was not read
+con-leche|con-leche|separate|records|--jobs=4|^con-leche: accepted [0-9]+ declarations \(--verified\)$|the toolchain's LICENSES file attributes con-leche to the Lean FRO; its --help says that in this mode (--verified, the default) a file that declares a theorem of type False is never accepted, by a theorem about the program (ConLeche.no_False_declaration); neither its source nor that theorem was examined
+con-ron|con-ron|separate|records|--jobs=4|^con-ron: accepted [0-9]+ declarations \(--verified\)$|the toolchain's LICENSES file attributes con-ron to the Lean FRO; its --help describes it as con-leche's checker written in Rust; its source was not examined
 EOF
 }
 
@@ -420,12 +573,13 @@ START="$(date +%s)"
   echo "  does:    writes the named declarations, and every declaration that occurs in the type or"
   echo "           in the value of one already written, to one file. So the file contains the part"
   echo "           of Mathlib, of its dependencies and of Lean core that the library depends on,"
-  echo "           proofs included, and nothing of the rest of the imported environment."
+  echo "           proofs included, and nothing of the rest of the imported environment. It checks"
+  echo "           nothing; that it writes what is in the compiled files is trusted."
 } >>"$RECORD"
-EXPORT_OK=0
+EXPORT=missing       # missing: no exporter; failed; ok
 if [ ! -x "$TCBIN/leanexport" ]; then
-  echo "  result:  not run, the tool is missing" >>"$RECORD"
-  fail export "leanexport not found in $TCBIN"
+  echo "  RESULT export: NOT RUN" >>"$RECORD"
+  notrun export leanexport
 else
   export_library
   status=$?
@@ -438,11 +592,14 @@ else
     echo "  contents, as read by scripts/export_census.py (exit status $census_status):"
     indent <"$TMP/census.txt"
   } >>"$RECORD"
-  echo "$(( $(date +%s) - START )) s"
+  echo "$(since "$START")"
   if [ "$status" = 0 ] && [ "$census_status" = 0 ]; then
+    echo "  RESULT export: ok" >>"$RECORD"
     ok export "$(grep '^declarations of the library present' "$TMP/census.txt")"
-    EXPORT_OK=1
+    EXPORT=ok
   else
+    echo "  RESULT export: FAILED" >>"$RECORD"
+    EXPORT=failed
     fail export "leanexport exited with status $status, the census with status $census_status"
   fi
 fi
@@ -451,16 +608,26 @@ echo "== 8. the export re-checked from an empty environment =="
 {
   echo
   echo "3. The export re-checked from an empty environment"
-  echo "  Each tool reads the export file and nothing else: no compiled file of the library, of"
-  echo "  Mathlib or of Lean core. Every declaration in the file is checked again, in the order"
-  echo "  of its dependencies."
+  echo "  Each tool is started in an empty directory with an empty environment (LEAN_ABORT_ON_PANIC=1"
+  echo "  apart) and is given the export file and nothing else. A tool passes if it exits with status"
+  echo "  0 and prints its line of acceptance; where that line says how many declarations were"
+  echo "  checked, the number must be the one that scripts/export_census.py finds in the export."
 } >>"$RECORD"
-if [ "$EXPORT_OK" = 1 ]; then
+if [ "$EXPORT" = ok ]; then
+  N_RECORDS="$(sed -n 's/^declaration records: \([0-9][0-9]*\) .*/\1/p' "$TMP/census.txt")"
+  N_RECORDS_QUOT="$(sed -n 's/^declaration records, the quotient records counted as one: //p' "$TMP/census.txt")"
+  N_CONSTANTS="$(sed -n 's/^constants declared[^:]*: //p' "$TMP/census.txt")"
   check_export replay-export "$TMP/library.ndjson" true
   N_OUTSIDE="$(sed -n 's/^declarations from outside the library[^:]*: //p' "$TMP/census.txt")"
-  if [ -n "$ACCEPTED" ]; then
-    REPLAYED="$REPLAYED; the $N_CHECKABLE declarations of the library and the $N_OUTSIDE declarations of Mathlib, its dependencies and Lean core that they depend on, from an empty environment, by $ACCEPTED"
+  if [ -n "$ACCEPTED_KERNEL$ACCEPTED_SEPARATE" ]; then
+    REPLAYED="$REPLAYED (2) an export of the $N_CHECKABLE declarations of the library with the $N_OUTSIDE declarations of Mathlib, its dependencies and Lean core that they depend on, from an empty environment, by ${ACCEPTED_KERNEL:-no tool} (Lean's own kernel) and by ${ACCEPTED_SEPARATE:-no tool} (programs that are not Lean's kernel, run as the toolchain ships them)."
+  else
+    REPLAYED="$REPLAYED (2) NO checker was run on the export."
   fi
+elif [ "$EXPORT" = missing ]; then
+  echo "  RESULT replay-export: NOT RUN (there is no export)" >>"$RECORD"
+  echo "RESULT replay-export: NOT RUN (there is no export, because leanexport is not installed)"
+  REPLAYED="$REPLAYED (2) NO export was written and no checker was run on one."
 else
   echo "  not run: there is no export" >>"$RECORD"
   echo "not run: there is no export"
@@ -478,38 +645,45 @@ if [ "$WHOLE" = 0 ]; then
     echo "  not run. Declarations of Mathlib and of Lean core that the library does not depend on"
     echo "  were not re-checked."
   } >>"$RECORD"
-  REPLAYED="$REPLAYED. Not re-checked: the declarations of the imported environment ($ENVIRONMENT) that the library does not depend on (--whole-env does that)."
+  REPLAYED="$REPLAYED Not re-checked: the declarations of the imported modules ($ENVIRONMENT) that the library does not depend on (--whole-env does that)."
 else
   echo "== 9. leanchecker --fresh: the whole imported environment, from an empty environment =="
   START="$(date +%s)"
   {
     echo "  tool:    $(tool_id leanchecker)"
+    echo "  kind:    Lean's own kernel"
     echo "  command: lake env leanchecker --fresh VoltageToBit"
     echo "  does:    loads the compiled files of VoltageToBit and of every module it imports, directly"
     echo "           or not ($ENVIRONMENT),"
     echo "           and sends every declaration in them to Lean's kernel, starting from an empty"
     echo "           environment. The tool leaves out the definitions marked unsafe or partial, which"
     echo "           exist for the compiler ($EVIDENCE/audit.txt has their number). Unlike 1 this"
-    echo "           re-checks Mathlib and Lean core themselves, whether the library uses a"
-    echo "           declaration or not. It is Lean's own kernel: no independent implementation was"
-    echo "           run on the whole environment."
+    echo "           re-checks the imported modules of Mathlib and Lean core themselves, whether the"
+    echo "           library uses a declaration or not. No other checker was run on the whole"
+    echo "           environment, and modules of Mathlib that the library does not import are not"
+    echo "           part of it."
   } >>"$RECORD"
   if [ ! -x "$TCBIN/leanchecker" ]; then
     echo "  result:  not run, the tool is missing" >>"$RECORD"
-    fail whole-env "leanchecker not found in $TCBIN"
+    fail whole-env "leanchecker is not in $TCBIN"
   else
     LEAN_ABORT_ON_PANIC=1 lake env "$TCBIN/leanchecker" --fresh VoltageToBit >"$TMP/fresh.log" 2>&1
     status=$?
     filter <"$TMP/fresh.log" | cut -c1-600 | head -n 20
     echo "  exit status: $status" >>"$RECORD"
-    echo "exit status $status; $(( $(date +%s) - START )) s"
+    echo "exit status $status; $(since "$START")"
     if [ "$status" = 0 ]; then
+      echo "  RESULT whole-env: ok" >>"$RECORD"
       ok whole-env "$ENVIRONMENT"
-      REPLAYED="$REPLAYED; every declaration of the imported environment ($ENVIRONMENT; those marked unsafe or partial are compiler-only and are left out), Mathlib included, from an empty environment, by leanchecker --fresh (Lean's own kernel only)."
+      REPLAYED="$REPLAYED (3) every declaration of every module that the library imports, directly or not ($ENVIRONMENT; those marked unsafe or partial are compiler-only and are left out), the imported part of Mathlib included, from an empty environment, by leanchecker --fresh (Lean's own kernel only)."
     else
+      echo "  RESULT whole-env: FAILED" >>"$RECORD"
       fail whole-env "leanchecker --fresh exited with status $status"
     fi
   fi
+fi
+if [ -n "$NOTRUN" ]; then
+  REPLAYED="$REPLAYED NOT RUN, because the executable is not in the toolchain's bin directory: $NOTRUN."
 fi
 
 last_line
