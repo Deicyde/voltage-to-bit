@@ -1,0 +1,279 @@
+# Allow-list of scripts/SourceScan.lean and scripts/Audit.lean: what the source files
+# and the compiled files of the library may contain.
+#
+# The lists hold what the library uses now, and nothing else. Anything that is not
+# listed is refused by scripts/check.sh, by name (step source-scan for the first four
+# kinds of line, step axiom-audit for the last). To admit something, add a line here
+# by hand, in a commit that says why. The records name the entries that nothing uses
+# (evidence/lean/source-scan.txt and evidence/lean/audit.txt).
+#
+#   command <kind>    a kind of command, as Lean's parser names it
+#   node <kind>       a kind of syntax node inside a command
+#   char U+XXXX       a character besides printable ASCII and line feed, anywhere in a
+#                     file, comments included (what follows the code point is a note)
+#   max-column <n>    no code token may end beyond this column
+#   extension <name>  an environment extension of Lean in which the compiled files of
+#                     the library may have entries. The entries of the instance and
+#                     simp extensions are looked at one by one by scripts/Audit.lean:
+#                     only what Lean generates for a structure is accepted there.
+#
+# Not listed on purpose, because each can change what later text means, hide a
+# hypothesis, or run code when a file is compiled:
+#   commands: every command other than the seven below. So no `section`, `universe`,
+#     `set_option`, `attribute`, `notation`, `infix`, `macro`, `syntax`, `elab`,
+#     `deriving instance`, `export`, `include`, `omit`, `mutual`, `#eval`, `#exit`,
+#     `run_cmd`, `initialize`, `open ... in`, and no command that Mathlib defines
+#     (`variable?`, `alias`, `lemma`, ...).
+#   nodes: attributes (`@[...]`), `axiom`, `opaque`, `instance`, `abbrev`, `class`,
+#     `inductive`, `example`, `deriving`, `unsafe`, `partial`, `protected`, instance
+#     binders `[...]`, strict implicit binders, default values and `by` blocks of
+#     binders, `where` declarations, `@f`, `sorry`, `decide`, `native_decide`, every
+#     item of a tactic configuration (`+opt`, `-opt`, `(opt := v)`), `set_option ... in`,
+#     `open ... in`, `Type`, `Sort`, string, character and name literals, quotations.
+#   extensions: those that hold parsers, macros, elaborators, notation, aliases and
+#     the attributes of Mathlib's tactics; the library has no entry in any of them.
+
+command Lean.Parser.Command.declaration
+command Lean.Parser.Command.end
+command Lean.Parser.Command.eoi
+command Lean.Parser.Command.moduleDoc
+command Lean.Parser.Command.namespace
+command Lean.Parser.Command.open
+command Lean.Parser.Command.variable
+
+node Batteries.ExtendedBinder.extBinder
+node Batteries.ExtendedBinder.extBinders
+node Batteries.Tactic.byContra
+node Filter.«term∀ᶠ_In_,_»
+node Lean.Parser.Command.declId
+node Lean.Parser.Command.declModifiers
+node Lean.Parser.Command.declSig
+node Lean.Parser.Command.declValEqns
+node Lean.Parser.Command.declValSimple
+node Lean.Parser.Command.definition
+node Lean.Parser.Command.docComment
+node Lean.Parser.Command.noncomputable
+node Lean.Parser.Command.openScoped
+node Lean.Parser.Command.openSimple
+node Lean.Parser.Command.optDeclSig
+node Lean.Parser.Command.optDeriving
+node Lean.Parser.Command.private
+node Lean.Parser.Command.structFields
+node Lean.Parser.Command.structSimpleBinder
+node Lean.Parser.Command.structure
+node Lean.Parser.Command.structureTk
+node Lean.Parser.Command.theorem
+node Lean.Parser.Command.whereStructInst
+node Lean.Parser.Tactic.cases
+node Lean.Parser.Tactic.constructor
+node Lean.Parser.Tactic.dsimp
+node Lean.Parser.Tactic.elimTarget
+node Lean.Parser.Tactic.exact
+node Lean.Parser.Tactic.induction
+node Lean.Parser.Tactic.inductionAlt
+node Lean.Parser.Tactic.inductionAltLHS
+node Lean.Parser.Tactic.inductionAlts
+node Lean.Parser.Tactic.intro
+node Lean.Parser.Tactic.location
+node Lean.Parser.Tactic.locationHyp
+node Lean.Parser.Tactic.locationType
+node Lean.Parser.Tactic.obtain
+node Lean.Parser.Tactic.optConfig
+node Lean.Parser.Tactic.rcases
+node Lean.Parser.Tactic.rcasesPat.clear
+node Lean.Parser.Tactic.rcasesPat.ignore
+node Lean.Parser.Tactic.rcasesPat.one
+node Lean.Parser.Tactic.rcasesPat.tuple
+node Lean.Parser.Tactic.rcasesPatLo
+node Lean.Parser.Tactic.rcasesPatMed
+node Lean.Parser.Tactic.refine
+node Lean.Parser.Tactic.rintro
+node Lean.Parser.Tactic.rintroPat.one
+node Lean.Parser.Tactic.rwRule
+node Lean.Parser.Tactic.rwRuleSeq
+node Lean.Parser.Tactic.rwSeq
+node Lean.Parser.Tactic.rwa
+node Lean.Parser.Tactic.rwaAt
+node Lean.Parser.Tactic.simp
+node Lean.Parser.Tactic.simpAll
+node Lean.Parser.Tactic.simpArgs
+node Lean.Parser.Tactic.simpLemma
+node Lean.Parser.Tactic.simpa
+node Lean.Parser.Tactic.simpaArgsRest
+node Lean.Parser.Tactic.tacticHave__
+node Lean.Parser.Tactic.tacticSeq
+node Lean.Parser.Tactic.tacticSeq1Indented
+node Lean.Parser.Tactic.unfold
+node Lean.Parser.Tactic.«tactic_<;>_»
+node Lean.Parser.Term.anonymousCtor
+node Lean.Parser.Term.app
+node Lean.Parser.Term.arrow
+node Lean.Parser.Term.basicFun
+node Lean.Parser.Term.byTactic
+node Lean.Parser.Term.byTactic'
+node Lean.Parser.Term.explicitBinder
+node Lean.Parser.Term.forall
+node Lean.Parser.Term.fun
+node Lean.Parser.Term.hole
+node Lean.Parser.Term.hygienicLParen
+node Lean.Parser.Term.implicitBinder
+node Lean.Parser.Term.letConfig
+node Lean.Parser.Term.letDecl
+node Lean.Parser.Term.letId
+node Lean.Parser.Term.letIdDecl
+node Lean.Parser.Term.matchAlt
+node Lean.Parser.Term.matchAlts
+node Lean.Parser.Term.matchAltsWhereDecls
+node Lean.Parser.Term.namedArgument
+node Lean.Parser.Term.optEllipsis
+node Lean.Parser.Term.paren
+node Lean.Parser.Term.proj
+node Lean.Parser.Term.prop
+node Lean.Parser.Term.show
+node Lean.Parser.Term.structInst
+node Lean.Parser.Term.structInstField
+node Lean.Parser.Term.structInstFieldDef
+node Lean.Parser.Term.structInstFields
+node Lean.Parser.Term.structInstLVal
+node Lean.Parser.Term.subst
+node Lean.Parser.Term.syntheticHole
+node Lean.Parser.Term.tuple
+node Lean.Parser.Term.typeAscription
+node Lean.Parser.Term.typeSpec
+node Lean.Parser.Termination.suffix
+node Lean.binderIdent
+node Lean.bracketedExplicitBinders
+node Lean.cdot
+node Lean.cdotTk
+node Lean.explicitBinders
+node Lean.unbracketedExplicitBinders
+node Lean.«binderPred∈_»
+node Lean.«term∀__,_»
+node Lean.«term∃__,_»
+node Mathlib.Linter.Style.show
+node Mathlib.Meta.FunProp.funPropTacStx
+node Mathlib.Meta.SetNotationForOrder.subsetStx'
+node Mathlib.Tactic.FieldSimp.fieldSimp
+node Mathlib.Tactic.Positivity.positivity
+node Mathlib.Tactic.Push.pushStx
+node Mathlib.Tactic.RingNF.ring
+node Mathlib.Tactic.filterUpwards
+node Mathlib.Tactic.linarith
+node Mathlib.Tactic.linarithArgsRest
+node Mathlib.Tactic.nlinarith
+node Mathlib.Tactic.normNum
+node Mathlib.Tactic.setArgsRest
+node Mathlib.Tactic.setTactic
+node Mathlib.Tactic.splitIfs
+node NNReal.«termℝ≥0»
+node Topology.nhdsGT
+node Topology.term𝓝
+node fieldIdx
+node group
+node hygieneInfo
+node null
+node num
+node patternIgnore
+node scientific
+node term!_
+node termIfThenElse
+node termℝ
+node token.«⊢»
+node «tacticBy_cases_:_»
+node «term-_»
+node «term[_]»
+node «term_*_»
+node «term_+_»
+node «term_-_»
+node «term_/_»
+node «term_::_»
+node «term_<_»
+node «term_=_»
+node «term_^_»
+node «term_×_»
+node «term_×ˢ_»
+node «term_↔_»
+node «term_∈_»
+node «term_∧_»
+node «term_≠_»
+node «term_≤_»
+node «term|___|»
+node «term¬_»
+node «term∃_,_»
+
+char U+00AC ¬
+char U+00B2 ²
+char U+00B5 µ
+char U+00B7 ·
+char U+00D7 ×
+char U+00F6 ö
+char U+02E2 ˢ
+char U+03B1 α
+char U+03B4 δ
+char U+03B5 ε
+char U+03B8 θ
+char U+03C4 τ
+char U+1DA0 ᶠ
+char U+2013 –
+char U+2026 …
+char U+2080 ₀
+char U+2081 ₁
+char U+2082 ₂
+char U+211D ℝ
+char U+2190 ←
+char U+2192 →
+char U+2194 ↔
+char U+21A6 ↦
+char U+2200 ∀
+char U+2203 ∃
+char U+2208 ∈
+char U+2218 ∘
+char U+2227 ∧
+char U+2248 ≈
+char U+2260 ≠
+char U+2264 ≤
+char U+2265 ≥
+char U+2286 ⊆
+char U+22A2 ⊢
+char U+25B8 ▸
+char U+27E8 ⟨
+char U+27E9 ⟩
+char U+1D4DD 𝓝
+
+max-column 110
+
+extension Lean.Compiler.LCNF.UnreachableBranches.functionSummariesExt
+extension Lean.Compiler.LCNF.baseExt
+extension Lean.Compiler.LCNF.impureSigExt
+extension Lean.Compiler.LCNF.monoExt
+extension Lean.Compiler.LCNF.monoTypeExt
+extension Lean.Compiler.inlineAttrs
+extension Lean.Elab.Structural.eqnInfoExt
+extension Lean.IR.declMapExt
+extension Lean.Meta.Grind.grindExt
+extension Lean.Meta.Match.Extension.extension
+extension Lean.Meta.completionBlackListExt
+extension Lean.Meta.instanceExtension
+extension Lean.Meta.simpExtension
+extension Lean.auxRecExt
+extension Lean.backwardDefeqAttr
+extension Lean.declRangeExt
+extension Lean.deprecatedModuleExt
+extension Lean.docStringExt
+extension Lean.noConfusionExt
+extension Lean.noncomputableExt
+extension Lean.projectionFnInfoExt
+extension Lean.protectedExt
+extension _private.Lean.Compiler.LCNF.MonoTypes.0.Lean.Compiler.LCNF.trivialStructureInfoExt
+extension _private.Lean.Compiler.LCNF.Specialize.0.Lean.Compiler.LCNF.Specialize.specCacheExt
+extension _private.Lean.Compiler.LCNF.ToImpureType.0.Lean.Compiler.LCNF.ctorLayoutExt
+extension _private.Lean.Compiler.LCNF.ToImpureType.0.Lean.Compiler.LCNF.impureTrivialStructureInfoExt
+extension _private.Lean.Compiler.LCNF.ToImpureType.0.Lean.Compiler.LCNF.impureTypeExt
+extension _private.Lean.Compiler.ModPkgExt.0.Lean.modPkgExt
+extension _private.Lean.DocString.Extension.0.Lean.moduleDocExt
+extension _private.Lean.ExtraModUses.0.Lean.extraModUses
+extension _private.Lean.Namespace.0.Lean.namespacesExt
+extension _private.Lean.Structure.0.Lean.structureExt
+extension _private.Lean.Util.CollectAxioms.0.Lean.exportedAxiomsExt
+extension recExt
+extension reducibilityCore

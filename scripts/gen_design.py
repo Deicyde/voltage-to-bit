@@ -25,7 +25,8 @@ what `scripts/check.sh` runs, so a design record that is added later is
 checked without anyone having to list it.
 
 Exit status: 0 success; 1 stale (--check and --check-all only); 2 the input
-was rejected or the command line is wrong. A rejected input writes nothing.
+was rejected, the command line is wrong, or the output file cannot be
+written. A rejected input writes nothing.
 
 What is validated before anything is generated (the JSON is treated as
 untrusted text, because two of its strings end up inside a Lean comment and
@@ -353,8 +354,12 @@ def main(argv):
             return 1
         print(f"ok: {lean_path} matches {json_path}")
         return 0
-    with open(lean_path, "w", encoding="utf-8", newline="") as handle:
-        handle.write(text)
+    try:
+        with open(lean_path, "w", encoding="utf-8", newline="") as handle:
+            handle.write(text)
+    except OSError as exc:
+        print(f"gen_design.py: cannot write {lean_path}: {exc.strerror}", file=sys.stderr)
+        return 2
     print(f"wrote {lean_path}")
     return 0
 
