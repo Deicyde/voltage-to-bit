@@ -17,5 +17,6 @@ import VoltageToBit.Examples.Illustrative
 import VoltageToBit.Examples.NegativeControls
 import VoltageToBit.Examples.RefinedDeadlines
 import VoltageToBit.Examples.Limits
+import VoltageToBit.Examples.DeadlineBrackets
 import VoltageToBit.Examples.InputClass
 import VoltageToBit.Examples.TwoStage
