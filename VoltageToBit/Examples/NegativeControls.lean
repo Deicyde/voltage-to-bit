@@ -16,15 +16,21 @@ circuit fails, so the controls exhibit trajectories wherever possible.
    observation time. For inputs in `[0, 0.40]` V, a trajectory that starts in
    the safe domain and whose output is valid-low at some instant is not
    valid-high at any time up to 38 ps later; a claimed rise deadline that short
-   is false.
+   is false, and a run from 0.25 V that is not valid-high at 38 ps is
+   exhibited.
    The lower bound `0 ≤ u` is part of the statement and cannot be dropped. The
    guarantee's own valid-low class is `u ≤ 0.40` V with no lower bound, and for
-   that class the sentence fails: with the input held at -1 V there is a
-   trajectory whose output starts valid-low and is valid-high after 38 ps
+   that class the sentence fails: with the input held at -1 V there is a run
+   that starts at the valid-low level 0.25 V and is valid-high after 38 ps
    (`valid_low_input_can_give_valid_high_within_38ps`).
-   This control is far from the boundary of the guarantee: 38 ps against a
-   proved rise deadline of 3.43 ns (2.34 ns with a certificate). The controls
-   at the boundary, in both directions, are in `Examples/DeadlineBrackets.lean`.
+   This control is far from the proved deadline: 38 ps against a rise deadline
+   of 3.43 ns in closed form and 2.26 ns with a certificate
+   (`Examples/RefinedDeadlines.lean`). The controls close to the proved
+   deadlines, in both directions, are in `Examples/Limits.lean`: every rise
+   deadline below 2.168 ns and every fall deadline below 1.0234 ns is false.
+   `Examples/DeadlineBrackets.lean` states these limits together with the
+   proved 2.26 ns and 1.425 ns; for a deadline in between the library has no
+   statement in either direction.
 3. `miswired_counterexample`, `miswired_never_high`: the two transistors
    exchanged, at nominal parameters. The output can sit at 0.3 V forever while
    the input is valid-low; and every trajectory of the exchanged network with a
@@ -34,9 +40,18 @@ circuit fails, so the controls exhibit trajectories wherever possible.
    1.34 V < `VOH` exists.
 5. `illustrative_riseCert_rejected`: a certificate claiming a deadline its
    levels do not support is rejected. This shows that one list of levels fails
-   a sufficient condition. That no list of levels is a valid certificate for
-   2.16 ns, and that a 2.16 ns rise deadline is false, is shown in
-   `Examples/DeadlineBrackets.lean`.
+   a sufficient condition. That no list of levels is a valid certificate for a
+   deadline below 2.168 ns (`riseCert_deadline_ge`), and that every rise
+   deadline below 2.168 ns is false (`rise_deadline_counterexample`), is shown
+   in `Examples/Limits.lean`.
+
+The statements of this file that assert the existence of a trajectory place
+its initial output in the safe domain (`v 0 = 0.25`, `v 0 = 1.35`,
+`v 0 ∈ noisy.Safe`). This matters: `IsTrajectory` asks for the current balance
+only while the node is in the safe domain, so a statement of the form "there
+is a trajectory with ..." that does not place the start there can be met by a
+function that stays outside the safe domain, and then exhibits no run of the
+circuit.
 
 Two numbers are recorded along the way. `illustrative_max_rise_slew` and
 `illustrative_max_fall_slew` are upper bounds on the output slew for inputs
@@ -51,7 +66,9 @@ review probes (`review/P03_DeadlineBrackets.lean` in the form ported in
 `review/D05_Part1Ports.lean`, and `review/P08_MiswiredUniversal.lean`; findings
 E1-04 and E1-05 of `docs/adversarial-review.md`) and ported into this file. The
 wording of the two slew bounds follows finding E2-03; the two unboundedness
-statements were added with it.
+statements were added with it. The 38 ps statement is stronger here than in
+the probe: the probe has `v 0 ≤ 0.25` and an unnamed input, the library
+statement names the input, the start and the node equation.
 -/
 
 namespace VoltageToBit.Examples
@@ -124,15 +141,22 @@ theorem illustrative_max_fall_slew :
   norm_num [Design.IdischargeMax, illustrative, psq_eq_ite]
 
 /-- A claimed rise deadline of 38 ps is false: there is a trajectory with a
-valid-low input from time 0 and a valid-low initial output that is not
-valid-high at `t = 0.038` ns. -/
+valid-low input at all times that starts at 0.25 V, the highest valid-low
+output level, and is not valid-high at `t = 0.038` ns. In the proof the input
+is held at 0.2 V, with nominal parameters, capacitance 5 fF and zero
+disturbance.
+
+The start is fixed by the statement (`v 0 = 0.25`), so the witness is subject
+to the current balance from the first instant. With `v 0 ≤ 0.25` alone the
+statement would also be met by a function that stays below the safe domain,
+where `IsTrajectory` asks for no balance. -/
 theorem early_sampling_counterexample :
-    ∃ u v : ℝ → ℝ, (∀ t, u t ≤ 0.40) ∧ v 0 ≤ 0.25 ∧
+    ∃ u v : ℝ → ℝ, (∀ t, u t ≤ 0.40) ∧ v 0 = 0.25 ∧
       IsTrajectory illustrative u v 0 10 ∧ v 0.038 < 1.35 := by
   obtain ⟨v, hv0, htraj⟩ := illustrative_exists_const nominal nominal_inBox 5 (by norm_num)
     (fun _ => 0.2) (fun _ => 0) continuous_const continuous_const 0 10 (by norm_num)
     (fun t _ => by norm_num) 0.25 (by norm_num)
-  refine ⟨fun _ => 0.2, v, fun t => by norm_num, hv0.le, htraj, ?_⟩
+  refine ⟨fun _ => 0.2, v, fun t => by norm_num, hv0, htraj, ?_⟩
   have h0 : v 0 ∈ illustrative.Safe := by
     rw [hv0]; norm_num [Design.Safe, illustrative]
   exact illustrative_no_early_high _ v 0 10 htraj h0 0 10 le_rfl le_rfl
@@ -167,21 +191,31 @@ theorem Inet_fastUp_ge {x : ℝ} (h1 : -0.10 ≤ x) (h2 : x ≤ 1.35) :
   simp only [Inet, Ip, In, fastUp, e1, e2, e3, e4]
   nlinarith
 
-/-- **Without the lower bound on the input, 38 ps is enough.** There is a
-trajectory of the illustrative record with a valid-low input at all times and a
-valid-low initial output that is valid-high at `t = 0.038` ns. In the proof the
-input is held at -1 V, which is valid-low for the guarantee (`u ≤ VIL`, no
-lower bound); the parameters are the constant box point `fastUp`, the
-capacitance is 5 fF and the disturbance is zero.
+/-- **Without the lower bound on the input, 38 ps is enough.** With the input
+held at -1 V there is a run of the illustrative record that starts at 0.25 V,
+the highest valid-low output level, and is valid-high at `t = 0.038` ns.
 
-Compare `early_sampling_counterexample`, which has the same form and the
-opposite conclusion at the same instant. So the sentence "no trajectory
-starting valid-low can be valid-high within 38 ps" is true for inputs in
-`[0, 0.40]` V (`illustrative_no_early_high`) and false for the valid-low class
-of the guarantee. -/
+The statement names everything about the run:
+
+* the input is the constant -1 V, which is valid-low for the guarantee
+  (`u ≤ VIL = 0.40` V, with no lower bound);
+* the output starts at 0.25 V;
+* it solves the node equation `5 * v' = Inet fastUp (-1) v + 0` on `[0, 10]`:
+  the constant box point `fastUp`, a capacitance of 5 fF and zero disturbance;
+* it is a trajectory of the illustrative record;
+* it is at or above 1.35 V at 38 ps.
+
+Compare `early_sampling_counterexample`: the same start, an input that is also
+valid-low (0.2 V in its proof), and the opposite conclusion at the same
+instant. So the sentence "no trajectory starting valid-low can be valid-high
+within 38 ps" is true for inputs in `[0, 0.40]` V
+(`illustrative_no_early_high`) and false for the valid-low class of the
+guarantee. -/
 theorem valid_low_input_can_give_valid_high_within_38ps :
-    ∃ u v : ℝ → ℝ, (∀ t, u t ≤ 0.40) ∧ v 0 ≤ 0.25 ∧
-      IsTrajectory illustrative u v 0 10 ∧ 1.35 ≤ v 0.038 := by
+    ∃ v : ℝ → ℝ, v 0 = 0.25 ∧
+      (∀ t ∈ Icc (0 : ℝ) 10,
+        HasDerivWithinAt v ((Inet fastUp (-1) (v t) + 0) / 5) (Icc 0 10) t) ∧
+      IsTrajectory illustrative (fun _ => -1) v 0 10 ∧ 1.35 ≤ v 0.038 := by
   have hadm := illustrative_admissible
   have hC1 : illustrative.Clo ≤ (5 : ℝ) := by norm_num [illustrative]
   have hC2 : (5 : ℝ) ≤ illustrative.Chi := by norm_num [illustrative]
@@ -200,7 +234,7 @@ theorem valid_low_input_can_give_valid_high_within_38ps :
     IsTrajectory.of_ode fastUp_inBox (Cf := fun _ => 5) (w := fun _ => 0) (fun _ => ⟨hC1, hC2⟩)
       (fun t ht => hwb t (Ico_subset_Icc_self ht)) hcont
       (fun t ht => ⟨_, hder t ht, by field_simp⟩)
-  refine ⟨fun _ => -1, v, fun _ => by norm_num, hv0.le, htraj, ?_⟩
+  refine ⟨v, hv0, hode, htraj, ?_⟩
   refine rise_by (v := v) (v' := fun t => (Inet fastUp (-1) (v t) + 0) / 5) (a := 0) (b := 10)
     (c := 1.35) (l := 0.25) (m := 33) hcont hder (by norm_num) hv0.ge ?_ 0.038
     ⟨by norm_num, by norm_num⟩ (by norm_num)

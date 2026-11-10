@@ -4,24 +4,39 @@ import VoltageToBit.Examples.Illustrative
 # Limits for the illustrative inverter: how far any proposal can go
 
 None of the statements here improves the guarantee. They say where improvement
-stops, and they were produced by workstream F's search loop
-(`docs/experiment-loop.md`, `search/promote/Limits.lean`) and ported to the
-current shape of the library by the coordinator.
+stops.
 
-| Quantity | Refuted below | Proved at | Source of the proved value |
+| Quantity | Refuted below | Statement | Proved at |
 | --- | --- | --- | --- |
-| Rise deadline | 2.168 ns (`rise_deadline_counterexample`) | 2.26 ns | `Examples/RefinedDeadlines.lean` |
-| Fall deadline | 1.0234 ns (`fall_deadline_counterexample`) | 1.425 ns | `Examples/RefinedDeadlines.lean` |
+| Rise deadline | 2.168 ns | `rise_deadline_counterexample` | 2.26 ns |
+| Fall deadline | 1.0234 ns | `fall_deadline_counterexample` | 1.425 ns |
 
-Between the refuted and the proved value nothing is known from these theorems.
-Numerically (not proved) the model's slowest runs take about 2.2512 ns and
-1.3945 ns.
+The proved values are those of `Examples/RefinedDeadlines.lean`
+(`illustrative_guarantee_refined`). For a deadline at or above the refuted
+value and below the proved value the library has no statement in either
+direction. `Examples/DeadlineBrackets.lean` puts the two ends of each row into
+one statement and says what each end means. The numerical experiments
+(`docs/discrepancy-report.md`, section 2) observed worst-case delays of about
+2.2512 ns (rise) and 1.3945 ns (fall). Those two numbers are observations of a
+simulation of the model, not theorems.
 
-* `slow_rise_trajectory`, `slow_fall_trajectory`: explicit slow runs at the two
-  slow corners of the box with the largest capacitance and the disturbance held
-  at its adverse bound. Their existence is proved, not assumed.
-* `rise_deadline_counterexample`, `fall_deadline_counterexample`: every smaller
-  deadline is violated by such a run.
+This file is the one place where the slow corners and the slow runs are
+defined; the other example files use them from here.
+
+* `slowUpCorner`, `slowDnCorner`: the two slow corners of the parameter box.
+* `slow_rise_run`, `slow_fall_run`: the slow runs. For every initial state in
+  the safe domain there is a solution on `[0, 10]` of the node equation at the
+  slow corner, with the largest capacitance (20 fF), the input held at the edge
+  of its valid band and the disturbance held at its adverse bound. Its
+  existence is proved, not assumed. The statement contains the node equation,
+  so the run is visibly one with constant parameters, constant capacitance and
+  constant disturbance: it does not use the freedom of the inclusion to change
+  the parameter point or the capacitance from instant to instant. The run is a
+  trajectory of the illustrative record and stays on the slow side of an
+  explicit line.
+* `rise_deadline_counterexample`, `fall_deadline_counterexample`: every
+  deadline below 2.168 ns (rise) or 1.0234 ns (fall) is violated by the slow
+  run started at the far end of the safe domain (-0.10 V, 2.08 V).
 * `riseCert_deadline_ge`, `fallCert_deadline_ge`: hence no certificate, whoever
   proposes it, can claim a smaller deadline.
 * `illustrativeEps`, `illustrativeEps_admissible`: the same circuit is admissible
@@ -33,6 +48,17 @@ Numerically (not proved) the model's slowest runs take about 2.2512 ns and
   boundary bound used in `Design.Admissible`, not a statement that the circuit
   fails: numerically the model's smallest restoring current is about 5.9 µA at
   the bottom of the safe domain and 6.4 µA at the top.
+
+Provenance. The statements were produced by workstream F's search loop
+(`docs/experiment-loop.md`, `search/promote/Limits.lean`) and ported to the
+current shape of the library by the coordinator. The same two slow runs are
+used in workstream E's review probes (`review/P03_DeadlineBrackets.lean`, in
+the form of `review/D05_Part1Ports.lean`; finding E1-05 of
+`docs/adversarial-review.md`). The two versions are merged here:
+`slow_rise_run` and `slow_fall_run` are stated for every initial state in the
+safe domain and include the node equation, and the runs from -0.10 V and from
+2.08 V that the search loop recorded as `slow_rise_trajectory` and
+`slow_fall_trajectory` are their instances at those two initial states.
 -/
 
 namespace VoltageToBit.Examples
@@ -54,8 +80,12 @@ theorem le_line_of_rderiv_le {v v' : ℝ → ℝ} {a b l m : ℝ}
       simpa using hd.hasDerivWithinAt)
     hm ht
 
+/-! ## Rising output -/
+
 /-- Slow pull-up corner of the box: lowest supply, weakest PMOS with the
-largest threshold magnitude, NMOS with the largest threshold. -/
+largest threshold magnitude, NMOS with the largest threshold. With
+`Vtn = 0.60` the NMOS is off on the whole safe domain for the input 0.40 V
+used below, so `kn` plays no role. -/
 def slowUpCorner : Params := ⟨1.62, 240, 80, 0.60, 0.60⟩
 
 theorem slowUpCorner_inBox : illustrative.InBox slowUpCorner := by
@@ -78,19 +108,23 @@ theorem Inet_slowUp_le {x : ℝ} (hx : (-0.10 : ℝ) ≤ x) :
   unfold Inet
   linarith
 
-/-- **A slow rising trajectory.** At the slow pull-up corner, with `C = 20` fF,
-the input held at `0.40` V (valid-low) and the disturbance held at `-2` µA,
-there is a trajectory from `-0.10` V that stays below the line
-`-0.10 + 0.6688 t`. -/
-theorem slow_rise_trajectory :
-    ∃ v : ℝ → ℝ, v 0 = -0.10 ∧
+/-- **A slow rising run** from the initial state `v₀`, for every `v₀` in the
+safe domain: the solution of the node equation
+`20 * v' = Inet slowUpCorner 0.40 v - 2` on `[0, 10]` (corner `slowUpCorner`,
+capacitance 20 fF, the input held at 0.40 V, which is valid-low, and the
+disturbance held at -2 µA). It exists, it is a trajectory of the illustrative
+record, and it stays below the line `v₀ + 0.6688 * t`
+(`0.6688 = (15.376 - 2) / 20`, see `Inet_slowUp_le`). -/
+theorem slow_rise_run (v₀ : ℝ) (hv₀ : v₀ ∈ illustrative.Safe) :
+    ∃ v : ℝ → ℝ, v 0 = v₀ ∧
+      (∀ t ∈ Icc (0 : ℝ) 10,
+        HasDerivWithinAt v ((Inet slowUpCorner 0.40 (v t) + -2) / 20) (Icc 0 10) t) ∧
       IsTrajectory illustrative (fun _ => 0.40) v 0 10 ∧
-      ∀ t ∈ Icc (0 : ℝ) 10, v t ≤ -0.10 + 0.6688 * t := by
+      ∀ t ∈ Icc (0 : ℝ) 10, v t ≤ v₀ + 0.6688 * t := by
   have hC1 : illustrative.Clo ≤ (20 : ℝ) := by norm_num [illustrative]
   have hC2 : (20 : ℝ) ≤ illustrative.Chi := by norm_num [illustrative]
   have hwb : ∀ t ∈ Icc (0 : ℝ) 10, |(fun _ : ℝ => (-2 : ℝ)) t| ≤ illustrative.eps :=
     fun t _ => by norm_num [illustrative]
-  have hv₀ : (-0.10 : ℝ) ∈ illustrative.Safe := by norm_num [Design.Safe, illustrative]
   obtain ⟨v, hv0, hsafe, hode⟩ := exists_solution illustrative_admissible slowUpCorner_inBox
     (Cf := fun _ => 20) (Kc := 0) (fun _ => hC1) (fun x _ y _ => by simp)
     (u := fun _ => (0.40 : ℝ)) (w := fun _ => (-2 : ℝ)) continuous_const continuous_const
@@ -104,7 +138,7 @@ theorem slow_rise_trajectory :
       (fun _ => ⟨hC1, hC2⟩)
       (fun t ht => hwb t (Ico_subset_Icc_self ht)) hcont
       (fun t ht => ⟨_, hder t ht, by field_simp⟩)
-  refine ⟨v, hv0, htraj, fun t ht => ?_⟩
+  refine ⟨v, hv0, hode, htraj, fun t ht => ?_⟩
   have hslope : ∀ s ∈ Ico (0 : ℝ) 10, (Inet slowUpCorner 0.40 (v s) + -2) / 20 ≤ 0.6688 := by
     intro s hs
     have hvs : (-0.10 : ℝ) ≤ v s := by
@@ -118,16 +152,21 @@ theorem slow_rise_trajectory :
 
 /-- **No rise deadline below 2.168 ns is valid** for the illustrative record:
 for every such `τ` there are a valid-low input, a trajectory starting in the
-safe domain and a time `t ≥ τ` at which the output is still below `VOH`. -/
+safe domain and a time `t ≥ τ` at which the output is still below `VOH`. The
+witness is `slow_rise_run` started at -0.10 V, the bottom of the safe domain.
+
+The number 2.168 is rounded down: the line bound of that run reaches 1.35 V at
+`1.45 / 0.6688 ≈ 2.16806` ns. -/
 theorem rise_deadline_counterexample {τ : ℝ} (hτ : τ < 2.168) :
     ∃ (u v : ℝ → ℝ) (t : ℝ),
       IsTrajectory illustrative u v 0 10 ∧ v 0 ∈ illustrative.Safe ∧
       (∀ s ∈ Ico (0 : ℝ) 10, u s ≤ illustrative.VIL) ∧
       t ∈ Icc (0 : ℝ) 10 ∧ 0 + τ ≤ t ∧ v t < illustrative.VOH := by
-  obtain ⟨v, hv0, htraj, hbound⟩ := slow_rise_trajectory
+  have hv₀ : (-0.10 : ℝ) ∈ illustrative.Safe := by norm_num [Design.Safe, illustrative]
+  obtain ⟨v, hv0, -, htraj, hbound⟩ := slow_rise_run (-0.10) hv₀
   have ht : max τ 0 ∈ Icc (0 : ℝ) 10 := ⟨le_max_right _ _, max_le (by linarith) (by norm_num)⟩
   refine ⟨fun _ => 0.40, v, max τ 0, htraj, ?_, ?_, ht, ?_, ?_⟩
-  · rw [hv0]; norm_num [Design.Safe, illustrative]
+  · rw [hv0]; exact hv₀
   · intro s _; norm_num [illustrative]
   · simp
   · have hb := hbound (max τ 0) ht
@@ -136,7 +175,11 @@ theorem rise_deadline_counterexample {τ : ℝ} (hτ : τ < 2.168) :
     rw [this]
     nlinarith
 
-/-- **No certificate can prove a rise deadline below 2.168 ns.** -/
+/-- **No certificate can prove a rise deadline below 2.168 ns.** Whatever list
+of levels is proposed, `ValidRiseCert` with a deadline `τ` forces `2.168 ≤ τ`:
+a valid certificate with a smaller deadline would force the slow run above to
+be valid-high too early. So the certificate mechanism cannot be used to claim a
+deadline that the model violates. -/
 theorem riseCert_deadline_ge {c : ℝ} {cs : List ℝ} {τ : ℝ}
     (h : illustrative.ValidRiseCert c cs τ) : 2.168 ≤ τ := by
   by_contra hlt
@@ -144,6 +187,8 @@ theorem riseCert_deadline_ge {c : ℝ} {cs : List ℝ} {τ : ℝ}
     rise_deadline_counterexample (not_le.mp hlt)
   have := htraj.rise_of_cert illustrative_admissible h0 h le_rfl le_rfl hu t ht hτt
   linarith
+
+/-! ## Falling output -/
 
 /-- A signal whose right derivative is at least `-m` stays above the line of
 slope `-m` through its initial bound. -/
@@ -186,19 +231,23 @@ theorem Inet_slowDn_ge {x : ℝ} (hx : x ≤ (2.08 : ℝ)) :
   rw [h6, h5]
   linarith
 
-/-- **A slow falling trajectory.** At the slow pull-down corner, with
-`C = 20` fF, the input held at `1.25` V (valid-high) and the disturbance held
-at `+2` µA, there is a trajectory from `2.08` V that stays above the line
-`2.08 - 1.788 t`. -/
-theorem slow_fall_trajectory :
-    ∃ v : ℝ → ℝ, v 0 = 2.08 ∧
+/-- **A slow falling run** from the initial state `v₀`, for every `v₀` in the
+safe domain: the solution of the node equation
+`20 * v' = Inet slowDnCorner 1.25 v + 2` on `[0, 10]` (corner `slowDnCorner`,
+capacitance 20 fF, the input held at 1.25 V, which is valid-high, and the
+disturbance held at +2 µA). It exists, it is a trajectory of the illustrative
+record, and it stays above the line `v₀ - 1.788 * t`
+(`1.788 = (37.76 - 2) / 20`, see `Inet_slowDn_ge`). -/
+theorem slow_fall_run (v₀ : ℝ) (hv₀ : v₀ ∈ illustrative.Safe) :
+    ∃ v : ℝ → ℝ, v 0 = v₀ ∧
+      (∀ t ∈ Icc (0 : ℝ) 10,
+        HasDerivWithinAt v ((Inet slowDnCorner 1.25 (v t) + 2) / 20) (Icc 0 10) t) ∧
       IsTrajectory illustrative (fun _ => 1.25) v 0 10 ∧
-      ∀ t ∈ Icc (0 : ℝ) 10, 2.08 - 1.788 * t ≤ v t := by
+      ∀ t ∈ Icc (0 : ℝ) 10, v₀ + -1.788 * t ≤ v t := by
   have hC1 : illustrative.Clo ≤ (20 : ℝ) := by norm_num [illustrative]
   have hC2 : (20 : ℝ) ≤ illustrative.Chi := by norm_num [illustrative]
   have hwb : ∀ t ∈ Icc (0 : ℝ) 10, |(fun _ : ℝ => (2 : ℝ)) t| ≤ illustrative.eps :=
     fun t _ => by norm_num [illustrative]
-  have hv₀ : (2.08 : ℝ) ∈ illustrative.Safe := by norm_num [Design.Safe, illustrative]
   obtain ⟨v, hv0, hsafe, hode⟩ := exists_solution illustrative_admissible slowDnCorner_inBox
     (Cf := fun _ => 20) (Kc := 0) (fun _ => hC1) (fun x _ y _ => by simp)
     (u := fun _ => (1.25 : ℝ)) (w := fun _ => (2 : ℝ)) continuous_const continuous_const
@@ -212,7 +261,7 @@ theorem slow_fall_trajectory :
       (fun _ => ⟨hC1, hC2⟩)
       (fun t ht => hwb t (Ico_subset_Icc_self ht)) hcont
       (fun t ht => ⟨_, hder t ht, by field_simp⟩)
-  refine ⟨v, hv0, htraj, fun t ht => ?_⟩
+  refine ⟨v, hv0, hode, htraj, fun t ht => ?_⟩
   have hslope : ∀ s ∈ Ico (0 : ℝ) 10, -1.788 ≤ (Inet slowDnCorner 1.25 (v s) + 2) / 20 := by
     intro s hs
     have hvs : v s ≤ (2.08 : ℝ) := by
@@ -226,16 +275,21 @@ theorem slow_fall_trajectory :
 
 /-- **No fall deadline below 1.0234 ns is valid** for the illustrative record:
 for every such `τ` there are a valid-high input, a trajectory starting in the
-safe domain and a time `t ≥ τ` at which the output is still above `VOL`. -/
+safe domain and a time `t ≥ τ` at which the output is still above `VOL`. The
+witness is `slow_fall_run` started at 2.08 V, the top of the safe domain.
+
+The number 1.0234 is rounded down: the line bound of that run reaches 0.25 V
+at `1.83 / 1.788 ≈ 1.02349` ns. -/
 theorem fall_deadline_counterexample {τ : ℝ} (hτ : τ < 1.0234) :
     ∃ (u v : ℝ → ℝ) (t : ℝ),
       IsTrajectory illustrative u v 0 10 ∧ v 0 ∈ illustrative.Safe ∧
       (∀ s ∈ Ico (0 : ℝ) 10, illustrative.VIH ≤ u s) ∧
       t ∈ Icc (0 : ℝ) 10 ∧ 0 + τ ≤ t ∧ illustrative.VOL < v t := by
-  obtain ⟨v, hv0, htraj, hbound⟩ := slow_fall_trajectory
+  have hv₀ : (2.08 : ℝ) ∈ illustrative.Safe := by norm_num [Design.Safe, illustrative]
+  obtain ⟨v, hv0, -, htraj, hbound⟩ := slow_fall_run 2.08 hv₀
   have ht : max τ 0 ∈ Icc (0 : ℝ) 10 := ⟨le_max_right _ _, max_le (by linarith) (by norm_num)⟩
   refine ⟨fun _ => 1.25, v, max τ 0, htraj, ?_, ?_, ht, ?_, ?_⟩
-  · rw [hv0]; norm_num [Design.Safe, illustrative]
+  · rw [hv0]; exact hv₀
   · intro s _; norm_num [illustrative]
   · simp
   · have hb := hbound (max τ 0) ht
@@ -244,7 +298,9 @@ theorem fall_deadline_counterexample {τ : ℝ} (hτ : τ < 1.0234) :
     rw [this]
     nlinarith
 
-/-- **No certificate can prove a fall deadline below 1.0234 ns.** -/
+/-- **No certificate can prove a fall deadline below 1.0234 ns.** Whatever list
+of levels is proposed, `ValidFallCert` with a deadline `τ` forces
+`1.0234 ≤ τ`. -/
 theorem fallCert_deadline_ge {c : ℝ} {cs : List ℝ} {τ : ℝ}
     (h : illustrative.ValidFallCert c cs τ) : 1.0234 ≤ τ := by
   by_contra hlt
@@ -252,6 +308,8 @@ theorem fallCert_deadline_ge {c : ℝ} {cs : List ℝ} {τ : ℝ}
     fall_deadline_counterexample (not_le.mp hlt)
   have := htraj.fall_of_cert illustrative_admissible h0 h le_rfl le_rfl hu t ht hτt
   linarith
+
+/-! ## The disturbance bound -/
 
 /-- The illustrative record with the largest disturbance bound found for which
 admissibility is provable by changing only `uHi` and `uLo` (record `eps-006-split-search-6dp`). -/
