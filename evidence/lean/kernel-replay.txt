@@ -4,7 +4,7 @@ same tools reproduces it, and the four other records of this directory, byte for
 
 What was checked
   files:     the build configuration, library sources, design files and checking scripts
-             listed in evidence/lean/sources.sha256 (sha256 of the list: 68d38a13dc7d09d5aa13cee0bf615328a7897a7b6254ec41d72f7e2e95f30e42)
+             listed in evidence/lean/sources.sha256 (sha256 of the list: d2dd1132a4232e50b24fca8f88736e4b55d9f1a84bf717dd981cd5ee9a88a8e5)
   config:    lakefile.toml, lake-manifest.json and lean-toolchain are the files pinned in
              scripts/pinned-config.sha256
   toolchain: leanprover/lean4:v4.35.0 (lean-toolchain); Lean (version 4.35.0, arm64-apple-darwin24.6.0, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)

@@ -25,6 +25,7 @@ files: 23 (5058 lines, 433 commands with the end-of-file markers); each one is i
   VoltageToBit/Proofs/ModelError.lean: 426 lines, 23 commands
   VoltageToBit/Proofs/NonVacuity.lean: 103 lines, 17 commands
   VoltageToBit/Proofs/Reach.lean: 273 lines, 25 commands
+files for which the build passed `autoImplicit = false` and `relaxedAutoImplicit = false` to the compiler: 23 of 23
 commands by kind:
   Lean.Parser.Command.declaration: 260
   Lean.Parser.Command.end: 34
