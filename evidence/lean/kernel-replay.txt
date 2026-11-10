@@ -1,20 +1,25 @@
-Kernel replay record. Written by scripts/check.sh; do not edit.
-It has no dates or timings: a run with the same options on the same files with the same
-tools reproduces it.
+Record of a full run of scripts/check.sh. Written by that script; do not edit.
+It has no dates or timings: a full run with the same options on the same files with the
+same tools reproduces it, and the four other records of this directory, byte for byte.
 
 What was checked
-  files:     the library sources, build configuration, design files and checking scripts
-             listed in evidence/lean/sources.sha256 (sha256 of the list: 45c5cf4f4c08d918a9b9b701a46b5c2e5ae85f2ee1d9e705718767cea38529c4)
-  toolchain: Lean (version 4.35.0, arm64-apple-darwin24.6.0, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)
-  mathlib:   56a005855ea17e0b0958f73ec801ae140b0a1679
-  library:   18 modules; 430 declarations that the replay steps re-check, and
+  files:     the build configuration, library sources, design files and checking scripts
+             listed in evidence/lean/sources.sha256 (sha256 of the list: 68d38a13dc7d09d5aa13cee0bf615328a7897a7b6254ec41d72f7e2e95f30e42)
+  config:    lakefile.toml, lake-manifest.json and lean-toolchain are the files pinned in
+             scripts/pinned-config.sha256
+  toolchain: leanprover/lean4:v4.35.0 (lean-toolchain); Lean (version 4.35.0, arm64-apple-darwin24.6.0, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)
+  mathlib:   56a005855ea17e0b0958f73ec801ae140b0a1679 (lake-manifest.json); used as compiled in .lake/packages, not
+             recompiled
+  compiled:  all 23 modules of the library, in this run, after its build products had been removed (Lake reported each one as built).
+  library:   23 modules; 553 declarations that the replay steps re-check, and
              3 compiler auxiliaries that they leave out (named in evidence/lean/audit.txt)
-  imported environment, of which the library is a part: 5220 modules, 457119 declarations
+  imported environment, of which the library is a part: 4502 modules, 421287 declarations
 
 Where the tools come from
-  Every executable named below was looked for in the bin directory of the toolchain that
-  lean-toolchain pins (the directory of `lake env which lean`) and nowhere else. A tool that
-  is not there is reported as NOT RUN and is not counted.
+  The script runs with an environment of its own (HOME, PATH, TMPDIR). `lean` is found
+  through PATH in the project directory; every Lean tool is then run from the bin directory
+  of that toolchain (`lean --print-prefix`) and from nowhere else. A tool that is not there
+  is reported as NOT RUN and is not counted.
   `lake help check` of this toolchain says about the checkers it bundles:
     --paranoid also run all external checkers bundled with Lean besides Lean's own kernel: `leanchecker-paranoid`, `lean4lean`, `nanoda`, `con-leche` and `con-ron`
 
@@ -27,11 +32,16 @@ Where the tools come from
            Lean's kernel, on top of the environment formed by the module's imports. The
            imports themselves (other modules of the library, Mathlib, Lean core) are
            loaded as compiled; they are not re-checked by this step.
-  modules replayed (18):
+  modules replayed (23):
     VoltageToBit
+    VoltageToBit.Examples.DeadlineBrackets
     VoltageToBit.Examples.Illustrative
     VoltageToBit.Examples.IllustrativeDesign
+    VoltageToBit.Examples.InputClass
+    VoltageToBit.Examples.Limits
     VoltageToBit.Examples.NegativeControls
+    VoltageToBit.Examples.RefinedDeadlines
+    VoltageToBit.Examples.TwoStage
     VoltageToBit.Model.Device
     VoltageToBit.Model.Inverter
     VoltageToBit.Model.PosSq
@@ -51,7 +61,7 @@ Where the tools come from
 
 2. Export of the declarations of the library with everything they depend on
   tool:    leanexport, in the bin directory of the toolchain (sha256 of the executable: 01327b83d6a69dbc84fa04fd671c61068b2f074e51d1bf607bf6a6b9aed5339e)
-  command: lake env leanexport VoltageToBit -- <the 430 declaration names>
+  command: lake env leanexport VoltageToBit -- <the 553 declaration names>
   does:    writes the named declarations, and every declaration that occurs in the type or
            in the value of one already written, to one file. So the file contains the part
            of Mathlib, of its dependencies and of Lean core that the library depends on,
@@ -60,22 +70,24 @@ Where the tools come from
   exit status: 0
   contents, as read by scripts/export_census.py (exit status 0):
     written by: lean4export 3.1.0, format 3.1.0, Lean 4.35.0 (eb6cafb7290e8bd5f2937522d8d804f58f02bafc)
-    sha256: ab559d860745a1a86c8ae1b00941870a21b3757233e626562cea06d0acdb0cae
-    declaration records: 42935 (axiom: 3, definition: 9036, inductive block: 912, opaque: 37, quotient primitive: 4, theorem: 32943)
-    declaration records, the quotient records counted as one: 42932
-    constants declared (an inductive block declares its types, constructors and recursors): 44849
+    sha256: 3f7e5578417c8e656964c366c638247b39fd18a6d21435cf500a2e96be4329d8
+    declaration records: 43087 (axiom: 3, definition: 9048, inductive block: 912, opaque: 37, quotient primitive: 4, theorem: 33083)
+    declaration records, the quotient records counted as one: 43084
+    constants declared (an inductive block declares its types, constructors and recursors): 45001
     axioms declared: Classical.choice, Quot.sound, propext
-    declarations of the library present in the export: 430 of 430
-    declarations from outside the library (Mathlib, its dependencies, Lean core): 44419
+    declarations of the library present in the export: 553 of 553
+    declarations from outside the library (Mathlib, its dependencies, Lean core): 44448
   RESULT export: ok
 
-3. The export re-checked from an empty environment
+3. The export re-checked
   Each tool is started in an empty directory with an empty environment (LEAN_ABORT_ON_PANIC=1
   apart) and is given the export file and nothing else. A tool passes if it exits with status
   0 and prints its line of acceptance; where that line says how many declarations were
   checked, the number must be the one that scripts/export_census.py finds in the export.
+  What a tool starts from is said for each: an empty environment, or a prelude of its own.
   leanchecker
     kind:        Lean's own kernel
+    starts from: an empty environment (its source creates one, `Lean.mkEmptyEnvironment`, and replays the export into it)
     known of it: its source is in the toolchain (src/lean/LeanChecker.lean): it reads the export and sends every declaration in it to Lean's kernel, starting from an empty environment
     tool:        leanchecker, in the bin directory of the toolchain (sha256 of the executable: d70e645ea2b0e597d0ff4cf67aa0c268483fac0b5b2b991ca2d4cd7fb78ab73c)
     command:     leanchecker --from-export <export>
@@ -84,6 +96,7 @@ Where the tools come from
     RESULT replay-export/leanchecker: ok
   leanchecker-paranoid
     kind:        Lean's own kernel
+    starts from: an empty environment, as far as observed: it refuses a small export from which the declaration of Eq has been removed (scripts/selftest.sh repeats the observation); its source was not read
     known of it: an executable of its own with the same options and messages as leanchecker (on arm64 macOS it is linked statically, where leanchecker uses the toolchain's shared libraries); the toolchain does not say what else its build changes, so it is not counted as an independent implementation
     tool:        leanchecker-paranoid, in the bin directory of the toolchain (sha256 of the executable: 85be1ed043c3eb92e5260126eeb6c1b7129757dde1280a390e2c39a538cc85b5)
     command:     leanchecker-paranoid --from-export <export>
@@ -92,41 +105,45 @@ Where the tools come from
     RESULT replay-export/leanchecker-paranoid: ok
   lean4lean
     kind:        a separate program, not Lean's kernel, as far as the following says
+    starts from: an empty environment, as far as observed: it refuses a small export from which the declaration of Eq has been removed (scripts/selftest.sh repeats the observation); its source was not read
     known of it: the toolchain's LICENSES file attributes lean4lean to Mario Carneiro; the executable contains code named Lean4Lean.TypeChecker; its source is not in the toolchain and was not read
     tool:        lean4lean, in the bin directory of the toolchain (sha256 of the executable: 5d9522abac7f701e7b5324c96b0be5b0091d5d557b558d2a023d950688eccdea)
     command:     lean4lean --import <export>
     exit status: 0
-    it printed:  checked 42932 declarations
-    the export has: 42932, counted its way (one per declaration record of the export with the quotient records as one; seen on small exports, not documented)
+    it printed:  checked 43084 declarations
+    the export has: 43084, counted its way (one per declaration record of the export with the quotient records as one; seen on small exports, not documented)
     RESULT replay-export/lean4lean: ok
   nanoda
     kind:        a separate program, not Lean's kernel, as far as the following says
+    starts from: an empty environment, as far as observed: it refuses a small export from which the declaration of Eq has been removed (scripts/selftest.sh repeats the observation); its source was not read
     known of it: its --help calls it an external type checker for Lean 4 (nanoda_lib); the toolchain's LICENSES file attributes nanoda to Chris Bailey; its source is not in the toolchain and was not read
     tool:        nanoda_bin, in the bin directory of the toolchain (sha256 of the executable: b5a75a50d07b06a25b3ddb9519144ebdeed8e0f3489222c88ba4049dfe8ce627)
     it calls itself: nanoda_bin 0.4.19
     command:     nanoda_bin <configuration naming the export; axioms permitted: "propext", "Classical.choice", "Quot.sound";
                  an axiom outside that list is a hard error: true>
     exit status: 0
-    it printed:  Checked 44849 declarations with no errors
-    the export has: 44849, counted its way (one per constant that the export declares; seen on small exports, not documented)
+    it printed:  Checked 45001 declarations with no errors
+    the export has: 45001, counted its way (one per constant that the export declares; seen on small exports, not documented)
     RESULT replay-export/nanoda: ok
   con-leche
     kind:        a separate program, not Lean's kernel, as far as the following says
+    starts from: NOT an empty environment: its --help says that every run first installs a prelude that is built into the program (Eq, Nat, Empty, False, Quot, Bool, And), and it accepts a small export from which the declaration of Eq has been removed (scripts/selftest.sh repeats the observation). Its --help also says that a declaration of the export that copies one of the prelude is dropped when it is the same and makes the run fail when it differs; that was not examined
     known of it: the toolchain's LICENSES file attributes con-leche to the Lean FRO; its --help says that in this mode (--verified, the default) a file that declares a theorem of type False is never accepted, by a theorem about the program (ConLeche.no_False_declaration); neither its source nor that theorem was examined
     tool:        con-leche, in the bin directory of the toolchain (sha256 of the executable: 4dc91239adc01a07a8d974bad720d68a316ed21aef73847bb74a191696304e34)
     command:     con-leche --jobs=4 <export>
     exit status: 0
-    it printed:  con-leche: accepted 42935 declarations (--verified)
-    the export has: 42935, counted its way (one per declaration record of the export, which is what its --help says it counts)
+    it printed:  con-leche: accepted 43087 declarations (--verified)
+    the export has: 43087, counted its way (one per declaration record of the export, which is what its --help says it counts)
     RESULT replay-export/con-leche: ok
   con-ron
     kind:        a separate program, not Lean's kernel, as far as the following says
-    known of it: the toolchain's LICENSES file attributes con-ron to the Lean FRO; its --help describes it as con-leche's checker written in Rust; its source was not examined
+    starts from: NOT an empty environment: its --help says that every run first installs a prelude that is built into the program (Eq, Nat, Empty, False, Quot, Bool, And), and it accepts a small export from which the declaration of Eq has been removed (scripts/selftest.sh repeats the observation). Its --help also says that a declaration of the export that copies one of the prelude is dropped when it is the same and makes the run fail when it differs; that was not examined
+    known of it: the toolchain's LICENSES file attributes con-ron to the Lean FRO; its --help describes it as con-leche's checker written in Rust, so it is not a design independent of con-leche; its source was not examined
     tool:        con-ron, in the bin directory of the toolchain (sha256 of the executable: ea4213f72b8c124c1fe1802ae85a16fe60f6cdd73c3ede7bd38d07fdbab924b8)
     command:     con-ron --jobs=4 <export>
     exit status: 0
-    it printed:  con-ron: accepted 42935 declarations (--verified)
-    the export has: 42935, counted its way (one per declaration record of the export, which is what its --help says it counts)
+    it printed:  con-ron: accepted 43087 declarations (--verified)
+    the export has: 43087, counted its way (one per declaration record of the export, which is what its --help says it counts)
     RESULT replay-export/con-ron: ok
 
 4. The whole imported environment (optional, scripts/check.sh --whole-env)
@@ -134,6 +151,23 @@ Where the tools come from
   were not re-checked.
 
 Summary
+  results of the steps, in the order in which they were run:
+    RESULT design-record: ok
+    RESULT config: ok (the three files are the pinned ones; the toolchain is leanprover/lean4:v4.35.0)
+    RESULT build: ok
+    RESULT source-scan: ok
+    RESULT axiom-audit: ok
+    RESULT import-closure: ok (23 source files, 23 modules in the audited environment, 23 modules compiled in this run, the same names)
+    RESULT declaration-count: ok (329)
+    RESULT replay-modules: ok (23 modules)
+    RESULT export: ok (declarations of the library present in the export: 553 of 553)
+    RESULT replay-export/leanchecker: ok
+    RESULT replay-export/leanchecker-paranoid: ok
+    RESULT replay-export/lean4lean: ok
+    RESULT replay-export/nanoda: ok
+    RESULT replay-export/con-leche: ok
+    RESULT replay-export/con-ron: ok
   tools not run because they are not installed: none
   outcome of the run of scripts/check.sh that wrote this record: every step that was run passed.
-  kernel replay: (1) the compiled files of the 18 modules of the library, each on top of its imports as compiled, by leanchecker (Lean's own kernel). (2) an export of the 430 declarations of the library with the 44419 declarations of Mathlib, its dependencies and Lean core that they depend on, from an empty environment, by leanchecker, leanchecker-paranoid (Lean's own kernel) and by lean4lean, nanoda, con-leche, con-ron (programs that are not Lean's kernel, run as the toolchain ships them). Not re-checked: the declarations of the imported modules (5220 modules, 457119 declarations) that the library does not depend on (--whole-env does that).
+  compiled: all 23 modules of the library, in this run, after its build products had been removed (Lake reported each one as built).
+  kernel replay: (1) the compiled files of the 23 modules of the library, each on top of its imports as compiled, by leanchecker (Lean's own kernel). (2) an export of the 553 declarations of the library with the 44448 declarations of Mathlib, its dependencies and Lean core that they depend on: accepted from an empty environment by leanchecker, leanchecker-paranoid (Lean's own kernel) and by lean4lean, nanoda (programs that are not Lean's kernel); accepted on top of a prelude built into the program by con-leche, con-ron (programs that are not Lean's kernel). All are run as the toolchain ships them. Not re-checked: the declarations of the imported modules (4502 modules, 421287 declarations) that the library does not depend on (--whole-env does that).

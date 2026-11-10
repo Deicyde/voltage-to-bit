@@ -1,12 +1,18 @@
-project modules in the audited environment: 18
+environment: what `import VoltageToBit` gives, loaded from the compiled files
+modules of the library in it: 23
   VoltageToBit: 0 declarations
-  VoltageToBit.Examples.Illustrative: 60 declarations
+  VoltageToBit.Examples.DeadlineBrackets: 3 declarations
+  VoltageToBit.Examples.Illustrative: 66 declarations
   VoltageToBit.Examples.IllustrativeDesign: 8 declarations
-  VoltageToBit.Examples.NegativeControls: 29 declarations
+  VoltageToBit.Examples.InputClass: 22 declarations
+  VoltageToBit.Examples.Limits: 40 declarations
+  VoltageToBit.Examples.NegativeControls: 59 declarations
+  VoltageToBit.Examples.RefinedDeadlines: 10 declarations
+  VoltageToBit.Examples.TwoStage: 3 declarations
   VoltageToBit.Model.Device: 44 declarations
-  VoltageToBit.Model.Inverter: 110 declarations
+  VoltageToBit.Model.Inverter: 112 declarations
   VoltageToBit.Model.PosSq: 11 declarations
-  VoltageToBit.Proofs.AtSupply: 7 declarations
+  VoltageToBit.Proofs.AtSupply: 8 declarations
   VoltageToBit.Proofs.Certificate: 8 declarations
   VoltageToBit.Proofs.Chain: 4 declarations
   VoltageToBit.Proofs.Concat: 3 declarations
@@ -14,22 +20,67 @@ project modules in the audited environment: 18
   VoltageToBit.Proofs.Existence: 26 declarations
   VoltageToBit.Proofs.Guarantee: 26 declarations
   VoltageToBit.Proofs.Margins: 8 declarations
-  VoltageToBit.Proofs.ModelError: 10 declarations
+  VoltageToBit.Proofs.ModelError: 16 declarations
   VoltageToBit.Proofs.NonVacuity: 9 declarations
   VoltageToBit.Proofs.Reach: 61 declarations
-imported environment: 5220 modules, 457119 declarations
-of these, marked unsafe or partial (they exist for the compiler; the replay tools leave them out, and the kernel lets no safe definition or theorem refer to them): 4544
-declarations audited: 433 (of which theorems: 291)
-kinds: constructor: 5, definition: 127, inductive type: 5, recursor: 5, theorem: 291
-declarations that the replay steps re-check: 430; compiler auxiliaries marked partial, which they leave out and to which the kernel lets no safe definition or theorem refer: 3
+imported environment: 4502 modules, 421287 declarations
+  modules by the first part of their name: Aesop 132, Batteries 72, ImportGraph 35, Init 653, Lake 5, Lean 790, LeanSearchClient 4, Mathlib 2543, Plausible 13, ProofWidgets 10, Qq 14, Std 208, VoltageToBit 23
+  declarations marked unsafe or partial (they exist for the compiler; the replay tools leave them out, and the kernel lets no safe definition or theorem refer to them): 3892
+declarations stored in the compiled files of the library: 556 (of which theorems: 405)
+  kinds: constructor: 5, definition: 136, inductive type: 5, recursor: 5, theorem: 405
+  written in a source file (Lean stored a source position): 329; the other 227 are generated (proofs split off, matchers, recursors, auxiliary lemmas of simp)
+  generated ones with an instance-implicit binder or a universe parameter: 105
+names of compiled code in these files that are not declarations (auxiliaries of the code generator; not part of the logic, not looked at): 51
+declarations that the replay steps re-check: 553; compiler auxiliaries marked partial, which they leave out and to which the kernel lets no safe definition or theorem refer: 3
   VoltageToBit.FallSegs._unsafe_rec
   VoltageToBit.RiseSegs._unsafe_rec
   VoltageToBit.finalLevel._unsafe_rec
-axioms used anywhere: [Classical.choice, Quot.sound, propext]
-AUDIT OK: no declaration depends on an axiom outside [propext, Classical.choice, Quot.sound]
-theorems with a name of their own, and the axioms each one depends on (227):
+declarations walked for axioms (the library and everything it refers to, directly or not): 44276
+axioms that a declaration of the library depends on: Classical.choice, Quot.sound, propext
+entries of the library in Lean's environment extensions (name: number):
+  Lean.Compiler.LCNF.UnreachableBranches.functionSummariesExt: 24
+  Lean.Compiler.LCNF.baseExt: 18
+  Lean.Compiler.LCNF.impureSigExt: 62
+  Lean.Compiler.LCNF.monoExt: 58
+  Lean.Compiler.LCNF.monoTypeExt: 10
+  Lean.Compiler.inlineAttrs: 14
+  Lean.Elab.Structural.eqnInfoExt: 5
+  Lean.IR.declMapExt: 62
+  Lean.Meta.Grind.grindExt: 2
+  Lean.Meta.Match.Extension.extension: 9
+  Lean.Meta.completionBlackListExt: 4
+  Lean.Meta.instanceExtension: 2
+  Lean.Meta.simpExtension: 4
+  Lean.auxRecExt: 10
+  Lean.backwardDefeqAttr: 44
+  Lean.declRangeExt: 329
+  Lean.deprecatedModuleExt: 23
+  Lean.docStringExt: 214
+  Lean.noConfusionExt: 4
+  Lean.noncomputableExt: 37
+  Lean.projectionFnInfoExt: 64
+  Lean.protectedExt: 11
+  _private.Lean.Compiler.LCNF.MonoTypes.0.Lean.Compiler.LCNF.trivialStructureInfoExt: 5
+  _private.Lean.Compiler.LCNF.Specialize.0.Lean.Compiler.LCNF.Specialize.specCacheExt: 7
+  _private.Lean.Compiler.LCNF.ToImpureType.0.Lean.Compiler.LCNF.ctorLayoutExt: 5
+  _private.Lean.Compiler.LCNF.ToImpureType.0.Lean.Compiler.LCNF.impureTrivialStructureInfoExt: 5
+  _private.Lean.Compiler.LCNF.ToImpureType.0.Lean.Compiler.LCNF.impureTypeExt: 5
+  _private.Lean.Compiler.ModPkgExt.0.Lean.modPkgExt: 23
+  _private.Lean.DocString.Extension.0.Lean.moduleDocExt: 49
+  _private.Lean.ExtraModUses.0.Lean.extraModUses: 1022
+  _private.Lean.Namespace.0.Lean.namespacesExt: 58
+  _private.Lean.Structure.0.Lean.structureExt: 5
+  _private.Lean.Util.CollectAxioms.0.Lean.exportedAxiomsExt: 556
+  recExt: 13
+  reducibilityCore: 66
+extensions on the allow-list in which the library has no entry: none
+instances of the library, scoped ones included: 2 (each is the `SizeOf` instance Lean generates for a structure, or it is refused below)
+simp entries of the library in the 44 simp sets, scoped ones included: 4 (each is an `injEq` or `sizeOf_spec` lemma Lean generates for a structure, or it is refused below)
+AUDIT OK: nothing refused. No declaration of the library depends on an axiom outside [propext, Classical.choice, Quot.sound].
+theorems with a name of their own, and the axioms each one depends on (297):
   VoltageToBit.Design.Admissible.C_le: Classical.choice, Quot.sound, propext
   VoltageToBit.Design.Admissible.C_pos: Classical.choice, Quot.sound, propext
+  VoltageToBit.Design.Admissible.RhiN_atSupply: Classical.choice, Quot.sound, propext
   VoltageToBit.Design.Admissible.VDD_le: Classical.choice, Quot.sound, propext
   VoltageToBit.Design.Admissible.VDD_pos: Classical.choice, Quot.sound, propext
   VoltageToBit.Design.Admissible.VIH_le_VOH: Classical.choice, Quot.sound, propext
@@ -43,7 +94,9 @@ theorems with a name of their own, and the axioms each one depends on (227):
   VoltageToBit.Design.Admissible.Vhi_ge: Classical.choice, Quot.sound, propext
   VoltageToBit.Design.Admissible.Vlo_le: Classical.choice, Quot.sound, propext
   VoltageToBit.Design.Admissible.Vtn_le: Classical.choice, Quot.sound, propext
+  VoltageToBit.Design.Admissible.Vtn_nonneg: Classical.choice, Quot.sound, propext
   VoltageToBit.Design.Admissible.Vtp_le: Classical.choice, Quot.sound, propext
+  VoltageToBit.Design.Admissible.Vtp_nonneg: Classical.choice, Quot.sound, propext
   VoltageToBit.Design.Admissible.atSupply: Classical.choice, Quot.sound, propext
   VoltageToBit.Design.Admissible.dn: Classical.choice, Quot.sound, propext
   VoltageToBit.Design.Admissible.eps_nonneg: Classical.choice, Quot.sound, propext
@@ -60,13 +113,17 @@ theorems with a name of their own, and the axioms each one depends on (227):
   VoltageToBit.Design.Admissible.loP: Classical.choice, Quot.sound, propext
   VoltageToBit.Design.Admissible.tauDn_pos: Classical.choice, Quot.sound, propext
   VoltageToBit.Design.Admissible.tauUp_pos: Classical.choice, Quot.sound, propext
+  VoltageToBit.Design.Admissible.uHi_lt: Classical.choice, Quot.sound, propext
   VoltageToBit.Design.Admissible.up: Classical.choice, Quot.sound, propext
   VoltageToBit.Design.Admissible.zero_mem_safe: Classical.choice, Quot.sound, propext
+  VoltageToBit.Design.IchargeMax.eq_1: Classical.choice, Quot.sound, propext
   VoltageToBit.Design.IchargeMax.eq_1: Classical.choice, Quot.sound, propext
   VoltageToBit.Design.IchargeMax_nonneg: Classical.choice, Quot.sound, propext
   VoltageToBit.Design.IdischargeMax.eq_1: Classical.choice, Quot.sound, propext
   VoltageToBit.Design.IdischargeMax_nonneg: Classical.choice, Quot.sound, propext
   VoltageToBit.Design.Idn.eq_1: Classical.choice, Quot.sound, propext
+  VoltageToBit.Design.InBox.In_eq_zero: Classical.choice, Quot.sound, propext
+  VoltageToBit.Design.InBox.Inet_ground_eq_zero: Classical.choice, Quot.sound, propext
   VoltageToBit.Design.InBox.VDD_ge: Classical.choice, Quot.sound, propext
   VoltageToBit.Design.InBox.VDD_le: Classical.choice, Quot.sound, propext
   VoltageToBit.Design.InBox.Vtn_ge: Classical.choice, Quot.sound, propext
@@ -87,7 +144,6 @@ theorems with a name of their own, and the axioms each one depends on (227):
   VoltageToBit.Design.Inet_le_IchargeMax: Classical.choice, Quot.sound, propext
   VoltageToBit.Design.Inet_le_neg_Idn: Classical.choice, Quot.sound, propext
   VoltageToBit.Design.Iup.eq_1: Classical.choice, Quot.sound, propext
-  VoltageToBit.Design.RhiN'.eq_1: Classical.choice, Quot.sound, propext
   VoltageToBit.Design.RhiN.eq_1: Classical.choice, Quot.sound, propext
   VoltageToBit.Design.RhiP.eq_1: Classical.choice, Quot.sound, propext
   VoltageToBit.Design.RloN.eq_1: Classical.choice, Quot.sound, propext
@@ -96,6 +152,7 @@ theorems with a name of their own, and the axioms each one depends on (227):
   VoltageToBit.Design.RloP_le_Inet_Vlo: Classical.choice, Quot.sound, propext
   VoltageToBit.Design.Safe.eq_1: Classical.choice, Quot.sound, propext
   VoltageToBit.Design.decodeOut.eq_1: Classical.choice, Quot.sound, propext
+  VoltageToBit.Design.dnSegs.eq_1: Classical.choice, Quot.sound, propext
   VoltageToBit.Design.exists_inBox_of_between: Classical.choice, Quot.sound, propext
   VoltageToBit.Design.mk.inj: Classical.choice, Quot.sound, propext
   VoltageToBit.Design.mk.injEq: Classical.choice, Quot.sound, propext
@@ -106,30 +163,58 @@ theorems with a name of their own, and the axioms each one depends on (227):
   VoltageToBit.Design.tauUp.eq_1: Classical.choice, Quot.sound, propext
   VoltageToBit.Design.upSegs.eq_1: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.InetSwapped.eq_1: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.InetSwapped_le: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.Inet_fastUp_ge: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.Inet_high_ge: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.Inet_high_le: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.Inet_low_ge: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.Inet_slowDn_ge: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.Inet_slowUp_le: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.abs_wSin_le: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.badBox.eq_1: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.badBox_empty: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.badBox_not_admissible: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.chain_witness: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.chain_witness_high: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.continuous_uFeed: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.continuous_uRamp: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.continuous_wSin: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.early_sampling_counterexample: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.exists_second_stage: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.fallCert_deadline_ge: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.fall_deadline_bracket: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.fall_deadline_counterexample: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.fastUp.eq_1: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.fastUp_inBox: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.ge_line_of_rderiv_ge: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.hasDerivAt_gFeed: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.hasDerivAt_uFeed: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.illustrative.eq_1: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.illustrativeEps.eq_1: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.illustrativeEps_admissible: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.illustrativeEps_tauDn: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.illustrativeEps_tauUp: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.illustrative_Idn: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.illustrative_Iup: Classical.choice, Quot.sound, propext
-  VoltageToBit.Examples.illustrative_RhiN': Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.illustrative_RhiN: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.illustrative_RhiP: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.illustrative_RloN: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.illustrative_RloP: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.illustrative_admissible: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.illustrative_box_bounds: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.illustrative_eps_no_split_points: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.illustrative_eps_pos: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.illustrative_exists: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.illustrative_exists_const: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.illustrative_fallCert_16: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.illustrative_feedthrough_scenario: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.illustrative_guarantee: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.illustrative_guarantee_refined: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.illustrative_initial_undefined: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.illustrative_max_fall_slew: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.illustrative_max_rise_slew: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.illustrative_no_early_high: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.illustrative_riseCert_16: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.illustrative_riseCert_3: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.illustrative_riseCert_rejected: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.illustrative_safe_atSupply: Classical.choice, Quot.sound, propext
@@ -138,16 +223,47 @@ theorems with a name of their own, and the axioms each one depends on (227):
   VoltageToBit.Examples.illustrative_tauDn_le: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.illustrative_tauUp: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.illustrative_tauUp_le: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.le_line_of_rderiv_le: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.miswired_counterexample: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.miswired_never_high: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.no_trajectory_through_left_continuous_jump: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.noisy.eq_1: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.noisy_counterexample: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.noisy_not_admissible: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.nominal.eq_1: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.nominal_inBox: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.rderiv_ge_of_right_nhd: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.riseCert_deadline_ge: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.rise_deadline_1p64_is_false_from_valid_low: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.rise_deadline_bracket: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.rise_deadline_counterexample: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.slowDnCorner.eq_1: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.slowDnCorner_inBox: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.slowUpCorner.eq_1: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.slowUpCorner_inBox: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.slow_fall_run: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.slow_rise_run: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.spike_no_trajectory: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.stepL_no_trajectory: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.stepR_has_trajectory: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.step_input_scope: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.uFeed_le: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.uRamp_high: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.uRamp_low: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.uSpike.eq_1: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.uStepL.eq_1: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.uStepL_eq_uStepR_of_ne: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.uStepR.eq_1: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.uStepR_hasDerivWithinAt_zero: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.uStepR_not_continuousOn: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.valid_high_fall_slew_unbounded: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.valid_low_input_can_give_valid_high_within_38ps: Classical.choice, Quot.sound, propext
+  VoltageToBit.Examples.valid_low_rise_slew_unbounded: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.weakCorner.eq_1: Classical.choice, Quot.sound, propext
   VoltageToBit.Examples.weakCorner_inBox: Classical.choice, Quot.sound, propext
+  VoltageToBit.FallSegs.eq_1: Classical.choice, Quot.sound, propext
+  VoltageToBit.FallSegs.eq_2: Classical.choice, Quot.sound, propext
+  VoltageToBit.FallSegs.eq_def: Classical.choice, Quot.sound, propext
   VoltageToBit.FallSegs.finalLevel_le: Classical.choice, Quot.sound, propext
   VoltageToBit.FallSegs.finalLevel_le_mem: Classical.choice, Quot.sound, propext
   VoltageToBit.FallSegs.pos: Classical.choice, Quot.sound, propext
@@ -184,11 +300,13 @@ theorems with a name of their own, and the axioms each one depends on (227):
   VoltageToBit.IsTrajectory.hasDeriv: Classical.choice, Quot.sound, propext
   VoltageToBit.IsTrajectory.incl: Classical.choice, Quot.sound, propext
   VoltageToBit.IsTrajectory.mono: Classical.choice, Quot.sound, propext
+  VoltageToBit.IsTrajectory.of_charge_balance: Classical.choice, Quot.sound, propext
   VoltageToBit.IsTrajectory.of_model_error: Classical.choice, Quot.sound, propext
   VoltageToBit.IsTrajectory.of_ode: Classical.choice, Quot.sound, propext
   VoltageToBit.IsTrajectory.of_ode_atSupply: Classical.choice, Quot.sound, propext
   VoltageToBit.IsTrajectory.of_ode_varying: Classical.choice, Quot.sound, propext
   VoltageToBit.IsTrajectory.of_sandwich: Classical.choice, Quot.sound, propext
+  VoltageToBit.IsTrajectory.of_static_sandwich: Classical.choice, Quot.sound, propext
   VoltageToBit.IsTrajectory.rise: Classical.choice, Quot.sound, propext
   VoltageToBit.IsTrajectory.rise_at_most: Classical.choice, Quot.sound, propext
   VoltageToBit.IsTrajectory.rise_certificate: Classical.choice, Quot.sound, propext
@@ -253,5 +371,7 @@ theorems with a name of their own, and the axioms each one depends on (227):
   VoltageToBit.riseTime_nonneg: Classical.choice, Quot.sound, propext
   VoltageToBit.rise_by: Classical.choice, Quot.sound, propext
   VoltageToBit.rise_chain: Classical.choice, Quot.sound, propext
+  VoltageToBit.slew_bound_of_rderiv: Classical.choice, Quot.sound, propext
   VoltageToBit.solution_safe_atSupply: Classical.choice, Quot.sound, propext
   VoltageToBit.solution_unique: Classical.choice, Quot.sound, propext
+  VoltageToBit.trajectory_safe_atSupply: Classical.choice, Quot.sound, propext
