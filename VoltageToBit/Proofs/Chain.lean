@@ -18,13 +18,17 @@ modelled as extra state; they are covered only if the stages' capacitance
 bounds and error bounds `eps` contain them. That is an assumption about the
 environment, not something proved here.
 
-For the illustrative record the assumption is not physically plausible: by
-`rise_at_most` and `fall_at_most` the first stage's output may slew at up to
-about 29 V/ns rising and 58 V/ns falling, so a second stage with gate-drain
-capacitance `C_M` would see a feedthrough current of up to `58 · C_M` µA, which
-stays inside the 2 µA allowance only for `C_M` below about 0.03 fF (a small
-inverter has 0.2 to 1 fF). Read the corollary as a statement about two ideal
-one-node stages. See `docs/model.md`, section 7.4.
+For the illustrative record the assumption is not physically plausible. The
+only bounds the library has on the first stage's output slew are about
+29 V/ns rising and 58 V/ns falling, and they hold for first-stage inputs
+confined to `[0, 0.40]` V and `[1.25, 1.98]` V (`rise_at_most`, `fall_at_most`,
+`Examples.illustrative_max_rise_slew`, `Examples.illustrative_max_fall_slew`);
+for inputs outside those ranges the slew has no bound. A second stage with
+gate-drain capacitance `C_M` would therefore have to allow for a feedthrough
+current of up to `58 · C_M` µA, which stays inside the 2 µA allowance only for
+`C_M` below about 0.03 fF (a small inverter has 0.2 to 1 fF). Read the
+corollary as a statement about two ideal one-node stages. See `docs/model.md`,
+section 7.4.
 -/
 
 namespace VoltageToBit
