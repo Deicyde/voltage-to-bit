@@ -1,0 +1,9 @@
+# The build configuration that scripts/check.sh accepts: sha256 and name of each file.
+# Step 2 of scripts/check.sh fails unless the three files are these, byte for byte.
+# They fix, among other things: the toolchain (lean-toolchain); the one library and its
+# options `autoImplicit = false` and `relaxedAutoImplicit = false` (lakefile.toml); the
+# Mathlib revision and those of its dependencies (lake-manifest.json).
+# To change one of the files on purpose, change its line here in the same commit.
+179f1719e3c64e67cd7c19ac7b473f5e75159cffd1f365d591a5e2a4b5747238  lakefile.toml
+66c80c12e1501046447c01c0e10819ea9eabc1007dcfe793708ccf1cc284c152  lake-manifest.json
+ca5f1f601d34c49079e38d7e7041eb0f2a9c227fbc1df0f404820069a052330c  lean-toolchain
