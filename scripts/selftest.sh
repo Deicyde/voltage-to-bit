@@ -437,8 +437,8 @@ lake-manifest.json with another revision of Mathlib|lake-manifest.json|NOT THE P
 lean-toolchain naming another toolchain|lean-toolchain|NOT THE PINNED FILE: lean-toolchain|t.strip() + "-rc1\n"
 a lakefile.lean next to lakefile.toml|lakefile.lean|NOT ALLOWED: lakefile.lean|
 EOF
-  # The same kind of change with the pin changed to accept the file (round 4, issue 3): a key that
-  # or an option that could move the library's sources or build products, or reach the compiler, is refused
+  # The same kind of change with the pin changed to accept the file (round 4, issue 3): a key or an
+  # option that could move the library's sources or build products, or reach the compiler, is refused
   # whatever the pin says. srcDir under [[lean_lib]] made Lake compile the library from another
   # directory than the one the scan and the digests read.
   # name | what must be reported | python expression that maps the text `t` of lakefile.toml to the changed text
@@ -581,8 +581,8 @@ fi
 # ---------------------------------------------------------------------------
 if want s5; then
 echo "== (s5) lakefile.toml without autoImplicit = false, and names that are bound nowhere =="
-# As in (b1), the pin of the copy is changed to accept its lakefile: then the scan and the audit
-# are what stands between a misspelt name and a theorem about an arbitrary variable.
+# As in (b1), the pin of the copy is changed to accept its lakefile; step 2 still refuses its
+# [leanOptions], whatever the pin says, before anything is compiled.
 copy_project s5 "$BASE"
 grep -v 'utoImplicit' lakefile.toml >"$TMP/s5/lakefile.toml"
 if cmp -s lakefile.toml "$TMP/s5/lakefile.toml"; then
