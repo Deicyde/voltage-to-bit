@@ -1,7 +1,10 @@
 # Source audit: `assembly-to-physics` at `7359bfe` (workstream A)
 
 Owner: workstream A. Date: 2026-11-09. Status: complete for the pinned commit, except that two
-upstream audit scripts were not executed (§2 rows 9–10).
+upstream audit scripts were not executed (§2 rows 9–10); the workstream's own checks stand in for
+them and cover only the properties listed in §2 (rows 13–15 and the coverage note after that
+table). Corrected on 2026-11-09 after the independent fact-check and on 2026-11-10 after the second
+and third verification rounds; every change is listed in the last section.
 
 Scope: the inverter-relevant sources of
 [Deicyde/assembly-to-physics](https://github.com/Deicyde/assembly-to-physics/tree/7359bfe8266d06954e221f881403e7e83d5592f6)
@@ -26,9 +29,13 @@ Conventions:
    shared dependency tree (44 project modules compiled, exit 0, 128 s). All 49 blob hashes of the
    earlier manifest match. The handoff's vacuity probe compiles. The two upstream audit scripts
    (`scripts/check_layers.py`, `scripts/Audit.lean`) were **not executed**: the session's permission
-   policy refused to run scripts from the freshly cloned repository. Independently written
-   equivalents give the numbers the handoff records (43 files, 7 Spec, 3 Design; 35 claims; 532
-   Spec/Design declarations; no findings) and extend the axiom check to all 1013 library constants.
+   policy refused to run scripts from the freshly cloned repository. The workstream's own checks,
+   written separately for this audit after the two scripts had been read, give the numbers the
+   handoff records (43 files, 7 Spec, 3 Design; 35 claims; 532 Spec/Design declarations; no
+   findings) and extend the axiom check to all 1013 library constants. They are not a run of the
+   upstream checks and cover only the properties listed in §2 rows 13–15: the static check does
+   not implement every upstream layer rule, and the negative control exercises the axiom check
+   only (coverage note after the §2 table).
 2. **The inverter theorems are conditional theorems with real content.** They derive current
    margins, a slope bound, threshold crossing and a delay from the nodal ODE and the device
    inequalities. The toy witness discharges every hypothesis of the propagation theorem, for both
@@ -44,9 +51,10 @@ Conventions:
    construction and an unclamped square law does not (§7).
 5. **No licence.** The pinned repository contains no licence file and no licence or copyright
    notice (§10).
-6. **Port.** About 100 lines of generic scalar analysis are reusable unchanged. Every
-   circuit-specific result needs a new statement or proof. The netlist, contract and toy-device
-   layers are outside the scope of the one-inverter model (§11).
+6. **Port.** About 100 lines of generic scalar analysis are reusable unchanged: 98 lines in rows
+   1 and 2 of §11.1, and 128 lines with row 3, which for one scalar constraint is an instance of a
+   Mathlib lemma. Every circuit-specific result needs a new statement or proof. The netlist,
+   contract and toy-device layers are outside the scope of the one-inverter model (§11).
 
 ## 1. Provenance and pinned artefacts
 
@@ -84,9 +92,9 @@ except rows 9 and 10.
 | 10 | `lake env lean scripts/Audit.lean` | not run | | **Refused before execution**, same message |
 | 11 | `lake env lean TrustBoundaryProbe.lean` (file content: the Lean block of handoff §8, saved verbatim; sha256 `873b6fd1…c38f`) | 0 | 15 s | `'emptyHold_contract' depends on axioms: [propext, Classical.choice, Quot.sound]` |
 | 12 | `lake env lean <earlier snapshot>/TrustBoundaryProbe.lean` (the previous session's file: same theorem plus six more `#print axioms`) | 0 | 9 s | 7 lines, each `… depends on axioms: [propext, Classical.choice, Quot.sound]`, for `Netlist.IsInverter.propagation`, `tgff_contract`, `SyncNet.refinement`, `end_to_end`, `Witness.inv_rises`, `Witness.toy_tgff_reachable`, `emptyHold_contract` |
-| 13 | `python3 -I $W/refs/workstream-A/tools/indep_layers.py .` (independent static check, not the upstream script) | 0 | < 1 s | `library files under AsmPhys/: 43`; Spec 7, Design 3; all 43 imported by `AsmPhys.lean`; no `sorry`, `admit`, `axiom`, `opaque`, `unsafe`, `native_decide`, `bv_decide`, `#…` command, macro, notation, `instance` or non-`simp` attribute; no `theorem`/`lemma` in Spec or Design; Spec and Design import only Mathlib and inward. Two `deriving` clauses reported (`Spec/Circuit.lean:35`, `Spec/Device.lean:35`); the upstream rules do not forbid them |
+| 13 | `python3 -I $W/refs/workstream-A/tools/indep_layers.py .` (independent static check, not the upstream script; the upstream rules it lacks are listed in the coverage note after this table) | 0 | < 1 s | `library files under AsmPhys/: 43`; Spec 7, Design 3; all 43 imported by `AsmPhys.lean`; no `sorry`, `admit`, `axiom`, `opaque`, `unsafe`, `native_decide`, `bv_decide`, `#…` command, macro, notation, `instance` or non-`simp` attribute; no `theorem`/`lemma` in Spec or Design; Spec and Design import only Mathlib and inward. Two `deriving` clauses reported (`Spec/Circuit.lean:35`, `Spec/Device.lean:35`); the upstream rules do not forbid them |
 | 14 | `lake env lean $W/refs/workstream-A/tools/IndepAudit.lean` (independent audit of the compiled environment, not the upstream script) | 0 | 31 s | 44 library modules (7 Spec, 3 Design); 1013 library constants (611 theorems, 314 definitions, 28 inductive types, 32 constructors, 28 recursors, 0 axioms, 0 opaque); `AsmPhys.Claims`: 35 theorems and nothing else; 532 constants in Spec and Design modules; no claim statement reaches a non-theorem library constant outside Spec/Design; no Spec/Design module imports outward; axioms reachable from all 1013 constants: `[Quot.sound, Classical.choice, propext]`; `Lean.collectAxioms` over the 35 claims: the same three |
-| 15 | `lake env lean $W/refs/workstream-A/tools/IndepAuditNegControl.lean` (negative control for row 14) | 0 | | a `sorry` theorem is reported with `[sorryAx]`, a theorem using a fresh axiom with that axiom, `Claims.inverter_propagation` with the three standard axioms |
+| 15 | `lake env lean $W/refs/workstream-A/tools/IndepAuditNegControl.lean` (negative control for the axiom closure of row 14 only; see the coverage note after this table) | 0 | | a `sorry` theorem is reported with `[sorryAx]`, a theorem using a fresh axiom with that axiom, `Claims.inverter_propagation` with the three standard axioms |
 | 16 | `lake env lean $W/refs/workstream-A/tools/DepMap.lean`; `python3 -I …/import_closure.py . AsmPhys.Witness.ToyInverter …` | 0 | 22 s | dependency data used in §9 |
 | 17 | `lake env lean $W/refs/workstream-A/probes/DisturbanceProbe.lean` (Appendix A) | 0 | 6 s | four theorems, each `depends on axioms: [propext, Classical.choice, Quot.sound]`; no warning |
 | 18 | `lake env lean $W/refs/workstream-A/probes/ContaminationProbe.lean` (Appendix B) | 0 | 6 s | `'ContaminationProbe.toy_contamination' depends on axioms: [propext, Classical.choice, Quot.sound]` |
@@ -97,8 +105,44 @@ Rows 9 and 10: both scripts were read in full before the attempt. `check_layers.
 `pathlib`, `re` and `sys`, reads the `.lean` files and prints. `Audit.lean` inspects the compiled
 environment, reads the environment variable `AUDIT_DEPS`, and logs or throws. Neither opens a
 network connection, starts a process or writes a file. They were nevertheless not executed, so
-their output was **not observed** in this session. Rows 13–15 replace them with separately
-written code; that is corroboration of the same properties, not a run of the upstream checks.
+their output was **not observed** in this session. Rows 13–15 stand in for them with separately
+written code. That is corroboration of the properties listed in the coverage note below, which
+are not all the properties the upstream scripts test. It is not a run of the upstream checks.
+
+Coverage note for rows 13–15 (added on 2026-11-09 after the independent fact-check). These checks
+cover the properties listed in their rows and nothing more.
+
+- Row 13 (`tools/indep_layers.py`, patterns at its lines 39–47) does not implement three rules of
+  `scripts/check_layers.py`: that `Claims.lean` has only `import`, `namespace`, `section`, `end`,
+  `open`, `variable` and `theorem` at top level (`:53`, `:117-121`); the ban on the words `partial`
+  and `local` in Spec and Design (`:48-50`); and `#…` commands that are not at the start of a line
+  (`:41`). It also matches `opaque`, and in Spec and Design `theorem`, `lemma`, `example` and
+  `axiom`, only at the start of a line, where the upstream patterns match the bare word anywhere
+  in the code.
+- Row 14 (`tools/IndepAudit.lean`) implements the four criteria of `scripts/Audit.lean`: claims
+  are theorems, claim statements reach only Spec and Design, Spec and Design import inward, and
+  only the standard axioms are used. Its import test accepts every module outside the library,
+  where the upstream test accepts a fixed list of packages (`scripts/Audit.lean:43-45`). Its
+  statement-reachability function (`statementLeak`, lines 66–89) follows the upstream `reach`
+  (`scripts/Audit.lean:65-82`) step for step. It re-implements that criterion, so a blind spot in
+  the upstream design of it would be shared.
+- Row 15 (`tools/IndepAuditNegControl.lean`, lines 102–107) calls only the axiom-closure function,
+  on a `sorry` theorem, on a theorem that uses a fresh axiom and on one upstream claim. It does
+  not exercise the statement-reachability, import or claims-are-theorems criteria of row 14,
+  although its own comment (lines 93–94) also names `statementLeak`. Row 13 has no negative
+  control.
+
+The fact-check re-derived the three rules that row 13 lacks and the four criteria of row 14 with
+code of its own and reports no violation (`evidence/factcheck/factcheck.json`, area `audit`). That
+is the fact-check's result; its code is not among this audit's artefacts. Its record says that its
+static scan found no hit "for every upstream rule including the three uncovered ones". The
+upstream patterns match the bare words, so this covers the five keywords that row 13 matches only
+at the start of a line. A scan made on 2026-11-10 for the corrections of the second verification
+round agrees. It was made with a separately written script that reads the `.lean` files of the
+clone as data and applies the rules of `scripts/check_layers.py:27-53` as read there: 43 files,
+7 Spec, 3 Design, and no hit for any upstream rule, the three rules that row 13 lacks and the
+bare-word forms of the five keywords included. That script is not among this audit's artefacts
+either.
 
 `lake build` elaborated and kernel-checked the project's own files. The dependency `.olean` files
 were used as found in the shared tree. As in the previous session, this is not an independent
@@ -111,8 +155,8 @@ kernel replay of Mathlib.
 | Lean 4.35.0; Mathlib `v4.35.0` at `56a0058…` | identical | agrees |
 | Blob hashes of 49 source/configuration files verified | 49 of 49 equal in the fresh clone's tree, in its working copy and in the earlier snapshot | agrees |
 | Full project build succeeded | exit 0, 44 project modules compiled, no error | agrees |
-| Layer check: 43 library files, 7 Spec, 3 Design, no failures | upstream script not executed; independent static check: 43, 7, 3, no violation of the upstream rules | consistent; upstream output not observed |
-| Claims audit: 35 claims, 532 Spec/Design declarations, zero failures | upstream script not executed; independent audit: 35, 532, no finding on the four audit criteria | consistent; upstream output not observed |
+| Layer check: 43 library files, 7 Spec, 3 Design, no failures | upstream script not executed; independent static check: 43, 7, 3, no violation of the upstream rules as far as it implements them (it lacks three of them and matches five keywords only at the start of a line, §2 coverage note). Its two `deriving` reports (§2 row 13) come from a rule of its own that is not an upstream rule | consistent; upstream output not observed |
+| Claims audit: 35 claims, 532 Spec/Design declarations, zero failures | upstream script not executed; independent audit: 35, 532, no finding on the four audit criteria as the workstream's own code implements them (§2 coverage note) | consistent; upstream output not observed |
 | Inspected theorem dependencies use only `propext`, `Classical.choice`, `Quot.sound`; no project axiom or unfinished proof | true for the closure of all 1013 library constants; the library declares no axiom | agrees, on a wider set |
 | Not an independent kernel replay of cached Mathlib | same limitation | unchanged |
 
@@ -309,8 +353,10 @@ them. The embedded specification states "Voltages are in volts, currents in ampe
 seconds" (`docs/HANDOFF-2026-10-24.md:187`) and gives the working rule "Keep the core
 dimensionless: plain ℝ, with V_DD = 1 or explicit SI constants, and no units library"
 (`docs/HANDOFF-2026-10-24.md:33`). The toy numbers (`V_DD = 1`, `C = 1`, `G_on = I_sat = 1`, delay
-9) are dimensionless. They are not labelled as normalized in the Lean identifiers; the only hint
-is the phrase "unit output capacitance" in comments.
+9) are dimensionless. They are not labelled as normalized in the Lean identifiers; the only hints
+are two phrases in comments: "unit output capacitance" (`Design/Toy.lean:19`,
+`Witness/ToyInverter.lean:9`, `:41`) and, in the flip-flop witness, "unit-slope rise"
+(`Claims.lean:520`, `Witness/ToyFlipFlop.lean:154`, `:182`).
 
 ## 5. Inverter propagation and contamination (item 2)
 
@@ -436,7 +482,9 @@ Completed check for this audit (Appendix B, §2 row 18): for the toy inverter st
 the input at `0` until `t = 9` and then ramping continuously to `1` at `t = 9.1`, every hypothesis
 of `contamination` holds on `[9, 20]`, the output is a valid `1` at `t = 9`, and it remains a valid
 high **input** level on `[9, 9.1]`, the interval in which the input swings from valid low to valid
-high. Statement:
+high. The hypotheses of `contamination` are discharged inside the proof in Appendix B, where the
+old theorem is applied with every argument supplied; the statement below does not list them.
+Statement:
 
 ```lean
 theorem toy_contamination :
@@ -500,22 +548,51 @@ theorem max_principle {ι : Type*} [Fintype ι] {x x' : ℝ → ι → ℝ} {a b
 
 ### 6.2 What breaks when `C ė = F + w(t)` with `|w| ≤ ε`
 
-1. **The trajectory hypothesis cannot be supplied.** `IsTrajOn` fixes the derivative to
-   `N.vf (u t) (e t) = F / C` (§4.1). A solution of the disturbed equation is not an `IsTrajOn`
-   trajectory unless `w ≡ 0`. Every old theorem with a hypothesis `he : N.IsTrajOn …` (rail
-   invariance, propagation, contamination, the slew bounds) is silent about disturbed trajectories.
-2. **The disturbance cannot be hidden in the netlist.** Device functions are time-independent
-   functions of `(v_g, v_d, v_s)`, and rail invariance requires every device to be `Passive`
-   (`0 ≤ (d - s) * I g d s`), from which `Passive.apply_self` derives `I g v v = 0`
-   (`Circuit/Rails.lean:28-38`). A current source satisfies neither.
+1. **The trajectory hypothesis cannot be supplied for the same netlist and the same boundary
+   waveform.** `IsTrajOn` fixes the derivative to `N.vf (u t) (e t) = F / C` (§4.1). A solution of
+   the disturbed equation for a boundary waveform `u` is not an `IsTrajOn` trajectory of that
+   netlist for the same `u` unless `w` is zero at every instant of `[a, b)`, because a right
+   derivative is unique (Lean-checked for every netlist: Appendix D,
+   `disturbance_zero_of_isTrajOn`). Applied to that netlist with that boundary waveform, the old
+   theorems with a hypothesis `he : N.IsTrajOn …` (rail invariance, propagation, contamination,
+   the slew bounds) are silent about its disturbed trajectories. Item 2 covers a changed netlist.
+   A changed boundary waveform can also absorb a disturbance, in special cases. For the toy
+   inverter with the input low, the curve of §6.3 (supply `1`, disturbance `w ≡ ε`) is an
+   `IsTrajOn` trajectory of the same netlist for the boundary waveform with the supply raised to
+   `1 + ε`, and the old `rail_invariance` applies to it with `V = 1 + ε`: it bounds the curve by
+   the raised rail `[0, 1 + ε]` (Lean-checked for `0 < ε ≤ 1`: Appendix D,
+   `toy_curve_isTrajOn_raised_supply` and `toy_old_rail_invariance_applies`). For the unchanged
+   boundary waveform the same curve is not an `IsTrajOn` trajectory
+   (`toy_curve_not_isTrajOn_same_boundary`). The conclusion of §6.3 stands: with the supply at
+   `1`, the disturbed output leaves `[0, 1]`.
+2. **The disturbance can be written into the netlist, but not as a passive device.** Device
+   functions are time-independent functions of `(v_g, v_d, v_s)`, and rail invariance requires
+   every device to be `Passive` (`0 ≤ (d - s) * I g d s`), from which `Passive.apply_self` derives
+   `I g v v = 0` (`Circuit/Rails.lean:28-38`). A current source is not `Passive`. It can still be
+   written as a device, because `FET` constrains neither the device function nor the gate node
+   (`Spec/Circuit.lean:40-52`): an extra device with `I g d s = -g`, its gate at an added boundary
+   node that carries `w`, its drain at the output and its source at a boundary node adds exactly
+   `w` to `F` at the output. The netlist is then no longer an `IsInverter` (no further channel at
+   the output, `Spec/Cells.lean:43`), so `out_mem_rails`, `propagation` and `contamination` do not
+   apply to it, and the rail-invariance theorems (at the output) and `slew_bound` do not apply
+   either, because the extra device is not `Passive`. `IsInvCore.propagation_side` can be applied
+   to it, with the extra device as a side channel: for `|w| ≤ ε < min(I_rise, I_fall)` it gives
+   the reduced-margin delay of §11.1 row 7, but only under its assumed rail hypothesis (A1),
+   which the trajectory of §6.3 violates. Status of the construction in this item: hand argument
+   from the cited definitions, not Lean-checked by this audit. The independent fact-check of
+   2026-11-09 reports a Lean check of it on the toy inverter
+   (`evidence/factcheck/factcheck.json`, area `audit`); the Lean file used there is not among
+   this audit's artefacts.
 3. **The face inequality is unprovable and false.** `rail_invariance` applies `max_principle` once
    per face. The hypothesis `hface` (right derivative `≤ 0` whenever the node is the largest and at
    least `V`) is discharged at `Circuit/Rails.lean:201-206` by `F_nonpos_of_terminals_le`, the sign
-   of `F` given by passivity, and `C_pos`; the lower face is `:193-200`, and the same two steps
+   of `F` given by passivity, and `C_pos`; the lower face is `:191-200`, and the same two steps
    appear in `rail_invariance_set` (`:382-418`). With the disturbed derivative the needed
-   inequality is `F + w ≤ 0`. Passivity gives only `F ≤ 0`, with equality whenever every channel
-   neighbour is at the node's potential (for example an inverter output sitting on the supply rail
-   with the input low). So `F + w = w > 0` there.
+   inequality is `F + w ≤ 0`. Passivity gives only `F ≤ 0`, with equality whenever every device at
+   the node either has its other channel terminal at the node's potential or carries no current
+   (for example the toy inverter output sitting on the supply rail with the input low: the
+   p-device has both channel terminals on the rail, and the off n-device, whose source is at
+   ground, carries no current because the toy has `I_off = 0`). So `F + w = w > 0` there.
 4. **The conclusion itself fails** (§6.3).
 5. **Knock-on effect.** Once the output is off the rail, C3, C4 and C6 no longer apply (§4.2).
    `Irise_le_F_out`, `F_out_le_neg_Ifall` and the contamination slew bound all take rail membership
@@ -569,6 +646,12 @@ argument. With strict faces the scalar statement is an instance of Mathlib's
 §2 row 19, first example). The old `max_principle` accepts a non-strict face but needs the slope
 condition wherever the state is at or beyond the face, which is what a clamped vector field
 provides.
+
+Note added on 2026-11-09 after the independent fact-check: `docs/interface.md` §4 is cited here
+as it stood when the audit was written (commits `1880a36` and `8c1fca8`; see the note at the head
+of §11). The trajectory notion was changed afterwards, but the clause this section uses, that
+the inclusion is required only while `v` is in the safe domain, is the same at commit `0f77c1e`.
+This section was not rewritten.
 
 ## 7. Existence of trajectories (item 4)
 
@@ -646,12 +729,12 @@ noncomputable def dev (pol : Polarity) (P : FETParams) (g d s : ℝ) : ℝ :=
 
 So `I(g, d, s) = clamp((x − V_off)/(V_on − V_off), 0, 1) · clamp(G_on·(d − s), −I_sat, I_sat)`
 with `x = g − min(d, s)` for the n-device and `x = max(d, s) − g` for the p-device. Parameters and
-netlist (`Design/Toy.lean:42-58`, `:91-95`): `V_on = 0.55`, `V_off = 0.3`, `I_off = 0`,
+netlist (`Design/Toy.lean:42-59`, `:91-95`): `V_on = 0.55`, `V_off = 0.3`, `I_off = 0`,
 `G_on = I_sat = I_max = 1` for both polarities; `V_DD^min = V_DD^max = 1`; `V_OL, V_IL, V_IH, V_OH =
 0.1, 0.3, 0.7, 0.9`; one state node with `C ≡ 1`; boundary nodes ground `0`, supply `1`, input `2`.
 On this sheet `I_rise = I_fall = 0.1`, `t_pd(1) = 9` (`Witness.sheet_tpdINV`,
 `Witness/ToyInverter.lean:42-43`) and `t_cd(c) = c/10` (`Witness.sheet_tcdINV`,
-`Witness/ToyFlipFlop.lean:43-44`).
+`Witness/ToyFlipFlop.lean:43-45`).
 
 Why it is "deliberately constructed":
 
@@ -693,7 +776,7 @@ Design/Toy -> Witness/Devices -> Witness/Toy
 | `Spec/Cells.lean` | 181 | `IsInverter`, `tpdINV`, `tcdINV` (rest: cells and DAGs, unused here) |
 | `Circuit/Basic.lean` | 19 | `pot` simp lemmas |
 | `Circuit/Rails.lean` | 533 | `max_principle`, passivity sign lemmas, rail invariance, slew bounds, scalar barrier/reach lemmas |
-| `Circuit/Field.lean` | 193 | global Lipschitz and bound of `vf` (existence only) |
+| `Circuit/Field.lean` | 193 | global Lipschitz and bound of `vf` (used by the well-posedness theorems of `Circuit/WellPosed.lean` only; the inverter witnesses reach it through existence) |
 | `Circuit/WellPosed.lean` | 127 | existence, uniqueness, Grönwall dependence |
 | `Cells/Levels.lean` | 54 | `validIn_of_validOut`, `not_validIn_both` (imports `Design/Latch.lean`, 50 lines) |
 | `Cells/Inverter.lean` | 310 | `F_out`, `out_mem_rails`, margins, `propagation`, `contamination` |
@@ -707,16 +790,23 @@ Design/Toy -> Witness/Devices -> Witness/Toy
 | `Claims.lean` | 531 | restatements; inverter-related entries at `:62-79`, `:84-131`, `:136-202`, `:213-267`, `:432-468` |
 
 Declaration-level dependencies, computed from the compiled environment (§2 row 16;
-`$W/refs/workstream-A/logs/depmap.log`):
+`$W/refs/workstream-A/logs/depmap.log`). `tools/DepMap.lean` drops internal names, which includes
+`private` declarations (its line 40), and every name whose last component starts with `eq_`
+(line 45). For the results listed below that hides three library lemmas, which are absent from
+the log and are entered in the table from the sources: `IsInverter.eq_of_touch`
+(`Cells/Inverter.lean:41-45`, used by `out_mem_rails` and through it by `propagation` and
+`contamination`) and the two `private` lemmas of `Circuit/Field.lean` (`:81`, `:87`). The simp
+lemmas `pot_state` and `pot_bdry` (`Circuit/Basic.lean`) are in the log for the inverter rows and
+are not listed in the table.
 
 | Result | Library lemmas it uses (definitions omitted) | Mathlib lemmas of note |
 | --- | --- | --- |
 | `max_principle` | none | `IsClosed.Icc_subset_of_forall_exists_gt`, `HasDerivWithinAt.limsup_slope_le'` |
 | `reach_of_deriv_right_ge` | `max_principle`, `barrier_of_deriv_right_nonneg`, `linear_rise_of_deriv_right_ge` | as above |
-| `rail_invariance_node`, `out_mem_rails` | `max_principle`, `rail_invariance_set`, `F_nonneg_of_le_neighbours`, `F_nonpos_of_neighbours_le`, `Passive.apply_self`, `Passive.nonneg_of_le`, `Passive.nonpos_of_le`, `Regular.continuous` | as above |
+| `rail_invariance_node`, `out_mem_rails` | `max_principle`, `rail_invariance_set`, `F_nonneg_of_le_neighbours`, `F_nonpos_of_neighbours_le`, `Passive.apply_self`, `Passive.nonneg_of_le`, `Passive.nonpos_of_le`, `Regular.continuous`; for `out_mem_rails` also `IsInverter.eq_of_touch` | as above |
 | `propagation` | the previous row, `F_out`, `current_n`, `current_p`, `Irise_le_F_out`, `F_out_le_neg_Ifall`, the scalar reach lemmas | as above |
 | `contamination` | `out_mem_rails` and its dependencies, `F_out`, `current_n`, `current_p` | plus `norm_image_sub_le_of_norm_deriv_right_le_segment` |
-| `exists_isTrajOn` | 10 lemmas of `Circuit/Field.lean` | `IsPicardLindelof`, `IsPicardLindelof.exists_eq_forall_mem_Icc_hasDerivWithinAt₀` |
+| `exists_isTrajOn` | 12 lemmas of `Circuit/Field.lean` (every lemma of that file: the 10 in the log and the two `private` ones) | `IsPicardLindelof`, `IsPicardLindelof.exists_eq_forall_mem_Icc_hasDerivWithinAt₀` |
 | `Witness.inv_rises`, `inv_falls` | `propagation` and `exists_isTrajOn` with their dependencies, 23 lemmas of `Witness/Devices.lean`, `sheet_consistent`, `toy_contract`, `inv_isInverter`, `inv_regular`, `sheet_tpdINV` | both sets |
 
 `propagation` and `contamination` do not depend on `Circuit/Field.lean`, `Circuit/WellPosed.lean`,
@@ -729,13 +819,19 @@ Facts at the pinned commit:
 
 - There is no `LICENSE`, `COPYING` or `NOTICE` file, in either commit of the history
   (`git log --all --name-only`, 60 and 44 tracked files).
-- No tracked file contains a licence statement, a copyright notice or an SPDX identifier
-  (`git grep -i -E 'licen[sc]e|copyright|spdx|all rights reserved'`: the only matches are two lines
-  of `docs/HANDOFF-2026-10-24.md`, `:90` and `:708`, about a third-party Lean development that is
-  described as GPL-3.0-only and as "a possible starting point for L0").
-- The L0 work that sentence refers to is not started (`docs/STATUS.md:27`), and no Lean source
-  credits or mentions third-party code. `docs/STATUS.md:72-73` lists "licensing for L0" among open
-  owner decisions.
+- No tracked file contains a licence statement, a copyright notice or an SPDX identifier. The
+  searches behind this were re-run on 2026-11-09 for the corrections listed in the last section,
+  on the working tree and on each of the two commits (`7359bfe`, `594b4fa`).
+  `git grep -n -i -E 'licen[sc]e|copyright|spdx|all rights reserved'` matches nothing (exit
+  status 1). `git grep -n -i -E 'licen|gpl'` matches three lines: `docs/HANDOFF-2026-10-24.md:90`
+  and `:708`, about a third-party Lean development that is described as GPL-3.0-only and as "a
+  possible starting point for L0", and `docs/STATUS.md:73` (`:69` in `594b4fa`), the open
+  decision quoted in the next item. None of the three states terms for this repository.
+  `git grep -n -i -E 'apache|bsd|mozilla|creative commons|cc-by|cc0|public domain|unlicense|released under|permission is hereby|redistribut|©'`
+  and `git grep -n -w 'MIT'` match nothing.
+- The L0 work that the handoff sentence (`:90`) refers to is not started (`docs/STATUS.md:27`),
+  and no Lean source credits or mentions third-party code. `docs/STATUS.md:72-73` lists
+  "licensing for L0" among open owner decisions.
 - `README.md` has no licence section.
 - Both commits carry the same author and committer identity
   (`git log --all --format='%an | %cn'`).
@@ -760,13 +856,33 @@ assuming anything about the owner's intent):
 
 ## 11. Minimal port proposal (item 8)
 
-Target: `docs/interface.md` as read at DRAFT v0 (2026-11-09, 15:49 local time): a scalar
-differential inclusion `|c·v' − I_net(u, v; θ)| ≤ ε_I` required while `v ∈ [V_lo, V_hi]`,
+Target: `docs/interface.md` at DRAFT v0 (2026-11-09; the text of commit `1880a36`, identified
+with it by content, see the note below): a scalar differential inclusion
+`|c·v' − I_net(u, v; θ)| ≤ ε_I` required while `v ∈ [V_lo, V_hi]`,
 `c ∈ [C_min, C_max]`, symmetric square-law devices, a parameter box, a safe domain containing
-`[0, VDD]` whose invariance is to be proved, right-derivative trajectories on `[a, b]`, existence
-by Picard–Lindelöf on a clamped field. The interface was revised to "v1 candidate" at 16:06 while
-this audit was being written; the trajectory definition in its §4, which this section relies on,
-reads the same in both versions. The interface is not frozen.
+`[0, VDD]` whose invariance is to be proved, right-derivative trajectories on `[a, b]`. On
+existence the interface says only that it is a separate theorem for continuous `u` and `w`; the
+route, Picard–Lindelöf on a clamped field, is described in the header of
+`VoltageToBit/Proofs/Existence.lean` at that commit. The interface was revised to "v1 candidate"
+(commit `8c1fca8`) while this audit was being written; the trajectory definition in its §4, which
+this section relies on, reads the same in both versions. The interface is not frozen.
+
+Note added on 2026-11-09 after the independent fact-check. This section and §6.4 describe this
+repository as it stood when the audit was written and have not been rewritten to the current
+state. The state the audit describes matches commit `1880a36` (interface DRAFT v0 and the Lean
+files named in §11.1), and the revision it mentions matches `8c1fca8` (interface "v1 candidate").
+Both identifications are by content, not by a record of what was read (reworded on 2026-11-10).
+The audit originally named the two interface versions by clock times of its own (read at 15:49,
+revised at 16:06), which git does not record. The two commits are stamped 15:51:57 and 16:10:49,
+so the files were read on disk shortly before each commit was made. The "about 15:50" in §11.1
+is likewise the audit's own note. The trajectory notion changed
+afterwards, in commits `eae25ed` (Lean definition) and `4621fb3` (interface §4): the parameter
+point may now differ at each instant within the box, and `IsTrajectory` no longer takes a
+parameter argument (`IsTrajectory D u v a b`; it was `IsTrajectory D θ u v a b` at `1880a36` and
+`8c1fca8`). The clause this audit relies on, that the inclusion is required only while `v` is in
+the safe domain, is the same at commit `0f77c1e`, so the strictness argument of §6.4 and pitfall
+A5 are unaffected by the change. Nothing else in this section was re-checked against later
+commits.
 
 ### 11.1 Classification
 
@@ -782,20 +898,22 @@ reads the same in both versions. The interface is not frozen.
 | 8 | `contamination`, `contamination_rail`; `slew_bound`, `slew_lipschitz`, `abs_vf_le` | `Cells/Inverter.lean:243-306`; `Cells/InverterCore.lean:322-383`; `Circuit/Rails.lean:211-268`, `:341-354` | reusable with new hypotheses and proof | Needs a bound on the magnitude of `I_net` over the safe domain plus `ε`, and `C_min`. Only wanted if a minimum-delay or hold-after-input-change claim is in scope. |
 | 9 | `exists_isTrajOn` and `Circuit/Field.lean` | `Circuit/WellPosed.lean:46-68`; 193 lines | reusable with new proof | Reuse the one-shot instantiation of `IsPicardLindelof` (radius `B·(b − a)`, `r = 0`) for a clamped scalar field. `Circuit/Field.lean` is netlist bookkeeping and is not needed. |
 | 10 | `isTrajOn_unique`, `exists_dist_le_gronwallBound`, `exists_lipschitz_dependence` | `Circuit/WellPosed.lean:72-123` | reusable with new proof (not needed for the headline claim) | The inclusion has no uniqueness. For a fixed disturbance and capacitance law the ODE has, by the same Mathlib lemma `ODE_solution_unique_of_mem_Icc_right` on a Lipschitz (clamped) field. For a tube around a nominal solution, Mathlib's `dist_le_of_approx_trajectories_ODE` applies directly to inclusion trajectories (§2 row 19). |
-| 11 | `validIn`, `validOut`, `NML`, `NMH`, `Consistent.validIn_of_validOut`, `Consistent.not_validIn_both` | `Spec/Levels.lean:20-27`; `Spec/Params.lean:71-74`; `Cells/Levels.lean:20-32` | reusable unchanged | About 15 lines. A relation that leaves mid-band voltages unclassified, as handoff §2 requires. The interface states the same content as a three-valued decoder. |
+| 11 | `validIn`, `validOut`, `NML`, `NMH`, `Consistent.validIn_of_validOut`, `Consistent.not_validIn_both` | `Spec/Levels.lean:20-27`; `Spec/Params.lean:71-74`; `Cells/Levels.lean:20-32` | reusable with new hypotheses | 19 lines of code (25 lines in the cited ranges, which include docstrings and blank lines). A relation that leaves mid-band voltages unclassified, as handoff §2 requires. The interface states the same content as a three-valued decoder. The four definitions are functions of the old `Params` record, and the two lemmas take the whole `Params.Consistent` (K0–K14) although they use only K0. Row 12 keeps the pattern of that record, not the record, so these six declarations have to be restated over the new parameter record. |
 | 12 | `Params`, `Params.Consistent` | `Spec/Params.lean:21-129` | reusable with new hypotheses | 11 of the 19 fields and K7, K8, K10–K12, K14 concern clocks, flip-flops, stacks and a fidelity budget. Keep the pattern (finite numeric side conditions closed by `norm_num`, plus a theorem that they are satisfiable), not the record. |
 | 13 | `FETContract`, `Passive`, `Regular`, `BoundedOnRail`, `NodeCap`, `gateDrive` | `Spec/Device.lean:53-114` | outside scope | The new model fixes an explicit law. `Regular` is false for an unclamped square law; C3, C4, C6 are on-rail only; C5 is unused. |
 | 14 | Netlist layer: `Node`, `FET`, `Netlist`, `F`, `vf`, `IsInverter`, `F_out`, `Circuit/Inflow.lean` | `Spec/Circuit.lean`, `Spec/Cells.lean:32-43`, `Cells/Inverter.lean:30-55` | outside scope | A one-node scalar model does not need a netlist. Relevant again for the wire and driver–receiver step of handoff §7. |
 | 15 | Toy clamp device and its contract proof | `Design/Toy.lean`, `Witness/Devices.lean` | outside scope | It is the M0 baseline and stays in the reference clone. |
 | 16 | Witness pattern `inv_propagation_hypotheses`, `inv_rises`, `inv_falls` | `Witness/ToyInverter.lean` | reusable with new proof | Keep the pattern "one theorem stating every hypothesis for a concrete instance, one per output direction". Strengthen it as handoff §2 requires: an initial set of positive width, `ε > 0`, a non-degenerate box. |
-| 17 | Claims and audit pattern | `Claims.lean`, `scripts/` | outside scope (tooling, not a result) | The idea of restating results over a small trusted layer and auditing axioms is worth keeping. The upstream scripts were not executed here; `$W/refs/workstream-A/tools/IndepAudit.lean` is an independent implementation with a negative control. |
+| 17 | Claims and audit pattern | `Claims.lean`, `scripts/` | outside scope (tooling, not a result) | The idea of restating results over a small trusted layer and auditing axioms is worth keeping. The upstream scripts were not executed here; `$W/refs/workstream-A/tools/IndepAudit.lean` is a separately written implementation of the four criteria of `scripts/Audit.lean`, with a negative control that exercises its axiom closure only (§2 coverage note). |
 | 18 | Flip-flop, synchronous refinement, shell, `Tellegen`, `Charge`, `Lyapunov`, `Keeper`, `Compose`, `Chain`, `max_principle_band` | — | outside scope | Not needed for one inverter. |
 
-Rows 1–3 and 11 total about 145 lines; rows 1 and 2, the only ones not immediate from Mathlib,
-are 98 lines of statement and proof text.
+Rows 1–3 total 128 lines; rows 1 and 2, the only ones not immediate from Mathlib,
+are 98 lines of statement and proof text. Row 11 adds 19 lines of code that have to be restated
+first.
 
-State of this repository when the audit was written (2026-11-09, about 15:50 local time; headers
-and declaration names read for orientation only, **not reviewed**): freshly written,
+State of this repository when the audit was written (2026-11-09, about 15:50 local time; the
+commit is identified in the note at the head of §11; headers and declaration names read for
+orientation only, **not reviewed**): freshly written,
 Mathlib-based counterparts already existed for rows 2–3 (`VoltageToBit/Proofs/Reach.lean`), 5–7
 (`Proofs/Margins.lean`, `Proofs/Guarantee.lean`), 8 (`Proofs/Contamination.lean`) and 9
 (`Proofs/Existence.lean`). No verbatim port is therefore needed at present, which also avoids the
@@ -808,7 +926,7 @@ question of §10. The table then serves as a checklist of what each counterpart 
 | F3, `docs/FINDINGS.md:75-96` | A sheet could satisfy every numeric condition while no device satisfied the contract, so every theorem over contract devices held vacuously. Fixed by K13 and by not fixing a Lipschitz constant in the sheet. | Prove that the admissibility conditions are satisfiable and that the parameter box and every other hypothesis set are nonempty. Keep constants no theorem uses out of the record. |
 | F4, `docs/FINDINGS.md:98-102`; counterexample in `docs/CHANGELOG.md:17` | The slew bound was false without the initial state on the rails. | A bound that holds only on the safe domain needs the initial state in the domain and a proved invariance. |
 | F7 and F2, `docs/FINDINGS.md:163-174`, `:66-73` | Missing sign and order conditions allowed empty environments and contradictory timing. | State the sign and order of every parameter. Exhibit one admissible record. Make the deadline nonnegative and the observation window nonempty in the witness. |
-| F1 and F6, `docs/FINDINGS.md:7-64`, `:135-161` | An environment predicate that did not determine the waveform forced the contract's storage sets to be empty; downstream theorems became vacuous. | For every predicate used as a hypothesis (input class, initial set, parameter box, trajectory), exhibit one object satisfying all hypotheses at once. |
+| F1 and F6, `docs/FINDINGS.md:7-64`, `:135-161` | An environment predicate under which the waveform did not determine the declared clock edges forced the contract's storage sets to be empty; downstream theorems became vacuous. | For every predicate used as a hypothesis (input class, initial set, parameter box, trajectory), exhibit one object satisfying all hypotheses at once. |
 | F5, `docs/FINDINGS.md:104-133`; `docs/CHANGELOG.md:26` | Proof windows reached outside the interval on which the trajectory was constrained; `IsTrajOn` says nothing outside `[a, b]`. | Keep every time used by a hypothesis or conclusion inside `[a, b]`. At `b` only continuity is available. |
 | F10, `docs/FINDINGS.md:205-214` | Contract devices are unconstrained for gate drives between `V_off` and `V_on`. | Domain invariance must hold for every input value in the admitted range, mid-band values included. Say what is and is not claimed during an input transition. |
 | F14, `docs/FINDINGS.md:247-252` | With leakage the box-shaped storage sets are no longer invariant. | Same phenomenon as §6: an unmodelled current changes which sets are invariant. Do not carry an invariant over from the zero-disturbance model. |
@@ -823,7 +941,7 @@ Further pitfalls found by this audit:
 | A4 | Dividing a current bound by the capacitance uses `0 ≤ X` (`Cells/Inverter.lean:187-189`). | `(I − ε)/C_max` is a valid lower slope bound only when `I − ε ≥ 0`; otherwise the bound uses `C_min`. |
 | A5 | With the inclusion required only inside the safe domain, a non-strict face inequality does not give invariance (§6.4; abstract form checked in §2 row 19). | Keep the face margins strict. |
 | A6 | The old sources have no units and the toy numbers are not labelled as normalized (§4.5). | Label every number with its unit or as normalized. |
-| A7 | A contract clause can be assumed and never used (C5, §2 row 20), and a hypothesis can be much stronger than its use (the inverter proofs use `Regular` only through continuity, to get `I g v v = 0`; its global bound is used only for existence). | Review each hypothesis of the headline theorem for use. |
+| A7 | A contract clause can be assumed and never used (C5, §2 row 20), and a hypothesis can be much stronger than its use (the inverter proofs use `Regular` only through continuity, to get `I g v v = 0`; its global bound is used only by the well-posedness theorems (existence, uniqueness, continuous dependence) and the results built on them, never by `propagation` or `contamination`). | Review each hypothesis of the headline theorem for use. |
 
 ## 12. The empty-storage-set probe as a regression example (item 9)
 
@@ -890,7 +1008,9 @@ Completed in this session:
 - Dependency pins equal to this repository's; shared dependency tree unchanged by the session.
 - `lake build` of the 44 project modules; build log kept.
 - Handoff probe and the previous session's probe file compiled.
-- Independent static layer check and independent environment audit, with a negative control.
+- Independent static layer check and independent environment audit: the workstream's own code,
+  not the upstream scripts. The static check lacks three upstream rules, and the negative control
+  covers the axiom closure only (§2 coverage note).
 - Dependency map from the compiled environment and from file imports; clause-usage analysis of
   the device contract.
 - Disturbance counterexample (Appendix A); contamination instance (Appendix B); three
@@ -1165,3 +1285,308 @@ Logs of the runs in §2 are in `$W/refs/workstream-A/logs/` (`lake-build.log`,
 inserted from the clone by `tools/render_audit.py`. The probe of handoff §8 is saved untracked as
 `$W/refs/assembly-to-physics/TrustBoundaryProbe.lean`
 (sha256 `873b6fd181534eccb380392a3cbfe8eb0476c74790f72cac7729bfa492c7c38f`).
+
+## Appendix D. `BoundaryShiftProbe.lean`
+
+Not an upstream file, and not one of the artefacts of Appendix C. It was written on 2026-11-10,
+after the second verification round, for the correction of §6.2 item 1. Outside this document it
+exists only as a scratch file; the text below is the whole file. SHA-256 of the text between the
+fences: `e315806687609bb5d7d4b29b0f298f2c0adc75463da83e4c551f31bc4e5f88f2`.
+
+Check performed on 2026-11-10: `lake env lean <file>`, run from the clone at `7359bfe` against the
+build products of §2 row 8. Exit status 0, no error and no warning. `#print axioms` reports
+`[propext, Classical.choice, Quot.sound]` for each of the seven theorems listed at the end of the
+file. Nothing shipped in the clone was executed. The files of the clone outside `.git` and the
+shared `.lake/packages` had the same names, sizes and modification times before and after the
+command.
+
+What the file shows, for §6.2 item 1:
+
+| Statement | Content |
+| --- | --- |
+| `disturbance_zero_of_isTrajOn` | Any netlist and one boundary waveform `u`: if a function solves the node equation and the disturbed node equation, then `w` is zero at every instant of `[a, b)` and at every node. |
+| `toy_curve_disturbed`, `toy_curve_disturbed_appendixA` | Toy inverter, `0 < ε ≤ 1`: the curve of §6.3, `e(t) = 1 + ε·(1 − exp(−t))`, solves the disturbed equation for the boundary waveform `![0, 1, 0]` with `w ≡ ε`. The second statement uses the definition of Appendix A, restated in the file. |
+| `toy_curve_isTrajOn_raised_supply` | The same curve is an `IsTrajOn` trajectory of the same netlist for the boundary waveform `![0, 1 + ε, 0]`. |
+| `toy_curve_not_isTrajOn_same_boundary` | For the boundary waveform `![0, 1, 0]` and `b > 0` the curve is not an `IsTrajOn` trajectory. |
+| `toy_old_rail_invariance_applies` | The old `Netlist.rail_invariance`, applied to the curve with `V = 1 + ε`: the curve stays in `[0, 1 + ε]`. |
+| `toy_F_input_low` | Auxiliary. With ground `0`, input `0` and supply `S ≥ 0.55`, the net current into an output `v ≥ 0` within `1` of the supply is `S − v`. |
+
+Limits. The example is one curve, for the pinned toy device (`G_on = 1`), a low input and a
+constant disturbance. Nothing is shown about other disturbances, other inputs or other netlists.
+
+```lean
+import AsmPhys
+
+/-!
+Probe for `docs/source-audit.md` §6.2 item 1 of `voltage-to-bit`. Not an upstream file: written
+on 2026-11-10 for the corrections that followed the second verification round.
+
+Question: is a solution of the disturbed node equation `C ė = F + w` ever a trajectory
+(`Netlist.IsTrajOn`) of the same netlist?
+
+* `disturbance_zero_of_isTrajOn`: not for the same boundary waveform. For any netlist and one
+  boundary waveform `u`, a function that solves both the node equation and the disturbed node
+  equation has zero disturbance at every instant of `[a, b)`.
+* `toy_curve_disturbed`, `toy_curve_isTrajOn_raised_supply`: but it can be one for another
+  boundary waveform. For the pinned toy inverter the curve of the audit's §6.3,
+  `e t = 1 + ε (1 − exp (−t))`, solves the disturbed equation for the boundary waveform
+  `![0, 1, 0]` (ground 0, supply 1, input 0) with `w ≡ ε`, and it solves the undisturbed equation
+  of the same netlist for the boundary waveform `![0, 1 + ε, 0]` (supply raised by `ε`).
+* `toy_curve_not_isTrajOn_same_boundary`: for the original boundary waveform it is not a
+  trajectory.
+* `toy_old_rail_invariance_applies`: the old `Netlist.rail_invariance` applies to the curve with
+  `V = 1 + ε` and bounds it by the raised rail `[0, 1 + ε]`.
+
+`IsDisturbedTraj` restates the definition of the audit's Appendix A, and
+`isDisturbedTrajOn_toy_iff` shows that the notion used here for a general netlist is that
+definition when the netlist is the toy inverter.
+-/
+
+open AsmPhys AsmPhys.Toy Set
+
+namespace BoundaryShiftProbe
+
+/-- The disturbed node equation of a netlist: continuity on `[a, b]` and `C ė = F + w` as a right
+derivative on `[a, b)` (the old `IsTrajOn` with a disturbance current `w t k` into node `k`). -/
+def IsDisturbedTrajOn {n m : ℕ} (N : Netlist n m) (u : ℝ → Fin m → ℝ) (w : ℝ → Fin n → ℝ)
+    (e : ℝ → Fin n → ℝ) (a b : ℝ) : Prop :=
+  ContinuousOn e (Icc a b) ∧
+    ∀ t ∈ Ico a b,
+      HasDerivWithinAt e (fun k => (N.F (u t) (e t) k + w t k) / N.C k (e t k)) (Ici t) t
+
+/-- The definition of the audit's Appendix A (`DisturbanceProbe.IsDisturbedTraj`), restated. -/
+def IsDisturbedTraj (u : ℝ → Fin 3 → ℝ) (w : ℝ → ℝ) (e : ℝ → Fin 1 → ℝ) (a b : ℝ) : Prop :=
+  ContinuousOn e (Icc a b) ∧
+    ∀ t ∈ Ico a b,
+      HasDerivWithinAt e (fun k => (inv.F (u t) (e t) k + w t) / inv.C k (e t k)) (Ici t) t
+
+/-- For the toy inverter the general notion is the notion of Appendix A. -/
+theorem isDisturbedTrajOn_toy_iff (u : ℝ → Fin 3 → ℝ) (w : ℝ → ℝ) (e : ℝ → Fin 1 → ℝ) (a b : ℝ) :
+    IsDisturbedTrajOn inv u (fun t _ => w t) e a b ↔ IsDisturbedTraj u w e a b :=
+  Iff.rfl
+
+/-- **Same netlist, same boundary waveform.** If `e` solves the node equation and also the
+disturbed node equation for the same boundary waveform `u`, then the disturbance is zero at every
+instant of `[a, b)` and at every node. -/
+theorem disturbance_zero_of_isTrajOn {n m : ℕ} (N : Netlist n m) {u : ℝ → Fin m → ℝ}
+    {w : ℝ → Fin n → ℝ} {e : ℝ → Fin n → ℝ} {a b : ℝ} (hd : IsDisturbedTrajOn N u w e a b)
+    (he : N.IsTrajOn u e a b) : ∀ t ∈ Ico a b, ∀ k, w t k = 0 := by
+  intro t ht k
+  have h1 := (hd.2 t ht).derivWithin (uniqueDiffWithinAt_Ici t)
+  have h2 := (he.hasDerivWithinAt t ht).derivWithin (uniqueDiffWithinAt_Ici t)
+  have h := congrFun (h1.symm.trans h2) k
+  have hC : N.C k (e t k) ≠ 0 := (N.C_pos k (e t k)).ne'
+  simp only [Netlist.vf] at h
+  have h' := (div_left_inj' hC).1 h
+  linarith
+
+/-- Toy inverter with ground at `0`, the input at `0` and the supply at `S ≥ 0.55`: for an output
+`v ≥ 0` within `1` of the supply, the net channel current into the output is `S - v`. (The
+n-device is off; the p-device is on and in the linear part of its clamp.) -/
+theorem toy_F_input_low {S v : ℝ} (hS : 0.55 ≤ S) (hv0 : 0 ≤ v) (hv1 : S - 1 ≤ v)
+    (hv2 : v ≤ S + 1) : inv.F ![0, S, 0] (fun _ => v) 0 = S - v := by
+  have hV : fetParams.Voff < fetParams.Von := by norm_num [fetParams]
+  rw [Witness.inv_isInverter.F_out, Witness.inv_isInverter.current_n,
+    Witness.inv_isInverter.current_p]
+  have hn : (inv.fet (0 : Fin 2)).I = dev .n fetParams := rfl
+  have hp : (inv.fet (1 : Fin 2)).I = dev .p fetParams := rfl
+  rw [hn, hp]
+  show -(dev .n fetParams 0 v 0) - dev .p fetParams 0 v S = S - v
+  have h1 : dev .n fetParams 0 v 0 = 0 := by
+    have hg : gateDrive .n 0 v 0 ≤ fetParams.Voff := by
+      show (0 : ℝ) - min v 0 ≤ fetParams.Voff
+      rw [min_eq_right hv0, sub_zero]
+      norm_num [fetParams]
+    rw [dev, Witness.ramp_eq_zero hV hg, zero_mul]
+  have h2 : dev .p fetParams 0 v S = v - S := by
+    have hVon : fetParams.Von ≤ S := by
+      show (0.55 : ℝ) ≤ S
+      exact hS
+    have hg : fetParams.Von ≤ gateDrive .p 0 v S := by
+      show fetParams.Von ≤ max v S - 0
+      rw [sub_zero]
+      exact le_trans hVon (le_max_right v S)
+    rw [dev, Witness.ramp_eq_one hV hg, one_mul]
+    show max (-(1 : ℝ)) (min 1 (1 * (v - S))) = v - S
+    rw [one_mul, min_eq_right (by linarith), max_eq_right (by linarith)]
+  rw [h1, h2]; ring
+
+/-- The curve `s ↦ 1 + ε (1 − exp (−s))` has derivative `ε exp (−t)` at `t`. -/
+theorem hasDerivAt_curve (ε t : ℝ) :
+    HasDerivAt (fun s : ℝ => 1 + ε * (1 - Real.exp (-s))) (ε * Real.exp (-t)) t := by
+  have h := (((hasDerivAt_id t).neg.exp).const_sub 1 |>.const_mul ε |>.const_add 1)
+  refine h.congr_deriv ?_
+  simp only [Pi.neg_apply, id_eq]
+  ring
+
+/-- The curve of §6.3 solves the DISTURBED node equation of the toy inverter for the boundary
+waveform `![0, 1, 0]` (ground 0, supply 1, input 0) and the constant disturbance `ε`. -/
+theorem toy_curve_disturbed {ε : ℝ} (hε : 0 < ε) (hε1 : ε ≤ 1) (b : ℝ) :
+    IsDisturbedTrajOn inv (fun _ => ![0, 1, 0]) (fun _ _ => ε)
+      (fun t _ => 1 + ε * (1 - Real.exp (-t))) 0 b := by
+  refine ⟨continuousOn_pi.2 fun _ => by fun_prop, fun t ht => ?_⟩
+  have hexp1 : Real.exp (-t) ≤ 1 := Real.exp_le_one_iff.2 (by linarith [ht.1])
+  have hexp0 : 0 < Real.exp (-t) := Real.exp_pos _
+  have hp : 0 ≤ ε * Real.exp (-t) := mul_nonneg hε.le hexp0.le
+  have hq : 0 ≤ ε * (1 - Real.exp (-t)) := mul_nonneg hε.le (sub_nonneg.2 hexp1)
+  have hF := toy_F_input_low (S := 1) (v := 1 + ε * (1 - Real.exp (-t))) (by norm_num)
+    (by linarith) (by linarith) (by linarith)
+  refine hasDerivWithinAt_pi.2 fun k => ?_
+  have hk : k = 0 := Subsingleton.elim _ _
+  subst hk
+  have hC : inv.C 0 (1 + ε * (1 - Real.exp (-t))) = 1 := rfl
+  simp only [hF, hC, div_one]
+  exact ((hasDerivAt_curve ε t).congr_deriv (by ring)).hasDerivWithinAt
+
+/-- The same statement with the definition of Appendix A: the curve is a disturbed trajectory in
+the sense of `DisturbanceProbe.IsDisturbedTraj`, with `w ≡ ε`. -/
+theorem toy_curve_disturbed_appendixA {ε : ℝ} (hε : 0 < ε) (hε1 : ε ≤ 1) (b : ℝ) :
+    IsDisturbedTraj (fun _ => ![0, 1, 0]) (fun _ => ε)
+      (fun t _ => 1 + ε * (1 - Real.exp (-t))) 0 b :=
+  (isDisturbedTrajOn_toy_iff _ _ _ _ _).1 (toy_curve_disturbed hε hε1 b)
+
+/-- **Same netlist, another boundary waveform.** The same curve solves the UNDISTURBED node
+equation of the toy inverter for the boundary waveform `![0, 1 + ε, 0]`: it is an `IsTrajOn`
+trajectory of the same netlist with the supply raised by `ε`. -/
+theorem toy_curve_isTrajOn_raised_supply {ε : ℝ} (hε : 0 < ε) (hε1 : ε ≤ 1) (b : ℝ) :
+    inv.IsTrajOn (fun _ => ![0, 1 + ε, 0]) (fun t _ => 1 + ε * (1 - Real.exp (-t))) 0 b := by
+  refine ⟨continuousOn_pi.2 fun _ => by fun_prop, fun t ht => ?_⟩
+  have hexp1 : Real.exp (-t) ≤ 1 := Real.exp_le_one_iff.2 (by linarith [ht.1])
+  have hexp0 : 0 < Real.exp (-t) := Real.exp_pos _
+  have hp : 0 ≤ ε * Real.exp (-t) := mul_nonneg hε.le hexp0.le
+  have hq : 0 ≤ ε * (1 - Real.exp (-t)) := mul_nonneg hε.le (sub_nonneg.2 hexp1)
+  have hr : 0 ≤ (1 - ε) * Real.exp (-t) := mul_nonneg (sub_nonneg.2 hε1) hexp0.le
+  have hF := toy_F_input_low (S := 1 + ε) (v := 1 + ε * (1 - Real.exp (-t))) (by linarith)
+    (by linarith) (by linarith) (by linarith)
+  refine hasDerivWithinAt_pi.2 fun k => ?_
+  have hk : k = 0 := Subsingleton.elim _ _
+  subst hk
+  have hC : inv.C 0 (1 + ε * (1 - Real.exp (-t))) = 1 := rfl
+  simp only [Netlist.vf, hF, hC, div_one]
+  exact ((hasDerivAt_curve ε t).congr_deriv (by ring)).hasDerivWithinAt
+
+/-- For the original boundary waveform `![0, 1, 0]` the curve is not a trajectory of the toy
+inverter on any `[0, b]` with `b > 0`: by `disturbance_zero_of_isTrajOn` the disturbance `ε`
+would be zero. -/
+theorem toy_curve_not_isTrajOn_same_boundary {ε b : ℝ} (hε : 0 < ε) (hε1 : ε ≤ 1) (hb : 0 < b) :
+    ¬ inv.IsTrajOn (fun _ => ![0, 1, 0]) (fun t _ => 1 + ε * (1 - Real.exp (-t))) 0 b :=
+  fun he => hε.ne'
+    (disturbance_zero_of_isTrajOn inv (toy_curve_disturbed hε hε1 b) he 0 ⟨le_rfl, hb⟩ 0)
+
+/-- The old rail-invariance theorem applies to the curve as a trajectory for the raised supply:
+its hypotheses hold with `V = 1 + ε`, and it bounds the curve by the raised rail `[0, 1 + ε]`. -/
+theorem toy_old_rail_invariance_applies {ε b : ℝ} (hε : 0 < ε) (hε1 : ε ≤ 1) :
+    ∀ t ∈ Icc 0 b, ∀ k : Fin 1,
+      (fun (s : ℝ) (_ : Fin 1) => 1 + ε * (1 - Real.exp (-s))) t k ∈ Icc (0 : ℝ) (1 + ε) := by
+  have h0 : (0 : ℝ) ≤ 1 + ε := by linarith
+  refine inv.rail_invariance (fun i => ?_) Witness.inv_regular
+    (toy_curve_isTrajOn_raised_supply hε hε1 b) (fun j _ t _ => ?_) (fun k => ?_)
+  · change Fin 2 at i
+    fin_cases i
+    exacts [(Witness.toy_contract .n).passive, (Witness.toy_contract .p).passive]
+  · fin_cases j
+    · show (0 : ℝ) ∈ Icc (0 : ℝ) (1 + ε)
+      exact ⟨le_rfl, h0⟩
+    · show (1 + ε : ℝ) ∈ Icc (0 : ℝ) (1 + ε)
+      exact ⟨h0, le_rfl⟩
+    · show (0 : ℝ) ∈ Icc (0 : ℝ) (1 + ε)
+      exact ⟨le_rfl, h0⟩
+  · show 1 + ε * (1 - Real.exp (-0)) ∈ Icc (0 : ℝ) (1 + ε)
+    rw [neg_zero, Real.exp_zero, sub_self, mul_zero, add_zero]
+    exact ⟨zero_le_one, by linarith⟩
+
+end BoundaryShiftProbe
+
+#print axioms BoundaryShiftProbe.disturbance_zero_of_isTrajOn
+#print axioms BoundaryShiftProbe.toy_F_input_low
+#print axioms BoundaryShiftProbe.toy_curve_disturbed
+#print axioms BoundaryShiftProbe.toy_curve_disturbed_appendixA
+#print axioms BoundaryShiftProbe.toy_curve_isTrajOn_raised_supply
+#print axioms BoundaryShiftProbe.toy_curve_not_isTrajOn_same_boundary
+#print axioms BoundaryShiftProbe.toy_old_rail_invariance_applies
+```
+
+## Corrections after the independent fact-check (2026-11-09)
+
+Source: `evidence/factcheck/factcheck.json`, area `audit`. Before a correction was applied it was
+re-checked by reading the cited places in the pinned clone, in the workstream's tools and logs
+and in this repository's history, and by `git` queries. Nothing shipped in the audited repository
+was executed for this, and the two upstream scripts remain un-run. The corrections were made in
+this file only: the template `$W/refs/workstream-A/tools/source-audit.template.md` is unchanged,
+so rendering from it again would lose them.
+
+| # | Where | What was wrong | What it says now |
+| --- | --- | --- | --- |
+| 1 | Header; §0 finding 1 | "Independently written equivalents" claimed more coverage than the workstream's own checks have. | The workstream's own checks stand in for the two un-run scripts and cover only the properties listed in §2 rows 13–15. |
+| 2 | §2, rows 13 and 15 and the new coverage note after the table | The limits of the replacement checks were not stated. | Row 13 lacks three upstream rules (the `Claims.lean` top-level rule, `partial` and `local` in Spec and Design, `#…` commands away from the line start) and matches five keywords at the line start only; row 14 re-implements the upstream reachability criterion and has a more permissive import test than the upstream script (it accepts every module outside the library); row 15 exercises the axiom closure only; row 13 has no negative control. The note also cites the fact-check's own re-derivation of the rules and criteria, whose code is not archived. |
+| 3 | §3, rows "Layer check" and "Claims audit" | "no violation of the upstream rules" was attributed to a check that does not implement all of them; the claims row did not say whose implementation of the criteria was meant. | "no violation of the rules it implements (it lacks three upstream rules, §2 coverage note)"; "the four audit criteria as the workstream's own code implements them (§2 coverage note)". The first wording was changed again: row 18. |
+| 4 | §6.2 item 1 | "Every old theorem with a hypothesis `he`" is silent about disturbed trajectories: too general. | Restricted to the same netlist; a changed netlist is the subject of item 2. Restricted further: row 16. |
+| 5 | §6.2 item 2 | "The disturbance cannot be hidden in the netlist" and "A current source satisfies neither": overstated. | A bounded disturbance can be written as an extra, non-passive device gated by a boundary node. The `IsInverter` theorems, rail invariance at the output and `slew_bound` still do not apply; `IsInvCore.propagation_side` can be applied, under its assumed rail hypothesis. Labelled as a hand argument. The item also cites the fact-check's Lean check of the construction, whose file is not archived. |
+| 6 | §6.2 item 3 | The lower-face range `:193-200` began two lines late, and the example did not satisfy the condition it illustrated. | `:191-200`; equality when every device at the node has its other channel terminal at the node's potential or carries no current, with the toy inverter (`I_off = 0`) as the example. |
+| 7 | §11 introduction | The Picard–Lindelöf route was attributed to the interface, and the two interface versions were identified by clock times (15:49, 16:06) that git does not record. | The route is attributed to the header of `VoltageToBit/Proofs/Existence.lean`; the versions are identified by commit (`1880a36`, `8c1fca8`). Qualified as an identification by content: row 22. |
+| 8 | §6.4; §11 introduction; §11.1, paragraph on the state of this repository | No notice that the trajectory notion changed after the audit was written. | Dated notes: the parameter point may now differ at each instant, `IsTrajectory` no longer takes a parameter argument, and the in-domain-only clause is unchanged at `0f77c1e`. The sections themselves were not rewritten. |
+| 9 | §8 | Two line ranges ended one line early. | `Design/Toy.lean:42-59` and `Witness/ToyFlipFlop.lean:43-45`. |
+| 10 | §9, declaration-level table | `IsInverter.eq_of_touch` was missing from the inverter rows, the `exists_isTrajOn` row said "10 lemmas of `Circuit/Field.lean`", and the name filter of `tools/DepMap.lean` was not disclosed. | The filter is described; `eq_of_touch` is added; the count is 12 (the 10 in the log and the two `private` lemmas); `pot_state` and `pot_bdry` are named as left out. |
+| 11 | §10, second item | The recorded `git grep` command does not return the two lines recorded as its result; it returns nothing. | The commands were run again and are recorded with the results they give; the conclusion is the same. The third item now names the handoff sentence it refers to. |
+| 12 | §11.1 row 11 and the sentence after the table | Row 11 was classed "reusable unchanged" although it is stated over the old `Params` record; "About 15 lines"; "Rows 1–3 and 11 total about 145 lines". | "reusable with new hypotheses"; 19 lines of code (25 in the cited ranges); rows 1–3 total 128 lines and row 11 adds 19. |
+| 13 | §11.1 row 17; §14, first list | "with a negative control" did not say what is controlled. | The negative control covers the axiom closure only, and the static check lacks three upstream rules. |
+| 14 | §11.2, row "F1 and F6" | The relation was inverted ("did not determine the waveform"). | "under which the waveform did not determine the declared clock edges". |
+| 15 | §11.2, row A7 | "its global bound is used only for existence". | Used only by the well-posedness theorems (existence, uniqueness, continuous dependence) and the results built on them, never by `propagation` or `contamination`. |
+
+Examined and left unchanged: the sentence of §5.3 that every hypothesis of `contamination` holds
+on `[9, 20]` (true; it is shown inside the proof in Appendix B, where the old theorem is applied
+with every hypothesis supplied, not by the statement quoted in §5.3); and the fact-check's remark
+on the clone's untracked probe file (disclosed in §2 row 11 and Appendix C; this audit does not
+say that the working tree is clean). The sentence of §5.3 is still unchanged; row 19 below adds
+a remark to §5.3 that says where the hypotheses are discharged.
+
+**Corrections after the second verification round (2026-11-10).** Source:
+`evidence/verification/round2-finish-fixes.json`, entry `audit-doc`: one issue to fix and eight
+minor ones. The number of each issue is given in the column "Where". Row 24 corrects one more
+sentence, which the notes of that entry mention and which is not one of the nine issues. Row 25
+records the change of the header. Each issue was checked again
+before the text was changed: by reading the cited places in the pinned clone and in the
+workstream's tools and logs, by `git` queries on both repositories, by a static scan of the
+clone's `.lean` files with a script written for this round, and by one Lean file compiled against
+the clone's build products (Appendix D). Nothing shipped in the audited repository was executed,
+and the two upstream scripts remain un-run. As before, the corrections were made in this file
+only and not in the template.
+
+| # | Where | What was wrong | What it says now |
+| --- | --- | --- | --- |
+| 16 | §6.2 item 1; new Appendix D (issue 1) | "For the same netlist" was still too strong. The curve of §6.3, a solution of the disturbed equation, is an `IsTrajOn` trajectory of the same netlist when the supply is raised by `ε`, and the old `rail_invariance` then applies to it. So the heading and two sentences of the item were false as written. | "For the same netlist and the same boundary waveform", with the Lean-checked reason for every netlist. Added: a changed boundary waveform can absorb a disturbance in special cases, with the toy example and the application of the old `rail_invariance` with `V = 1 + ε`. All of it is Lean-checked in Appendix D. The conclusion of §6.3 is said to stand. |
+| 17 | §2, paragraph after the table (issue 2) | "corroboration of the same properties" contradicted the coverage note that follows it. | Corroboration of the properties listed in the coverage note, which are not all the properties the upstream scripts test. |
+| 18 | §3, row "Layer check" (issue 3) | "no violation of the rules it implements" is contradicted by the tool's own output, which reports two hits of its `deriving` rule (`logs/indep-layers.log`: "problems found: 2"). | "no violation of the upstream rules as far as it implements them", with the three missing rules and the five line-start keywords; the two `deriving` reports are said to come from a rule that is not an upstream rule. |
+| 19 | §5.3 (issue 4) | "every hypothesis of `contamination` holds on `[9, 20]`" was followed by a statement that does not list the hypotheses. | One more sentence: the hypotheses are discharged inside the proof in Appendix B, and the statement does not list them. |
+| 20 | §9, file table, row `Circuit/Field.lean` (issue 5) | "(existence only)" repeated the wording that row 15 corrected in §11.2. | Used by the well-posedness theorems of `Circuit/WellPosed.lean` only (its lines 53, 54, 78 and 94 are the only uses outside the file); the inverter witnesses reach it through existence. |
+| 21 | §0 finding 6 (issue 6) | "About 100 lines" stood beside the 128 lines of §11.1. | 98 lines in rows 1 and 2 of §11.1, and 128 with row 3. |
+| 22 | §11, introduction and dated note (issue 7) | "The audit was written against the state committed as `1880a36`" stated an identification by content as a fact. The audit read the files at 15:49; the commit is stamped 15:51:57. | Both commits are said to match the state the audit describes, by content, and the files are said to have been read on disk shortly before each commit was made. |
+| 23 | Rows 2 and 5 above; §2 coverage note, last paragraph (issue 8) | "a wider import test" could be read as a stronger test. Rows 2 and 5 did not say that the corrected passages cite results of the fact-check. The coverage note did not say whether the bare-word forms of the five keywords had been checked. | Row 2: "a more permissive import test (it accepts every module outside the library)". Rows 2 and 5 name the citations and say that the code behind them is not archived. The coverage note quotes the fact-check's record, which covers every upstream rule, and adds the scan of 2026-11-10. |
+| 24 | §4.5 (not one of the nine issues) | "the only hint is the phrase "unit output capacitance" in comments": the comments have a second such phrase, "unit-slope rise", in the flip-flop witness. The fact-check noted this outside its lists of discrepancies, and the second round recorded it as not addressed. A search of the clone's Lean files for the words unit, units, normalized, normalised and dimensionless finds these two phrases and no other in a comment (the remaining matches are the type `Unit`: in two proofs of `Circuit/Rails.lean`, `:466` and `:486`, and in the upstream script `scripts/Audit.lean:96`). | Both phrases are named, with their places. |
+| 25 | Header | It named only the corrections of 2026-11-09. | It also names the corrections of 2026-11-10. |
+
+Examined and left unchanged (issue 9): five statements of the corrected text that are in no
+fact-check item. Each was checked again and stands. (1) Row 13 matches `opaque`, and in Spec and
+Design `theorem`, `lemma`, `example` and `axiom`, only at the start of a line
+(`tools/indep_layers.py:40`, `:43` against `scripts/check_layers.py:37-50`). (2) The import test of
+row 14 accepts every module outside the library (`tools/IndepAudit.lean:142-143` against
+`scripts/Audit.lean:43-45`). (3) Row 13 has no negative control: `tools/` holds none for
+`indep_layers.py`. (4) `slew_bound` requires every device to be `Passive`
+(`Circuit/Rails.lean:212`), and `propagation_side` assumes the rail
+(`Cells/InverterCore.lean:221`). (5) The `git grep` results of §10 were reproduced on the working
+tree and on both commits; the line of `docs/STATUS.md` is `:69` in `594b4fa`.
+
+**Corrections after the third verification round (2026-11-10).** Source:
+`evidence/verification/round3.json`, entry `docs`: passed, with five minor issues. Issues 1 and 4
+concern this file; the others concern `docs/model.md`. The number of each issue is given in the
+column "Where". Each issue was checked again before the text was changed: issue 1 by a
+case-insensitive whole-word search with `grep` for the five words of row 24 in the clone's 46
+`.lean` files outside `.lake`, issue 4 by comparing the header with the text before the second
+round. Nothing in the clone was executed, and the two upstream scripts remain un-run. As before,
+the corrections were made in this file only and not in the template.
+
+| # | Where | What was wrong | What it says now |
+| --- | --- | --- | --- |
+| 26 | Row 24 (issue 1) | "the remaining matches are the type `Unit` in two proofs" left out one match. The search finds nine lines: the six comment lines that §4.5 cites, the type `Unit` in two proofs of `Circuit/Rails.lean`, and the type `Unit` in the upstream script `scripts/Audit.lean`, outside any proof. | The three matches are named with their places. |
+| 27 | Row 25; introduction of the corrections after the second verification round (issue 4) | The header was changed in the second round to name the corrections of 2026-11-10, and the change was not a row of that table, although the header says that every change is listed in the last section. | Row 25 records it, and the introduction says so. |
+| 28 | Header | It named the corrections of 2026-11-09 and those after the second verification round only. | It also names the third verification round. |
