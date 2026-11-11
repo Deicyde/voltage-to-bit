@@ -4,7 +4,7 @@ same tools reproduces it, and the four other records of this directory, byte for
 
 What was checked
   files:     the build configuration, library sources, design files and checking scripts
-             listed in evidence/lean/sources.sha256 (sha256 of the list: 0a2062a838cccb2d28c058992bfb26d871f11a9b03d7f21da5d66c2eec9fc6c7)
+             listed in evidence/lean/sources.sha256 (sha256 of the list: 6e97845d42f9dc58db66be5e4c72b7af99a1378050659f20da5a3885da1dc67b)
   config:    lakefile.toml, lake-manifest.json and lean-toolchain are the files pinned in
              scripts/pinned-config.sha256, and lakefile.toml has no key and no option that step 2 does not accept
   toolchain: leanprover/lean4:v4.35.0 (lean-toolchain); Lean (version 4.35.0, arm64-apple-darwin24.6.0, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)
