@@ -26,8 +26,12 @@ in `[0, 0.40]` V and about 58 V/ns falling for inputs in `[1.25, 1.98]` V
 (`Examples.illustrative_max_rise_slew`, `Examples.illustrative_max_fall_slew`).
 The same lemmas give about 32 V/ns falling for inputs in `[0, 0.40]` V and
 about 65 V/ns rising for inputs in `[1.25, 1.98]` V, so the magnitude of the
-slew is bounded by about 65 V/ns for inputs in either range; for inputs outside
-those ranges it has no bound. A second stage with gate-drain capacitance `C_M`
+slew is bounded by about 65 V/ns for inputs in either range. The two lemmas
+give a bound for every bounded input range; for the valid-input classes of the
+guarantee, which have no such range, the slew has no bound
+(`Examples.valid_low_rise_slew_unbounded`,
+`Examples.valid_high_fall_slew_unbounded`). A second stage with gate-drain
+capacitance `C_M`
 would therefore have to allow for a feedthrough current of up to about
 `65 · C_M` µA, which stays inside the 2 µA allowance only for `C_M` below about
 0.03 fF (a small inverter has 0.2 to 1 fF). Read the corollary as a statement

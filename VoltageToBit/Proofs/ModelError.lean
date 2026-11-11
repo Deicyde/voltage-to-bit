@@ -38,7 +38,8 @@ same node (a higher-fidelity device model, or the physical device).
   nonnegative, the total capacitance `CL + CM + Cc` lies in `[Clo, Chi]` with
   `0 < Clo`, and `CM * Su + Cc * Sg + εw ≤ eps`, then the node voltage is a
   trajectory. This is the formal place where an input slew bound is needed.
-  Inputs with a jump are outside this lemma (limit 4 below).
+  An input that is not continuous on `[a, b]`, in particular one with a jump at
+  an instant of `(a, b)`, is outside this lemma (limit 4 below).
 * `Design.InBox.In_eq_zero`: for inputs at or below `Vtnlo` and a node at or
   above ground, the NMOS current of every box member is zero. This is about
   the NMOS current only: the net currents of the box members can still differ
@@ -93,7 +94,8 @@ not, such as conduction below threshold.
 4. **Nothing about the feedthrough of an input jump.** `of_charge_balance`
    assumes that the input and the aggressor are continuous. With `CM > 0` and
    a continuous aggressor, a continuous node voltage cannot conserve charge
-   across a jump of the input, so inputs with a jump are outside that lemma.
+   across a jump of the input, so an input with a jump at an instant of
+   `(a, b)` is outside that lemma.
    The trajectory notion itself still admits them (existence for one jump is
    `exists_trajectory_step`). For such an input the model therefore leaves the
    feedthrough at the jump out.
@@ -362,7 +364,9 @@ What the statement says and does not say:
   guarantee itself takes every input function; over that class the term
   `CM * du` has no bound, so the feedthrough current is covered by `eps` only
   under a slew bound such as `Su`.
-* Inputs with a jump are outside this lemma. With `CM > 0` a continuous `v`
+* An input with a jump at an instant of `(a, b)` is outside this lemma (one
+  that jumps exactly at `a` and already has its new value there is continuous
+  on `[a, b]`). With `CM > 0` a continuous `v`
   cannot conserve charge across a jump of the input: with `v` and `g`
   continuous, the charge changes at the jump by `CM` times its height.
   Conserving the charge would take a jump of `v`, and a trajectory is
