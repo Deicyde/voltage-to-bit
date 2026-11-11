@@ -1,7 +1,8 @@
 # Shared interface
 
-Owner: coordinator. Status: **v1, frozen 2026-11-10**. The findings of the
-adversarial review (workstream E), of the independent fact-check and of three
+Owner: coordinator. Status: **v1.1, 2026-11-11** (v1, frozen 2026-11-10, with
+corrections of prose only; see the change log). The findings of the
+adversarial review (workstream E), of the independent fact-check and of five
 verification rounds are dispositioned in `docs/review-disposition.md`; the
 findings of workstreams A, B, D and F are recorded in their own documents
 (`docs/source-audit.md`, `docs/model.md`, `docs/discrepancy-report.md`,
@@ -136,16 +137,19 @@ C_M · S_u + C_c · S_g + ε_w ≤ ε_I
 then `v` is a trajectory (`IsTrajectory.of_charge_balance`). This is the one
 place where a slew bound enters. The guarantee of §6 assumes none; a node with
 feedthrough is shown to be among its trajectories only under such a budget. An
-input with a jump inside `[a, b]` is outside this lemma: with a continuous
-neighbour, a continuous `v` cannot conserve charge across a jump of `u` when
-`C_M > 0`.
+input with a jump at an instant of `(a, b)` is outside this lemma (one that
+jumps exactly at `a` and already has its new value there is continuous on
+`[a, b]`). With `C_M > 0` and a continuous neighbour, a continuous `v` cannot
+conserve charge across a jump of `u`.
 
 ### 4.1 Physical reading of the envelopes (not part of any theorem)
 
-These are environment restrictions and conventions. They are recorded in
-`docs/assumptions.md` (rows ENV-07 to ENV-10 and ENV-13; the disturbance
-budget with leakage and near-threshold conduction is row PHY-04, noise is row
-PHY-07) and none of them is proved.
+These are environment restrictions, conventions and unresolved physical
+assumptions. They are recorded in `docs/assumptions.md`: rows ENV-07 to ENV-10
+and ENV-13 (environment restrictions), PHY-04 (the disturbance budget, with
+leakage and near-threshold conduction), PHY-02 (a box that brackets a real
+device), PHY-03 and PHY-14 (the admissibility of such a box, its margins
+included) and PHY-07 (noise). None of them is proved.
 
 - **Capacitance.** `c` is the incremental capacitance `∂Q/∂v` of the output
   node, with every attached capacitor counted once. Currents caused by *other*
@@ -276,7 +280,10 @@ equation with constant parameters that starts in the interval of its own
 supply (`solution_safe_atSupply`). This is proved for a
 supply that is the same number at every instant of the run. For a supply that
 moves within its range, only the fixed domain `[V_lo, V_hi]` is proved
-invariant. The physical claim should be read with the supply-relative domain.
+invariant, and the model-error obligation of §4 then has to be met on all of
+it, which reaches 0.46 V above the lowest supply in the illustrative record.
+For runs at one supply value the physical claim should be read with the
+supply-relative domain.
 
 Also proved:
 
@@ -289,9 +296,10 @@ Also proved:
   derivative within `[a, b]` at every point of `[a, b]`; uniqueness is not
   stated for the weaker notion that `IsTrajectory.of_ode` accepts. For an input
   that is continuous on `[a, b]` only, existence is stated for the illustrative
-  record (`Examples.exists_second_stage`), not in general. Existence is not
-  proved for parameters that move in time or for less regular data; for those
-  the guarantee is a statement about whatever trajectories there are.
+  record on `[0, 10]` (`Examples.exists_second_stage`), not in general.
+  Existence is not proved for parameters that move in time or for less regular
+  data; for those the guarantee is a statement about whatever trajectories
+  there are.
 - Non-vacuity for every admissible record (`Proofs/NonVacuity.lean`).
 - Refined deadlines from a list of intermediate levels
   (`Design.ValidRiseCert`, `Design.ValidFallCert`, `IsTrajectory.rise_of_cert`,
@@ -383,4 +391,5 @@ completed or only proposed.
 | 2026-11-09 | v1 candidate | Hypothesis window is `[s, e)`; six margins written out; existence extended to voltage-dependent Lipschitz capacitance; uniqueness, certificates, minimum delay, model-error obligation and the measurable-disturbance scope limit recorded. | Bring prose in line with the Lean at commit `cac4016`. |
 | 2026-11-09 | v1 candidate (rev. 2) | `IsTrajectory` no longer takes a fixed `θ`: at each instant some point of the box must satisfy the current balance. Theorems lose their `θ` argument and are strictly more general. Model-error obligation restated as a sandwich between box members. | A fixed additive `ε_I` cannot absorb model-form error that scales with device current; the proofs only ever used bounds that hold throughout the box. Commit `eae25ed`. Statements reviewed by workstream E at `1880a36` are implied by the new ones via `IsTrajectory.of_ode`. |
 | 2026-11-09 | v1 candidate (rev. 3) | Added §4.1 (physical reading: incremental capacitance, capacitor load only, what gives `ε_I` meaning, noise, temperature), threshold side conditions, the exact invariance condition, the supply-relative safe domain, step inputs, and per-record notes files. No theorem changed. | Workstream B proposals IP-2 to IP-8 and IP-10 (`docs/model.md`). IP-9 (comparison plan) is for workstream D; IP-11 and IP-12 are deferred. |
-| 2026-11-10 | v1 (frozen) | `Design.Admissible` gains `0 ≤ V_tn,min` and `0 ≤ V_tp,min` (26 conditions); the supply-relative safe domain no longer needs an extra condition and is stated for trajectories as well as ODE solutions. Added: how to read "every input", the static form of the model-error obligation, the charge-balance lemma with its slew budget, the deadline table with proved and refuted ends, the step-input scope as compiled statements, negative controls, and the limit on the provable `ε_I`. Base layer recorded as circuit level. After verification round 3: the exact hypotheses of the model-link lemmas (capacitance range; sign conditions and one parameter point in the charge balance), the regions of the six margins, invariance from the boundary margins as a sufficient condition, the supply-relative domain for trajectories that start in it, the existence and uniqueness class, the deadline gap with its rounded ends, the 38 ps run as one instance, the two-stage reading, the step-input scope with its interval, and the full names of the certificate theorems. No theorem changed. | Workstream E findings and their independent re-verification (`docs/review-disposition.md`); workstream F results (`docs/experiment-loop.md`); owner decisions of 2026-11-09; verification round 3 (`evidence/verification/round3.json`, entries `prose` and `register`). |
+| 2026-11-10 | v1 (frozen) | `Design.Admissible` gains `0 ≤ V_tn,min` and `0 ≤ V_tp,min` (26 conditions); the supply-relative safe domain no longer needs an extra condition and is stated for trajectories as well as ODE solutions. Added: how to read "every input", the static form of the model-error obligation, the charge-balance lemma with its slew budget, the deadline table with proved and refuted ends, the step-input scope as compiled statements, negative controls, and the limit on the provable `ε_I`. Base layer recorded as circuit level. After verification round 3 (prose only; no theorem changed): the exact hypotheses of the model-link lemmas (capacitance range; sign conditions and one parameter point in the charge balance), the regions of the six margins, invariance from the boundary margins as a sufficient condition, the supply-relative domain for trajectories that start in it, the existence and uniqueness class, the deadline gap with its rounded ends, the 38 ps run as one instance, the two-stage reading, the step-input scope with its interval, and the full names of the certificate theorems. | Workstream E findings and their independent re-verification (`docs/review-disposition.md`); workstream F results (`docs/experiment-loop.md`); owner decisions of 2026-11-09; verification round 3 (`evidence/verification/round3.json`, entries `prose` and `register`). |
+| 2026-11-11 | v1.1 | Prose only; no definition or theorem changed. §4: an input with a jump at an instant of `(a, b)` is outside the charge-balance lemma, and one that jumps exactly at `a` and already has its new value there is continuous on `[a, b]` (was: "a jump inside `[a, b]`"). §4.1: what the section records is called environment restrictions, conventions and unresolved physical assumptions, and the register rows of the parameter box (PHY-02, PHY-03, PHY-14) are cited. §6: the supply-relative domain is the reading for runs at one supply value, and for a supply that moves the model-error obligation has to be met on the whole fixed domain; existence for an input continuous on `[a, b]` only is stated for the illustrative record on `[0, 10]`. This log: in the v1 row, "no theorem changed" now applies to the changes after verification round 3 only. Status line: v1.1. | Verification round 4 (`evidence/verification/round4.json`, entry `prose`, issues 7, 8, 10, 11 and 12). Issue 11 named PHY-02 and PHY-03 for the box; PHY-14 is cited as well, because the margins that the box bullet says must be recomputed include the two switching margins, which are in PHY-14 and not in PHY-03. A new version line, not an addition to the v1 row, because the header asks for one for every change after the freeze. |

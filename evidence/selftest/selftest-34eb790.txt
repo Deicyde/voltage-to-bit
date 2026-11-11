@@ -1,0 +1,111 @@
+Output of `sh scripts/selftest.sh` (exit status 0), run in a checkout of commit
+34eb790c058a3822e74b2df007830db81b86dadd, CHECK_REPLAY_JOBS=1. Uncommitted changes were present
+only in README.md and docs/, and evidence/verification/round5.json was untracked; no control
+uses these files (the last check digests evidence/ before and after, that file included). The lines below the dashes are the output as the script printed it; it has no
+dates or timings.
+------------------------------------------------------------------------------
+== small cases for the source scan and for the design generator ==
+PASS scan: the source scan (Lean's own parser) reports each of 71 texts that contain a construct outside the allow-list or a way of hiding one, at the kind or character named in the case, and reports nothing for 3 texts in the style of the library
+PASS generator: the design generator rejects each of 37 malformed inputs, writes nothing for them, accepts the committed record, reports a changed output as stale, and exits with status 2 and a message when it cannot write its output; --check-all also reports a listed record that is stale, whose header was altered or that is missing, a design file or a generated file that the list does not name (the decoy of verification round 4, issue 4, among them), and a malformed list
+== positive control: a copy without build products (a full run of check.sh) ==
+PASS control: a copy of the project without any build product passes a full run of check.sh, which compiles every module
+PASS control: the records that run wrote (sources.sha256, versions.txt, source-scan.txt, audit.txt, kernel-replay.txt) are byte for byte those in evidence/lean/ of this checkout
+PASS (py) that copy has a hashlib.py and a json.py in its top directory, check.sh's working directory, which end any Python program that imports them (round 4, issue 2): no program imported them, the run passed, and its records are those of this checkout
+== (s6) --quick says how the last full run on these files ended ==
+PASS (qcfg) a compiled configuration of a dependency in .lake/config replaced by a file that is not one (round 4, issue 5): --quick removes .lake/config before the build, and the build passes
+PASS (s6) --quick after a full run that passed: it passes, removes .lake/config, compiles nothing again, and says that the record names these same files and says that its run passed
+PASS (s6) --quick when the record of the last full run on these files says FAILED: the line that reports the quick check says so
+== (cfg) a build configuration that is not the pinned one ==
+PASS (cfg) the unchanged configuration files are accepted as the pinned ones, with no key refused; in a copy without the dependencies check.sh then stops at step config and says that .lake/packages/mathlib is missing
+PASS (cfg) lakefile.toml without the line defaultTargets (B1): check.sh stops at step config, also with --keep-going, and reports: NOT THE PINNED FILE: lakefile.toml
+PASS (cfg) lakefile.toml with another default target and a second library (B1): check.sh stops at step config, also with --keep-going, and reports: NOT THE PINNED FILE: lakefile.toml
+PASS (cfg) lakefile.toml without autoImplicit = false and relaxedAutoImplicit = false (S5): check.sh stops at step config, also with --keep-going, and reports: NOT THE PINNED FILE: lakefile.toml
+PASS (cfg) lakefile.toml with autoImplicit = true: check.sh stops at step config, also with --keep-going, and reports: NOT THE PINNED FILE: lakefile.toml
+PASS (cfg) lakefile.toml with an option that switches the kernel check off: check.sh stops at step config, also with --keep-going, and reports: NOT THE PINNED FILE: lakefile.toml
+PASS (cfg) lakefile.toml with extra arguments for the compiler: check.sh stops at step config, also with --keep-going, and reports: NOT THE PINNED FILE: lakefile.toml
+PASS (cfg) lakefile.toml with another revision of Mathlib: check.sh stops at step config, also with --keep-going, and reports: NOT THE PINNED FILE: lakefile.toml
+PASS (cfg) lakefile.toml with a second dependency: check.sh stops at step config, also with --keep-going, and reports: NOT THE PINNED FILE: lakefile.toml
+PASS (cfg) lakefile.toml with a comment added: check.sh stops at step config, also with --keep-going, and reports: NOT THE PINNED FILE: lakefile.toml
+PASS (cfg) lake-manifest.json with another revision of Mathlib: check.sh stops at step config, also with --keep-going, and reports: NOT THE PINNED FILE: lake-manifest.json
+PASS (cfg) lean-toolchain naming another toolchain: check.sh stops at step config, also with --keep-going, and reports: NOT THE PINNED FILE: lean-toolchain
+PASS (cfg) a lakefile.lean next to lakefile.toml: check.sh stops at step config, also with --keep-going, and reports: NOT ALLOWED: lakefile.lean
+PASS (cfg) lakefile.toml with srcDir in [[lean_lib]] (round 4, issue 3), with the pin changed to accept the file: check.sh stops at step config, also with --keep-going, and reports: NOT ALLOWED: lakefile.toml has the key srcDir in [[lean_lib]] "VoltageToBit"; accepted there: name
+PASS (cfg) lakefile.toml with roots in [[lean_lib]], with the pin changed to accept the file: check.sh stops at step config, also with --keep-going, and reports: NOT ALLOWED: lakefile.toml has the key roots in [[lean_lib]] "VoltageToBit"
+PASS (cfg) lakefile.toml with globs in [[lean_lib]], with the pin changed to accept the file: check.sh stops at step config, also with --keep-going, and reports: NOT ALLOWED: lakefile.toml has the key globs in [[lean_lib]] "VoltageToBit"
+PASS (cfg) lakefile.toml with libName in [[lean_lib]], with the pin changed to accept the file: check.sh stops at step config, also with --keep-going, and reports: NOT ALLOWED: lakefile.toml has the key libName in [[lean_lib]] "VoltageToBit"
+PASS (cfg) lakefile.toml with moreLeanArgs in [[lean_lib]], with the pin changed to accept the file: check.sh stops at step config, also with --keep-going, and reports: NOT ALLOWED: lakefile.toml has the key moreLeanArgs in [[lean_lib]] "VoltageToBit"
+PASS (cfg) lakefile.toml with weakLeanArgs in [[lean_lib]], with the pin changed to accept the file: check.sh stops at step config, also with --keep-going, and reports: NOT ALLOWED: lakefile.toml has the key weakLeanArgs in [[lean_lib]] "VoltageToBit"
+PASS (cfg) lakefile.toml with options of its own in [[lean_lib]], with the pin changed to accept the file: check.sh stops at step config, also with --keep-going, and reports: NOT ALLOWED: lakefile.toml has the key leanOptions in [[lean_lib]] "VoltageToBit"
+PASS (cfg) lakefile.toml with srcDir in the package table, with the pin changed to accept the file: check.sh stops at step config, also with --keep-going, and reports: NOT ALLOWED: lakefile.toml has the key srcDir in its package table
+PASS (cfg) lakefile.toml with buildDir in the package table, with the pin changed to accept the file: check.sh stops at step config, also with --keep-going, and reports: NOT ALLOWED: lakefile.toml has the key buildDir in its package table
+PASS (cfg) lakefile.toml with moreLeanArgs in the package table, with the pin changed to accept the file: check.sh stops at step config, also with --keep-going, and reports: NOT ALLOWED: lakefile.toml has the key moreLeanArgs in its package table
+PASS (cfg) lakefile.toml with an executable, with the pin changed to accept the file: check.sh stops at step config, also with --keep-going, and reports: NOT ALLOWED: lakefile.toml has the key lean_exe in its package table
+PASS (cfg) lakefile.toml with subDir in [[require]], with the pin changed to accept the file: check.sh stops at step config, also with --keep-going, and reports: NOT ALLOWED: lakefile.toml has the key subDir in [[require]] "mathlib"
+PASS (cfg) lakefile.toml with a second library of the same name, with the pin changed to accept the file: check.sh stops at step config, also with --keep-going, and reports: NOT ALLOWED: lakefile.toml must have exactly one [[lean_lib]] named VoltageToBit; it has 2
+PASS (cfg) lakefile.toml with an option that changes what a statement means (round 5), with the pin changed to accept the file: check.sh stops at step config, also with --keep-going, and reports: NOT ALLOWED: lakefile.toml: [leanOptions] must be exactly pp.unicode.fun = true, autoImplicit = false and relaxedAutoImplicit = false
+PASS (cfg) lakefile.toml with autoImplicit switched on in [leanOptions], with the pin changed to accept the file: check.sh stops at step config, also with --keep-going, and reports: NOT ALLOWED: lakefile.toml: [leanOptions] must be exactly
+== (env) the environment that check.sh gives itself ==
+PASS (env) check.sh called with --clean-environment and exactly the environment it gives itself: it runs (and stops at step config in the copy without dependencies)
+PASS (env) the same with LEAN_PATH added: check.sh stops with exit status 2 before step 1 and names the variable
+PASS (env) the same without PYTHONSAFEPATH (round 4, issue 2): check.sh stops with exit status 2 before step 1 and names the variable
+PASS (env) a python3 that fails the test for version 3.11 and the safe path (a stand-in): check.sh stops with exit status 2 before step 1
+PASS (env) a call with LEAN_PATH, LAKE_HOME, ELAN_TOOLCHAIN and PYTHONPATH set (PYTHONPATH with a json.py that ends any program importing it): the output is the one without them
+== (b1) sources that do not compile, with compiled files of an earlier build present ==
+PASS (b1) a file that no longer compiles, lakefile.toml without default targets: check.sh builds the library by name, the changed file is compiled again and fails, and check.sh stops at step build
+PASS (b1) a file that no longer compiles, lakefile.toml with another default target: check.sh builds the library by name, the changed file is compiled again and fails, and check.sh stops at step build
+== (s5) a build without autoImplicit = false, and names that are bound nowhere ==
+PASS (s5) lakefile.toml without the autoImplicit lines, the pin changed to accept it, and two statements with names that are bound nowhere: check.sh stops at step config, before the build, because [leanOptions] is not the pinned set
+== (e) stale design record ==
+PASS (e) a design file that differs from the generated Lean file: check.sh stops with exit status 1 at step design-record
+PASS (e) the decoy of round 4, issue 4: the header of the design record altered and a copy generated under another name: check.sh stops at step design-record and names both files
+== (d) failing build ==
+PASS (d) a module that does not compile: check.sh stops with exit status 1 at step build, and the error that it shows names the file
+== (src) defects in the sources, each in a module of its own (one run of check.sh --quick --keep-going) ==
+PASS (src) the copy fails at the steps source-scan, axiom-audit, import-closure and declaration-count, and at the comparison of the digests at the end; the build accepts all of it
+PASS a notation: the scan names the command, the audit names the environment extensions that hold it, and the declarations that Lean made for it are counted in the compiled files and not in the text
+PASS (c) a source file that VoltageToBit.lean does not import: the scan and step import-closure name it
+PASS (f) an axiom declared and used: the scan names the command, the audit names the axiom and the theorem that depends on it
+PASS (S3) a scoped instance in plain sight: the scan names the command, the audit names the instance and says that it is scoped
+PASS (B2) the same instance behind `/-/-/`, which Lean reads as a complete comment: the scan reads what Lean reads, and the audit names the instance
+PASS (S4) an indented `variable?` that adds an instance hypothesis: the scan names the command, the audit names the theorem whose text reads `: False`
+PASS (M8) a tactic configuration, which Lean evaluates as a program: the scan names it
+PASS a theorem with a universe parameter: the scan and the audit name it
+PASS a simp attribute: the scan names the attribute, the audit names the lemma
+PASS a definition of a metaprogramming type, written with allowed syntax only: the audit names it
+PASS a definition that hides a name of Mathlib inside the library's namespace, written with allowed syntax only: the audit names it
+PASS an opaque, an unsafe and a partial definition (round 4, issue 9): the scan names the first keyword, the audit names each declaration
+PASS definitions marked reducible (`abbrev`) and irreducible, and the two scoped instances, which Lean marks with the reducibility of instances (round 4, issue 9): the audit names each one
+PASS an argument with a default value, written with allowed syntax only (`optParam`; round 4, issue 9): the audit names the declaration
+PASS a module that writes a file into scripts/ while it is compiled (round 4, issue 9): the scan names the command, and the digests taken at the end of the run name the new file
+PASS (tree) file names that the source tree may not have (round 4, issue 9): a non-ASCII letter, a leading `_`, the extension .LEAN and a symbolic link: the scan names each one
+== (stored) a compiled file that was not made from the present sources ==
+PASS (stored) the compiled file of a module, left from before the module it imports changed: the audit finds an axiom that the stored axiom list does not have, and refuses the declaration
+PASS (stored) with the compiled file made from the present sources the same command passes
+== (origin) compiled files of the library that come from another directory ==
+PASS (origin) the audit refuses compiled files of the library that the search path takes from another directory than .lake/build of the project
+PASS (origin) without the second copy the same command passes
+== (m9) an error of lean in the audit program, after the audit has printed its result ==
+PASS (m9) the audit program fails after it has printed AUDIT OK and its list: check.sh fails at step axiom-audit and shows the error on the screen
+== (a), (b) declaration added with the kernel check switched off (a full run of check.sh) ==
+     the build and the axiom audit accept the file (RESULT build: ok, RESULT axiom-audit: ok): this is the gap of finding E1-08
+PASS (a) a declaration of False added with the kernel check switched off: leanchecker accepts the compiled files of the unmodified copy and rejects those of the copy with the declaration, naming it
+PASS (a) the same declaration, in the export: leanchecker accepts the export of the unmodified copy and does not accept the export of the copy with the declaration; it says: (kernel) declaration type mismatch, 'VoltageToBit.Selftest.bad' has type
+PASS (a) the same declaration, in the export: leanchecker-paranoid accepts the export of the unmodified copy and does not accept the export of the copy with the declaration; it says: (kernel) declaration type mismatch, 'VoltageToBit.Selftest.bad' has type
+PASS (a) the same declaration, in the export: lean4lean accepts the export of the unmodified copy and does not accept the export of the copy with the declaration; it says: at VoltageToBit.Selftest.bad: (kernel) declaration type mismatch
+PASS (a) the same declaration, in the export: nanoda accepts the export of the unmodified copy and does not accept the export of the copy with the declaration; it says: assertion failed: self.def_eq(u, v)
+PASS (a) the same declaration, in the export: con-leche accepts the export of the unmodified copy and does not accept the export of the copy with the declaration; it says: con-leche: invalid: type mismatch in theorem VoltageToBit.Selftest.bad
+PASS (a) the same declaration, in the export: con-ron accepts the export of the unmodified copy and does not accept the export of the copy with the declaration; it says: con-ron: rejected: type mismatch in theorem [at theorem VoltageToBit.Selftest.bad
+PASS (b) the source scan flags the file that switches the kernel check off: the import, the option and the command that runs code
+PASS (pyc) a module of the library in a directory named __pycache__, imported by VoltageToBit.lean (round 4, issue 1): the scan refuses the directory and the import
+PASS (pyc) the record of that run lists the digest of the module's source file (sources.sha256) and the module among those that leanchecker replayed
+PASS (s6) the record that this failed run wrote says so, with the steps
+== (g) what the export checkers start from ==
+PASS (g) leanchecker accepts a small export ("Lean default kernel accepts the solution") and refuses the same export without the declaration of Eq: "(kernel) unknown constant 'Eq'"
+PASS (g) leanchecker-paranoid accepts a small export ("Lean default kernel accepts the solution") and refuses the same export without the declaration of Eq: "(kernel) unknown constant 'Eq'"
+PASS (g) lean4lean accepts a small export ("checked ") and refuses the same export without the declaration of Eq: "(kernel) unknown constant 'Eq'"
+PASS (g) nanoda_bin accepts a small export ("Checked ") and refuses the same export without the declaration of Eq: "declaration not found in infer_const, Eq"
+PASS (g) con-leche accepts a small export, and also the same export without the declaration of Eq ("con-leche: accepted " both times): it does not start from an empty environment
+PASS (g) con-ron accepts a small export, and also the same export without the declaration of Eq ("con-ron: accepted " both times): it does not start from an empty environment
+== this checkout ==
+PASS the library, the design files, the scripts and the evidence of this checkout are byte for byte what they were before the controls
+SELFTEST PASSED: every defect was reported by the step that is meant to catch it. PASS lines: 87 (negative controls: 73, positive controls: 7, observations: 6, check of this checkout: 1); FAIL lines: 0.

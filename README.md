@@ -92,11 +92,12 @@ units V, µA, fF, ns):
 The closed-form deadlines are 7250/2119 ≈ 3.4214 ns and 4575/1787 ≈ 2.5602 ns.
 For a deadline between the last two columns no theorem of the library says
 that it holds or that it is false. The ends are rounded: the slow runs behind
-the last column (`slow_rise_run`, `slow_fall_run`) also refute deadlines below
-about 2.16806 ns (rise) and 1.02349 ns (fall), and that small refinement is not
-stated as a theorem. The proof method caps the allowance for this box: with
-re-chosen proof split points 2.3801 µA is admissible, and no choice of them
-admits 2.3802 µA (`VoltageToBit/Examples/Limits.lean`).
+the last column (`Examples.slow_rise_run`, `Examples.slow_fall_run`) also
+refute deadlines below about 2.16806 ns (rise) and 1.02349 ns (fall), and that
+small refinement is not stated as a theorem. The proof method caps the
+allowance for this box: with re-chosen proof split points 2.3801 µA is
+admissible, and no choice of them admits 2.3802 µA
+(`VoltageToBit/Examples/Limits.lean`).
 
 These numbers are **illustrative**. They are plausible orders of magnitude and
 are not fitted to any process, device model, or measurement. The notes beside
@@ -112,7 +113,7 @@ There is deliberately no single badge.
 
 | Dimension | Status | Evidence |
 | --- | --- | --- |
-| Formal correctness | Lean 4.35.0 with Mathlib at a pinned revision checks every theorem. The library has no `sorry` and no axiom of its own, and every declaration depends only on `propext`, `Classical.choice` and `Quot.sound`. A full run of `scripts/check.sh` on this commit passed: the 23 modules were compiled from scratch; the source scan (Lean's own parser against allow-lists) and the axiom audit found nothing; Lean's kernel replayed every module; and an export of the library's 553 declarations, with the 44,448 declarations of Mathlib and Lean core that they depend on, was accepted by six checkers bundled with the toolchain (four start from an empty environment, two from a prelude built into them). The checking scripts were rewritten after the review showed that the old ones could pass falsely; their self-test (`scripts/selftest.sh`: 55 negative controls, including every attack that had broken the old ones) passed on commit `c670461`, and the scripts have not changed since. Their last repair was not verified by an independent reviewer, and the soundness and independence of the six checkers were not examined. | `scripts/check.sh`, [evidence/lean/](evidence/lean/) |
+| Formal correctness | **Passed.** Lean 4.35.0 with Mathlib at a pinned revision checks every theorem; the library has no `sorry` and no axiom of its own. A full run of `scripts/check.sh --fresh` on this library passed: all 23 modules were compiled in the run, the source scan and the axiom audit found nothing, Lean's kernel re-checked every declaration of the compiled files, and six checkers bundled with the toolchain accepted an export of the library with everything it depends on. The self-test of the scripts passed (88 PASS lines, no FAIL). The section Reproduce says exactly what this establishes and what it does not. The scripts were rewritten twice after reviews showed ways to make them pass falsely; the repair was checked by independent verifiers in two further rounds, and the points of the last check were closed in commit `9d9d1d0`, which no independent reviewer has looked at. The soundness of the four checkers that are not Lean's own kernel was not examined. | `scripts/check.sh`, [evidence/lean/](evidence/lean/) |
 | Applicability | One concrete record satisfies every hypothesis. The parameter box, the safe domain and the set of trajectories are proved nonempty for every admissible record. An explicit run exhibits both logic directions; a second explicit run has gate-drain feedthrough and coupling to one neighbour inside the allowance (rising direction only). Negative controls show that the checks reject wrong records and that claimed deadlines below the stated floors are false. The obligations that would connect a device or a simulator model to the box are stated and not discharged. | `VoltageToBit/Examples/`, `VoltageToBit/Proofs/NonVacuity.lean`, `VoltageToBit/Proofs/ModelError.lean`, [docs/assumptions.md](docs/assumptions.md) |
 | Physical evidence | **None.** No measurement and no comparison against a foundry device model or SPICE has been run. Whether a real inverter stays inside the envelopes is an open assumption. The numerical experiments in this repository simulate the model itself; they are not evidence about a device. | [docs/assumptions.md](docs/assumptions.md), [docs/discrepancy-report.md](docs/discrepancy-report.md) |
 
@@ -191,29 +192,106 @@ These figures are computations, not theorems.
 
 ## Reproduce
 
-Requirements: the toolchain named in `lean-toolchain` (through elan), and
-Mathlib checked out and compiled in `.lake/packages` at the revision in
-`lake-manifest.json` (`lake build` fetches and compiles it once;
-`scripts/check.sh` downloads nothing and stops if a dependency is missing or
-at another revision).
+Requirements: the toolchain named in `lean-toolchain` (through elan); Mathlib
+and its dependencies checked out in `.lake/packages` at the revisions in
+`lake-manifest.json`, with no change that `git status` reports, and compiled
+(`lake build` fetches and compiles them once; `scripts/check.sh` downloads
+nothing and stops if one is missing, at another revision or changed); and
+`python3` 3.11 or later and `git`, both found through `PATH` and trusted. The
+scripts run every Python program with `PYTHONSAFEPATH=1` and
+`PYTHONNOUSERSITE=1`, so no module is imported from the project directory.
 
 | Command | What it does | Time here |
 | --- | --- | --- |
-| `sh scripts/check.sh --quick` | steps 1 to 6: design records, pinned configuration, build, source scan, axiom audit, import closure; no kernel replay, no record | about 4 min |
-| `sh scripts/check.sh` | full run: recompiles the library, Lean's kernel replays every module, six checkers accept an export; writes `evidence/lean/` | 7 to 11 min (two runs) |
-| `sh scripts/check.sh --whole-env` | also replays, with Lean's kernel, every module that the library imports | not run for this commit |
-| `sh scripts/selftest.sh` | negative controls for `check.sh`: each known way of making it pass falsely must be caught, at its step | about 52 min |
+| `sh scripts/check.sh --quick` | steps 1 to 6: design records, pinned configuration, build, source scan, axiom audit, import closure; no kernel replay, no record | about 4 min (nothing to recompile) |
+| `sh scripts/check.sh` | full run: recompiles the library, Lean's kernel replays every module, six checkers accept an export; writes `evidence/lean/` | 435 s for the run recorded here; other full runs took 431 to 892 s |
+| `sh scripts/check.sh --whole-env` | also replays, with Lean's kernel, every module that the library imports, directly or not | not run for this commit |
+| `sh scripts/selftest.sh` | controls for `check.sh` itself; needs an up-to-date build and the records of a full run on the same files (run `scripts/check.sh` first) | 1960 s (about 33 min) for the run archived here; other runs took 2010, 2136 and 3609 s |
 
-Times are for a laptop with 18 GB of memory shared with other work; one full
-run peaked at about 3.4 GB of resident memory. The last line of a full run says what was compiled, what was replayed
-and by which tools. `evidence/lean/kernel-replay.txt` is the record of the run
-on this commit; it has no dates or timings, so a full run on the same files
-reproduces it byte for byte. The head of `scripts/check.sh` says what a pass
-establishes and what it does not: in particular nothing about whether the
-statements mean what the prose says, nothing when the library itself is
-hostile (library code runs while it is compiled), and nothing about
-declarations of Mathlib that the library does not depend on unless
-`--whole-env` is given.
+What the last full run established (records in `evidence/lean/`):
+
+- `lakefile.toml`, `lake-manifest.json` and `lean-toolchain` are the pinned
+  files; `lakefile.toml` has no key and no compiler option outside the short
+  lists that step 2 accepts, so nothing in it can move the library's sources
+  or build products or change what the compiler is told; each of the nine
+  dependency checkouts is at the revision given in `lake-manifest.json`, and
+  `git status` lists no changed and no untracked file in it.
+- All 23 modules of the library were compiled in that run from its source
+  files. The digests of the 37 checked files (build configuration, library
+  sources, design file, checking scripts) are in `evidence/lean/sources.sha256`;
+  they were taken before the first step and again at the end, and agreed. No
+  module of a dependency was compiled.
+- The design record `VoltageToBit/Examples/IllustrativeDesign.lean`, named in
+  `scripts/design-records.txt`, is byte for byte what `scripts/gen_design.py`
+  generates from `designs/illustrative-1v8.json` under the definition name
+  `illustrative`, and no other `.lean` file of the library begins with the
+  generator's header.
+- The source scan (Lean's own parser against an allow-list) and the axiom
+  audit found nothing. None of the 556 declarations stored in the compiled
+  files of the library, 329 of which are written in the source files, depends
+  on an axiom other than `propext`, `Classical.choice` and `Quot.sound`.
+- Lean's kernel (`leanchecker`) re-checked the 553 declarations of the
+  compiled files of the 23 modules, each module on top of its imports as
+  compiled; the other 3 stored declarations are compiler auxiliaries that the
+  replay leaves out.
+- An export of these 553 declarations, with the 44,448 declarations of
+  Mathlib, its dependencies and Lean core that they depend on, was accepted by
+  the six checkers bundled with the toolchain. `leanchecker` and
+  `leanchecker-paranoid` are Lean's own kernel; `lean4lean` and `nanoda` are
+  other implementations; `con-leche` and `con-ron` start from a prelude built
+  into them, and `con-ron` is `con-leche`'s checker written in Rust, so at most
+  four of the six are independent designs. `leanchecker` starts from an empty
+  environment, as its source shows; `leanchecker-paranoid`, `lean4lean` and
+  `nanoda` refuse an export without the declaration of `Eq` (observed; their
+  sources were not read).
+
+The self-test (`sh scripts/selftest.sh`; output in
+`evidence/selftest/selftest-aa997c2.txt`) passed on commit `aa997c2` with 88 PASS lines and no
+FAIL line: 74 negative controls (a defect that `check.sh` must report at the
+step meant to catch it, or an attack that must change nothing; they include
+the attacks of the reviews on the file tree, on Python's search path, on
+`lakefile.toml` and its options, on the design record, on `.lake/config` and
+on the kernel check, and in 4 of them the program of a step, the scan, the
+design generator or the audit, is run directly instead of `check.sh`), 7 positive controls (an unmodified input that must
+pass; one of them shows that a copy without build products reproduces the
+records of `evidence/lean/` byte for byte), 6 observations of what the six
+export checkers start from, and 1 check that the checkout was not changed.
+The scripts of this commit differ from those of that run only in two comments
+of `scripts/selftest.sh` (commit `60997fa`).
+Several checks of `check.sh` have no control in the self-test, among them the
+revision and `git status` check of the dependency checkouts, the comparison of
+`lean --version` with `lean-toolchain`, the comparisons of built, audited and
+replayed modules, the comparison of each export checker's count with the
+export's, step 10 (`--whole-env`), the handling of a tool that is not
+installed, and the scan's rule on the options a file was compiled with, which
+no change of `lakefile.toml` alone can now reach.
+
+What a pass does not establish: that the statements mean what the prose says,
+or that any physical device obeys the model. Nothing at all when the library
+itself is hostile: library code can run while it is compiled, before any check
+runs. Nor that the export is faithful, that the four checkers other than Lean's
+kernel are sound or independent of each other, or anything about declarations
+of Mathlib that the library does not depend on (`--whole-env` re-checks those
+of the modules the library imports, by Lean's kernel alone). Further limits:
+the audit's shadowing rule does not consider names that `open` makes visible; a
+definition of type `Design` that `scripts/design-records.txt` does not name is
+compared with no JSON file; `git status` sees a dependency checkout as git is
+configured there, for the user and for the system, so files that `.gitignore`,
+`.git/info/exclude` or an excludes file exclude, and changes to files that the
+index marks assume-unchanged or skip-worktree, are not looked at, and with
+`core.worktree` set it looks at another directory;
+Mathlib's compiled files in `.lake/packages` are used as they are; and
+`--quick` reads the record of the last full run as it is.
+
+Times are wall-clock times of single runs on an Apple M3 Pro laptop (12 cores,
+18 GB of memory, macOS 14.4) while other jobs were running, with
+`CHECK_REPLAY_JOBS=1` and the other settings at their defaults, and Mathlib
+already compiled. The largest single process of a full run reached about
+4.1 GB of resident memory. `evidence/lean/kernel-replay.txt` has no dates or
+timings, so a full run with the same options on the same files with the same
+tools (the toolchain build and platform named in it) reproduces it byte for
+byte; the self-test shows this for a copy in another directory on this
+machine.
 
 ## Where to look
 
