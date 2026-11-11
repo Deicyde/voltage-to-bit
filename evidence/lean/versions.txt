@@ -13,7 +13,7 @@ lake-manifest.json: Qq at dce0ad79c486cb1fb504af04f953c3466b0c6db8 from https://
 lake-manifest.json: batteries at 66e469188fe07963e5cf666c7d4433f45b8131c5 from https://github.com/leanprover-community/batteries (required by a dependency); .lake/packages/batteries is checked out at that revision, and `git status` lists no changed and no untracked file in it
 lake-manifest.json: Cli at c24fe6078c630e89b489bffe59b3e20ac30d12c8 from https://github.com/leanprover/lean4-cli (required by a dependency); .lake/packages/Cli is checked out at that revision, and `git status` lists no changed and no untracked file in it
 these three files are the ones pinned in scripts/pinned-config.sha256, and lakefile.toml has no key
-that step 2 of scripts/check.sh does not accept
+and no option that step 2 of scripts/check.sh does not accept
 lean --version: Lean (version 4.35.0, arm64-apple-darwin24.6.0, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)
 lake --version: Lake version 5.0.0-src+eb6cafb (Lean version 4.35.0)
 toolchain programs: 22 files in bin and lib/lean of the toolchain (every file of bin, every shared library of lib/lean); sha256 of the list of their sha256 and names: 0c406eb3ca0c8a0e4693a14c7929694f6bcb918a5872b886328a0065894795d7
