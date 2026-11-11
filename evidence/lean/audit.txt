@@ -25,6 +25,7 @@ modules of the library in it: 23
   VoltageToBit.Proofs.Reach: 61 declarations
 imported environment: 4502 modules, 421287 declarations
   modules by the first part of their name: Aesop 132, Batteries 72, ImportGraph 35, Init 653, Lake 5, Lean 790, LeanSearchClient 4, Mathlib 2543, Plausible 13, ProofWidgets 10, Qq 14, Std 208, VoltageToBit 23
+  compiled files loaded from .lake/build of this project (the library): 23; from .lake/packages: 2823; from the toolchain: 1656
   declarations marked unsafe or partial (they exist for the compiler; the replay tools leave them out, and the kernel lets no safe definition or theorem refer to them): 3892
 declarations stored in the compiled files of the library: 556 (of which theorems: 405)
   kinds: constructor: 5, definition: 136, inductive type: 5, recursor: 5, theorem: 405

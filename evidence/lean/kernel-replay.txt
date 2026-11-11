@@ -4,12 +4,12 @@ same tools reproduces it, and the four other records of this directory, byte for
 
 What was checked
   files:     the build configuration, library sources, design files and checking scripts
-             listed in evidence/lean/sources.sha256 (sha256 of the list: d2dd1132a4232e50b24fca8f88736e4b55d9f1a84bf717dd981cd5ee9a88a8e5)
+             listed in evidence/lean/sources.sha256 (sha256 of the list: 4c825417e095e5108f859962fd4d17d9fe2fcdeb53623bc468e029ab1f5b1b55)
   config:    lakefile.toml, lake-manifest.json and lean-toolchain are the files pinned in
              scripts/pinned-config.sha256
   toolchain: leanprover/lean4:v4.35.0 (lean-toolchain); Lean (version 4.35.0, arm64-apple-darwin24.6.0, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)
-  mathlib:   56a005855ea17e0b0958f73ec801ae140b0a1679 (lake-manifest.json); used as compiled in .lake/packages, not
-             recompiled
+  mathlib:   56a005855ea17e0b0958f73ec801ae140b0a1679 (lake-manifest.json; .lake/packages/mathlib is checked out at
+             that revision); used as compiled there, not recompiled
   compiled:  all 23 modules of the library, in this run, after its build products had been removed (Lake reported each one as built).
   library:   23 modules; 553 declarations that the replay steps re-check, and
              3 compiler auxiliaries that they leave out (named in evidence/lean/audit.txt)
