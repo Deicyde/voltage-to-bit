@@ -200,12 +200,12 @@ at another revision).
 | Command | What it does | Time here |
 | --- | --- | --- |
 | `sh scripts/check.sh --quick` | steps 1 to 6: design records, pinned configuration, build, source scan, axiom audit, import closure; no kernel replay, no record | about 4 min |
-| `sh scripts/check.sh` | full run: recompiles the library, Lean's kernel replays every module, six checkers accept an export; writes `evidence/lean/` | about 11 min |
+| `sh scripts/check.sh` | full run: recompiles the library, Lean's kernel replays every module, six checkers accept an export; writes `evidence/lean/` | 7 to 11 min (two runs) |
 | `sh scripts/check.sh --whole-env` | also replays, with Lean's kernel, every module that the library imports | not run for this commit |
 | `sh scripts/selftest.sh` | negative controls for `check.sh`: each known way of making it pass falsely must be caught, at its step | about 52 min |
 
-Times are for a laptop with 18 GB of memory; one full run peaked at about
-3.4 GB. The last line of a full run says what was compiled, what was replayed
+Times are for a laptop with 18 GB of memory shared with other work; one full
+run peaked at about 3.4 GB of resident memory. The last line of a full run says what was compiled, what was replayed
 and by which tools. `evidence/lean/kernel-replay.txt` is the record of the run
 on this commit; it has no dates or timings, so a full run on the same files
 reproduces it byte for byte. The head of `scripts/check.sh` says what a pass
