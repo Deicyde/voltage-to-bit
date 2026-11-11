@@ -23,8 +23,9 @@ that instant refers to the old one. A trajectory that starts in the safe
 domain then need not exist on an interval containing the jump, and where none
 exists the guarantee says nothing. For the illustrative record, such a step
 from 1.8 V to 0 V at `t = 4` and the interval `[0, 10]`, none exists
-(`Examples.stepL_no_trajectory` in `Examples/InputClass.lean`). Existence is
-proved here only for continuous inputs and for right-continuous steps.
+(`Examples.stepL_no_trajectory` in `Examples/InputClass.lean`). For a general
+record, existence is proved only for continuous inputs and for right-continuous
+steps.
 -/
 
 namespace VoltageToBit

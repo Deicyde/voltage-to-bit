@@ -22,23 +22,27 @@ separate parameter argument here.
 Scope of "every input function". No regularity of `u` is assumed, but these
 are statements about *all* trajectories for that input that start in the safe
 domain, so they have instances only where such trajectories exist. Existence
-is proved separately, and for two classes of inputs only: continuous inputs
-(`Proofs/Existence.lean`) and an input with one jump that takes its new value
-at the jump instant (`Proofs/Concat.lean`). The trajectory notion evaluates the
-input pointwise in time, so the value at a jump instant matters.
-`Examples/InputClass.lean` shows this in one case, for the illustrative
-record. For the step `uStepL`, which keeps its old value at the jump instant
+is proved separately. For a general record it is proved for two classes of
+inputs only: continuous inputs (`Proofs/Existence.lean`) and an input with one
+jump that takes its new value at the jump instant (`Proofs/Concat.lean`). For
+the illustrative record and `[0, 10]` it is also proved for an input that is
+continuous on `[0, 10]` only (`Examples.exists_second_stage`). The trajectory
+notion evaluates the input pointwise in time, so the value at a jump instant
+matters.
+`Examples/InputClass.lean` shows this in one case, for the illustrative record.
+For the step `Examples.uStepL`, which keeps its old value at the jump instant
 (1.8 V for `t ≤ 4`, 0 V afterwards), no trajectory on `[0, 10]` starts in the
-safe domain (`stepL_no_trajectory`). For `uStepR`, which differs from it only
-at `t = 4`, where it already has its new value, a trajectory on `[0, 10]`
-exists from every state of the safe domain (`stepR_has_trajectory`). So for
-`uStepL` the statements here are vacuously true on `[0, 10]`. This is not the
-absence of every trajectory: for an admissible record a constant outside the
-safe domain is a trajectory for every input, because the inclusion constrains
-nothing while the node is outside the safe domain; the statements here do not
-speak about such trajectories. Nor does it hold on every interval: after the
-jump `uStepL` is constant, and there trajectories exist from every state of
-the safe domain (`exists_trajectory` with `IsTrajectory.congr_input`).
+safe domain (`Examples.stepL_no_trajectory`). For `Examples.uStepR`, which
+differs from it only at `t = 4`, where it already has its new value, a
+trajectory on `[0, 10]` exists from every state of the safe domain
+(`Examples.stepR_has_trajectory`). So for `Examples.uStepL` the statements here
+are vacuously true on `[0, 10]`. This is not the absence of every trajectory:
+for an admissible record a constant outside the safe domain is a trajectory for
+every input, because the inclusion constrains nothing while the node is outside
+the safe domain; the statements here do not speak about such trajectories. Nor
+does it hold on every interval: after the jump `Examples.uStepL` is constant,
+and there trajectories exist from every state of the safe domain
+(`exists_trajectory` with `IsTrajectory.congr_input`).
 -/
 
 namespace VoltageToBit
@@ -147,7 +151,8 @@ theorem slope_dn (hD : D.Admissible) (h : IsTrajectory D u v a b)
   nlinarith [mul_nonneg (sub_nonneg.mpr hc2) (neg_nonneg.mpr hneg.le)]
 
 /-- **Low in, high out, by a deadline, and it stays.** If the input is
-valid-low on `[s, e)`, the output is valid-high on `[s + tauUp, e]`. -/
+valid-low on a window `[s, e)` within `[a, b]`, the output is valid-high on
+`[s + tauUp, e]`. -/
 theorem rise (hD : D.Admissible) (h : IsTrajectory D u v a b)
     (h0 : v a ∈ D.Safe) {s e : ℝ} (hs : a ≤ s) (he : e ≤ b)
     (hu : ∀ t ∈ Ico s e, u t ≤ D.VIL) :
@@ -168,7 +173,8 @@ theorem rise (hD : D.Admissible) (h : IsTrajectory D u v a b)
   exact htime
 
 /-- **High in, low out, by a deadline, and it stays.** If the input is
-valid-high on `[s, e)`, the output is valid-low on `[s + tauDn, e]`. -/
+valid-high on a window `[s, e)` within `[a, b]`, the output is valid-low on
+`[s + tauDn, e]`. -/
 theorem fall (hD : D.Admissible) (h : IsTrajectory D u v a b)
     (h0 : v a ∈ D.Safe) {s e : ℝ} (hs : a ≤ s) (he : e ≤ b)
     (hu : ∀ t ∈ Ico s e, D.VIH ≤ u t) :
@@ -188,10 +194,10 @@ theorem fall (hD : D.Admissible) (h : IsTrajectory D u v a b)
   rw [htau]
   exact htime
 
-/-- **Decoded form.** If the input decodes to the bit `inBit` throughout
-`[s, e)`, then the output decodes to the opposite bit throughout
-`[s + tau inBit, e]`. Voltages between the thresholds decode to `none`, so the
-hypothesis fails for them and nothing is claimed. -/
+/-- **Decoded form.** If the input decodes to the bit `inBit` throughout a
+window `[s, e)` within `[a, b]`, then the output decodes to the opposite bit
+throughout `[s + tau inBit, e]`. Voltages between the thresholds decode to
+`none`, so the hypothesis fails for them and nothing is claimed. -/
 theorem decoded (hD : D.Admissible) (h : IsTrajectory D u v a b)
     (h0 : v a ∈ D.Safe) {s e : ℝ} (hs : a ≤ s) (he : e ≤ b) (inBit : Bool)
     (hu : ∀ t ∈ Ico s e, D.decodeIn (u t) = some inBit) :

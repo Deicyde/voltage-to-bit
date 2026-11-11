@@ -33,12 +33,17 @@ circuit fails, so the controls exhibit trajectories wherever possible.
    statement in either direction.
 3. `miswired_counterexample`, `miswired_never_high`: the two transistors
    exchanged, at nominal parameters. For every horizon `T` there is a run on
-   `[0, T]` with a valid-low input whose output stays at 0.3 V; and every
-   trajectory of the exchanged network with a valid-low input that starts
-   below 1.35 V stays below 1.35 V.
+   `[0, T]` with a valid-low input whose output starts in `[-0.10, 2.08]` V
+   and is never valid-high (informative for `T > 0`; the proof uses the input
+   held at 0 V and the output resting at 0.3 V, which the statement does not
+   name); and every trajectory of the exchanged network with a valid-low input
+   that starts below 1.35 V stays below 1.35 V.
 4. `noisy_*`: a disturbance allowance of 10.76 µA, just above the pull-up
    margin of 10.476 µA. The record is rejected, and for every horizon `T` there
-   is a trajectory on `[0, T]` that stays at 1.34 V < `VOH`.
+   is a trajectory of `noisy` on `[0, T]` that starts in its safe domain, has a
+   valid-low input and is never valid-high (informative for `T > 0`; the proof
+   uses the input held at 0.40 V and the output resting at 1.34 V, which the
+   statement does not name).
 5. `illustrative_riseCert_rejected`: a certificate claiming a deadline its
    levels do not support is rejected. This shows that one list of levels fails
    a sufficient condition. That no list of levels is a valid certificate for a
@@ -55,11 +60,12 @@ function that stays outside the safe domain, and then exhibits no run of the
 circuit.
 
 Two numbers are recorded along the way. `illustrative_max_rise_slew` and
-`illustrative_max_fall_slew` are upper bounds on the output slew for inputs
-restricted to `[0, 0.40]` V and to `[1.25, 1.98]` V. For the guarantee's own
-input classes, `u ≤ 0.40` V and `1.25 V ≤ u`, which have no such range, the
-slew is not bounded (`valid_low_rise_slew_unbounded`,
-`valid_high_fall_slew_unbounded`).
+`illustrative_max_fall_slew` are upper bounds on the rising output slew for
+inputs restricted to `[0, 0.40]` V and on the falling output slew for inputs
+restricted to `[1.25, 1.98]` V. For the guarantee's own input classes,
+`u ≤ 0.40` V and `1.25 V ≤ u`, which have no such range, the rising slew over
+the first and the falling slew over the second are not bounded
+(`valid_low_rise_slew_unbounded`, `valid_high_fall_slew_unbounded`).
 
 Provenance. `valid_low_input_can_give_valid_high_within_38ps` and
 `miswired_never_high`, with their lemmas, were contributed by workstream E's

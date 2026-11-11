@@ -27,9 +27,11 @@ the mathematics here is unit-free.
 
 namespace VoltageToBit
 
-/-- Device and supply parameters: one point of the parameter space. In the ODE
-form of the model it is constant during a run; a trajectory (`IsTrajectory`)
-may use a different point of the box at every instant. -/
+/-- Device and supply parameters: one point of the parameter space. In
+`IsTrajectory.of_ode`, `exists_solution` and `solution_unique` it is constant
+during a run; in `IsTrajectory.of_ode_varying` it may move within the box as
+time passes; a trajectory (`IsTrajectory`) may use a different point of the box
+at every instant. -/
 structure Params where
   /-- supply voltage -/
   VDD : ℝ

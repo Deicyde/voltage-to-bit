@@ -6,11 +6,16 @@ import VoltageToBit.Proofs.Guarantee
 The guarantee gives a deadline by which the output is valid. This file gives
 the opposite kind of bound, for inputs confined to a stated range
 `[ulo, uhi]`: the output cannot move faster than the largest available current
-allows (`rise_at_most`, `fall_at_most`). It is used as a negative control: for
-such inputs a claimed deadline shorter than this bound is false. For the
-valid-input classes of the guarantee, which have no such range, there is no
-minimum delay (`Examples.valid_low_input_can_give_valid_high_within_38ps`,
-`Examples.valid_low_rise_slew_unbounded`,
+allows (`IsTrajectory.rise_at_most`, `IsTrajectory.fall_at_most`). It is used
+as a negative control: for such inputs a claimed deadline shorter than this
+bound is false. For the valid-input classes of the guarantee, which have no
+such range, these lemmas give no bound that holds for a whole class, and the
+library states no minimum delay for these classes. For the illustrative
+record the library shows that the range cannot be dropped: with a valid-low
+input, a run that starts at 0.25 V can be valid-high at 38 ps
+(`Examples.valid_low_input_can_give_valid_high_within_38ps`), and the rising
+slew over the valid-low class and the falling slew over the valid-high class
+have no bound (`Examples.valid_low_rise_slew_unbounded`,
 `Examples.valid_high_fall_slew_unbounded`).
 -/
 

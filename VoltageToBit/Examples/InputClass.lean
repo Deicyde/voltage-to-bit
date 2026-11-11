@@ -80,8 +80,9 @@ where trajectories from the safe domain exist.
   values on `[a, b)` matter, `IsTrajectory.congr_input`), and
   `exists_trajectory_step` for an input with one jump that takes its new value
   at the jump instant. Both give a trajectory from every initial state in the
-  safe domain, and both are for constant parameters, a Lipschitz capacitance
-  in range and a continuous disturbance within the bound.
+  safe domain, and both assume constant parameters in the box, a Lipschitz
+  capacitance in range and a continuous disturbance within the bound, which
+  serve only to build the trajectory.
 * For `uStepL` on `[0, 10]`, non-existence from an initial state in the safe
   domain is proved here.
 * For an input that no existence theorem reaches, the guarantee is a statement

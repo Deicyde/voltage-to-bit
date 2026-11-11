@@ -32,8 +32,10 @@ file shows the quantifier is not empty.
   accepts the weaker notion (continuous, with a right derivative at every
   instant of `[a, b)`); uniqueness for that notion is not stated.
 
-Scope: existence and uniqueness are proved for constant parameters, `u` and
-`w` continuous on the whole real line, and Lipschitz `Cf`. For a general
+Scope: in this file existence and uniqueness are proved for constant
+parameters, `u` and `w` continuous on the whole real line, and Lipschitz `Cf`
+(`exists_trajectory_step` in `Proofs/Concat.lean` adds existence for an input
+with one jump that takes its new value at the jump instant). For a general
 admissible record no existence statement is stated for an input that is
 continuous on `[a, b]` only (such as the output of a first stage);
 `Examples.exists_second_stage` does this for the illustrative record and
@@ -230,8 +232,13 @@ box, continuous input and disturbance with `|w| ≤ eps` on `[a, b]` (`a ≤ b`)
 capacitance function that stays at or above `Clo` and is Lipschitz on the safe
 domain, and an initial state in the safe domain, the ODE
 `Cf (v) * dv/dt = Inet θ u v + w` has a solution on the whole interval
-`[a, b]`, and it stays in the safe domain. Admissibility is needed for the last
-part: for an inadmissible record a solution can leave the safe domain.
+`[a, b]`, and it stays in the safe domain. Admissibility is needed for both
+parts: for an inadmissible record a solution can leave the safe domain, and a
+solution on all of `[a, b]` need not exist (for example, if `D.Clo < 0`, the
+function `Cf` can be negative above the safe domain; if in addition the net
+current at the top of the safe domain can point outwards, which
+`Design.Inet_Vhi_lt` excludes for an admissible record, there can be no solution
+from the top of the safe domain).
 
 The bound `Clo ≤ Cf x` is required for all real `x` (`hCf`), not only on the
 safe domain; only the Lipschitz condition `hCfLip` is restricted to the safe
