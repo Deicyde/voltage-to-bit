@@ -12,21 +12,34 @@ file shows the quantifier is not empty.
   capacitance function `Cf` within `[Clo, Chi]` and a disturbance `|w| ≤ eps`,
   is a trajectory of the inclusion. `IsTrajectory.of_ode_varying` allows the
   parameter point to move within the box as time passes.
-* `exists_solution`: for continuous input `u`, continuous disturbance `w` with
-  `|w| ≤ eps` on `[a, b]`, a voltage-dependent capacitance `Cf` that stays in
-  `[Clo, Chi]` and is Lipschitz on the safe domain, and any initial state in the
-  safe domain, the ODE has a solution on all of `[a, b]`.
+* `exists_solution`: for an admissible record, a parameter point `θ` of the
+  box, continuous input `u`, continuous disturbance `w` with `|w| ≤ eps` on
+  `[a, b]` (`a ≤ b`), a voltage-dependent capacitance `Cf` that stays at or
+  above `Clo` and is Lipschitz on the safe domain, and any initial state in the
+  safe domain, the ODE has a solution on all of `[a, b]`, and it stays in the
+  safe domain.
   The proof applies Picard–Lindelöf to a vector field clamped to the safe
   domain (so it is globally Lipschitz and bounded, giving a solution on the
   whole interval at once) and then uses the boundary margins to show that the
   solution never leaves the safe domain, where clamping does nothing.
-* `exists_trajectory`: the combination.
-* `solution_unique`: two solutions with the same initial state coincide.
+* `exists_trajectory`: the combination. Its conclusion is only that *some*
+  trajectory exists from the given initial state; it does not mention `θ`,
+  `Cf` or `w`, which serve to build it. A run with given data is
+  `exists_solution` followed by `IsTrajectory.of_ode`.
+* `solution_unique`: two solutions with the same initial state in the safe
+  domain coincide. "Solution" means here what `exists_solution` provides: a
+  derivative within `[a, b]` at every point of `[a, b]`. `IsTrajectory.of_ode`
+  accepts the weaker notion (continuous, with a right derivative at every
+  instant of `[a, b)`); uniqueness for that notion is not stated.
 
-Scope: existence and uniqueness are proved for constant parameters, continuous
-`u` and `w`, and Lipschitz `Cf`. The guarantee itself needs none of this; for
-less regular data, or parameters that move within the box, it is a statement
-about whatever trajectories there are.
+Scope: existence and uniqueness are proved for constant parameters, `u` and
+`w` continuous on the whole real line, and Lipschitz `Cf`. For a general
+admissible record no existence statement is stated for an input that is
+continuous on `[a, b]` only (such as the output of a first stage);
+`Examples.exists_second_stage` does this for the illustrative record and
+`[0, 10]`. The guarantee itself needs none of this; for less regular data, or
+parameters that move within the box, it is a statement about whatever
+trajectories there are.
 
 The capacitance bounds are required for all real arguments. In every lemma of
 this file that takes a capacitance function `Cf`, the hypothesis reads
@@ -212,10 +225,13 @@ theorem exists_clampedField_bounds {D : Design} {θ : Params} (hD : D.Admissible
     rw [abs_div, abs_of_pos (hCpos _)]
     exact div_le_div₀ (abs_nonneg _) (hNbound t ht x) hClo (hCf _)
 
-/-- **Existence.** For continuous input and disturbance, a capacitance function
-that stays at or above `Clo` and is Lipschitz on the safe domain, and an
-initial state in the safe domain, the ODE `Cf (v) * dv/dt = Inet θ u v + w` has
-a solution on the whole interval `[a, b]`, and it stays in the safe domain.
+/-- **Existence.** For an admissible record and a parameter point `θ` of its
+box, continuous input and disturbance with `|w| ≤ eps` on `[a, b]` (`a ≤ b`), a
+capacitance function that stays at or above `Clo` and is Lipschitz on the safe
+domain, and an initial state in the safe domain, the ODE
+`Cf (v) * dv/dt = Inet θ u v + w` has a solution on the whole interval
+`[a, b]`, and it stays in the safe domain. Admissibility is needed for the last
+part: for an inadmissible record a solution can leave the safe domain.
 
 The bound `Clo ≤ Cf x` is required for all real `x` (`hCf`), not only on the
 safe domain; only the Lipschitz condition `hCfLip` is restricted to the safe
@@ -293,7 +309,12 @@ theorem exists_solution {D : Design} {θ : Params} (hD : D.Admissible) (hθ : D.
 
 /-- **Trajectories exist.** Under the hypotheses of `exists_solution`, with the
 capacitance function also bounded above by `Chi`, there is a trajectory of the
-inclusion on `[a, b]` from any initial state in the safe domain. -/
+inclusion on `[a, b]` from any initial state in the safe domain.
+
+The conclusion does not mention `θ`, `Cf` or `w`: they only serve to build the
+trajectory, and the statement does not say that the trajectory solves the node
+equation with those data. For that, use `exists_solution` and
+`IsTrajectory.of_ode`, as this proof does. -/
 theorem exists_trajectory {D : Design} {θ : Params} (hD : D.Admissible) (hθ : D.InBox θ)
     {Cf : ℝ → ℝ} (hCf : ∀ x, D.Clo ≤ Cf x ∧ Cf x ≤ D.Chi) {Kc : ℝ}
     (hCfLip : ∀ x ∈ D.Safe, ∀ y ∈ D.Safe, |Cf x - Cf y| ≤ Kc * |x - y|)
@@ -311,7 +332,10 @@ theorem exists_trajectory {D : Design} {θ : Params} (hD : D.Admissible) (hθ : 
   have := (hCpos (v t)).ne'
   field_simp
 
-/-- Trajectories exist for every constant capacitance in range. -/
+/-- Trajectories exist from every initial state in the safe domain, built from a
+constant capacitance in range, a parameter point of the box and a continuous
+disturbance within `eps`. As for `exists_trajectory`, the conclusion does not
+mention these data. -/
 theorem exists_trajectory_const {D : Design} {θ : Params} (hD : D.Admissible)
     (hθ : D.InBox θ) {C : ℝ} (hC1 : D.Clo ≤ C) (hC2 : C ≤ D.Chi) {u w : ℝ → ℝ}
     (hu : Continuous u) (hw : Continuous w) {a b : ℝ} (hab : a ≤ b)

@@ -9,10 +9,10 @@ trajectory `v` of the differential inclusion on `[a, b]` that starts in the
 safe domain:
 
 * `IsTrajectory.safe`: `v` stays in the safe domain;
-* `IsTrajectory.rise`: if `u ≤ VIL` on `[s, e)` then `VOH ≤ v t` for all
-  `t ∈ [s + tauUp, e]`;
-* `IsTrajectory.fall`: if `VIH ≤ u` on `[s, e)` then `v t ≤ VOL` for all
-  `t ∈ [s + tauDn, e]`;
+* `IsTrajectory.rise`: if `u ≤ VIL` on a window `[s, e)` within `[a, b]` then
+  `VOH ≤ v t` for all `t ∈ [s + tauUp, e]`;
+* `IsTrajectory.fall`: if `VIH ≤ u` on a window `[s, e)` within `[a, b]` then
+  `v t ≤ VOL` for all `t ∈ [s + tauDn, e]`;
 * `IsTrajectory.decoded`: the same two facts through the three-valued decoder.
 
 The trajectory notion already quantifies over the capacitance, the parameter

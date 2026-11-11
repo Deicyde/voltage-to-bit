@@ -3,8 +3,9 @@ import VoltageToBit.Model.Device
 /-!
 # The uncertain inverter: design record, trajectories, decoding
 
-* `Design`: a record of numbers: a parameter box, a disturbance bound, logic
-  thresholds, a safe voltage domain, and two auxiliary split points.
+* `Design`: a record of numbers: a parameter box, a capacitance range, a
+  disturbance bound, logic thresholds, a safe voltage domain, and two
+  auxiliary split points.
 * `Design.InBox`: membership of a parameter choice in the box.
 * `Design.Iup`, `Design.Idn`, `Design.RhiP`, `Design.RhiN`, `Design.RloN`,
   `Design.RloP`: closed-form worst-corner current margins. They are *numbers

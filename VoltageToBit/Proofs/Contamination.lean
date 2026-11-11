@@ -1,13 +1,17 @@
 import VoltageToBit.Proofs.Guarantee
 
 /-!
-# Minimum delays (contamination bounds)
+# Bounds on how fast the output can move (for inputs in a range)
 
 The guarantee gives a deadline by which the output is valid. This file gives
-the opposite kind of bound: the output cannot move faster than the largest
-available current allows (`rise_at_most`, `fall_at_most`). It is used as a
-negative control: a claimed deadline shorter than this bound is false for
-every trajectory.
+the opposite kind of bound, for inputs confined to a stated range
+`[ulo, uhi]`: the output cannot move faster than the largest available current
+allows (`rise_at_most`, `fall_at_most`). It is used as a negative control: for
+such inputs a claimed deadline shorter than this bound is false. For the
+valid-input classes of the guarantee, which have no such range, there is no
+minimum delay (`Examples.valid_low_input_can_give_valid_high_within_38ps`,
+`Examples.valid_low_rise_slew_unbounded`,
+`Examples.valid_high_fall_slew_unbounded`).
 -/
 
 namespace VoltageToBit

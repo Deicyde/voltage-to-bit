@@ -62,7 +62,8 @@ open Set
 `v₁` that is continuous on `[0, 10]`, in particular for the output of a
 first-stage trajectory on `[0, 10]`, there is a trajectory of the illustrative
 record on `[0, 10]` whose input is `v₁`, from any initial state in the safe
-domain (nominal parameters, capacitance 10 fF, zero disturbance).
+domain. (The proof builds it with nominal parameters, capacitance 10 fF and
+zero disturbance; the statement does not name these data.)
 
 The existence theorem wants an input that is continuous on all of ℝ; `v₁` is
 only assumed continuous on `[0, 10]`. So the solution is built for the input

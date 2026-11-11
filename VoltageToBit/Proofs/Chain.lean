@@ -19,16 +19,19 @@ bounds and error bounds `eps` contain them. That is an assumption about the
 environment, not something proved here.
 
 For the illustrative record the assumption is not physically plausible. The
-only bounds the library has on the first stage's output slew are about
-29 V/ns rising and 58 V/ns falling, and they hold for first-stage inputs
-confined to `[0, 0.40]` V and `[1.25, 1.98]` V (`rise_at_most`, `fall_at_most`,
-`Examples.illustrative_max_rise_slew`, `Examples.illustrative_max_fall_slew`);
-for inputs outside those ranges the slew has no bound. A second stage with
-gate-drain capacitance `C_M` would therefore have to allow for a feedthrough
-current of up to `58 · C_M` µA, which stays inside the 2 µA allowance only for
-`C_M` below about 0.03 fF (a small inverter has 0.2 to 1 fF). Read the
-corollary as a statement about two ideal one-node stages. See `docs/model.md`,
-section 7.4.
+only bounds the library has on the first stage's output slew come from
+`rise_at_most` and `fall_at_most`, and they hold only for first-stage inputs
+confined to a range. Two of them are stated: about 29 V/ns rising for inputs
+in `[0, 0.40]` V and about 58 V/ns falling for inputs in `[1.25, 1.98]` V
+(`Examples.illustrative_max_rise_slew`, `Examples.illustrative_max_fall_slew`).
+The same lemmas give about 32 V/ns falling for inputs in `[0, 0.40]` V and
+about 65 V/ns rising for inputs in `[1.25, 1.98]` V, so the magnitude of the
+slew is bounded by about 65 V/ns for inputs in either range; for inputs outside
+those ranges it has no bound. A second stage with gate-drain capacitance `C_M`
+would therefore have to allow for a feedthrough current of up to about
+`65 · C_M` µA, which stays inside the 2 µA allowance only for `C_M` below about
+0.03 fF (a small inverter has 0.2 to 1 fF). Read the corollary as a statement
+about two ideal one-node stages. See `docs/model.md`, section 7.4.
 -/
 
 namespace VoltageToBit

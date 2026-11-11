@@ -32,12 +32,13 @@ circuit fails, so the controls exhibit trajectories wherever possible.
    proved 2.26 ns and 1.425 ns; for a deadline in between the library has no
    statement in either direction.
 3. `miswired_counterexample`, `miswired_never_high`: the two transistors
-   exchanged, at nominal parameters. The output can sit at 0.3 V forever while
-   the input is valid-low; and every trajectory of the exchanged network with a
-   valid-low input that starts below 1.35 V stays below 1.35 V.
+   exchanged, at nominal parameters. For every horizon `T` there is a run on
+   `[0, T]` with a valid-low input whose output stays at 0.3 V; and every
+   trajectory of the exchanged network with a valid-low input that starts
+   below 1.35 V stays below 1.35 V.
 4. `noisy_*`: a disturbance allowance of 10.76 µA, just above the pull-up
-   margin of 10.476 µA. The record is rejected, and a trajectory stuck at
-   1.34 V < `VOH` exists.
+   margin of 10.476 µA. The record is rejected, and for every horizon `T` there
+   is a trajectory on `[0, T]` that stays at 1.34 V < `VOH`.
 5. `illustrative_riseCert_rejected`: a certificate claiming a deadline its
    levels do not support is rejected. This shows that one list of levels fails
    a sufficient condition. That no list of levels is a valid certificate for a
@@ -341,9 +342,13 @@ noncomputable def InetSwapped (θ : Params) (u v : ℝ) : ℝ :=
   θ.kn / 2 * (psq (u - v - θ.Vtn) - psq (u - θ.VDD - θ.Vtn))
     - θ.kp / 2 * (psq (v - u - θ.Vtp) - psq (0 - u - θ.Vtp))
 
-/-- The miswired network is not an inverter: with the input held at 0 V
-(valid-low) the output can rest at 0.3 V forever. The disturbance is zero and
-the same capacitance and error bounds as the illustrative instance are used. -/
+/-- The miswired network is not an inverter: for every horizon `T` there is a
+run on `[0, T]` with a valid-low input whose output is never valid-high. The
+proof uses the input held at 0 V and the output resting at 0.3 V, the same pair
+for every `T`, with zero disturbance and the capacitance and error bounds of the
+illustrative instance; the statement itself names neither the input nor the
+level, and lets the pair depend on `T`. For `T ≤ 0` the dynamic part is empty
+and the statement holds trivially, so it is informative for `T > 0`. -/
 theorem miswired_counterexample (T : ℝ) :
     ∃ u v : ℝ → ℝ, (∀ t, u t ≤ 0.40) ∧ v 0 ∈ Icc (-0.10 : ℝ) 2.08 ∧
       ContinuousOn v (Icc 0 T) ∧
@@ -431,9 +436,13 @@ theorem noisy_not_admissible : ¬ noisy.Admissible := fun h => by
   have h1 := h.up
   norm_num [noisy, illustrative, Design.Iup, psq_eq_ite] at h1
 
-/-- With the larger allowance the guarantee is false, not merely unproved:
-at the weak corner, with the input held valid-low at 0.40 V, the output can
-rest at 1.34 V, below `VOH = 1.35` V, forever. -/
+/-- With the larger allowance the guarantee is false, not merely unproved: for
+every horizon `T` there is a trajectory of `noisy` on `[0, T]` that starts in
+its safe domain, has a valid-low input and is never valid-high. The proof uses
+the weak corner, the input held at 0.40 V and the output resting at 1.34 V,
+below `VOH = 1.35` V, the same pair for every `T`; the statement itself does not
+name them and lets the pair depend on `T`. For `T ≤ 0` it holds trivially, so
+it is informative for `T > 0`. -/
 theorem noisy_counterexample (T : ℝ) :
     ∃ u v : ℝ → ℝ, (∀ t, u t ≤ noisy.VIL) ∧ v 0 ∈ noisy.Safe ∧
       IsTrajectory noisy u v 0 T ∧ ∀ t, v t < noisy.VOH := by

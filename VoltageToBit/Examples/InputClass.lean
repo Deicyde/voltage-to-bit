@@ -361,8 +361,9 @@ theorem stepL_no_trajectory (v : ℝ → ℝ) (h : IsTrajectory illustrative uSt
 
 /-- **Trajectories exist for the twin input.** The library's existence theorem
 for a step covers `uStepR`, which takes its new value at `t = 4`: trajectories
-exist on `[0, 10]` from every initial state in the safe domain (nominal
-parameters, capacitance 10 fF, zero disturbance). -/
+exist on `[0, 10]` from every initial state in the safe domain. (The proof
+builds them with nominal parameters, capacitance 10 fF and zero disturbance;
+the statement does not name these data.) -/
 theorem stepR_has_trajectory (v₀ : ℝ) (hv₀ : v₀ ∈ illustrative.Safe) :
     ∃ v : ℝ → ℝ, v 0 = v₀ ∧ IsTrajectory illustrative uStepR v 0 10 :=
   exists_trajectory_step illustrative_admissible nominal_inBox (Cf := fun _ => 10) (Kc := 0)

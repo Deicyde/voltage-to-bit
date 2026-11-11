@@ -79,7 +79,11 @@ end IsTrajectory
 `u₁` before time `c` and a continuous `u₂` from `c` on (so it may jump at `c`,
 taking the new value there), constant parameters in the box, a Lipschitz
 capacitance in range and a continuous disturbance within the bound, a
-trajectory exists on `[a, b]` from any initial state in the safe domain. -/
+trajectory exists on `[a, b]` from any initial state in the safe domain.
+
+The conclusion is a trajectory of the inclusion; it does not mention `θ`,
+`Cf` or `w`, and the statement does not say that the trajectory solves the node
+equation with those data. -/
 theorem exists_trajectory_step {D : Design} {θ : Params} (hD : D.Admissible)
     (hθ : D.InBox θ) {Cf : ℝ → ℝ} (hCf : ∀ x, D.Clo ≤ Cf x ∧ Cf x ≤ D.Chi) {Kc : ℝ}
     (hCfLip : ∀ x ∈ D.Safe, ∀ y ∈ D.Safe, |Cf x - Cf y| ≤ Kc * |x - y|)

@@ -14,7 +14,8 @@ process, device model or measurement.
 
 * `illustrative_admissible`: the record satisfies every numeric condition.
 * `illustrative_guarantee`: the universal guarantee with explicit numbers.
-* `illustrative_exists`: trajectories exist for every admissible choice.
+* `illustrative_exists`: trajectories exist from every initial state in the
+  safe domain, for every continuous input and every interval.
 * `illustrative_scenario`: one fully explicit run (nominal parameters, a
   concrete input waveform, a concrete nonzero disturbance, an initial state in
   the undefined band) in which both logic directions occur and each is followed
@@ -78,8 +79,13 @@ function `u` and every trajectory `v` on `[a, b]` that starts in
 `[-0.10, 2.08]` V:
 
 1. `v` stays in `[-0.10, 2.08]` V;
-2. whenever `u ≤ 0.40` V on `[s, e)`, `v ≥ 1.35` V on `[s + 3.43 ns, e]`;
-3. whenever `u ≥ 1.25` V on `[s, e)`, `v ≤ 0.25` V on `[s + 2.57 ns, e]`.
+2. whenever `u ≤ 0.40` V on a window `[s, e)` within `[a, b]`, `v ≥ 1.35` V on
+   `[s + 3.43 ns, e]`;
+3. whenever `u ≥ 1.25` V on a window `[s, e)` within `[a, b]`, `v ≤ 0.25` V on
+   `[s + 2.57 ns, e]`.
+
+The closed-form deadlines are `7250/2119 ≈ 3.4214` ns and `4575/1787 ≈ 2.5602`
+ns; 3.43 and 2.57 round them up.
 
 The trajectory notion allows, at each instant, any capacitance in `[5, 20]` fF,
 any parameter point of the box, and any unmodelled current of magnitude at most
@@ -106,11 +112,14 @@ theorem illustrative_guarantee (u v : ℝ → ℝ)
       (by linarith [illustrative_tauDn_le])
     simpa [illustrative] using this
 
-/-- **Trajectories exist** for the illustrative inverter: for every constant
-parameter choice in the box, every voltage-dependent capacitance with values in
-`[5, 20]` fF that is Lipschitz on the safe domain, every continuous input,
-every continuous disturbance of magnitude at most `2` µA, every interval and
-every initial state in the safe domain. -/
+/-- **Trajectories exist** for the illustrative inverter: for every continuous
+input, every interval and every initial state in the safe domain there is a
+trajectory. The statement takes a constant parameter point of the box, a
+voltage-dependent capacitance with values in `[5, 20]` fF that is Lipschitz on
+the safe domain, and a continuous disturbance of magnitude at most `2` µA, but
+its conclusion does not mention them: they serve to build the trajectory. A
+run that solves the node equation with given data is `exists_solution`
+followed by `IsTrajectory.of_ode`. -/
 theorem illustrative_exists (θ : Params) (hθ : illustrative.InBox θ) (Cf : ℝ → ℝ)
     (hCf : ∀ x, Cf x ∈ Icc (5 : ℝ) 20) (Kc : ℝ)
     (hCfLip : ∀ x ∈ Icc (-0.10 : ℝ) 2.08, ∀ y ∈ Icc (-0.10 : ℝ) 2.08,
@@ -130,7 +139,8 @@ theorem illustrative_exists (θ : Params) (hθ : illustrative.InBox θ) (Cf : �
   · rw [hsafe]
     exact hv₀
 
-/-- The constant-capacitance special case of `illustrative_exists`. -/
+/-- The constant-capacitance special case of `illustrative_exists` (its
+conclusion, too, does not mention the data it takes). -/
 theorem illustrative_exists_const (θ : Params) (hθ : illustrative.InBox θ) (C : ℝ)
     (hC : C ∈ Icc (5 : ℝ) 20) (u w : ℝ → ℝ) (hu : Continuous u) (hw : Continuous w)
     (a b : ℝ) (hab : a ≤ b) (hwb : ∀ t ∈ Icc a b, |w t| ≤ 2) (v₀ : ℝ)
