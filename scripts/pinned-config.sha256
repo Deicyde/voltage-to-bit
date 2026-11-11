@@ -4,10 +4,11 @@
 # options `autoImplicit = false` and `relaxedAutoImplicit = false` (lakefile.toml); the
 # Mathlib revision and those of its dependencies (lake-manifest.json).
 # To change one of the files on purpose, change its line here in the same commit.
-# Changing a pin changes what step 2 accepts. The keys of lakefile.toml are checked
-# separately, whatever the pin says: a key that could move the library's sources or build
-# products or pass arguments to the compiler (srcDir, roots, globs, moreLeanArgs, ...) is
-# refused (see step 2 in scripts/check.sh).
+# Changing a pin changes what step 2 accepts. The keys and the options of lakefile.toml are
+# checked separately, whatever the pin says: a key that could move the library's sources or
+# build products or pass arguments to the compiler (srcDir, roots, globs, moreLeanArgs, ...) is
+# refused, and [leanOptions] must be exactly pp.unicode.fun = true, autoImplicit = false and
+# relaxedAutoImplicit = false (see step 2 in scripts/check.sh).
 179f1719e3c64e67cd7c19ac7b473f5e75159cffd1f365d591a5e2a4b5747238  lakefile.toml
 66c80c12e1501046447c01c0e10819ea9eabc1007dcfe793708ccf1cc284c152  lake-manifest.json
 ca5f1f601d34c49079e38d7e7041eb0f2a9c227fbc1df0f404820069a052330c  lean-toolchain

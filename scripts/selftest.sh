@@ -39,10 +39,10 @@
 #   (cfg) the build configuration is not the pinned one: each of a list of
 #       changes to lakefile.toml, lake-manifest.json and lean-toolchain, and a
 #       lakefile.lean next to lakefile.toml, stops check.sh at step config,
-#       before any Lean tool runs (B1, S5); so does each of a list of keys of
-#       lakefile.toml that could move the library's sources or build products
-#       or reach the compiler, srcDir among them, also when the pin is changed
-#       to accept the file (round 4, issue 3)
+#       before any Lean tool runs (B1, S5); so does each of a list of keys or
+#       options of lakefile.toml that could move the library's sources or build
+#       products or reach the compiler, srcDir among them, also when the pin is
+#       changed to accept the file (round 4, issue 3; options: round 5)
 #   (env) in the same group as (cfg), the environment check: called with
 #       exactly the environment that check.sh gives itself, it runs; with one
 #       variable more, or without
@@ -438,7 +438,7 @@ lean-toolchain naming another toolchain|lean-toolchain|NOT THE PINNED FILE: lean
 a lakefile.lean next to lakefile.toml|lakefile.lean|NOT ALLOWED: lakefile.lean|
 EOF
   # The same kind of change with the pin changed to accept the file (round 4, issue 3): a key that
-  # could move the library's sources or build products, or reach the compiler, is refused
+  # or an option that could move the library's sources or build products, or reach the compiler, is refused
   # whatever the pin says. srcDir under [[lean_lib]] made Lake compile the library from another
   # directory than the one the scan and the digests read.
   # name | what must be reported | python expression that maps the text `t` of lakefile.toml to the changed text
@@ -478,6 +478,7 @@ lakefile.toml with subDir in [[require]]|NOT ALLOWED: lakefile.toml has the key 
 lakefile.toml with a second library of the same name|NOT ALLOWED: lakefile.toml must have exactly one [[lean_lib]] named VoltageToBit; it has 2|t + '\n[[lean_lib]]\nname = "VoltageToBit"\n'
 lakefile.toml with an option that changes what a statement means (round 5)|NOT ALLOWED: lakefile.toml: [leanOptions] must be exactly pp.unicode.fun = true, autoImplicit = false and relaxedAutoImplicit = false|t.replace("relaxedAutoImplicit = false", "relaxedAutoImplicit = false\ndeprecated.oldSectionVars = true", 1)
 lakefile.toml with autoImplicit switched on in [leanOptions]|NOT ALLOWED: lakefile.toml: [leanOptions] must be exactly|t.replace("autoImplicit = false\nrelaxed", "autoImplicit = true\nrelaxed", 1)
+lakefile.toml with autoImplicit = 0, which Python counts as false|NOT ALLOWED: lakefile.toml: [leanOptions] must be exactly|t.replace("autoImplicit = false\nrelaxed", "autoImplicit = 0\nrelaxed", 1)
 EOF
 
   echo "== (env) the environment that check.sh gives itself =="
@@ -579,7 +580,7 @@ fi
 
 # ---------------------------------------------------------------------------
 if want s5; then
-echo "== (s5) a build without autoImplicit = false, and names that are bound nowhere =="
+echo "== (s5) lakefile.toml without autoImplicit = false, and names that are bound nowhere =="
 # As in (b1), the pin of the copy is changed to accept its lakefile: then the scan and the audit
 # are what stands between a misspelt name and a theorem about an arbitrary variable.
 copy_project s5 "$BASE"
@@ -601,7 +602,8 @@ EOF
   # Since round 5 step 2 refuses any [leanOptions] other than the three pinned options, whatever
   # the pin says, so the copy stops there, before anything is compiled. (The scan's rule
   # `options` stays as a second line behind it; no change of lakefile.toml alone reaches it now.)
-  if [ "$CHECK_STATUS" = 1 ] && absent "$LOG" "RESULT build:" && absent "$LOG" "== 3."; then
+  if [ "$CHECK_STATUS" = 1 ] && present "$LOG" "pinned: lakefile.toml" && absent "$LOG" "NOT THE PINNED FILE" \
+      && absent "$LOG" "RESULT build:" && absent "$LOG" "== 3."; then
     verdict "(s5) lakefile.toml without the autoImplicit lines, the pin changed to accept it, and two statements with names that are bound nowhere: check.sh stops at step config, before the build, because [leanOptions] is not the pinned set" "$LOG" \
       "NOT ALLOWED: lakefile.toml: [leanOptions] must be exactly pp.unicode.fun = true, autoImplicit = false and relaxedAutoImplicit = false" \
       "CHECK FAILED: config"

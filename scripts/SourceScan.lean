@@ -678,7 +678,7 @@ def report (a : ScanArgs) (allow : AllowList) (inventory : Bool) (treeFindings :
     return 1
 
 def moduleFile (m : Name) : String :=
-  "/".intercalate (m.components.map (·.toString)) ++ ".lean"
+  "/".intercalate (m.components.map (·.toString (escape := false))) ++ ".lean"
 
 unsafe def scanLibrary (a : ScanArgs) (inventory : Bool) : IO UInt32 := do
   if a.self.isEmpty || a.allow.isEmpty || a.root.isEmpty || a.build.isEmpty || !a.files.isEmpty

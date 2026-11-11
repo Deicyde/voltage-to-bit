@@ -44,18 +44,21 @@
 #                      them is the library, every [[require]] has the keys
 #                      name, git and rev only, and [leanOptions] is exactly
 #                      pp.unicode.fun = true, autoImplicit = false and
-#                      relaxedAutoImplicit = false (so no srcDir, roots, globs,
-#                      libName, buildDir, moreLeanArgs, weakLeanArgs, option or
-#                      the like can move the sources or the build products or
-#                      reach the compiler); every dependency is checked out in
+#                      relaxedAutoImplicit = false, with these Boolean values
+#                      (not 0 or 1), so no srcDir, roots, globs, libName,
+#                      buildDir, moreLeanArgs, weakLeanArgs, other option or the
+#                      like can move the sources or the build products or reach
+#                      the compiler; every dependency is checked out in
 #                      .lake/packages at the revision that lake-manifest.json
 #                      gives, and `git status` lists no changed and no
-#                      untracked file in it. `git status` runs with the
-#                      checkout's git configuration and the user's: files that
-#                      .gitignore, .git/info/exclude or the user's excludes
-#                      file exclude (such as the compiled files), and changes
-#                      to files that the index marks assume-unchanged or
-#                      skip-worktree, are not looked at. The `lean` that runs
+#                      untracked file in it. `git status` runs with the git
+#                      configuration of the checkout, of the user and of the
+#                      system: files that .gitignore, .git/info/exclude or an
+#                      excludes file exclude (such as the compiled files), and
+#                      changes to files that the index marks assume-unchanged
+#                      or skip-worktree, are not looked at, and with
+#                      core.worktree set it looks at another directory than
+#                      the checkout. The `lean` that runs
 #                      reports the version that lean-toolchain names. A
 #                      failure here always ends the run
 #   3 build            `lake build VoltageToBit` (the library, by name) exits
@@ -612,10 +615,20 @@ if os.path.isfile("lakefile.toml") and not os.path.islink("lakefile.toml"):
         # three. Another option can change what a statement means (deprecated.oldSectionVars, for
         # example, makes a theorem take in the section variables its proof uses).
         expected_options = {"pp": {"unicode": {"fun": True}}, "autoImplicit": False, "relaxedAutoImplicit": False}
-        if config.get("leanOptions", {}) != expected_options:
+        def same(x, y):
+            # equal with the same types at every level: in Python 0 == False and 1 == True, and
+            # Lake passes a number to Lean as a number, which a Boolean option ignores
+            if type(x) is not type(y):
+                return False
+            if isinstance(x, dict):
+                return set(x) == set(y) and all(same(x[k], y[k]) for k in x)
+            if isinstance(x, list):
+                return len(x) == len(y) and all(same(a, b) for a, b in zip(x, y))
+            return x == y
+        if not same(config.get("leanOptions", {}), expected_options):
             print("NOT ALLOWED: lakefile.toml: [leanOptions] must be exactly pp.unicode.fun = true, "
                   "autoImplicit = false and relaxedAutoImplicit = false; it is "
-                  + json.dumps(config.get("leanOptions"), sort_keys=True))
+                  + json.dumps(config.get("leanOptions"), sort_keys=True, default=str))
             status = 1
 if status == 0:
     # as read from the files
@@ -662,7 +675,7 @@ cat "$TMP/config.txt"
 MATHLIB_REV="$(sed -n 's/^lake-manifest.json: mathlib at \([0-9a-f]*\) .*/\1/p' "$TMP/config.txt")"
 if [ "$status" != 0 ]; then
   # With another configuration `lake` may fetch or rebuild dependencies, or run a program.
-  stop config "the build configuration is not the pinned one or has a key or an option that step 2 does not accept, or a dependency is not checked out at its pinned revision with no change that \`git status\` reports; nothing further is run, because \`lake\` could then download, move or rebuild dependencies. A deliberate change of the configuration files is made by editing scripts/pinned-config.sha256 (the keys of lakefile.toml are checked whatever the pin says)"
+  stop config "the build configuration is not the pinned one or has a key or an option that step 2 does not accept, or a dependency is not checked out at its pinned revision with no change that \`git status\` reports; nothing further is run, because \`lake\` could then download, move or rebuild dependencies. A deliberate change of the configuration files is made by editing scripts/pinned-config.sha256 (the keys and the options of lakefile.toml are checked whatever the pin says)"
 fi
 PREFIX="$(lean --print-prefix 2>"$TMP/prefix.err")"
 status=$?
@@ -699,7 +712,7 @@ print(f"{len(files)} files in bin and lib/lean of the toolchain (every file of b
 {
   cat "$TMP/config.txt"
   echo "these three files are the ones pinned in scripts/pinned-config.sha256, and lakefile.toml has no key"
-  echo "that step 2 of scripts/check.sh does not accept"
+  echo "and no option that step 2 of scripts/check.sh does not accept"
   echo "lean --version: $LEAN_VERSION"
   echo "lake --version: $LAKE_VERSION"
   echo "toolchain programs: $TOOLCHAIN_FILES"
@@ -714,7 +727,7 @@ case "$LEAN_VERSION" in
 esac
 {
   echo "  config:    lakefile.toml, lake-manifest.json and lean-toolchain are the files pinned in"
-  echo "             scripts/pinned-config.sha256, and lakefile.toml has no key that step 2 does not accept"
+  echo "             scripts/pinned-config.sha256, and lakefile.toml has no key and no option that step 2 does not accept"
   echo "  toolchain: $TOOLCHAIN (lean-toolchain); $LEAN_VERSION"
   echo "  mathlib:   $MATHLIB_REV (lake-manifest.json); .lake/packages/mathlib is checked out at that"
   echo "             revision, and \`git status\` lists no changed and no untracked file in it (the same"
