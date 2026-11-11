@@ -20,10 +20,10 @@
 # reuses them. The script itself writes nothing into .lake/packages, where the
 # dependencies are checked out and compiled, and downloads nothing: step 2
 # stops the run unless every dependency is checked out there at its pinned
-# revision with nothing changed. `lake build` compiles a module of a
-# dependency there when the library imports one that is not compiled yet
-# (Mathlib is compiled only in part); step 3 and the record then name every
-# such module.
+# revision with no change that `git status` reports (see step 2). `lake build`
+# compiles a module of a dependency there when the library imports one that is
+# not compiled yet (Mathlib is compiled only in part); step 3 prints their
+# number and the first 20, and the record names every one.
 #
 # Steps. Each prints "RESULT <step>: ok" or "RESULT <step>: FAILED"; a tool
 # that is not installed prints "RESULT <step>: NOT RUN" (see Tools).
@@ -41,17 +41,23 @@
 #                      tomllib) has no key besides name, version,
 #                      defaultTargets, leanOptions, require and lean_lib, every
 #                      [[lean_lib]] has the key name only and exactly one of
-#                      them is the library, and every [[require]] has the keys
-#                      name, git and rev only (so no srcDir, roots, globs,
-#                      libName, buildDir, moreLeanArgs, weakLeanArgs or the
-#                      like can move the sources or the build products or
+#                      them is the library, every [[require]] has the keys
+#                      name, git and rev only, and [leanOptions] is exactly
+#                      pp.unicode.fun = true, autoImplicit = false and
+#                      relaxedAutoImplicit = false (so no srcDir, roots, globs,
+#                      libName, buildDir, moreLeanArgs, weakLeanArgs, option or
+#                      the like can move the sources or the build products or
 #                      reach the compiler); every dependency is checked out in
 #                      .lake/packages at the revision that lake-manifest.json
 #                      gives, and `git status` lists no changed and no
-#                      untracked file in it (files that its .gitignore
-#                      excludes, such as its compiled files, are not looked
-#                      at); the `lean` that runs reports the version that
-#                      lean-toolchain names. A failure here always ends the run
+#                      untracked file in it. `git status` runs with the
+#                      checkout's git configuration and the user's: files that
+#                      .gitignore, .git/info/exclude or the user's excludes
+#                      file exclude (such as the compiled files), and changes
+#                      to files that the index marks assume-unchanged or
+#                      skip-worktree, are not looked at. The `lean` that runs
+#                      reports the version that lean-toolchain names. A
+#                      failure here always ends the run
 #   3 build            `lake build VoltageToBit` (the library, by name) exits
 #                      with status 0. In a full run every module of the library
 #                      is compiled in this step (step 6 checks that Lake
@@ -169,8 +175,9 @@
 #
 # What a pass establishes. The last line of output says which parts apply.
 #   steps 1 to 6 of a full run: the three configuration files are the pinned
-#     ones, and lakefile.toml has no key outside the list of step 2; every
-#     dependency is checked out at its pinned revision with nothing changed;
+#     ones, and lakefile.toml has no key and no option outside the lists of
+#     step 2; every dependency is checked out at its pinned revision with no
+#     change that `git status` reports;
 #     every module of the library was compiled in this run, by the toolchain
 #     named in the record, from the source files whose digests are in the
 #     record (evidence/lean/sources.sha256: every file of the library's
@@ -601,8 +608,14 @@ if os.path.isfile("lakefile.toml") and not os.path.islink("lakefile.toml"):
         if libraries.count(library) != 1:
             print(f"NOT ALLOWED: lakefile.toml must have exactly one [[lean_lib]] named {library}; it has {libraries.count(library)}")
             status = 1
-        if not isinstance(config.get("leanOptions", {}), dict):
-            print("NOT ALLOWED: lakefile.toml: leanOptions is not a table")
+        # The options that the build passes to the compiler, whatever the pin says: exactly these
+        # three. Another option can change what a statement means (deprecated.oldSectionVars, for
+        # example, makes a theorem take in the section variables its proof uses).
+        expected_options = {"pp": {"unicode": {"fun": True}}, "autoImplicit": False, "relaxedAutoImplicit": False}
+        if config.get("leanOptions", {}) != expected_options:
+            print("NOT ALLOWED: lakefile.toml: [leanOptions] must be exactly pp.unicode.fun = true, "
+                  "autoImplicit = false and relaxedAutoImplicit = false; it is "
+                  + json.dumps(config.get("leanOptions"), sort_keys=True))
             status = 1
 if status == 0:
     # as read from the files
@@ -622,7 +635,7 @@ if status == 0:
         rev = package.get("rev")
         name = package["name"]
         # the checkout that Lake will use must be there and at that revision already, with
-        # nothing changed: otherwise `lake` would fetch it or move it, or compile changed
+        # no change that `git status` reports: otherwise `lake` would fetch it or move it, or compile changed
         # modules of it. (GIT_OPTIONAL_LOCKS=0: `git status` then does not write the index.)
         where = os.path.join(manifest.get("packagesDir", ".lake/packages"), name)
         if not os.path.isdir(where):
@@ -649,7 +662,7 @@ cat "$TMP/config.txt"
 MATHLIB_REV="$(sed -n 's/^lake-manifest.json: mathlib at \([0-9a-f]*\) .*/\1/p' "$TMP/config.txt")"
 if [ "$status" != 0 ]; then
   # With another configuration `lake` may fetch or rebuild dependencies, or run a program.
-  stop config "the build configuration is not the pinned one or has a key that step 2 does not accept, or a dependency is not checked out at its pinned revision with nothing changed; nothing further is run, because \`lake\` could then download, move or rebuild dependencies. A deliberate change of the configuration files is made by editing scripts/pinned-config.sha256 (the keys of lakefile.toml are checked whatever the pin says)"
+  stop config "the build configuration is not the pinned one or has a key or an option that step 2 does not accept, or a dependency is not checked out at its pinned revision with no change that \`git status\` reports; nothing further is run, because \`lake\` could then download, move or rebuild dependencies. A deliberate change of the configuration files is made by editing scripts/pinned-config.sha256 (the keys of lakefile.toml are checked whatever the pin says)"
 fi
 PREFIX="$(lean --print-prefix 2>"$TMP/prefix.err")"
 status=$?
@@ -695,7 +708,7 @@ echo "lean --version: $LEAN_VERSION"
 echo "lake --version: $LAKE_VERSION"
 echo "toolchain programs: $TOOLCHAIN_FILES"
 case "$LEAN_VERSION" in
-  *"(version $WANTED_VERSION,"*) ok config "the three files are the pinned ones, and lakefile.toml has no key that step 2 does not accept; every dependency is at its pinned revision with nothing changed; the toolchain is $TOOLCHAIN" ;;
+  *"(version $WANTED_VERSION,"*) ok config "the three files are the pinned ones, and lakefile.toml has no key and no option that step 2 does not accept; every dependency is at its pinned revision with no change that \`git status\` reports; the toolchain is $TOOLCHAIN" ;;
   *)
     stop config "lean-toolchain names $TOOLCHAIN, but the \`lean\` found through PATH in this directory reports: $LEAN_VERSION" ;;
 esac

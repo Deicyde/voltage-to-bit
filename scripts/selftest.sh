@@ -54,8 +54,10 @@
 #       earlier build, also when lakefile.toml names no default target or
 #       another one and the pin is changed to accept that (B1)
 #   (s5) with the autoImplicit lines deleted and the pin changed to accept
-#       that, a statement with a misspelt name still does not pass: the scan
-#       reads the options that the build passed to the compiler (S5)
+#       that, a statement with a misspelt name still does not pass: step 2
+#       refuses any [leanOptions] other than the three pinned options (S5;
+#       the scan's rule `options`, which reads the options the build passed,
+#       stays as a second line that no change of lakefile.toml alone reaches)
 #   (e) a design file that no longer matches the generated Lean file; and the
 #       decoy of round 4, issue 4: the header of the design record altered, and a
 #       copy generated from the same JSON file under another name
@@ -474,6 +476,8 @@ lakefile.toml with moreLeanArgs in the package table|NOT ALLOWED: lakefile.toml 
 lakefile.toml with an executable|NOT ALLOWED: lakefile.toml has the key lean_exe in its package table|t + '\n[[lean_exe]]\nname = "x"\nroot = "Main"\n'
 lakefile.toml with subDir in [[require]]|NOT ALLOWED: lakefile.toml has the key subDir in [[require]] "mathlib"|t.replace('rev = "v4.35.0"', 'rev = "v4.35.0"\nsubDir = "x"', 1)
 lakefile.toml with a second library of the same name|NOT ALLOWED: lakefile.toml must have exactly one [[lean_lib]] named VoltageToBit; it has 2|t + '\n[[lean_lib]]\nname = "VoltageToBit"\n'
+lakefile.toml with an option that changes what a statement means (round 5)|NOT ALLOWED: lakefile.toml: [leanOptions] must be exactly pp.unicode.fun = true, autoImplicit = false and relaxedAutoImplicit = false|t.replace("relaxedAutoImplicit = false", "relaxedAutoImplicit = false\ndeprecated.oldSectionVars = true", 1)
+lakefile.toml with autoImplicit switched on in [leanOptions]|NOT ALLOWED: lakefile.toml: [leanOptions] must be exactly|t.replace("autoImplicit = false\nrelaxed", "autoImplicit = true\nrelaxed", 1)
 EOF
 
   echo "== (env) the environment that check.sh gives itself =="
@@ -594,14 +598,15 @@ theorem concrete_one (h : n + 0 = 1) : n = 1 := h
 end VoltageToBit.Selftest
 EOF
   run_check s5 --quick --keep-going
-  if [ "$CHECK_STATUS" = 1 ] && present "$LOG" "RESULT config: ok" && present "$LOG" "RESULT build: ok"; then
-    verdict "(s5) lakefile.toml without the autoImplicit lines, the pin changed to accept it, and two statements with names that are bound nowhere: the build accepts them; the scan reports that the file was compiled without the options, and the audit names the theorem that got a universe parameter" "$LOG" \
-      "$LIBRARY/Selftest/Auto.lean: [options] the build did not pass \`autoImplicit = false\` and \`relaxedAutoImplicit = false\`" \
-      "RESULT source-scan: FAILED" \
-      "$LIBRARY.Selftest.thresholds_agree: [universes] it has the universe parameters" \
-      "RESULT axiom-audit: FAILED"
+  # Since round 5 step 2 refuses any [leanOptions] other than the three pinned options, whatever
+  # the pin says, so the copy stops there, before anything is compiled. (The scan's rule
+  # `options` stays as a second line behind it; no change of lakefile.toml alone reaches it now.)
+  if [ "$CHECK_STATUS" = 1 ] && absent "$LOG" "RESULT build:" && absent "$LOG" "== 3."; then
+    verdict "(s5) lakefile.toml without the autoImplicit lines, the pin changed to accept it, and two statements with names that are bound nowhere: check.sh stops at step config, before the build, because [leanOptions] is not the pinned set" "$LOG" \
+      "NOT ALLOWED: lakefile.toml: [leanOptions] must be exactly pp.unicode.fun = true, autoImplicit = false and relaxedAutoImplicit = false" \
+      "CHECK FAILED: config"
   else
-    flunk "(s5) the control is not valid: exit status $CHECK_STATUS, or the configuration or the build of the copy was refused"
+    flunk "(s5) the copy was not stopped at step config: exit status $CHECK_STATUS, or check.sh went on to the build"
     show_tail "$LOG"
   fi
 fi
@@ -1088,7 +1093,8 @@ else
     "RESULT source-scan: FAILED"
   verdict "(pyc) a module of the library in a directory named __pycache__, imported by $LIBRARY.lean (round 4, issue 1): the scan refuses the directory and the import" "$LOG" \
     "$LIBRARY/__pycache__: [tree] a directory whose name does not begin with an ASCII letter or is not made of ASCII letters, digits and \`_\`" \
-    "$LIBRARY.lean: [closure] import of \`$LIBRARY.__pycache__.Extra\`: there is no source file $LIBRARY/__pycache__/Extra.lean"
+    "$LIBRARY.lean: [closure] import of \`$LIBRARY.__pycache__.Extra\`: there is no source file that the tree rule accepts for it ($LIBRARY/__pycache__/Extra.lean)" \
+    "[import] import of \`$LIBRARY.__pycache__.Extra\`: only modules of Mathlib and of $LIBRARY are allowed, with names whose components begin with an ASCII letter"
   if present "$TMP/bypass/evidence/lean/sources.sha256" "  $LIBRARY/__pycache__/Extra.lean" \
       && present "$TMP/bypass/evidence/lean/kernel-replay.txt" "    $LIBRARY.__pycache__.Extra"; then
     pass "(pyc) the record of that run lists the digest of the module's source file (sources.sha256) and the module among those that leanchecker replayed"

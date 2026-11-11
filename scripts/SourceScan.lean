@@ -721,7 +721,7 @@ unsafe def scanLibrary (a : ScanArgs) (inventory : Bool) : IO UInt32 := do
           unless known.contains m do
             closureOk := false
             findings := findings.push
-              s!"{file.path}: [closure] import of `{m}`: there is no source file {moduleFile m}"
+              s!"{file.path}: [closure] import of `{m}`: there is no source file that the tree rule accepts for it ({moduleFile m})"
         else
           external := external.insert m.toString (external.getD m.toString 0 + 1)
   let mut reached : Std.HashSet Name := {}
