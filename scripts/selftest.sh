@@ -18,57 +18,96 @@
 # these files (run scripts/check.sh first). The output has no dates or
 # timings. check.sh is run in full twice (on the unmodified copy and on the
 # copy with a kernel bypass) and with --quick for the rest; expect the whole
-# to take about five times as long as one full run of check.sh.
+# to take about five times as long as one full run of check.sh. The last line
+# says how many PASS lines there are of each kind: negative controls (a defect
+# that check.sh must report, or an attack that must change nothing), positive
+# controls (an unmodified input that must pass, so that the refusals mean
+# something), observations (what the export checkers start from) and the check
+# of this checkout.
 #
 # First, a positive control: a copy without any build product must pass a full
 # run, so that a failure below is due to the defect and not to the copying;
 # and the records check.sh writes for that copy must be the ones in
 # evidence/lean/ of this checkout, which shows that those records can be
-# reproduced from the files alone, in another directory.
+# reproduced from the files alone, in another directory. That copy also has a
+# hashlib.py and a json.py in its top directory, which end any Python program
+# that imports them (py; verification round 4, issue 2): the run must pass, and its
+# records be those of the checkout, all the same.
 #
-# Then the controls, with the finding of the review each one answers:
+# Then the controls, with the finding of the review each one answers ("round 4,
+# issue N" is issue N of entry `tooling` of verification round 4):
 #   (cfg) the build configuration is not the pinned one: each of a list of
 #       changes to lakefile.toml, lake-manifest.json and lean-toolchain, and a
 #       lakefile.lean next to lakefile.toml, stops check.sh at step config,
-#       before any Lean tool runs (B1, S5)
+#       before any Lean tool runs (B1, S5); so does each of a list of keys of
+#       lakefile.toml that could move the library's sources or build products
+#       or reach the compiler, srcDir among them, also when the pin is changed
+#       to accept the file (round 4, issue 3)
+#   (env) in the same group as (cfg), the environment check: called with
+#       exactly the environment that check.sh gives itself, it runs; with one
+#       variable more, or without
+#       PYTHONSAFEPATH, or with a python3 that fails the version test, it stops
+#       with exit status 2 before step 1; variables of the caller such as
+#       LEAN_PATH and PYTHONPATH (with a json.py in it) change nothing
+#       (round 4, issues 2 and 9)
 #   (b1) sources that do not compile cannot pass on compiled files left by an
 #       earlier build, also when lakefile.toml names no default target or
 #       another one and the pin is changed to accept that (B1)
 #   (s5) with the autoImplicit lines deleted and the pin changed to accept
-#       that, a statement with a misspelt name still does not pass: the scan
-#       reads the options that the build passed to the compiler (S5)
-#   (e) a design file that no longer matches the generated Lean file
-#   (d) a failing build makes check.sh exit non-zero, at the build step
+#       that, a statement with a misspelt name still does not pass: step 2
+#       refuses any [leanOptions] other than the three pinned options (S5;
+#       the scan's rule `options`, which reads the options the build passed,
+#       stays as a second line that no change of lakefile.toml alone reaches)
+#   (e) a design file that no longer matches the generated Lean file; and the
+#       decoy of round 4, issue 4: the header of the design record altered, and a
+#       copy generated from the same JSON file under another name
+#   (d) a failing build makes check.sh exit non-zero, at the build step, and
+#       the error names the file
 #   (src) one copy with several modules, each with one defect, and a full list
 #       of what the scan and the audit must say about each: a file outside the
 #       import closure (c); a declared axiom (f); a scoped instance in plain
 #       sight (S3) and one behind `/-/-/` (B2); an indented `variable?` (S4);
 #       a tactic configuration that carries a program (M8); a universe
 #       parameter; a simp attribute; a notation; a definition of a
-#       metaprogramming type; a definition that hides a name of Mathlib
+#       metaprogramming type; a definition that hides a name of Mathlib; an
+#       opaque, an unsafe and a partial definition, an argument with a default
+#       value, definitions marked reducible and irreducible (round 4, issue
+#       9); file names that the tree rule refuses: a non-ASCII letter, a
+#       leading `_`, the extension .LEAN, a symbolic link (round 4, issue 9);
+#       and a module that writes a file into scripts/ while it is compiled,
+#       which the comparison of the digests at the end reports
+#   (stored) a compiled file that was not made from the present sources: a
+#       module whose stored axiom list no longer agrees with the declarations
+#       it refers to is refused by the audit (round 4, issue 9)
 #   (a) a declaration added with the kernel check switched off, as in
 #       review/tooling/AuditGapDemo.lean, passes the build and the axiom audit
 #       and is rejected by the replay steps: one line for leanchecker on the
 #       compiled files, and one line for each tool that checks the export and
-#       is installed. A line says PASS only if the same tool accepted the
-#       unmodified copy.
+#       is installed, which must name its reason. A line says PASS only if the
+#       same tool accepted the unmodified copy.
 #   (b) the source scan flags that file
+#   (pyc) in the same copy, a module of the library in a directory named
+#       __pycache__, imported by the root: the scan refuses it, and the record
+#       of the run lists its digest (round 4, issue 1)
 #   (origin) the audit refuses compiled files of the library that are loaded
 #       from another directory than .lake/build of the project
 #   (m9) when lean fails in the audit program after the audit has printed its
 #       result, check.sh shows the error (M9)
-#   (s6) --quick says how the last full run on the present files ended (S6)
+#   (s6) --quick says how the last full run on the present files ended (S6);
+#       for that run the compiled configuration of a dependency in .lake/config
+#       is replaced by a file that is not one, which --quick must not read
+#       (qcfg; round 4, issue 5)
 #   (g) what the export checkers start from: with the declaration of Eq
-#       removed from a small export, four of them refuse it and con-leche and
-#       con-ron accept it (M7)
+#       removed from a small export, four of them refuse it, each with its
+#       message about Eq, and con-leche and con-ron accept it (M7)
 #   and two sets of small cases for the source scan and for the design
 #   generator (scripts/selftest_static.py).
 #
 # SELFTEST_KEEP=1 keeps the temporary directory and prints its path.
 # SELFTEST_ONLY="<tags>" runs only the named groups of controls (static, control,
-# s6, cfg, b1, s5, e, d, src, origin, m9, bypass, g), for work on this script; the copies are then
-# made from the build products of this checkout when the positive control is not
-# among them, and the last line says that the self-test was partial.
+# s6, cfg, b1, s5, e, d, src, stored, origin, m9, bypass, g), for work on this script; the
+# copies are then made from the build products of this checkout when the positive control is
+# not among them, and the last line says that the self-test was partial.
 set -u
 
 # an environment of its own, as scripts/check.sh gives itself
@@ -77,6 +116,7 @@ case "${1:-}" in
   *)
     exec env -i HOME="${HOME:-}" PATH="${PATH:-/usr/bin:/bin}" TMPDIR="${TMPDIR:-/tmp}" \
       LC_ALL=C PYTHONUTF8=1 PYTHONIOENCODING=utf-8 PYTHONDONTWRITEBYTECODE=1 \
+      PYTHONSAFEPATH=1 PYTHONNOUSERSITE=1 \
       LAKE_ARTIFACT_CACHE=false LAKE_NO_CACHE=true LAKE_CONFIG=/nonexistent/lake-config.toml \
       CHECK_REPLAY_JOBS="${CHECK_REPLAY_JOBS:-1}" CHECK_SCAN_JOBS="${CHECK_SCAN_JOBS:-2}" \
       CHECK_BUILD_JOBS="${CHECK_BUILD_JOBS:-}" SELFTEST_KEEP="${SELFTEST_KEEP:-0}" \
@@ -85,6 +125,11 @@ case "${1:-}" in
 esac
 ROOT="$(cd "$(dirname "$0")/.." && pwd)" || exit 2
 cd "$ROOT" || exit 2
+# Python imports no module from the project directory (PYTHONSAFEPATH=1, Python 3.11 or later)
+if ! python3 -c 'import sys; sys.exit(0 if sys.version_info >= (3, 11) and sys.flags.safe_path and sys.flags.no_user_site else 1)' >/dev/null 2>&1; then
+  echo "selftest.sh: needs python3 through PATH, version 3.11 or later (an older one ignores PYTHONSAFEPATH=1)" >&2
+  exit 2
+fi
 LIBRARY=VoltageToBit
 
 TMP="$(mktemp -d "${TMPDIR:-/tmp}/vtb-selftest.XXXXXX")" || exit 2
@@ -98,8 +143,20 @@ STATUS=0
 # want <tag>: is this group of controls to be run?
 want() { case " ${SELFTEST_ONLY:-$1} " in *" $1 "*) return 0 ;; *) return 1 ;; esac; }
 BASE=checkout      # where the copies take their build products from
-pass() { echo "PASS $1"; }
-flunk() { echo "FAIL $1"; STATUS=1; }
+# The kind of the controls that follow (set with `kind`): negative, positive, observation or
+# checkout. The PASS lines of each kind are counted for the last line.
+KIND=negative; N_NEGATIVE=0; N_POSITIVE=0; N_OBSERVATION=0; N_CHECKOUT=0; N_FAIL=0
+kind() { KIND="$1"; }
+pass() {
+  echo "PASS $1"
+  case "$KIND" in
+    negative) N_NEGATIVE=$((N_NEGATIVE + 1)) ;;
+    positive) N_POSITIVE=$((N_POSITIVE + 1)) ;;
+    observation) N_OBSERVATION=$((N_OBSERVATION + 1)) ;;
+    checkout) N_CHECKOUT=$((N_CHECKOUT + 1)) ;;
+  esac
+}
+flunk() { echo "FAIL $1"; STATUS=1; N_FAIL=$((N_FAIL + 1)); }
 show_tail() { tail -n 8 "$1" | cut -c1-300 | sed 's/^/         /'; }
 # verdict <description> <log> <pattern>...: PASS if every fixed string occurs in the log
 verdict() {
@@ -121,6 +178,7 @@ present() { grep -q -F -- "$2" "$1"; }   # present <log> <fixed string>
 absent() { ! grep -q -F -- "$2" "$1"; }
 
 tree_digest() {   # one hash over every file of this checkout that a control could have touched
+  # (in every directory, whatever its name; Python's __pycache__ is passed over under scripts/ only)
   python3 -c 'import hashlib, pathlib
 h = hashlib.sha256()
 roots = ["VoltageToBit.lean", "VoltageToBit", "designs", "scripts", "evidence", "lakefile.toml",
@@ -130,7 +188,7 @@ for root in roots:
     path = pathlib.Path(root)
     files += [path] if path.is_file() else [p for p in path.rglob("*") if p.is_file()]
 for path in sorted(files, key=lambda p: p.as_posix()):
-    if "__pycache__" in path.parts:
+    if path.parts[0] == "scripts" and "__pycache__" in path.parts:
         continue
     h.update(path.as_posix().encode() + b"\0" + hashlib.sha256(path.read_bytes()).digest())
 print(h.hexdigest())'
@@ -193,7 +251,11 @@ VICTIM="$(grep -L '^GENERATED by scripts/gen_design.py' $(find "$LIBRARY" -name 
 # ---------------------------------------------------------------------------
 if want static; then
 echo "== small cases for the source scan and for the design generator =="
-python3 -B scripts/selftest_static.py "$ROOT" "$TMP/static" || STATUS=1
+python3 -B scripts/selftest_static.py "$ROOT" "$TMP/static" >"$TMP/static.out" 2>&1 || STATUS=1
+cat "$TMP/static.out"
+# each of its lines is a negative control with positive cases inside it
+N_NEGATIVE=$((N_NEGATIVE + $(grep -c '^PASS ' "$TMP/static.out")))
+N_FAIL=$((N_FAIL + $(grep -c '^FAIL ' "$TMP/static.out")))
 fi
 
 # ---------------------------------------------------------------------------
@@ -204,8 +266,21 @@ if want control; then
 echo "== positive control: a copy without build products (a full run of check.sh) =="
 BASE=control
 copy_project control none
+# (py) Python modules planted in the top directory of the copy, which is check.sh's working
+# directory: a program that imported one of them instead of the standard module would leave a
+# mark and stop with exit status 3
+for planted in hashlib json; do
+  cat >"$TMP/control/$planted.py" <<'EOF'
+# Planted by scripts/selftest.sh, control (py): a Python program that imports this file
+# instead of the module of the standard library leaves a mark and stops with exit status 3.
+import sys
+open(__file__ + ".imported", "a").close()
+sys.exit(3)
+EOF
+done
 run_check control
 cp "$LOG" "$CONTROL"
+kind positive
 if [ "$CHECK_STATUS" = 0 ]; then
   verdict "control: a copy of the project without any build product passes a full run of check.sh, which compiles every module" "$CONTROL" \
     "RESULT design-record: ok" "RESULT config: ok" "RESULT build: ok" "RESULT source-scan: ok" \
@@ -224,6 +299,12 @@ if [ -z "$DIFFER" ]; then
 else
   flunk "control: records in evidence/lean/ of this checkout are not what a full run of check.sh writes for an unmodified copy:$DIFFER (run scripts/check.sh, without --whole-env, to bring them up to date)"
 fi
+kind negative
+if [ "$CHECK_STATUS" = 0 ] && [ -z "$DIFFER" ] && [ ! -e "$TMP/control/hashlib.py.imported" ] && [ ! -e "$TMP/control/json.py.imported" ]; then
+  pass "(py) that copy has a hashlib.py and a json.py in its top directory, check.sh's working directory, which end any Python program that imports them (round 4, issue 2): no program imported them, the run passed, and its records are those of this checkout"
+else
+  flunk "(py) a hashlib.py or a json.py in the top directory of the copy was imported ($(ls "$TMP/control/"*.imported 2>/dev/null | sed 's|.*/||' | tr '\n' ' ')), or the run of the copy failed or wrote other records"
+fi
 grep '^RESULT replay-export/' "$CONTROL" | sed 's|^RESULT replay-export/||; s|:.*||' >"$TMP/export-tools.txt"
 grep '^RESULT .*: NOT RUN' "$CONTROL" | sed 's/^/     note: /'
 fi
@@ -233,16 +314,32 @@ if want s6 && [ "$BASE" != control ]; then
   flunk "(s6) these controls need the positive control: name both in SELFTEST_ONLY"
 elif want s6; then
 echo "== (s6) --quick says how the last full run on these files ended =="
+# (qcfg) the compiled configuration of a dependency that the full run left in .lake/config,
+# replaced by a file that is not one, its trace left as it is (round 4, issue 5): Lake would read
+# it, and fail, if --quick did not remove .lake/config
+PLANTED_CONFIG="$(ls "$TMP/control/.lake/config/"*/lakefile.olean 2>/dev/null | head -n 1)"
+if [ -n "$PLANTED_CONFIG" ]; then printf 'not a compiled configuration\n' >"$PLANTED_CONFIG"; fi
 run_check control --quick
+kind negative
+if [ -z "$PLANTED_CONFIG" ]; then
+  flunk "(qcfg) the copy of the positive control has no compiled configuration in .lake/config; update this control"
+elif [ "$CHECK_STATUS" = 0 ] && present "$LOG" "removing .lake/config" && present "$LOG" "RESULT build: ok"; then
+  pass "(qcfg) a compiled configuration of a dependency in .lake/config replaced by a file that is not one (round 4, issue 5): --quick removes .lake/config before the build, and the build passes"
+else
+  flunk "(qcfg) with a file that is not a compiled configuration in .lake/config: exit status $CHECK_STATUS, or --quick did not remove .lake/config, or the build failed"
+  show_tail "$LOG"
+fi
+kind positive
 if [ "$CHECK_STATUS" = 0 ]; then
-  verdict "(s6) --quick after a full run that passed: it passes, compiles nothing again, and says that the record is for these same files and that the run passed" "$LOG" \
-    "RESULT import-closure: ok" "0 compiled in this run, the others reused" \
-    "is for these same files, and that run PASSED." "QUICK CHECK PASSED (steps 1 to 6)." \
-    "no declaration was re-checked by any kernel in this run"
+  verdict "(s6) --quick after a full run that passed: it passes, removes .lake/config, compiles nothing again, and says that the record names these same files and says that its run passed" "$LOG" \
+    "RESULT import-closure: ok" "0 compiled in this run, the others reused" "removing .lake/config" \
+    "names these same files (by the digest of their list) and says that its run PASSED;" \
+    "QUICK CHECK PASSED (steps 1 to 6)." "no declaration was re-checked by any kernel in this run"
 else
   flunk "(s6) --quick on the unmodified copy after its full run: exit status $CHECK_STATUS"
   show_tail "$LOG"
 fi
+kind negative
 # the same record, as a full run that failed at the kernel replay would have left it
 sed 's/^  outcome of the run of scripts\/check.sh that wrote this record: every step that was run passed\.$/  outcome of the run of scripts\/check.sh that wrote this record: FAILED: replay-modules/' \
   "$TMP/control/evidence/lean/kernel-replay.txt" >"$TMP/failed-record.txt"
@@ -251,11 +348,11 @@ if cmp -s "$TMP/failed-record.txt" "$TMP/control/evidence/lean/kernel-replay.txt
 else
   cp "$TMP/failed-record.txt" "$TMP/control/evidence/lean/kernel-replay.txt"
   run_check control --quick
-  if [ "$CHECK_STATUS" = 0 ] && absent "$LOG" "that run PASSED"; then
+  if [ "$CHECK_STATUS" = 0 ] && absent "$LOG" "its run PASSED"; then
     verdict "(s6) --quick when the record of the last full run on these files says FAILED: the line that reports the quick check says so" "$LOG" \
-      "is for these same files, and that run FAILED: replay-modules." \
+      "names these same files (by the digest of their list) and says that its run FAILED: replay-modules;" \
       "QUICK CHECK PASSED (steps 1 to 6)."
-    tail -n 1 "$LOG" | grep -q -F "that run FAILED: replay-modules." \
+    tail -n 1 "$LOG" | grep -q -F "says that its run FAILED: replay-modules;" \
       || flunk "(s6) the last line of --quick does not say that the last full run failed"
   else
     flunk "(s6) --quick with a record that says FAILED: exit status $CHECK_STATUS, or it still says that the run passed"
@@ -276,18 +373,32 @@ else
   mkdir -p "$TMP/cfg"
   cp -R "$LIBRARY" "$LIBRARY.lean" scripts designs lakefile.toml lake-manifest.json lean-toolchain "$TMP/cfg/"
   rm -rf "$TMP/cfg/scripts/__pycache__"
+  # edit_text <file> <python expression>: map the text `t` of <file> in the copy to the value of
+  # the expression; exit status 3 if that changes nothing
+  edit_text() {
+    (cd "$TMP/cfg" && python3 -c 'import sys
+name, edit = sys.argv[1], sys.argv[2]
+t = open(name, encoding="utf-8", newline="").read()
+new = eval(edit)
+if new == t:
+    sys.exit(3)
+open(name, "w", encoding="utf-8", newline="").write(new)' "$1" "$2")
+  }
   # the unchanged configuration passes step 2's comparison; the copy has no dependencies
   (cd "$TMP/cfg" && PATH="$SAFE_PATH" sh scripts/check.sh --quick) >"$TMP/cfg.log" 2>&1
   c_status=$?
+  cp "$TMP/cfg.log" "$TMP/cfg-unchanged.log"
+  kind positive
   if [ "$c_status" = 1 ] && present "$TMP/cfg.log" "pinned: lakefile.toml" && present "$TMP/cfg.log" "pinned: lake-manifest.json" \
       && present "$TMP/cfg.log" "pinned: lean-toolchain" && absent "$TMP/cfg.log" "NOT THE PINNED FILE" \
-      && present "$TMP/cfg.log" "NOT READY: .lake/packages/mathlib is missing" \
+      && absent "$TMP/cfg.log" "NOT ALLOWED" && present "$TMP/cfg.log" "NOT READY: .lake/packages/mathlib is missing" \
       && present "$TMP/cfg.log" "CHECK FAILED: config" && absent "$TMP/cfg.log" "== 3."; then
-    pass "(cfg) the unchanged configuration files are accepted as the pinned ones; in a copy without the dependencies check.sh then stops at step config and says that .lake/packages/mathlib is missing"
+    pass "(cfg) the unchanged configuration files are accepted as the pinned ones, with no key refused; in a copy without the dependencies check.sh then stops at step config and says that .lake/packages/mathlib is missing"
   else
     flunk "(cfg) the unchanged configuration files are not accepted, or a copy without dependencies did not stop at step config (exit status $c_status)"
     show_tail "$TMP/cfg.log"
   fi
+  kind negative
   # name | file | what must be reported | python expression that maps the text `t` of the file to the changed text
   while IFS='|' read -r c_name c_file c_expect c_edit; do
     [ -n "$c_name" ] || continue
@@ -295,20 +406,14 @@ else
       : >"$TMP/cfg/lakefile.lean"
     else
       cp "$c_file" "$TMP/cfg/$c_file"
-      (cd "$TMP/cfg" && python3 -c 'import sys
-name, edit = sys.argv[1], sys.argv[2]
-t = open(name, encoding="utf-8", newline="").read()
-new = eval(edit)
-if new == t:
-    sys.exit(3)
-open(name, "w", encoding="utf-8", newline="").write(new)' "$c_file" "$c_edit")
+      edit_text "$c_file" "$c_edit"
       if [ $? != 0 ]; then
         flunk "(cfg) $c_name: the file does not have the text this control changes; update the control"
         cp "$c_file" "$TMP/cfg/$c_file"
         continue
       fi
     fi
-    (cd "$TMP/cfg" && PATH="$SAFE_PATH" sh scripts/check.sh --quick --keep-going) >"$TMP/cfg.log" 2>&1
+    (cd "$TMP/cfg" && PATH="$SAFE_PATH" sh scripts/check.sh --quick --keep-going) </dev/null >"$TMP/cfg.log" 2>&1
     c_status=$?
     if [ "$c_status" = 1 ] && present "$TMP/cfg.log" "$c_expect" && present "$TMP/cfg.log" "RESULT config: FAILED (the build configuration is not the pinned one" \
         && present "$TMP/cfg.log" "CHECK FAILED: config" && absent "$TMP/cfg.log" "RESULT build:" && absent "$TMP/cfg.log" "== 3."; then
@@ -332,6 +437,108 @@ lake-manifest.json with another revision of Mathlib|lake-manifest.json|NOT THE P
 lean-toolchain naming another toolchain|lean-toolchain|NOT THE PINNED FILE: lean-toolchain|t.strip() + "-rc1\n"
 a lakefile.lean next to lakefile.toml|lakefile.lean|NOT ALLOWED: lakefile.lean|
 EOF
+  # The same kind of change with the pin changed to accept the file (round 4, issue 3): a key that
+  # could move the library's sources or build products, or reach the compiler, is refused
+  # whatever the pin says. srcDir under [[lean_lib]] made Lake compile the library from another
+  # directory than the one the scan and the digests read.
+  # name | what must be reported | python expression that maps the text `t` of lakefile.toml to the changed text
+  while IFS='|' read -r c_name c_expect c_edit; do
+    [ -n "$c_name" ] || continue
+    cp lakefile.toml "$TMP/cfg/lakefile.toml"
+    if ! edit_text lakefile.toml "$c_edit"; then
+      flunk "(cfg) $c_name: lakefile.toml does not have the text this control changes; update the control"
+      continue
+    fi
+    repin cfg
+    (cd "$TMP/cfg" && PATH="$SAFE_PATH" sh scripts/check.sh --quick --keep-going) </dev/null >"$TMP/cfg.log" 2>&1
+    c_status=$?
+    if [ "$c_status" = 1 ] && present "$TMP/cfg.log" "$c_expect" && present "$TMP/cfg.log" "pinned: lakefile.toml" \
+        && absent "$TMP/cfg.log" "NOT THE PINNED FILE" && present "$TMP/cfg.log" "RESULT config: FAILED (the build configuration" \
+        && present "$TMP/cfg.log" "CHECK FAILED: config" && absent "$TMP/cfg.log" "RESULT build:" && absent "$TMP/cfg.log" "== 3."; then
+      pass "(cfg) $c_name, with the pin changed to accept the file: check.sh stops at step config, also with --keep-going, and reports: $c_expect"
+    else
+      flunk "(cfg) $c_name, with the pin changed to accept the file: exit status $c_status, or step config did not report \"$c_expect\", or check.sh went on"
+      show_tail "$TMP/cfg.log"
+    fi
+    cp lakefile.toml "$TMP/cfg/lakefile.toml"
+    cp scripts/pinned-config.sha256 "$TMP/cfg/scripts/pinned-config.sha256"
+  done <<'EOF'
+lakefile.toml with srcDir in [[lean_lib]] (round 4, issue 3)|NOT ALLOWED: lakefile.toml has the key srcDir in [[lean_lib]] "VoltageToBit"; accepted there: name|t + 'srcDir = "alt"\n'
+lakefile.toml with roots in [[lean_lib]]|NOT ALLOWED: lakefile.toml has the key roots in [[lean_lib]] "VoltageToBit"|t + 'roots = ["VoltageToBit", "Other"]\n'
+lakefile.toml with globs in [[lean_lib]]|NOT ALLOWED: lakefile.toml has the key globs in [[lean_lib]] "VoltageToBit"|t + 'globs = ["VoltageToBit.+"]\n'
+lakefile.toml with libName in [[lean_lib]]|NOT ALLOWED: lakefile.toml has the key libName in [[lean_lib]] "VoltageToBit"|t + 'libName = "Other"\n'
+lakefile.toml with moreLeanArgs in [[lean_lib]]|NOT ALLOWED: lakefile.toml has the key moreLeanArgs in [[lean_lib]] "VoltageToBit"|t + 'moreLeanArgs = ["-DautoImplicit=true"]\n'
+lakefile.toml with weakLeanArgs in [[lean_lib]]|NOT ALLOWED: lakefile.toml has the key weakLeanArgs in [[lean_lib]] "VoltageToBit"|t + 'weakLeanArgs = ["-DautoImplicit=true"]\n'
+lakefile.toml with options of its own in [[lean_lib]]|NOT ALLOWED: lakefile.toml has the key leanOptions in [[lean_lib]] "VoltageToBit"|t + '\n[lean_lib.leanOptions]\nautoImplicit = true\n'
+lakefile.toml with srcDir in the package table|NOT ALLOWED: lakefile.toml has the key srcDir in its package table|t.replace("[leanOptions]", 'srcDir = "alt"\n\n[leanOptions]', 1)
+lakefile.toml with buildDir in the package table|NOT ALLOWED: lakefile.toml has the key buildDir in its package table|t.replace("[leanOptions]", 'buildDir = "other"\n\n[leanOptions]', 1)
+lakefile.toml with moreLeanArgs in the package table|NOT ALLOWED: lakefile.toml has the key moreLeanArgs in its package table|t.replace("[leanOptions]", 'moreLeanArgs = ["-DautoImplicit=true"]\n\n[leanOptions]', 1)
+lakefile.toml with an executable|NOT ALLOWED: lakefile.toml has the key lean_exe in its package table|t + '\n[[lean_exe]]\nname = "x"\nroot = "Main"\n'
+lakefile.toml with subDir in [[require]]|NOT ALLOWED: lakefile.toml has the key subDir in [[require]] "mathlib"|t.replace('rev = "v4.35.0"', 'rev = "v4.35.0"\nsubDir = "x"', 1)
+lakefile.toml with a second library of the same name|NOT ALLOWED: lakefile.toml must have exactly one [[lean_lib]] named VoltageToBit; it has 2|t + '\n[[lean_lib]]\nname = "VoltageToBit"\n'
+lakefile.toml with an option that changes what a statement means (round 5)|NOT ALLOWED: lakefile.toml: [leanOptions] must be exactly pp.unicode.fun = true, autoImplicit = false and relaxedAutoImplicit = false|t.replace("relaxedAutoImplicit = false", "relaxedAutoImplicit = false\ndeprecated.oldSectionVars = true", 1)
+lakefile.toml with autoImplicit switched on in [leanOptions]|NOT ALLOWED: lakefile.toml: [leanOptions] must be exactly|t.replace("autoImplicit = false\nrelaxed", "autoImplicit = true\nrelaxed", 1)
+EOF
+
+  echo "== (env) the environment that check.sh gives itself =="
+  # check.sh's own list is selftest.sh's list without SELFTEST_* and with LEAN_ABORT_ON_PANIC=1
+  # (round 4, issue 9: the environment check was not exercised)
+  (cd "$TMP/cfg" && env -u SELFTEST_KEEP -u SELFTEST_ONLY LEAN_ABORT_ON_PANIC=1 PATH="$SAFE_PATH" \
+    sh scripts/check.sh --clean-environment --quick) >"$TMP/env.log" 2>&1
+  c_status=$?
+  kind positive
+  if [ "$c_status" = 1 ] && absent "$TMP/env.log" "the environment is not the one" && present "$TMP/env.log" "RESULT design-record: ok" \
+      && present "$TMP/env.log" "NOT READY: .lake/packages/mathlib is missing"; then
+    pass "(env) check.sh called with --clean-environment and exactly the environment it gives itself: it runs (and stops at step config in the copy without dependencies)"
+  else
+    flunk "(env) check.sh called with exactly the environment it gives itself: exit status $c_status, or it did not run"
+    show_tail "$TMP/env.log"
+  fi
+  kind negative
+  (cd "$TMP/cfg" && env -u SELFTEST_KEEP -u SELFTEST_ONLY LEAN_ABORT_ON_PANIC=1 LEAN_PATH=/nonexistent PATH="$SAFE_PATH" \
+    sh scripts/check.sh --clean-environment --quick) >"$TMP/env.log" 2>&1
+  c_status=$?
+  if [ "$c_status" = 2 ] && present "$TMP/env.log" "the environment is not the one this script gives itself" \
+      && present "$TMP/env.log" "Variables it did not ask for: LEAN_PATH." && absent "$TMP/env.log" "== 1."; then
+    pass "(env) the same with LEAN_PATH added: check.sh stops with exit status 2 before step 1 and names the variable"
+  else
+    flunk "(env) the same with LEAN_PATH added: exit status $c_status, or the variable was not named, or a step ran"
+    show_tail "$TMP/env.log"
+  fi
+  (cd "$TMP/cfg" && env -u SELFTEST_KEEP -u SELFTEST_ONLY -u PYTHONSAFEPATH LEAN_ABORT_ON_PANIC=1 PATH="$SAFE_PATH" \
+    sh scripts/check.sh --clean-environment --quick) >"$TMP/env.log" 2>&1
+  c_status=$?
+  if [ "$c_status" = 2 ] && present "$TMP/env.log" "Not set as the script sets them: PYTHONSAFEPATH." && absent "$TMP/env.log" "== 1."; then
+    pass "(env) the same without PYTHONSAFEPATH (round 4, issue 2): check.sh stops with exit status 2 before step 1 and names the variable"
+  else
+    flunk "(env) the same without PYTHONSAFEPATH: exit status $c_status, or the variable was not named, or a step ran"
+    show_tail "$TMP/env.log"
+  fi
+  # a python3 that fails the test of version and safe path, as one older than 3.11 does
+  mkdir -p "$TMP/oldpython"
+  printf '#!/bin/sh\nexit 1\n' >"$TMP/oldpython/python3"
+  chmod +x "$TMP/oldpython/python3"
+  (cd "$TMP/cfg" && PATH="$TMP/oldpython:$SAFE_PATH" sh scripts/check.sh --quick) >"$TMP/env.log" 2>&1
+  c_status=$?
+  if [ "$c_status" = 2 ] && present "$TMP/env.log" "check.sh: needs python3 through PATH, version 3.11 or later" && absent "$TMP/env.log" "== 1."; then
+    pass "(env) a python3 that fails the test for version 3.11 and the safe path (a stand-in): check.sh stops with exit status 2 before step 1"
+  else
+    flunk "(env) a python3 that fails the test for version 3.11 and the safe path: exit status $c_status, or a step ran"
+    show_tail "$TMP/env.log"
+  fi
+  # variables of the caller are dropped: the run is the one of the unchanged configuration above
+  mkdir -p "$TMP/pypath"
+  printf 'import sys\nopen(__file__ + ".imported", "a").close()\nsys.exit(3)\n' >"$TMP/pypath/json.py"
+  (cd "$TMP/cfg" && env LEAN_PATH=/nonexistent LAKE_HOME=/nonexistent ELAN_TOOLCHAIN=none PYTHONPATH="$TMP/pypath" \
+    PATH="$SAFE_PATH" sh scripts/check.sh --quick) >"$TMP/env.log" 2>&1
+  c_status=$?
+  if [ "$c_status" = 1 ] && [ ! -e "$TMP/pypath/json.py.imported" ] \
+      && [ "$(grep -v '^elapsed: ' "$TMP/env.log")" = "$(grep -v '^elapsed: ' "$TMP/cfg-unchanged.log")" ]; then
+    pass "(env) a call with LEAN_PATH, LAKE_HOME, ELAN_TOOLCHAIN and PYTHONPATH set (PYTHONPATH with a json.py that ends any program importing it): the output is the one without them"
+  else
+    flunk "(env) a call with variables of the caller: exit status $c_status, or json.py was imported, or the output differs from the one without them"
+    show_tail "$TMP/env.log"
+  fi
 fi
 fi
 
@@ -391,14 +598,15 @@ theorem concrete_one (h : n + 0 = 1) : n = 1 := h
 end VoltageToBit.Selftest
 EOF
   run_check s5 --quick --keep-going
-  if [ "$CHECK_STATUS" = 1 ] && present "$LOG" "RESULT config: ok" && present "$LOG" "RESULT build: ok"; then
-    verdict "(s5) lakefile.toml without the autoImplicit lines, the pin changed to accept it, and two statements with names that are bound nowhere: the build accepts them; the scan reports that the file was compiled without the options, and the audit names the theorem that got a universe parameter" "$LOG" \
-      "$LIBRARY/Selftest/Auto.lean: [options] the build did not pass \`autoImplicit = false\` and \`relaxedAutoImplicit = false\`" \
-      "RESULT source-scan: FAILED" \
-      "$LIBRARY.Selftest.thresholds_agree: [universes] it has the universe parameters" \
-      "RESULT axiom-audit: FAILED"
+  # Since round 5 step 2 refuses any [leanOptions] other than the three pinned options, whatever
+  # the pin says, so the copy stops there, before anything is compiled. (The scan's rule
+  # `options` stays as a second line behind it; no change of lakefile.toml alone reaches it now.)
+  if [ "$CHECK_STATUS" = 1 ] && absent "$LOG" "RESULT build:" && absent "$LOG" "== 3."; then
+    verdict "(s5) lakefile.toml without the autoImplicit lines, the pin changed to accept it, and two statements with names that are bound nowhere: check.sh stops at step config, before the build, because [leanOptions] is not the pinned set" "$LOG" \
+      "NOT ALLOWED: lakefile.toml: [leanOptions] must be exactly pp.unicode.fun = true, autoImplicit = false and relaxedAutoImplicit = false" \
+      "CHECK FAILED: config"
   else
-    flunk "(s5) the control is not valid: exit status $CHECK_STATUS, or the configuration or the build of the copy was refused"
+    flunk "(s5) the copy was not stopped at step config: exit status $CHECK_STATUS, or check.sh went on to the build"
     show_tail "$LOG"
   fi
 fi
@@ -415,9 +623,32 @@ else
   run_check stale --quick
   if [ "$CHECK_STATUS" = 1 ] && absent "$LOG" "RESULT config:"; then
     verdict "(e) a design file that differs from the generated Lean file: check.sh stops with exit status 1 at step design-record" \
-      "$LOG" "STALE:" "RESULT design-record: FAILED" "CHECK FAILED: design-record"
+      "$LOG" "STALE: $LIBRARY/Examples/IllustrativeDesign.lean is not what designs/illustrative-1v8.json generates" \
+      "RESULT design-record: FAILED" "CHECK FAILED: design-record"
   else
     flunk "(e) stale design record: exit status $CHECK_STATUS, or check.sh went on after the failure"
+    show_tail "$LOG"
+  fi
+fi
+# The decoy of round 4, issue 4: the header of the record that the library uses altered (so that a
+# check that went by the header would no longer compare it), its status line changed, and a copy
+# generated from the same JSON file under another name, imported by the root
+copy_project decoy "$BASE"
+RECORD_FILE="$LIBRARY/Examples/IllustrativeDesign.lean"
+(cd "$TMP/decoy" && python3 scripts/gen_design.py designs/illustrative-1v8.json "$LIBRARY/Examples/DesignDecoy.lean" illustrativeDecoy) >/dev/null
+printf 'import %s.Examples.DesignDecoy\n' "$LIBRARY" >>"$TMP/decoy/$LIBRARY.lean"
+sed 's/^GENERATED by /Generated by /; s/^Status: .*$/Status: ALTERED BY THE SELF-TEST./' "$RECORD_FILE" >"$TMP/decoy/$RECORD_FILE"
+if cmp -s "$RECORD_FILE" "$TMP/decoy/$RECORD_FILE" || [ ! -f "$TMP/decoy/$LIBRARY/Examples/DesignDecoy.lean" ]; then
+  flunk "(e) the decoy: the record could not be altered or the copy could not be generated; update this control"
+else
+  run_check decoy --quick
+  if [ "$CHECK_STATUS" = 1 ] && absent "$LOG" "RESULT config:"; then
+    verdict "(e) the decoy of round 4, issue 4: the header of the design record altered and a copy generated under another name: check.sh stops at step design-record and names both files" \
+      "$LOG" "STALE: $RECORD_FILE is not what designs/illustrative-1v8.json generates with the definition name illustrative" \
+      "NOT LISTED: $LIBRARY/Examples/DesignDecoy.lean begins with the header of a generated design record" \
+      "RESULT design-record: FAILED" "CHECK FAILED: design-record"
+  else
+    flunk "(e) the decoy: exit status $CHECK_STATUS, or check.sh went on after step design-record"
     show_tail "$LOG"
   fi
 fi
@@ -432,8 +663,9 @@ theorem VoltageToBit.Selftest.broken : (1 : Nat) = 2 := rfl
 EOF
 run_check broken --quick
 if [ "$CHECK_STATUS" = 1 ] && absent "$LOG" "RESULT axiom-audit:" && absent "$LOG" "RESULT source-scan: ok"; then
-  verdict "(d) a module that does not compile: check.sh stops with exit status 1 at step build" \
-    "$LOG" "RESULT config: ok" "RESULT build: FAILED (lake build $LIBRARY exited with status" "CHECK FAILED: build"
+  verdict "(d) a module that does not compile: check.sh stops with exit status 1 at step build, and the error that it shows names the file" \
+    "$LOG" "RESULT config: ok" "error: $LIBRARY/Selftest/Broken.lean:1:" \
+    "RESULT build: FAILED (lake build $LIBRARY exited with status" "CHECK FAILED: build"
 else
   flunk "(d) failing build: exit status $CHECK_STATUS, or check.sh went on after the failure"
   show_tail "$LOG"
@@ -551,15 +783,51 @@ theorem usesNotation : selftestFalse → True := fun _ => trivial
 
 end VoltageToBit.Selftest
 EOF
-  run_check src --quick --keep-going
+  # declarations of the kinds that the audit refuses (round 4, issue 9)
+  add_module src Kinds yes <<'EOF'
+namespace VoltageToBit.Selftest
+
+opaque hidden : Nat
+
+unsafe def unsafeId (n : Nat) : Nat := n
+
+partial def loop (n : Nat) : Nat := loop (n + 1)
+
+abbrev Small : Type := Nat
+
+@[irreducible] def sealed : Nat := 0
+
+end VoltageToBit.Selftest
+EOF
+  add_module src Default yes <<'EOF'
+namespace VoltageToBit.Selftest
+
+def withDefault (x : optParam Nat 5) : Nat := x
+
+end VoltageToBit.Selftest
+EOF
+  # a module that writes into scripts/ while it is compiled: the digests taken at the end of
+  # the run differ from those taken at its beginning (round 4, issue 9)
+  add_module src Writer yes <<'EOF'
+#eval (IO.FS.writeFile "scripts/written-while-compiling.txt" "written by a module of the library\n" : IO Unit)
+EOF
+  # file names that the tree rule refuses, none of them imported (round 4, issue 9); a module
+  # in a directory named __pycache__ is in the copy of control (a)
   S="$LIBRARY/Selftest"
+  NONASCII="$(printf 'Byp\303\244ss')"
+  printf 'theorem VoltageToBit.Selftest.nonAscii : True := trivial\n' >"$TMP/src/$S/$NONASCII.lean"
+  printf 'theorem VoltageToBit.Selftest.underscore : True := trivial\n' >"$TMP/src/$S/_Under.lean"
+  printf 'theorem VoltageToBit.Selftest.upper : True := trivial\n' >"$TMP/src/$S/Upper.LEAN"
+  ln -s Orphan.lean "$TMP/src/$S/Link.lean"
+  run_check src --quick --keep-going
   if [ "$CHECK_STATUS" != 1 ] || absent "$LOG" "RESULT build: ok"; then
     flunk "(src) the controls are not valid: check.sh exited with status $CHECK_STATUS, or the copy with the defects did not build"
     show_tail "$LOG"
   else
-    verdict "(src) the copy fails at the steps source-scan, axiom-audit, import-closure and declaration-count, and the build accepts all of it" "$LOG" \
+    verdict "(src) the copy fails at the steps source-scan, axiom-audit, import-closure and declaration-count, and at the comparison of the digests at the end; the build accepts all of it" "$LOG" \
       "RESULT build: ok" "RESULT source-scan: FAILED" "RESULT axiom-audit: FAILED" "RESULT import-closure: FAILED" \
-      "RESULT declaration-count: FAILED" "CHECK FAILED: source-scan axiom-audit import-closure declaration-count"
+      "RESULT declaration-count: FAILED" "RESULT sources-unchanged: FAILED" \
+      "CHECK FAILED: source-scan axiom-audit import-closure declaration-count sources-unchanged"
     verdict "a notation: the scan names the command, the audit names the environment extensions that hold it, and the declarations that Lean made for it are counted in the compiled files and not in the text" "$LOG" \
       "$S/Notation.lean:3:1: [command] a command of kind \`Lean.Parser.Command.notation\` is not on the allow-list" \
       "[extensions] the library has" "RESULT declaration-count: FAILED"
@@ -591,10 +859,100 @@ EOF
       "$LIBRARY.Selftest.piece: [meta] its type mentions"
     verdict "a definition that hides a name of Mathlib inside the library's namespace, written with allowed syntax only: the audit names it" "$LOG" \
       "$LIBRARY.Selftest.Continuous: [shadowing] inside its namespace the name \`Continuous\` would mean it"
-    if grep -q -E "^$S/(Meta|Shadow)\.lean:" "$LOG"; then
-      flunk "(src) the scan reported the last two modules, which were meant to show what only the audit sees; update these controls"
+    verdict "an opaque, an unsafe and a partial definition (round 4, issue 9): the scan names the first keyword, the audit names each declaration" "$LOG" \
+      "$S/Kinds.lean:3:1: [syntax] syntax of kind \`Lean.Parser.Command.opaque\` is not on the allow-list" \
+      "$LIBRARY.Selftest.hidden: [kinds] declared as opaque" "$LIBRARY.Selftest.unsafeId: [kinds] unsafe" \
+      "$LIBRARY.Selftest.loop: [kinds] declared as opaque" "$LIBRARY.Selftest.loop._unsafe_rec: [kinds] partial"
+    verdict "definitions marked reducible (\`abbrev\`) and irreducible, and the two scoped instances, which Lean marks with the reducibility of instances (round 4, issue 9): the audit names each one" "$LOG" \
+      "$LIBRARY.Selftest.Small: [reducible] marked Lean.ReducibilityStatus.reducible" \
+      "$LIBRARY.Selftest.sealed: [reducible] marked Lean.ReducibilityStatus.irreducible" \
+      "$LIBRARY.Selftest.Plain.fakeLE: [reducible] marked Lean.ReducibilityStatus.instanceReducible" \
+      "$LIBRARY.Selftest.Behind.fakeLE: [reducible] marked Lean.ReducibilityStatus.instanceReducible"
+    verdict "an argument with a default value, written with allowed syntax only (\`optParam\`; round 4, issue 9): the audit names the declaration" "$LOG" \
+      "$LIBRARY.Selftest.withDefault: [binders] its type has an argument with a default value or a default tactic"
+    verdict "a module that writes a file into scripts/ while it is compiled (round 4, issue 9): the scan names the command, and the digests taken at the end of the run name the new file" "$LOG" \
+      "$S/Writer.lean:1:1: [command] a command of kind \`Lean.Parser.Command.eval\` is not on the allow-list" \
+      "RESULT sources-unchanged: FAILED (a checked file changed while the check ran)" \
+      "scripts/written-while-compiling.txt"
+    verdict "(tree) file names that the source tree may not have (round 4, issue 9): a non-ASCII letter, a leading \`_\`, the extension .LEAN and a symbolic link: the scan names each one" "$LOG" \
+      "$S/$NONASCII.lean: [tree] not a \`.lean\` file whose name begins with an ASCII letter and is made of ASCII letters, digits and \`_\`" \
+      "$S/_Under.lean: [tree] not a \`.lean\` file whose name begins with an ASCII letter" \
+      "$S/Upper.LEAN: [tree] not a \`.lean\` file whose name begins with an ASCII letter" \
+      "$S/Link.lean: [tree] a symbolic link"
+    if grep -q -E "^$S/(Meta|Shadow|Default)\.lean:" "$LOG"; then
+      flunk "(src) the scan reported a module that was meant to show what only the audit sees (Meta, Shadow, Default); update these controls"
     fi
   fi
+fi
+fi
+
+# ---------------------------------------------------------------------------
+if want stored; then
+echo "== (stored) a compiled file that was not made from the present sources =="
+# A module whose compiled file is older than the module it imports: its stored axiom list
+# (computed when it was compiled) no longer agrees with the declarations it refers to. The
+# audit compares the axioms it finds by walking the declarations with the stored lists (round
+# 4, issue 9). The copy is built by `lake build` and the audit is run by hand, as in (origin).
+# (The theorem is not proved by `rfl`: Lean would add it to an environment extension that is
+# not on the allow-list, and the audit would refuse that too.)
+copy_project stored "$BASE"
+add_module stored Provider no <<'EOF'
+namespace VoltageToBit.Selftest
+
+def provided : Nat := 0
+
+end VoltageToBit.Selftest
+EOF
+add_module stored User yes <<'EOF'
+import VoltageToBit.Selftest.Provider
+
+namespace VoltageToBit.Selftest
+
+theorem usesProvided : provided ≤ provided := Nat.le_refl provided
+
+end VoltageToBit.Selftest
+EOF
+USER_OLEAN="$TMP/stored/.lake/build/lib/lean/$LIBRARY/Selftest/User.olean"
+(cd "$TMP/stored" && lake build "$LIBRARY" --no-ansi) >"$TMP/stored-build1.log" 2>&1
+s_first=$?
+cp "$USER_OLEAN" "$TMP/User.olean.first" 2>/dev/null
+# the module that is imported changes, so that its definition depends on an axiom (an allowed one)
+cat >"$TMP/stored/$LIBRARY/Selftest/Provider.lean" <<'EOF'
+namespace VoltageToBit.Selftest
+
+noncomputable def provided : Nat := Classical.choice ⟨0⟩
+
+end VoltageToBit.Selftest
+EOF
+(cd "$TMP/stored" && lake build "$LIBRARY" --no-ansi) >"$TMP/stored-build2.log" 2>&1
+s_second=$?
+if [ "$s_first" != 0 ] || [ "$s_second" != 0 ] || [ ! -f "$TMP/User.olean.first" ]; then
+  flunk "(stored) the copy did not build (exit status $s_first, then $s_second); update this control"
+  show_tail "$TMP/stored-build2.log"
+else
+  cp "$USER_OLEAN" "$TMP/User.olean.second"
+  cp "$TMP/User.olean.first" "$USER_OLEAN"
+  (cd "$TMP/stored" && lake env lean --run scripts/Audit.lean --root "$LIBRARY" --allow scripts/allowlist.txt) >"$TMP/stored.log" 2>&1
+  s_status=$?
+  if [ "$s_status" = 1 ] && absent "$TMP/stored.log" "AUDIT OK"; then
+    verdict "(stored) the compiled file of a module, left from before the module it imports changed: the audit finds an axiom that the stored axiom list does not have, and refuses the declaration" "$TMP/stored.log" \
+      "$LIBRARY.Selftest.usesProvided: [axioms] walking the declarations gives [Classical.choice], the list stored in the compiled file says [no axioms]" \
+      "AUDIT FAILED: 1 refused"
+  else
+    flunk "(stored) the audit program exited with status $s_status, or it said AUDIT OK"
+    show_tail "$TMP/stored.log"
+  fi
+  cp "$TMP/User.olean.second" "$USER_OLEAN"
+  (cd "$TMP/stored" && lake env lean --run scripts/Audit.lean --root "$LIBRARY" --allow scripts/allowlist.txt) >"$TMP/stored.log" 2>&1
+  s_status=$?
+  kind positive
+  if [ "$s_status" = 0 ] && present "$TMP/stored.log" "AUDIT OK"; then
+    pass "(stored) with the compiled file made from the present sources the same command passes"
+  else
+    flunk "(stored) the audit program does not pass on the copy with its own compiled files (exit status $s_status), so the refusal above shows nothing"
+    show_tail "$TMP/stored.log"
+  fi
+  kind negative
 fi
 fi
 
@@ -621,12 +979,14 @@ else
 fi
 (cd "$TMP/origin" && lake env lean --run scripts/Audit.lean --root "$LIBRARY" --allow scripts/allowlist.txt) >"$TMP/origin.log" 2>&1
 o_status=$?
+kind positive
 if [ "$o_status" = 0 ] && present "$TMP/origin.log" "AUDIT OK"; then
   pass "(origin) without the second copy the same command passes"
 else
   flunk "(origin) the audit program does not pass on the copy itself (exit status $o_status), so the refusal above shows nothing"
   show_tail "$TMP/origin.log"
 fi
+kind negative
 fi
 
 # ---------------------------------------------------------------------------
@@ -668,6 +1028,18 @@ run_cmd liftCoreM (addDecl (.thmDecl {
 
 theorem VoltageToBit.Selftest.oops : False := VoltageToBit.Selftest.bad
 EOF
+# (pyc) in the same copy, a module of the library in a directory named __pycache__, imported by
+# the root (round 4, issue 1: such a module was compiled, scanned, audited and replayed, but its
+# source was not digested). The scan does not read it, so step declaration-count fails too.
+mkdir -p "$TMP/bypass/$LIBRARY/__pycache__"
+cat >"$TMP/bypass/$LIBRARY/__pycache__/Extra.lean" <<'EOF'
+namespace VoltageToBit.Selftest
+
+theorem inCache : True := trivial
+
+end VoltageToBit.Selftest
+EOF
+printf 'import %s.__pycache__.Extra\n' "$LIBRARY" >>"$TMP/bypass/$LIBRARY.lean"
 run_check bypass --keep-going
 if [ "$CHECK_STATUS" != 1 ]; then
   flunk "(a) kernel check switched off: check.sh exited with status $CHECK_STATUS, expected 1"
@@ -697,17 +1069,21 @@ else
       continue
     fi
     sed -n "/^-- $tool --\$/,/^RESULT replay-export\/$tool:/p" "$LOG" >"$TMP/tool.log"
-    if grep -q -F -- "$BAD" "$TMP/tool.log"; then
-      named="its output names the declaration"
+    # how each tool says why it does not accept the declaration (observed with the toolchain of
+    # DESCRIBED_FOR in check.sh); nanoda does not name the declaration
+    case "$tool" in
+      leanchecker|leanchecker-paranoid) reason="(kernel) declaration type mismatch, '$BAD' has type" ;;
+      lean4lean) reason="at $BAD: (kernel) declaration type mismatch" ;;
+      nanoda) reason="assertion failed: self.def_eq(u, v)" ;;
+      con-leche) reason="con-leche: invalid: type mismatch in theorem $BAD" ;;
+      con-ron) reason="con-ron: rejected: type mismatch in theorem [at theorem $BAD" ;;
+      *) reason="$BAD" ;;
+    esac
+    if present "$CONTROL" "RESULT replay-export/$tool: ok" && present "$LOG" "RESULT replay-export/$tool: FAILED" \
+        && present "$TMP/tool.log" "$reason"; then
+      pass "(a) the same declaration, in the export: $tool accepts the export of the unmodified copy and does not accept the export of the copy with the declaration; it says: $reason"
     else
-      # the first line that says why, without thread or process numbers
-      named="its output does not name the declaration; it says: $(sed -n '3,$p' "$TMP/tool.log" \
-        | grep -i -E 'assert|reject|invalid|mismatch|error' | head -n 1 | sed 's/^ *//' | cut -c1-100)"
-    fi
-    if present "$CONTROL" "RESULT replay-export/$tool: ok" && present "$LOG" "RESULT replay-export/$tool: FAILED"; then
-      pass "(a) the same declaration, in the export: $tool accepts the export of the unmodified copy and does not accept the export of the copy with the declaration ($named)"
-    else
-      flunk "(a) the same declaration, in the export: $tool (control: $(grep -F "RESULT replay-export/$tool:" "$CONTROL" | cut -c1-80); with the declaration: $(grep -F "RESULT replay-export/$tool:" "$LOG" | cut -c1-80))"
+      flunk "(a) the same declaration, in the export: $tool (control: $(grep -F "RESULT replay-export/$tool:" "$CONTROL" | cut -c1-80); with the declaration: $(grep -F "RESULT replay-export/$tool:" "$LOG" | cut -c1-80); its reason \"$reason\" $(if present "$TMP/tool.log" "$reason"; then echo "was"; else echo "was not"; fi) shown)"
     fi
   done <"$TMP/export-tools.txt"
   verdict "(b) the source scan flags the file that switches the kernel check off: the import, the option and the command that runs code" "$LOG" \
@@ -715,8 +1091,18 @@ else
     "VoltageToBit/Selftest/KernelBypass.lean:5:1: [syntax] syntax of kind \`Lean.Parser.Command.set_option\` is not on the allow-list" \
     "VoltageToBit/Selftest/KernelBypass.lean:6:1: [syntax] syntax of kind \`Lean.runCmd\` is not on the allow-list" \
     "RESULT source-scan: FAILED"
-  verdict "(s6) the record that this failed run wrote says so, with the step" "$TMP/bypass/evidence/lean/kernel-replay.txt" \
-    "outcome of the run of scripts/check.sh that wrote this record: FAILED: source-scan replay-modules" \
+  verdict "(pyc) a module of the library in a directory named __pycache__, imported by $LIBRARY.lean (round 4, issue 1): the scan refuses the directory and the import" "$LOG" \
+    "$LIBRARY/__pycache__: [tree] a directory whose name does not begin with an ASCII letter or is not made of ASCII letters, digits and \`_\`" \
+    "$LIBRARY.lean: [closure] import of \`$LIBRARY.__pycache__.Extra\`: there is no source file that the tree rule accepts for it ($LIBRARY/__pycache__/Extra.lean)" \
+    "[import] import of \`$LIBRARY.__pycache__.Extra\`: only modules of Mathlib and of $LIBRARY are allowed, with names whose components begin with an ASCII letter"
+  if present "$TMP/bypass/evidence/lean/sources.sha256" "  $LIBRARY/__pycache__/Extra.lean" \
+      && present "$TMP/bypass/evidence/lean/kernel-replay.txt" "    $LIBRARY.__pycache__.Extra"; then
+    pass "(pyc) the record of that run lists the digest of the module's source file (sources.sha256) and the module among those that leanchecker replayed"
+  else
+    flunk "(pyc) the record of that run does not list the digest of $LIBRARY/__pycache__/Extra.lean, or not the module among those replayed"
+  fi
+  verdict "(s6) the record that this failed run wrote says so, with the steps" "$TMP/bypass/evidence/lean/kernel-replay.txt" \
+    "outcome of the run of scripts/check.sh that wrote this record: FAILED: source-scan declaration-count replay-modules" \
     "RESULT replay-modules: FAILED"
 fi
 fi
@@ -761,53 +1147,66 @@ EOF
       case "$1" in
         nanoda_bin)
           sed "s|$TMP/tiny/EXPORT|$2|" "$TMP/tiny/nanoda.json" >"$TMP/tiny/nanoda-run.json"
-          (cd "$TMP/tiny/empty" && env -i "$TCBIN/$1" "$TMP/tiny/nanoda-run.json") >"$TMP/tiny/tool.log" 2>&1 ;;
+          (cd "$TMP/tiny/empty" && env -i "$TCBIN/$1" "$TMP/tiny/nanoda-run.json") </dev/null >"$TMP/tiny/tool.log" 2>&1 ;;
         leanchecker|leanchecker-paranoid)
-          (cd "$TMP/tiny/empty" && env -i "$TCBIN/$1" --from-export "$2") >"$TMP/tiny/tool.log" 2>&1 ;;
+          (cd "$TMP/tiny/empty" && env -i "$TCBIN/$1" --from-export "$2") </dev/null >"$TMP/tiny/tool.log" 2>&1 ;;
         lean4lean)
-          (cd "$TMP/tiny/empty" && env -i "$TCBIN/$1" --import "$2") >"$TMP/tiny/tool.log" 2>&1 ;;
+          (cd "$TMP/tiny/empty" && env -i "$TCBIN/$1" --import "$2") </dev/null >"$TMP/tiny/tool.log" 2>&1 ;;
         *)
-          (cd "$TMP/tiny/empty" && env -i "$TCBIN/$1" --jobs=2 "$2") >"$TMP/tiny/tool.log" 2>&1 ;;
+          (cd "$TMP/tiny/empty" && env -i "$TCBIN/$1" --jobs=2 "$2") </dev/null >"$TMP/tiny/tool.log" 2>&1 ;;
       esac
     }
-    for tool in leanchecker leanchecker-paranoid lean4lean nanoda_bin con-leche con-ron; do
+    kind observation
+    # tool | its line of acceptance | what it says when Eq is missing (observed with the toolchain
+    # of DESCRIBED_FOR in check.sh; empty for the two that accept the export without Eq)
+    while IFS='|' read -r tool accepts refuses; do
+      [ -n "$tool" ] || continue
       if [ ! -x "$TCBIN/$tool" ]; then
         echo "     note: $tool is not installed; nothing to test"
         continue
       fi
       tiny_run "$tool" "$TMP/tiny/tiny.ndjson"; whole=$?
+      cp "$TMP/tiny/tool.log" "$TMP/tiny/whole.log"
       tiny_run "$tool" "$TMP/tiny/no-eq.ndjson"; without=$?
-      case "$tool" in
-        con-leche|con-ron)
-          if [ "$whole" = 0 ] && [ "$without" = 0 ]; then
-            pass "(g) $tool accepts a small export, and also the same export without the declaration of Eq: it does not start from an empty environment"
-          else
-            flunk "(g) $tool: exit status $whole on the small export and $without without Eq; check.sh says that it starts from a prelude of its own"
-          fi ;;
-        *)
-          if [ "$whole" = 0 ] && [ "$without" != 0 ]; then
-            pass "(g) $tool accepts a small export and refuses the same export without the declaration of Eq"
-          else
-            flunk "(g) $tool: exit status $whole on the small export and $without without Eq; check.sh says that it starts from an empty environment"
-          fi ;;
-      esac
-    done
+      if [ -z "$refuses" ]; then
+        if [ "$whole" = 0 ] && [ "$without" = 0 ] && present "$TMP/tiny/whole.log" "$accepts" && present "$TMP/tiny/tool.log" "$accepts"; then
+          pass "(g) $tool accepts a small export, and also the same export without the declaration of Eq (\"$accepts\" both times): it does not start from an empty environment"
+        else
+          flunk "(g) $tool: exit status $whole on the small export and $without without Eq, or no line \"$accepts\"; check.sh says that it starts from a prelude of its own"
+        fi
+      elif [ "$whole" = 0 ] && [ "$without" != 0 ] && present "$TMP/tiny/whole.log" "$accepts" && present "$TMP/tiny/tool.log" "$refuses"; then
+        pass "(g) $tool accepts a small export (\"$accepts\") and refuses the same export without the declaration of Eq: \"$refuses\""
+      else
+        flunk "(g) $tool: exit status $whole on the small export and $without without Eq, or not the messages \"$accepts\" and \"$refuses\"; check.sh says that it has no Eq built in"
+        show_tail "$TMP/tiny/tool.log"
+      fi
+    done <<'EOF'
+leanchecker|Lean default kernel accepts the solution|(kernel) unknown constant 'Eq'
+leanchecker-paranoid|Lean default kernel accepts the solution|(kernel) unknown constant 'Eq'
+lean4lean|checked |(kernel) unknown constant 'Eq'
+nanoda_bin|Checked |declaration not found in infer_const, Eq
+con-leche|con-leche: accepted |
+con-ron|con-ron: accepted |
+EOF
+    kind negative
   fi
 fi
 fi
 
 # ---------------------------------------------------------------------------
 echo "== this checkout =="
+kind checkout
 if [ "$(tree_digest)" = "$BEFORE" ]; then
   pass "the library, the design files, the scripts and the evidence of this checkout are byte for byte what they were before the controls"
 else
   flunk "a file of this checkout changed while the controls ran"
 fi
+COUNTS="PASS lines: $((N_NEGATIVE + N_POSITIVE + N_OBSERVATION + N_CHECKOUT)) (negative controls: $N_NEGATIVE, positive controls: $N_POSITIVE, observations: $N_OBSERVATION, check of this checkout: $N_CHECKOUT); FAIL lines: $N_FAIL"
 if [ -n "${SELFTEST_ONLY:-}" ]; then
-  echo "PARTIAL SELFTEST (SELFTEST_ONLY=$SELFTEST_ONLY): $(if [ "$STATUS" = 0 ]; then echo "no FAIL line"; else echo "see the FAIL lines above"; fi). This is not a pass of the self-test."
+  echo "PARTIAL SELFTEST (SELFTEST_ONLY=$SELFTEST_ONLY): $(if [ "$STATUS" = 0 ]; then echo "no FAIL line"; else echo "see the FAIL lines above"; fi). $COUNTS. This is not a pass of the self-test."
 elif [ "$STATUS" = 0 ]; then
-  echo "SELFTEST PASSED: every defect was reported by the step that is meant to catch it."
+  echo "SELFTEST PASSED: every defect was reported by the step that is meant to catch it. $COUNTS."
 else
-  echo "SELFTEST FAILED: see the FAIL lines above."
+  echo "SELFTEST FAILED: see the FAIL lines above. $COUNTS."
 fi
 exit "$STATUS"

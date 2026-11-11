@@ -4,12 +4,15 @@ same tools reproduces it, and the four other records of this directory, byte for
 
 What was checked
   files:     the build configuration, library sources, design files and checking scripts
-             listed in evidence/lean/sources.sha256 (sha256 of the list: a4d5fb377e7f900cd7bcd38701b3abc07986b276c219dff73e8cff487d4e1055)
+             listed in evidence/lean/sources.sha256 (sha256 of the list: c812ad253f7af5c2f482a4dce28d13dc3c64a8daa459e672aba5599ee8979ade)
   config:    lakefile.toml, lake-manifest.json and lean-toolchain are the files pinned in
-             scripts/pinned-config.sha256
+             scripts/pinned-config.sha256, and lakefile.toml has no key that step 2 does not accept
   toolchain: leanprover/lean4:v4.35.0 (lean-toolchain); Lean (version 4.35.0, arm64-apple-darwin24.6.0, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)
-  mathlib:   56a005855ea17e0b0958f73ec801ae140b0a1679 (lake-manifest.json; .lake/packages/mathlib is checked out at
-             that revision); used as compiled there, not recompiled
+  mathlib:   56a005855ea17e0b0958f73ec801ae140b0a1679 (lake-manifest.json); .lake/packages/mathlib is checked out at that
+             revision, and `git status` lists no changed and no untracked file in it (the same
+             holds for every dependency; see evidence/lean/versions.txt)
+  dependencies: no module outside the library was compiled in this run; Mathlib and the other
+             dependencies were used as they are compiled in .lake/packages
   compiled:  all 23 modules of the library, in this run, after its build products had been removed (Lake reported each one as built).
   library:   23 modules; 553 declarations that the replay steps re-check, and
              3 compiler auxiliaries that they leave out (named in evidence/lean/audit.txt)
@@ -29,7 +32,11 @@ Where the tools come from
   command: LEAN_NUM_THREADS=<jobs> lake env leanchecker -v VoltageToBit
   does:    for every module whose name starts with VoltageToBit, sends each declaration
            stored in the module's compiled file (the compiler auxiliaries excepted) to
-           Lean's kernel, on top of the environment formed by the module's imports. The
+           Lean's kernel, on top of the environment formed by the module's imports.
+           Constructors and recursors are not sent: the kernel generates them from their
+           inductive type, and they are compared with the stored ones. A theorem equal in
+           name, type, universe parameters and mutual block to one that is already in the
+           environment is not sent again (src/lean/Lean/Replay.lean of the toolchain). The
            imports themselves (other modules of the library, Mathlib, Lean core) are
            loaded as compiled; they are not re-checked by this step.
   modules replayed (23):
@@ -81,10 +88,11 @@ Where the tools come from
 
 3. The export re-checked
   Each tool is started in an empty directory with an empty environment (LEAN_ABORT_ON_PANIC=1
-  apart) and is given the export file and nothing else. A tool passes if it exits with status
-  0 and prints its line of acceptance; where that line says how many declarations were
-  checked, the number must be the one that scripts/export_census.py finds in the export.
-  What a tool starts from is said for each: an empty environment, or a prelude of its own.
+  apart) and is given the export file (nanoda: a configuration file that names it) and
+  nothing else. A tool passes if it exits with status 0 and prints its line of acceptance;
+  where that line says how many declarations were checked, the number must be the one that
+  scripts/export_census.py finds in the export. What a tool starts from is said for each:
+  an empty environment (by its source, or as observed), or a prelude of its own.
   leanchecker
     kind:        Lean's own kernel
     starts from: an empty environment (its source creates one, `Lean.mkEmptyEnvironment`, and replays the export into it)
@@ -153,7 +161,7 @@ Where the tools come from
 Summary
   results of the steps, in the order in which they were run:
     RESULT design-record: ok
-    RESULT config: ok (the three files are the pinned ones; the toolchain is leanprover/lean4:v4.35.0)
+    RESULT config: ok (the three files are the pinned ones, and lakefile.toml has no key that step 2 does not accept; every dependency is at its pinned revision with nothing changed; the toolchain is leanprover/lean4:v4.35.0)
     RESULT build: ok
     RESULT source-scan: ok
     RESULT axiom-audit: ok
@@ -170,4 +178,4 @@ Summary
   tools not run because they are not installed: none
   outcome of the run of scripts/check.sh that wrote this record: every step that was run passed.
   compiled: all 23 modules of the library, in this run, after its build products had been removed (Lake reported each one as built).
-  kernel replay: (1) the compiled files of the 23 modules of the library, each on top of its imports as compiled, by leanchecker (Lean's own kernel). (2) an export of the 553 declarations of the library with the 44448 declarations of Mathlib, its dependencies and Lean core that they depend on: accepted from an empty environment by leanchecker, leanchecker-paranoid (Lean's own kernel) and by lean4lean, nanoda (programs that are not Lean's kernel); accepted on top of a prelude built into the program by con-leche, con-ron (programs that are not Lean's kernel). All are run as the toolchain ships them. Not re-checked: the declarations of the imported modules (4502 modules, 421287 declarations) that the library does not depend on (--whole-env does that).
+  kernel replay: (1) the compiled files of the 23 modules of the library, each on top of its imports as compiled, by leanchecker (Lean's own kernel). (2) an export of the 553 declarations of the library with the 44448 declarations of Mathlib, its dependencies and Lean core that they depend on: accepted from an empty environment by leanchecker, leanchecker-paranoid (Lean's own kernel) and by lean4lean, nanoda (programs that are not Lean's kernel), where "from an empty environment" is what leanchecker's source shows and, for the others, what was observed (each refuses an export without the declaration of Eq); accepted on top of a prelude built into the program by con-leche, con-ron (programs that are not Lean's kernel). All are run as the toolchain ships them. Not re-checked: the declarations of the imported modules (4502 modules, 421287 declarations) that the library does not depend on (--whole-env does that).
