@@ -13,24 +13,45 @@
 #                  always stops the run)
 #
 # A full run deletes this project's own build products (.lake/build and
-# .lake/config) and compiles the library again; do not start one while
-# something else uses them. The script does not write to .lake/packages, the
-# prebuilt Mathlib, and downloads nothing: step 2 stops the run unless every
-# dependency is checked out there at its pinned revision. `lake build`
-# compiles a module there only if the library imports a module of a
-# dependency that is not compiled yet; step 3 then names it.
+# .lake/config) and compiles the library again; --quick deletes .lake/config
+# only (with --fresh, both). Do not start a run while something else uses
+# them. .lake/config holds the compiled configurations of the dependencies
+# that have a Lean lakefile; Lake loads them and runs their code, so no run
+# reuses them. The script itself writes nothing into .lake/packages, where the
+# dependencies are checked out and compiled, and downloads nothing: step 2
+# stops the run unless every dependency is checked out there at its pinned
+# revision with nothing changed. `lake build` compiles a module of a
+# dependency there when the library imports one that is not compiled yet
+# (Mathlib is compiled only in part); step 3 and the record then name every
+# such module.
 #
 # Steps. Each prints "RESULT <step>: ok" or "RESULT <step>: FAILED"; a tool
 # that is not installed prints "RESULT <step>: NOT RUN" (see Tools).
-#   1 design-record    every generated Lean design record is what its JSON file
-#                      generates, and every JSON file in designs/ has one
+#   1 design-record    each design record named in scripts/design-records.txt
+#                      (a JSON file in designs/, the .lean file of the library
+#                      generated from it, the name of its definition) is, byte
+#                      for byte, what scripts/gen_design.py generates from the
+#                      JSON file under that name; every JSON file in designs/
+#                      is named there; no other .lean file of the library
+#                      begins with the header of a generated file
 #   2 config           lakefile.toml, lake-manifest.json and lean-toolchain are,
 #                      byte for byte, the files pinned in
 #                      scripts/pinned-config.sha256; there is no lakefile.lean;
-#                      every dependency is checked out in .lake/packages at
-#                      the revision that lake-manifest.json gives; the `lean`
-#                      that runs reports the version that lean-toolchain names.
-#                      A failure here always ends the run
+#                      whatever the pin says, lakefile.toml (read with Python's
+#                      tomllib) has no key besides name, version,
+#                      defaultTargets, leanOptions, require and lean_lib, every
+#                      [[lean_lib]] has the key name only and exactly one of
+#                      them is the library, and every [[require]] has the keys
+#                      name, git and rev only (so no srcDir, roots, globs,
+#                      libName, buildDir, moreLeanArgs, weakLeanArgs or the
+#                      like can move the sources or the build products or
+#                      reach the compiler); every dependency is checked out in
+#                      .lake/packages at the revision that lake-manifest.json
+#                      gives, and `git status` lists no changed and no
+#                      untracked file in it (files that its .gitignore
+#                      excludes, such as its compiled files, are not looked
+#                      at); the `lean` that runs reports the version that
+#                      lean-toolchain names. A failure here always ends the run
 #   3 build            `lake build VoltageToBit` (the library, by name) exits
 #                      with status 0. In a full run every module of the library
 #                      is compiled in this step (step 6 checks that Lake
@@ -39,10 +60,14 @@
 #                      (scripts/SourceScan.lean; no text is lexed by a script).
 #                      Every command and every syntax node is of a kind on the
 #                      allow-list scripts/allowlist.txt, which holds the kinds
-#                      the library uses; every file is in the import closure of
-#                      VoltageToBit.lean; every file was compiled with
-#                      `autoImplicit = false` and `relaxedAutoImplicit = false`.
-#                      The head of scripts/SourceScan.lean lists the rules
+#                      the library uses; the library's directory holds only
+#                      directories and .lean files (and .DS_Store files),
+#                      none a symbolic link, every name beginning with an
+#                      ASCII letter (so no __pycache__); every file is in the
+#                      import closure of VoltageToBit.lean; every file was
+#                      compiled with `autoImplicit = false` and
+#                      `relaxedAutoImplicit = false`. The head of
+#                      scripts/SourceScan.lean lists the rules
 #   5 axiom-audit      over every declaration stored in the compiled files of
 #                      the library, not over a list of names
 #                      (scripts/Audit.lean): none depends on an axiom other than
@@ -67,7 +92,10 @@
 #                      compiled file of every module of the library (the
 #                      compiler auxiliaries named in the audit excepted) to
 #                      Lean's kernel again, on top of that module's imports as
-#                      they are compiled (Mathlib is loaded, not re-checked)
+#                      they are compiled (Mathlib is loaded, not re-checked);
+#                      constructors and recursors are generated by the kernel
+#                      from their inductive type and compared with the stored
+#                      ones
 #   8 export           `leanexport` writes every declaration of the library,
 #                      and every declaration those depend on, directly or not
 #                      (the part of Mathlib, of its dependencies and of Lean
@@ -76,35 +104,46 @@
 #                      declaration of the library is in it and that it declares
 #                      no axiom besides the three
 #   9 replay-export    that file is checked by each of the six checkers listed
-#                      under Tools. Four of them start from an empty
-#                      environment; con-leche and con-ron start from a prelude
-#                      that is built into them
+#                      under Tools. leanchecker starts from an empty
+#                      environment (its source shows it); leanchecker-paranoid,
+#                      lean4lean and nanoda refuse an export from which the
+#                      declaration of Eq has been removed, so they have no Eq
+#                      built in (observed; their sources were not read);
+#                      con-leche and con-ron start from a prelude that is built
+#                      into them
 #  10 whole-env        (--whole-env only) `leanchecker --fresh` sends every
-#                      declaration of every module that the library imports,
-#                      directly or not, to Lean's kernel, from an empty
-#                      environment, whether the library uses the declaration
-#                      or not. That is the part of Mathlib that the library
-#                      imports, its dependencies and Lean core; modules of
-#                      Mathlib that the library does not import are not
-#                      compiled here and are never looked at
+#                      declaration that is not marked unsafe or partial, of
+#                      every module that the library imports, directly or not,
+#                      to Lean's kernel, from an empty environment, whether the
+#                      library uses the declaration or not. That is the part
+#                      of Mathlib that the library imports, its dependencies
+#                      and Lean core; modules of Mathlib that the library does
+#                      not import are not compiled here and are never looked
+#                      at
 #   at the end, sources-unchanged: the checked files have the digests they had
 #                      before step 1 (reported only when it fails)
 #
 # Tools. The script starts itself again under `env -i`, with an environment of
 # its own: HOME, PATH, TMPDIR and the CHECK_* variables below are passed on, a
 # few variables are set by the script, and nothing else is, so LEAN_PATH,
-# ELAN_TOOLCHAIN, LAKE_* and the like have no effect; it stops with status 2
-# if its environment is then anything else. Step 5 also reads where every
-# compiled file was loaded from: those of the library from .lake/build of this
-# project, the others from .lake/packages or from the toolchain. `lean` is
-# found once through PATH in the project directory; every Lean tool is then
-# run from the bin directory of that toolchain (`lean --print-prefix`) and
-# from nowhere else. Step 2 fails unless that `lean` reports the version that
-# lean-toolchain names, and the record identifies the programs of the
-# toolchain by a digest. python3, git and the standard utilities come from
-# PATH and are trusted, and so is the toolchain that PATH leads to. `lake help
-# check` of the toolchain names the checkers it bundles; the record quotes the
-# sentence. A tool that is not in the bin directory is reported as NOT RUN, by
+# ELAN_TOOLCHAIN, LAKE_*, PYTHONPATH and the like have no effect; it stops
+# with status 2, naming the variables, if its environment is then anything
+# else. Step 5 also reads where every compiled file was loaded from: those of
+# the library from .lake/build of this project, the others from
+# .lake/packages or from the toolchain. `lean` is found once through PATH in
+# the project directory; every Lean tool is then run from the bin directory of
+# that toolchain (`lean --print-prefix`) and from nowhere else. Step 2 fails
+# unless that `lean` reports the version that lean-toolchain names, and the
+# record identifies the programs of the toolchain by a digest. python3, git
+# and the standard utilities come from PATH and are trusted, and so is the
+# toolchain that PATH leads to. Every Python program runs with
+# PYTHONSAFEPATH=1 and PYTHONNOUSERSITE=1: no module is imported from the
+# project directory, from the directory of a script or from the user's own
+# site directory. The script stops with status 2 if python3 is older than
+# 3.11 (an older one ignores PYTHONSAFEPATH, and step 2 needs tomllib) or if
+# git is not found. `lake help check` of the toolchain names the checkers it
+# bundles; the record quotes the sentence. A tool that is not in the bin
+# directory is reported as NOT RUN, by
 # name, in the output, in the record and in the last line, and is not counted;
 # the last line then begins differently (see Exit status). Only leanchecker is
 # required: without it steps 7 and 10 fail.
@@ -130,16 +169,21 @@
 #
 # What a pass establishes. The last line of output says which parts apply.
 #   steps 1 to 6 of a full run: the three configuration files are the pinned
-#     ones; every module of the library was compiled in this run, by the
-#     toolchain named in the record, from the source files whose digests are
-#     in the record
-#     (evidence/lean/sources.sha256; the digests are taken before step 1 and
-#     again at the end and must agree); every .lean file of the library is one
-#     of these modules; no declaration in the compiled files depends on an
-#     axiom beyond the three of step 5; the sources consist of the kinds of
-#     command and syntax on the allow-list; the design records match their
-#     JSON files. Nothing has been re-checked by a kernel yet: a declaration
-#     that was added with the kernel check switched off passes steps 3 and 5
+#     ones, and lakefile.toml has no key outside the list of step 2; every
+#     dependency is checked out at its pinned revision with nothing changed;
+#     every module of the library was compiled in this run, by the toolchain
+#     named in the record, from the source files whose digests are in the
+#     record (evidence/lean/sources.sha256: every file of the library's
+#     directory but .DS_Store; the digests are taken before step 1 and again
+#     at the end and must agree); every .lean file of the library is one of
+#     these modules; no declaration in the compiled files depends on an axiom
+#     beyond the three of step 5; the sources consist of the kinds of command
+#     and syntax on the allow-list; the design records named in
+#     scripts/design-records.txt are what their JSON files generate (a
+#     definition of type Design that is not named there, for example one
+#     derived in Lean from a generated record, is not compared with anything).
+#     Nothing has been re-checked by a kernel yet: a declaration that was added
+#     with the kernel check switched off passes steps 3 and 5
 #     (scripts/selftest.sh demonstrates it).
 #   steps 1 to 6 with --quick: the same, except that a module is compiled only
 #     when Lake finds its compiled file out of date. Lake decides that by
@@ -147,17 +191,22 @@
 #     depends on, with the hash it stored in .lake/build when it compiled the
 #     file. So the compiled files are those of the present sources as far as
 #     that comparison goes, and only if nothing but Lake has written to
-#     .lake/build; --fresh removes both conditions.
+#     .lake/build; --fresh removes both conditions. (.lake/config is deleted
+#     in every run, --quick included.)
 #   step 7: every declaration in the compiled files of the library (the
 #     compiler auxiliaries named in the audit excepted) is accepted by Lean's
-#     kernel on top of the compiled Mathlib.
+#     kernel on top of the compiled Mathlib (constructors and recursors: the
+#     kernel generates them from their inductive type, and they equal the
+#     stored ones).
 #   steps 8 and 9: the declarations of the library, together with every
 #     declaration of Mathlib, its dependencies and Lean core that they depend
-#     on, are accepted by each checker that the last line names: from an empty
-#     environment by leanchecker, leanchecker-paranoid, lean4lean and nanoda;
-#     on top of their built-in prelude by con-leche and con-ron.
-#   step 10: every declaration of every module that the library imports is
-#     accepted by Lean's kernel from an empty environment.
+#     on, are accepted by each checker that the last line names: by
+#     leanchecker from an empty environment; by leanchecker-paranoid,
+#     lean4lean and nanoda, which have no Eq built in (observed); by con-leche
+#     and con-ron on top of their built-in prelude.
+#   step 10: every declaration that is not marked unsafe or partial, of every
+#     module that the library imports, is accepted by Lean's kernel from an
+#     empty environment.
 # What it does not establish: that the statements mean what the prose says
 # (read them, and the definitions they use), or that any physical device obeys
 # the model. Nor
@@ -185,21 +234,25 @@
 #     they are run as shipped;
 #   - that step 4 or step 5 would notice every way of making a text mean
 #     something else: they limit the constructs in use to the lists, and a
-#     definition with a misleading name is not a construct.
+#     definition with a misleading name is not a construct (the audit's rule
+#     `shadowing` does not consider the names that `open` makes visible);
+#   - that a record of an earlier run is genuine: --quick reads
+#     evidence/lean/kernel-replay.txt as it is.
 #
 # Records. A full run writes evidence/lean/: sources.sha256, versions.txt,
 # source-scan.txt, audit.txt and kernel-replay.txt, all at the end, whether it
 # passed or failed (kernel-replay.txt says which, and a record of a step that
 # was not reached says so). They contain no dates or timings, so a full run
 # with the same options on the same files with the same tools reproduces them
-# byte for byte. --quick writes no record; it says whether the last record is
-# for the present files and how that run ended.
+# byte for byte, unless one of the two runs compiled modules of a dependency
+# (the record names them). --quick writes no record; it says whether the last
+# record names the present files and how it says that run ended.
 #
-# Each step prints the seconds it took. Step 3 takes time in proportion to the
-# library, step 4 to the number of files (each is parsed in a process of its
-# own that loads its imports), step 7 to the number of modules, steps 8 and 9
-# to the size of what the library depends on, step 10 to the size of the whole
-# imported environment.
+# Steps 3 to 5 and 7 to 10 print the seconds they took. Step 3 takes time in
+# proportion to the library, step 4 to the number of files (each is parsed in
+# a process of its own that loads its imports), step 7 to the number of
+# modules, steps 8 and 9 to the size of what the library depends on, step 10
+# to the size of the whole imported environment.
 #
 # Environment:
 #   CHECK_REPLAY_JOBS (default 1)  modules that `leanchecker` replays at a time
@@ -210,8 +263,9 @@
 #     loads the imports of one file and was measured to need about 2 GB.
 #   CHECK_BUILD_JOBS (default: all cores)  threads that `lake build` uses.
 #
-# Exit status: 0 every step that was run passed; 1 a step failed; 2 usage.
-# The last line of output says which happened. On success it begins with
+# Exit status: 0 every step that was run passed; 1 a step failed; 2 usage, or
+# an environment that the script does not run in (see Tools; nothing is then
+# run). The last line of output says which happened. On success it begins with
 # "ALL FORMAL CHECKS PASSED." if every tool was installed, with "THE FORMAL
 # CHECKS THAT WERE RUN PASSED; NOT EVERY TOOL IS INSTALLED." otherwise, with
 # "QUICK CHECK PASSED" for --quick, and goes on to say exactly what was
@@ -227,6 +281,7 @@ case "${1:-}" in
   *)
     exec env -i HOME="${HOME:-}" PATH="${PATH:-/usr/bin:/bin}" TMPDIR="${TMPDIR:-/tmp}" \
       LC_ALL=C PYTHONUTF8=1 PYTHONIOENCODING=utf-8 PYTHONDONTWRITEBYTECODE=1 \
+      PYTHONSAFEPATH=1 PYTHONNOUSERSITE=1 \
       LAKE_ARTIFACT_CACHE=false LAKE_NO_CACHE=true LAKE_CONFIG=/nonexistent/lake-config.toml \
       LEAN_ABORT_ON_PANIC=1 \
       CHECK_REPLAY_JOBS="${CHECK_REPLAY_JOBS:-1}" CHECK_SCAN_JOBS="${CHECK_SCAN_JOBS:-2}" \
@@ -234,16 +289,44 @@ case "${1:-}" in
       sh "$0" --clean-environment "$@" ;;
 esac
 # PWD, OLDPWD, SHLVL and _ are what a shell adds by itself; any other line is a variable (or
-# the rest of a value with a line break) that the script did not ask for
-if env | grep -q -v -E '^(HOME|PATH|TMPDIR|LC_ALL|PYTHONUTF8|PYTHONIOENCODING|PYTHONDONTWRITEBYTECODE|LAKE_ARTIFACT_CACHE|LAKE_NO_CACHE|LAKE_CONFIG|LEAN_ABORT_ON_PANIC|CHECK_REPLAY_JOBS|CHECK_SCAN_JOBS|CHECK_BUILD_JOBS|PWD|OLDPWD|SHLVL|_)=' \
-    || [ "${LC_ALL:-}" != C ] || [ "${LAKE_ARTIFACT_CACHE:-}" != false ] || [ "${LAKE_NO_CACHE:-}" != true ] \
-    || [ "${LAKE_CONFIG:-}" != /nonexistent/lake-config.toml ] || [ "${LEAN_ABORT_ON_PANIC:-}" != 1 ] \
-    || [ "${PYTHONUTF8:-}" != 1 ] || [ "${PYTHONDONTWRITEBYTECODE:-}" != 1 ] \
-    || [ -z "${CHECK_REPLAY_JOBS+set}" ] || [ -z "${CHECK_SCAN_JOBS+set}" ] || [ -z "${CHECK_BUILD_JOBS+set}" ]; then
-  echo "check.sh: the environment is not the one this script gives itself (--clean-environment is not an option for the command line)" >&2
+# the rest of a value with a line break) that the script did not ask for. Only names are shown.
+ENV_NAMES='HOME|PATH|TMPDIR|LC_ALL|PYTHONUTF8|PYTHONIOENCODING|PYTHONDONTWRITEBYTECODE|PYTHONSAFEPATH|PYTHONNOUSERSITE|LAKE_ARTIFACT_CACHE|LAKE_NO_CACHE|LAKE_CONFIG|LEAN_ABORT_ON_PANIC|CHECK_REPLAY_JOBS|CHECK_SCAN_JOBS|CHECK_BUILD_JOBS|PWD|OLDPWD|SHLVL|_'
+env_other="$(env | grep -v -E "^($ENV_NAMES)=" | sed -n 's/^\([A-Za-z_][A-Za-z0-9_]*\)=.*/\1/p' | LC_ALL=C sort -u | tr '\n' ' ' | sed 's/ $//')"
+env_lines="$(env | grep -v -E "^($ENV_NAMES)=" | grep -c -v -E '^[A-Za-z_][A-Za-z0-9_]*=')"
+env_wrong=""
+[ "${LC_ALL:-}" = C ] || env_wrong="$env_wrong LC_ALL"
+[ "${PYTHONUTF8:-}" = 1 ] || env_wrong="$env_wrong PYTHONUTF8"
+[ "${PYTHONIOENCODING:-}" = utf-8 ] || env_wrong="$env_wrong PYTHONIOENCODING"
+[ "${PYTHONDONTWRITEBYTECODE:-}" = 1 ] || env_wrong="$env_wrong PYTHONDONTWRITEBYTECODE"
+[ "${PYTHONSAFEPATH:-}" = 1 ] || env_wrong="$env_wrong PYTHONSAFEPATH"
+[ "${PYTHONNOUSERSITE:-}" = 1 ] || env_wrong="$env_wrong PYTHONNOUSERSITE"
+[ "${LAKE_ARTIFACT_CACHE:-}" = false ] || env_wrong="$env_wrong LAKE_ARTIFACT_CACHE"
+[ "${LAKE_NO_CACHE:-}" = true ] || env_wrong="$env_wrong LAKE_NO_CACHE"
+[ "${LAKE_CONFIG:-}" = /nonexistent/lake-config.toml ] || env_wrong="$env_wrong LAKE_CONFIG"
+[ "${LEAN_ABORT_ON_PANIC:-}" = 1 ] || env_wrong="$env_wrong LEAN_ABORT_ON_PANIC"
+[ -n "${CHECK_REPLAY_JOBS+set}" ] || env_wrong="$env_wrong CHECK_REPLAY_JOBS"
+[ -n "${CHECK_SCAN_JOBS+set}" ] || env_wrong="$env_wrong CHECK_SCAN_JOBS"
+[ -n "${CHECK_BUILD_JOBS+set}" ] || env_wrong="$env_wrong CHECK_BUILD_JOBS"
+if [ -n "$env_other$env_wrong" ] || [ "$env_lines" != 0 ]; then
+  env_message="check.sh: the environment is not the one this script gives itself (--clean-environment is not an option for the command line)."
+  if [ -n "$env_other" ]; then env_message="$env_message Variables it did not ask for: $env_other."; fi
+  if [ -n "$env_wrong" ]; then env_message="$env_message Not set as the script sets them:$env_wrong."; fi
+  if [ "$env_lines" != 0 ]; then env_message="$env_message Lines that are not of the form NAME=value (values with a line break): $env_lines."; fi
+  echo "$env_message" >&2
   exit 2
 fi
 cd "$(dirname "$0")/.." || exit 2
+# No Python program may import a module from the project directory or from the directory of a
+# script: PYTHONSAFEPATH=1 sees to that from Python 3.11 on, and older versions ignore it.
+# (Built-in modules such as sys are never looked for on the search path.)
+if ! python3 -c 'import sys; sys.exit(0 if sys.version_info >= (3, 11) and sys.flags.safe_path and sys.flags.no_user_site else 1)' >/dev/null 2>&1; then
+  echo "check.sh: needs python3 through PATH, version 3.11 or later (an older one ignores PYTHONSAFEPATH=1 and could import a module from the project directory; step 2 needs tomllib); found: $(python3 --version 2>&1 | head -n 1 | cut -c1-80)" >&2
+  exit 2
+fi
+if ! command -v git >/dev/null 2>&1; then
+  echo "check.sh: needs git through PATH (step 2 reads the revision and the state of each dependency checkout with it)" >&2
+  exit 2
+fi
 
 FRESH=0; QUICK=0; WHOLE=0; KEEP=0
 for arg in "$@"; do
@@ -288,6 +371,7 @@ FAILED=""            # steps that failed
 NOTRUN=""            # tools that are not installed, by name
 REPLAYED=""          # what the last line reports about the kernel replay
 COMPILED=""          # what the last line reports about the build
+REACHED_REPLAY=0     # 1 once step 7 has begun
 LEAN=lean; TCBIN=""     # set in step 2
 
 filter() { grep -v "designed for use with the module system" || true; }
@@ -303,20 +387,23 @@ print(h.hexdigest())' "$1"
 count_lines() { wc -l <"$1" | tr -d ' '; }
 since() { echo "$(( $(date +%s) - $1 )) s"; }
 # The files that are checked, with their digests: the build configuration, the library
-# sources (everything under the library's directory), the design files, the checking scripts.
+# sources (every file under the library's directory, in every directory, whatever its name;
+# only the .DS_Store files that macOS writes are passed over), the design files, the checking
+# scripts (without Python's __pycache__ directories, which PYTHONDONTWRITEBYTECODE=1 keeps
+# from being written and PYTHONSAFEPATH=1 from being read).
 list_sources() {
   python3 -c 'import hashlib, os, sys
 library = sys.argv[1]
 files = ["lean-toolchain", "lakefile.toml", "lake-manifest.json", library + ".lean"]
-def walk(top):
+def walk(top, prune=()):
     found = []
     for root, dirs, names in os.walk(top):
-        dirs[:] = sorted(d for d in dirs if d != "__pycache__")
+        dirs[:] = sorted(d for d in dirs if d not in prune)
         found += [os.path.join(root, n) for n in names if n != ".DS_Store"]
     return sorted(found)
 files += walk(library)
 files += sorted(os.path.join("designs", n) for n in os.listdir("designs") if n.endswith(".json"))
-files += walk("scripts")
+files += walk("scripts", prune=("__pycache__",))
 for f in files:
     with open(f, "rb") as handle:
         print(hashlib.sha256(handle.read()).hexdigest() + "  " + f)' "$LIBRARY"
@@ -347,7 +434,11 @@ write_records() {
     echo "Summary"
     echo "  results of the steps, in the order in which they were run:"
     indent <"$TMP/results.txt"
-    echo "  tools not run because they are not installed: ${NOTRUN:-none}"
+    if [ "$REACHED_REPLAY" = 1 ]; then
+      echo "  tools not run because they are not installed: ${NOTRUN:-none}"
+    else
+      echo "  tools of the kernel replay (steps 7 to 10): none was run, because the run did not reach step 7"
+    fi
     if [ -n "$FAILED" ]; then
       echo "  outcome of the run of scripts/check.sh that wrote this record: FAILED:$FAILED"
     else
@@ -436,16 +527,16 @@ SOURCES_DIGEST="$(sha256_of "$TMP/sources.begin")"
 
 # ---------------------------------------------------------------------------
 echo "== 1. design records in sync with their JSON files =="
-if python3 scripts/gen_design.py --check-all designs "$LIBRARY"; then
+if python3 scripts/gen_design.py --check-all designs "$LIBRARY" scripts/design-records.txt; then
   ok design-record
 else
-  fail design-record "a generated design record is stale, a JSON design file was rejected or has no generated record; see the message above"
+  fail design-record "a design record named in scripts/design-records.txt is not what its JSON file generates, a JSON design file was rejected or is not named there, or another file of the library has the header of a generated file; see the message above"
 fi
 
 # ---------------------------------------------------------------------------
 echo "== 2. build configuration: the pinned files and the pinned toolchain =="
-python3 -c 'import hashlib, json, os, subprocess, sys
-pin_file = sys.argv[1]
+python3 -c 'import hashlib, json, os, subprocess, sys, tomllib
+pin_file, library = sys.argv[1], sys.argv[2]
 expected = ["lakefile.toml", "lake-manifest.json", "lean-toolchain"]
 status = 0
 pins = {}
@@ -472,6 +563,47 @@ for name in sorted(os.listdir(".")):
     if name.lower() == "lakefile.lean":
         print(f"NOT ALLOWED: {name}: Lake would use it in place of lakefile.toml, and it is a program")
         status = 1
+# The keys of lakefile.toml, whatever the pin says: none that could move the sources or the
+# build products of the library (srcDir, roots, globs, libName, buildDir, ...) or pass
+# arguments to the compiler (moreLeanArgs, weakLeanArgs, ...), at any level.
+accepted = {"package": {"name", "version", "defaultTargets", "leanOptions", "require", "lean_lib"},
+            "lean_lib": {"name"}, "require": {"name", "git", "rev"}}
+def refuse_keys(table, kind, where):
+    global status
+    if not isinstance(table, dict):
+        print(f"NOT ALLOWED: lakefile.toml: {where} is not a table")
+        status = 1
+        return
+    for key in sorted(set(table) - accepted[kind]):
+        print(f"NOT ALLOWED: lakefile.toml has the key {key} in {where}; accepted there: "
+              + ", ".join(sorted(accepted[kind])))
+        status = 1
+if os.path.isfile("lakefile.toml") and not os.path.islink("lakefile.toml"):
+    try:
+        with open("lakefile.toml", "rb") as handle:
+            config = tomllib.load(handle)
+    except (OSError, UnicodeDecodeError, tomllib.TOMLDecodeError) as error:
+        print(f"NOT ALLOWED: lakefile.toml cannot be read as TOML: {error}")
+        config = None
+        status = 1
+    if config is not None:
+        refuse_keys(config, "package", "its package table")
+        for part in ("lean_lib", "require"):
+            entries = config.get(part, [])
+            if not isinstance(entries, list):
+                print(f"NOT ALLOWED: lakefile.toml: {part} is not an array of tables [[{part}]]")
+                status = 1
+                continue
+            for entry in entries:
+                name = entry.get("name") if isinstance(entry, dict) else None
+                refuse_keys(entry, part, f"[[{part}]] {json.dumps(name)}")
+        libraries = [entry.get("name") for entry in config.get("lean_lib", []) if isinstance(entry, dict)]
+        if libraries.count(library) != 1:
+            print(f"NOT ALLOWED: lakefile.toml must have exactly one [[lean_lib]] named {library}; it has {libraries.count(library)}")
+            status = 1
+        if not isinstance(config.get("leanOptions", {}), dict):
+            print("NOT ALLOWED: lakefile.toml: leanOptions is not a table")
+            status = 1
 if status == 0:
     # as read from the files
     print("lean-toolchain: " + open("lean-toolchain", encoding="utf-8").read().strip())
@@ -489,26 +621,35 @@ if status == 0:
         url = package.get("url")
         rev = package.get("rev")
         name = package["name"]
-        # the checkout that Lake will use must be there and at that revision already:
-        # otherwise `lake` would fetch it or move it
+        # the checkout that Lake will use must be there and at that revision already, with
+        # nothing changed: otherwise `lake` would fetch it or move it, or compile changed
+        # modules of it. (GIT_OPTIONAL_LOCKS=0: `git status` then does not write the index.)
         where = os.path.join(manifest.get("packagesDir", ".lake/packages"), name)
         if not os.path.isdir(where):
             print(f"NOT READY: {where} is missing; fetch and build the dependencies first (`lake build`): this script does not download anything")
             status = 1
             continue
-        head = subprocess.run(["git", "-C", where, "rev-parse", "HEAD"], capture_output=True, text=True)
+        git_env = dict(os.environ, GIT_OPTIONAL_LOCKS="0")
+        head = subprocess.run(["git", "-C", where, "rev-parse", "HEAD"], capture_output=True, text=True, env=git_env)
         if head.returncode != 0 or head.stdout.strip() != rev:
             print(f"NOT AT THE PINNED REVISION: {where} is at {head.stdout.strip() or head.stderr.strip()[:100]}; lake-manifest.json says {rev}")
             status = 1
+            continue
+        changes = subprocess.run(["git", "-C", where, "status", "--porcelain", "--untracked-files=normal"],
+                                 capture_output=True, text=True, env=git_env)
+        if changes.returncode != 0 or changes.stdout.strip():
+            listed = changes.stdout.strip().split("\n")[:5] if changes.returncode == 0 else [changes.stderr.strip()[:100]]
+            print(f"NOT CLEAN: {where} is at the pinned revision, but `git status` lists changed or untracked files: " + "; ".join(listed))
+            status = 1
         else:
-            print(f"lake-manifest.json: {name} at {rev} from {url} ({how}); {where} is checked out at that revision")
-sys.exit(status)' scripts/pinned-config.sha256 >"$TMP/config.txt" 2>&1
+            print(f"lake-manifest.json: {name} at {rev} from {url} ({how}); {where} is checked out at that revision, and `git status` lists no changed and no untracked file in it")
+sys.exit(status)' scripts/pinned-config.sha256 "$LIBRARY" >"$TMP/config.txt" 2>&1
 status=$?
 cat "$TMP/config.txt"
 MATHLIB_REV="$(sed -n 's/^lake-manifest.json: mathlib at \([0-9a-f]*\) .*/\1/p' "$TMP/config.txt")"
 if [ "$status" != 0 ]; then
   # With another configuration `lake` may fetch or rebuild dependencies, or run a program.
-  stop config "the build configuration is not the pinned one, or the dependencies are not checked out at the pinned revisions; nothing further is run, because \`lake\` could then download, move or rebuild dependencies. A deliberate change of the configuration is made by editing scripts/pinned-config.sha256"
+  stop config "the build configuration is not the pinned one or has a key that step 2 does not accept, or a dependency is not checked out at its pinned revision with nothing changed; nothing further is run, because \`lake\` could then download, move or rebuild dependencies. A deliberate change of the configuration files is made by editing scripts/pinned-config.sha256 (the keys of lakefile.toml are checked whatever the pin says)"
 fi
 PREFIX="$(lean --print-prefix 2>"$TMP/prefix.err")"
 status=$?
@@ -544,7 +685,8 @@ for shown, path in files:
 print(f"{len(files)} files in bin and lib/lean of the toolchain (every file of bin, every shared library of lib/lean); sha256 of the list of their sha256 and names: {total.hexdigest()}")' "$PREFIX" 2>&1)"
 {
   cat "$TMP/config.txt"
-  echo "these three files are the ones pinned in scripts/pinned-config.sha256"
+  echo "these three files are the ones pinned in scripts/pinned-config.sha256, and lakefile.toml has no key"
+  echo "that step 2 of scripts/check.sh does not accept"
   echo "lean --version: $LEAN_VERSION"
   echo "lake --version: $LAKE_VERSION"
   echo "toolchain programs: $TOOLCHAIN_FILES"
@@ -553,16 +695,17 @@ echo "lean --version: $LEAN_VERSION"
 echo "lake --version: $LAKE_VERSION"
 echo "toolchain programs: $TOOLCHAIN_FILES"
 case "$LEAN_VERSION" in
-  *"(version $WANTED_VERSION,"*) ok config "the three files are the pinned ones; the toolchain is $TOOLCHAIN" ;;
+  *"(version $WANTED_VERSION,"*) ok config "the three files are the pinned ones, and lakefile.toml has no key that step 2 does not accept; every dependency is at its pinned revision with nothing changed; the toolchain is $TOOLCHAIN" ;;
   *)
     stop config "lean-toolchain names $TOOLCHAIN, but the \`lean\` found through PATH in this directory reports: $LEAN_VERSION" ;;
 esac
 {
   echo "  config:    lakefile.toml, lake-manifest.json and lean-toolchain are the files pinned in"
-  echo "             scripts/pinned-config.sha256"
+  echo "             scripts/pinned-config.sha256, and lakefile.toml has no key that step 2 does not accept"
   echo "  toolchain: $TOOLCHAIN (lean-toolchain); $LEAN_VERSION"
-  echo "  mathlib:   $MATHLIB_REV (lake-manifest.json; .lake/packages/mathlib is checked out at"
-  echo "             that revision); used as compiled there, not recompiled"
+  echo "  mathlib:   $MATHLIB_REV (lake-manifest.json); .lake/packages/mathlib is checked out at that"
+  echo "             revision, and \`git status\` lists no changed and no untracked file in it (the same"
+  echo "             holds for every dependency; see $EVIDENCE/versions.txt)"
 } >>"$RECORD"
 TOOLCHAIN_NOTE=""
 if [ "$TOOLCHAIN" != "$DESCRIBED_FOR" ]; then
@@ -573,9 +716,15 @@ fi
 # ---------------------------------------------------------------------------
 echo "== 3. build: the library, by name =="
 START="$(date +%s)"
+# .lake/config holds the compiled configurations of the dependencies with a Lean lakefile,
+# which Lake loads and runs instead of their lakefile when their traces match: it is never
+# reused, also not by --quick
 if [ "$REBUILD" = 1 ]; then
   echo "removing this project's build products (.lake/build, .lake/config)"
   rm -rf .lake/build .lake/config
+else
+  echo "removing .lake/config (the compiled configurations of the dependencies; Lake makes them again)"
+  rm -rf .lake/config
 fi
 if [ -n "$BUILD_JOBS" ]; then
   env LEAN_NUM_THREADS="$BUILD_JOBS" "$TCBIN/lake" --file=lakefile.toml build "$LIBRARY" --no-ansi >"$TMP/build.log" 2>&1
@@ -589,16 +738,29 @@ sed -n 's/^.*\] Built \([^ ]*\) (.*$/\1/p' "$TMP/build.log" \
 N_BUILT="$(count_lines "$TMP/built-modules.txt")"
 sed -n 's/^.*\] Built \([^ ]*\) (.*$/\1/p' "$TMP/build.log" \
   | grep -v -E "^$LIBRARY(\\.|\$)" | LC_ALL=C sort -u >"$TMP/built-elsewhere.txt"
+N_ELSEWHERE="$(count_lines "$TMP/built-elsewhere.txt")"
+# what was compiled outside the library, from what Lake reported in this run
+{
+  if [ "$N_ELSEWHERE" = 0 ]; then
+    echo "  dependencies: no module outside the library was compiled in this run; Mathlib and the other"
+    echo "             dependencies were used as they are compiled in .lake/packages"
+  else
+    echo "  dependencies: $N_ELSEWHERE modules outside the library were compiled in this run, in"
+    echo "             .lake/packages (the library imports modules of a dependency that were not compiled):"
+    indent <"$TMP/built-elsewhere.txt"
+  fi
+} >>"$RECORD"
+if [ "$N_ELSEWHERE" != 0 ]; then
+  echo "NOTE: Lake also compiled $N_ELSEWHERE modules outside the library in this run, in .lake/packages (the library imports modules of a dependency that were not compiled yet; the record lists them all):"
+  head -n 20 "$TMP/built-elsewhere.txt" | indent
+fi
 if [ "$status" = 0 ]; then
   filter <"$TMP/build.log" | grep -v '\] Built \|\] Replayed ' | cut -c1-300 | tail -n 3
   echo "modules of the library compiled in this run: $N_BUILT; $(since "$START")"
-  if [ -s "$TMP/built-elsewhere.txt" ]; then
-    echo "NOTE: Lake also compiled $(count_lines "$TMP/built-elsewhere.txt") modules outside the library in this run, in .lake/packages (the library imports modules of a dependency that were not compiled yet):"
-    head -n 20 "$TMP/built-elsewhere.txt" | indent
-  fi
   ok build
 else
   filter <"$TMP/build.log" | cut -c1-600 | tail -n 60
+  echo "$(since "$START")"
   fail build "lake build $LIBRARY exited with status $status"
 fi
 
@@ -689,6 +851,9 @@ else
     if [ "$REBUILD" = 1 ]; then
       COMPILED="all $n_env modules of the library, in this run, after its build products had been removed (Lake reported each one as built)."
       ok import-closure "$n_src source files, $n_env modules in the audited environment, $N_BUILT modules compiled in this run, the same names"
+    elif [ "$N_BUILT" = "$n_env" ]; then
+      COMPILED="all $n_env modules of the library, in this run (Lake found none of them up to date)."
+      ok import-closure "$n_src source files, $n_env modules in the audited environment, the same names; all $N_BUILT compiled in this run"
     else
       COMPILED="$N_BUILT of the $n_env modules of the library in this run; the others were reused because Lake found them up to date (a comparison of 64-bit hashes kept in .lake/build; --fresh recompiles everything)."
       ok import-closure "$n_src source files, $n_env modules in the audited environment, the same names; $N_BUILT compiled in this run, the others reused"
@@ -716,17 +881,18 @@ echo "mathlib (lake-manifest.json): $MATHLIB_REV"
 
 if [ "$QUICK" = 1 ]; then
   echo "== 7 to 9. kernel replay: SKIPPED (--quick) =="
+  # what the record of a full run says; nothing verifies a record (evidence/ is not digested)
   if [ -f "$EVIDENCE/kernel-replay.txt" ]; then
     outcome="$(sed -n 's/^  outcome of the run of scripts\/check.sh that wrote this record: //p' "$EVIDENCE/kernel-replay.txt" | tail -n 1)"
     case "$outcome" in
-      "every step that was run passed.") outcome="that run PASSED" ;;
-      FAILED*) outcome="that run $outcome" ;;
-      *) outcome="the record does not say how that run ended" ;;
+      "every step that was run passed.") outcome="says that its run PASSED" ;;
+      FAILED*) outcome="says that its run $outcome" ;;
+      *) outcome="does not say how its run ended" ;;
     esac
     if grep -q "sha256 of the list: $SOURCES_DIGEST" "$EVIDENCE/kernel-replay.txt"; then
-      EARLIER="The record of the last full run ($EVIDENCE/kernel-replay.txt) is for these same files, and $outcome."
+      EARLIER="The record of a full run in $EVIDENCE/kernel-replay.txt names these same files (by the digest of their list) and $outcome; the record is read as it is, nothing verifies it."
     else
-      EARLIER="The record of the last full run ($EVIDENCE/kernel-replay.txt) is for DIFFERENT files ($outcome)."
+      EARLIER="The record of a full run in $EVIDENCE/kernel-replay.txt names DIFFERENT files and $outcome; the record is read as it is, nothing verifies it."
     fi
   fi
   echo "$EARLIER"
@@ -784,6 +950,7 @@ fi
 # --- step 7 ---------------------------------------------------------------
 echo "== 7. leanchecker: compiled modules replayed against their imports ($JOBS at a time) =="
 START="$(date +%s)"
+REACHED_REPLAY=1
 {
   echo
   echo "1. Compiled modules replayed against the imported environment"
@@ -792,7 +959,11 @@ START="$(date +%s)"
   echo "  command: LEAN_NUM_THREADS=<jobs> lake env leanchecker -v $LIBRARY"
   echo "  does:    for every module whose name starts with $LIBRARY, sends each declaration"
   echo "           stored in the module's compiled file (the compiler auxiliaries excepted) to"
-  echo "           Lean's kernel, on top of the environment formed by the module's imports. The"
+  echo "           Lean's kernel, on top of the environment formed by the module's imports."
+  echo "           Constructors and recursors are not sent: the kernel generates them from their"
+  echo "           inductive type, and they are compared with the stored ones. A theorem equal in"
+  echo "           name, type, universe parameters and mutual block to one that is already in the"
+  echo "           environment is not sent again (src/lean/Lean/Replay.lean of the toolchain). The"
   echo "           imports themselves (other modules of the library, Mathlib, Lean core) are"
   echo "           loaded as compiled; they are not re-checked by this step."
 } >>"$RECORD"
@@ -834,7 +1005,8 @@ fi
 # Runs the checkers on an export and appends to the record. Sets ACCEPTED_KERNEL (Lean's own
 # kernel, from an empty environment), ACCEPTED_EMPTY (other programs, from an empty environment)
 # and ACCEPTED_PRELUDE (other programs, on top of a prelude built into them) to the names of
-# the tools that accepted it. scripts/selftest.sh shows what each tool starts from.
+# the tools that accepted it. "From an empty environment" is what leanchecker's source shows,
+# and for the other tools what scripts/selftest.sh observes (they refuse an export without Eq).
 # Each tool is started in an empty directory with an empty environment, and is
 # given the export (for nanoda: a configuration naming it) and nothing else.
 # Needs N_RECORDS, N_RECORDS_QUOT and N_CONSTANTS, the contents of the export
@@ -949,7 +1121,7 @@ EOF
         # A Lean program that panics is stopped at once by LEAN_ABORT_ON_PANIC=1, before it can
         # say what it objects to. The verdict above stands; this only shows the message.
         echo "    the same command without LEAN_ABORT_ON_PANIC=1, for its message only (the result is not used):"
-        (cd "$TMP/empty" && env -i "$TCBIN/$ce_exe" "$@") </dev/null 2>&1 | filter | cut -c1-600 | tail -n 6
+        (cd "$TMP/empty" && env -i "$TCBIN/$ce_exe" "$@") </dev/null 2>&1 | filter | cut -c1-600 | tail -n 10
       fi
       echo "    RESULT $ce_step/$ce_name: FAILED" >>"$RECORD"
       fail "$ce_step/$ce_name" "exit status $ce_status"
@@ -1016,10 +1188,11 @@ echo "== 9. the export re-checked by the checkers =="
   echo
   echo "3. The export re-checked"
   echo "  Each tool is started in an empty directory with an empty environment (LEAN_ABORT_ON_PANIC=1"
-  echo "  apart) and is given the export file and nothing else. A tool passes if it exits with status"
-  echo "  0 and prints its line of acceptance; where that line says how many declarations were"
-  echo "  checked, the number must be the one that scripts/export_census.py finds in the export."
-  echo "  What a tool starts from is said for each: an empty environment, or a prelude of its own."
+  echo "  apart) and is given the export file (nanoda: a configuration file that names it) and"
+  echo "  nothing else. A tool passes if it exits with status 0 and prints its line of acceptance;"
+  echo "  where that line says how many declarations were checked, the number must be the one that"
+  echo "  scripts/export_census.py finds in the export. What a tool starts from is said for each:"
+  echo "  an empty environment (by its source, or as observed), or a prelude of its own."
 } >>"$RECORD"
 if [ "$EXPORT" = ok ]; then
   N_RECORDS="$(sed -n 's/^declaration records: \([0-9][0-9]*\) .*/\1/p' "$TMP/census.txt")"
@@ -1028,7 +1201,7 @@ if [ "$EXPORT" = ok ]; then
   check_export replay-export "$TMP/library.ndjson" true
   N_OUTSIDE="$(sed -n 's/^declarations from outside the library[^:]*: //p' "$TMP/census.txt")"
   if [ -n "$ACCEPTED_KERNEL$ACCEPTED_EMPTY$ACCEPTED_PRELUDE" ]; then
-    REPLAYED="$REPLAYED (2) an export of the $N_CHECKABLE declarations of the library with the $N_OUTSIDE declarations of Mathlib, its dependencies and Lean core that they depend on: accepted from an empty environment by ${ACCEPTED_KERNEL:-no tool} (Lean's own kernel) and by ${ACCEPTED_EMPTY:-no tool} (programs that are not Lean's kernel); accepted on top of a prelude built into the program by ${ACCEPTED_PRELUDE:-no tool} (programs that are not Lean's kernel). All are run as the toolchain ships them."
+    REPLAYED="$REPLAYED (2) an export of the $N_CHECKABLE declarations of the library with the $N_OUTSIDE declarations of Mathlib, its dependencies and Lean core that they depend on: accepted from an empty environment by ${ACCEPTED_KERNEL:-no tool} (Lean's own kernel) and by ${ACCEPTED_EMPTY:-no tool} (programs that are not Lean's kernel), where \"from an empty environment\" is what leanchecker's source shows and, for the others, what was observed (each refuses an export without the declaration of Eq); accepted on top of a prelude built into the program by ${ACCEPTED_PRELUDE:-no tool} (programs that are not Lean's kernel). All are run as the toolchain ships them."
   else
     REPLAYED="$REPLAYED (2) NO checker was run on the export."
   fi
@@ -1083,7 +1256,7 @@ else
     if [ "$status" = 0 ]; then
       echo "  RESULT whole-env: ok" >>"$RECORD"
       ok whole-env "$ENVIRONMENT"
-      REPLAYED="$REPLAYED (3) every declaration of every module that the library imports, directly or not ($ENVIRONMENT; those marked unsafe or partial are compiler-only and are left out), the imported part of Mathlib included, from an empty environment, by leanchecker --fresh (Lean's own kernel only)."
+      REPLAYED="$REPLAYED (3) every declaration that is not marked unsafe or partial (those exist for the compiler and are left out), of every module that the library imports, directly or not ($ENVIRONMENT), the imported part of Mathlib included, from an empty environment, by leanchecker --fresh (Lean's own kernel only)."
     else
       echo "  RESULT whole-env: FAILED" >>"$RECORD"
       fail whole-env "leanchecker --fresh exited with status $status"

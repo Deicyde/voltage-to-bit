@@ -69,7 +69,10 @@ What it refuses, each with the name of the declaration:
              `x` is a declaration of Mathlib or Lean in the imported
              environment, and not a theorem either: inside `namespace A` the
              text `B.x` would then mean the library's declaration. (Theorems
-             are left out: a statement cannot mention one.)
+             are left out: a statement cannot mention one.) Names that `open`
+             makes visible are not considered: after `open Set`, a definition
+             `Icc` in a namespace of the library means the library's `Icc`
+             there instead of `Set.Icc`, and this rule does not notice it.
 
 It also prints every theorem of the library that has a name of its own, with
 the axioms it depends on, and writes the lists that the replay steps use.

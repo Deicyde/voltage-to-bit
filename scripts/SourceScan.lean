@@ -31,16 +31,20 @@ declarations without attributes) do not change the parser.
 
 Rules. A finding is printed for each violation, with file, line and column.
 
-* tree     The source tree holds directories and `.lean` files only, with
-           names made of ASCII letters, digits and `_`; nothing is a symbolic
-           link.
+* tree     The source tree holds directories and `.lean` files only (files
+           named `.DS_Store`, which macOS writes, are passed over); every name
+           begins with an ASCII letter and is made of ASCII letters, digits
+           and `_` (so no `__pycache__`, `_x`, `Bypäss` or `Upper.LEAN`);
+           nothing is a symbolic link.
 * closure  Every `.lean` file is in the import closure of the root file, and
            every imported module of the library has a source file.
 * text     Every file is valid UTF-8 and holds no character outside printable
            ASCII, line feed and the characters listed in the allow-list (so no
            tab, carriage return, byte-order mark or bidirectional control).
 * header   No `module` and no `prelude` line; every import is a plain
-           `import M` with `M` a module of Mathlib or of the library.
+           `import M` with `M` a module of Mathlib or of the library, every
+           component of whose name begins with an ASCII letter and is made of
+           ASCII letters, digits and `_`.
 * options  The build passed `autoImplicit = false` and `relaxedAutoImplicit =
            false` to the compiler for the file (read from the setup file that
            Lake wrote for it). With either option on, a name that is bound
@@ -131,8 +135,12 @@ def loadAllowList (path : System.FilePath) : IO AllowList := do
 
 /-! ## Small helpers -/
 
-def isAsciiIdent (s : String) : Bool :=
-  !s.isEmpty && s.toList.all (fun c => c.isAlphanum || c == '_') && !(s.toList.head!.isDigit)
+/-- A name of the source tree, or a component of a module name: an ASCII letter, then ASCII
+letters, digits and `_`. (`Char.isAlpha` and `Char.isAlphanum` are ASCII only.) -/
+def isPlainName (s : String) : Bool :=
+  match s.toList with
+  | c :: rest => c.isAlpha && rest.all (fun c => c.isAlphanum || c == '_')
+  | [] => false
 
 def showChar (c : Char) : String :=
   let hex := String.ofList (Nat.toDigits 16 c.toNat) |>.toUpper
@@ -354,9 +362,10 @@ def checkHeader (root : Name) (header : HeaderSyntax) (ictx : Parser.InputContex
     imports := imports.push mod
     let first := mod.getRoot
     unless (first == root || first == `Mathlib) && !mod.isAnonymous && !mod.hasMacroScopes
-        && mod.components.all (fun c => match c with | .str .anonymous s => isAsciiIdent s | _ => false) do
+        && mod.components.all (fun c => match c with | .str .anonymous s => isPlainName s | _ => false) do
       findings := findings.push (at_ imp "import"
-        s!"import of `{mod}`: only modules of Mathlib and of {root} are allowed")
+        s!"import of `{mod}`: only modules of Mathlib and of {root} are allowed, with names whose \
+          components begin with an ASCII letter and are made of ASCII letters, digits and `_`")
   return (findings, imports)
 
 structure FileArgs where
@@ -483,17 +492,19 @@ partial def walkTree (dir : System.FilePath) (modPrefix : Name) (files : Array S
     if kind == .symlink then
       findings := findings.push s!"{shown}: [tree] a symbolic link"
     else if kind == .dir then
-      if isAsciiIdent entry.fileName then
+      if isPlainName entry.fileName then
         (files, findings) ← walkTree path (modPrefix.str entry.fileName) files findings
       else
-        findings := findings.push s!"{shown}: [tree] a directory whose name is not made of ASCII letters, digits and `_`"
+        findings := findings.push s!"{shown}: [tree] a directory whose name does not begin with an ASCII \
+          letter or is not made of ASCII letters, digits and `_`"
     else if kind == .file then
       if entry.fileName == ".DS_Store" then
         continue
-      else if entry.fileName.endsWith ".lean" && isAsciiIdent (entry.fileName.dropEnd 5).toString then
+      else if entry.fileName.endsWith ".lean" && isPlainName (entry.fileName.dropEnd 5).toString then
         files := files.push { path := shown, module := modPrefix.str (entry.fileName.dropEnd 5).toString }
       else
-        findings := findings.push s!"{shown}: [tree] not a `.lean` file with a name made of ASCII letters, digits and `_`"
+        findings := findings.push s!"{shown}: [tree] not a `.lean` file whose name begins with an ASCII \
+          letter and is made of ASCII letters, digits and `_`"
     else
       findings := findings.push s!"{shown}: [tree] neither a file nor a directory"
   return (files, findings)
@@ -671,7 +682,7 @@ def moduleFile (m : Name) : String :=
 
 unsafe def scanLibrary (a : ScanArgs) (inventory : Bool) : IO UInt32 := do
   if a.self.isEmpty || a.allow.isEmpty || a.root.isEmpty || a.build.isEmpty || !a.files.isEmpty
-      || !isAsciiIdent a.root then
+      || !isPlainName a.root then
     IO.eprintln "usage: scan --self <this file> --allow <allow-list> --root <root module> --build <build directory> [--jobs N]"
     return 2
   let allow ← loadAllowList a.allow

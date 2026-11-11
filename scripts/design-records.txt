@@ -1,0 +1,10 @@
+# The design records that step 1 of scripts/check.sh checks: one line per record, naming
+# a JSON design file, the .lean file of the library that scripts/gen_design.py generates
+# from it, and the name of the definition in that file.
+#
+# Step 1 fails unless every JSON file in designs/ is named here, each named .lean file is,
+# byte for byte, what gen_design.py generates from its JSON file under that name, and no
+# other .lean file of the library begins with the header of a generated file. So the
+# records are identified by this list, not by what a file says about itself.
+# To add a design record: add its JSON file, generate its .lean file, add a line here.
+designs/illustrative-1v8.json  VoltageToBit/Examples/IllustrativeDesign.lean  illustrative
