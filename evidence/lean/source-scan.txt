@@ -1,26 +1,26 @@
 parser: Lean's own (Lean.Parser.parseHeader, Lean.Parser.parseCommand); each file in a process of
   its own, in the environment of its own imports as compiled; no text is lexed by this script
 allow-list: scripts/allowlist.txt (7 kinds of command, 159 kinds of syntax node, 38 characters besides printable ASCII and line feed, code up to column 110)
-files: 23 (5125 lines, 433 commands with the end-of-file markers); each one is in the import closure of VoltageToBit.lean
+files: 23 (5157 lines, 433 commands with the end-of-file markers); each one is in the import closure of VoltageToBit.lean
   VoltageToBit.lean: 22 lines, 1 commands
   VoltageToBit/Examples/DeadlineBrackets.lean: 180 lines, 8 commands
   VoltageToBit/Examples/Illustrative.lean: 416 lines, 46 commands
   VoltageToBit/Examples/IllustrativeDesign.lean: 38 lines, 4 commands
-  VoltageToBit/Examples/InputClass.lean: 456 lines, 28 commands
+  VoltageToBit/Examples/InputClass.lean: 457 lines, 28 commands
   VoltageToBit/Examples/Limits.lean: 354 lines, 27 commands
-  VoltageToBit/Examples/NegativeControls.lean: 466 lines, 34 commands
+  VoltageToBit/Examples/NegativeControls.lean: 472 lines, 34 commands
   VoltageToBit/Examples/RefinedDeadlines.lean: 76 lines, 8 commands
   VoltageToBit/Examples/TwoStage.lean: 148 lines, 8 commands
-  VoltageToBit/Model/Device.lean: 209 lines, 32 commands
+  VoltageToBit/Model/Device.lean: 211 lines, 32 commands
   VoltageToBit/Model/Inverter.lean: 271 lines, 32 commands
   VoltageToBit/Model/PosSq.lean: 80 lines, 14 commands
   VoltageToBit/Proofs/AtSupply.lean: 218 lines, 15 commands
   VoltageToBit/Proofs/Certificate.lean: 152 lines, 19 commands
-  VoltageToBit/Proofs/Chain.lean: 95 lines, 10 commands
-  VoltageToBit/Proofs/Concat.lean: 105 lines, 12 commands
-  VoltageToBit/Proofs/Contamination.lean: 196 lines, 19 commands
-  VoltageToBit/Proofs/Existence.lean: 395 lines, 18 commands
-  VoltageToBit/Proofs/Guarantee.lean: 214 lines, 18 commands
+  VoltageToBit/Proofs/Chain.lean: 99 lines, 10 commands
+  VoltageToBit/Proofs/Concat.lean: 106 lines, 12 commands
+  VoltageToBit/Proofs/Contamination.lean: 201 lines, 19 commands
+  VoltageToBit/Proofs/Existence.lean: 402 lines, 18 commands
+  VoltageToBit/Proofs/Guarantee.lean: 220 lines, 18 commands
   VoltageToBit/Proofs/Margins.lean: 228 lines, 15 commands
   VoltageToBit/Proofs/ModelError.lean: 430 lines, 23 commands
   VoltageToBit/Proofs/NonVacuity.lean: 103 lines, 17 commands

@@ -4,7 +4,7 @@ same tools reproduces it, and the four other records of this directory, byte for
 
 What was checked
   files:     the build configuration, library sources, design files and checking scripts
-             listed in evidence/lean/sources.sha256 (sha256 of the list: c812ad253f7af5c2f482a4dce28d13dc3c64a8daa459e672aba5599ee8979ade)
+             listed in evidence/lean/sources.sha256 (sha256 of the list: 7a47ed71d6f709813ec345192db4793289a6a425c83478cc03b67ddeb87965ad)
   config:    lakefile.toml, lake-manifest.json and lean-toolchain are the files pinned in
              scripts/pinned-config.sha256, and lakefile.toml has no key that step 2 does not accept
   toolchain: leanprover/lean4:v4.35.0 (lean-toolchain); Lean (version 4.35.0, arm64-apple-darwin24.6.0, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)
@@ -161,7 +161,7 @@ Where the tools come from
 Summary
   results of the steps, in the order in which they were run:
     RESULT design-record: ok
-    RESULT config: ok (the three files are the pinned ones, and lakefile.toml has no key that step 2 does not accept; every dependency is at its pinned revision with nothing changed; the toolchain is leanprover/lean4:v4.35.0)
+    RESULT config: ok (the three files are the pinned ones, and lakefile.toml has no key and no option that step 2 does not accept; every dependency is at its pinned revision with no change that `git status` reports; the toolchain is leanprover/lean4:v4.35.0)
     RESULT build: ok
     RESULT source-scan: ok
     RESULT axiom-audit: ok
