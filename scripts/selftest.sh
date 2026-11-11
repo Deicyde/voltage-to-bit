@@ -53,6 +53,8 @@
 #       is installed. A line says PASS only if the same tool accepted the
 #       unmodified copy.
 #   (b) the source scan flags that file
+#   (origin) the audit refuses compiled files of the library that are loaded
+#       from another directory than .lake/build of the project
 #   (m9) when lean fails in the audit program after the audit has printed its
 #       result, check.sh shows the error (M9)
 #   (s6) --quick says how the last full run on the present files ended (S6)
@@ -64,21 +66,23 @@
 #
 # SELFTEST_KEEP=1 keeps the temporary directory and prints its path.
 # SELFTEST_ONLY="<tags>" runs only the named groups of controls (static, control,
-# s6, cfg, b1, s5, e, d, src, m9, bypass, g), for work on this script; the copies are then
+# s6, cfg, b1, s5, e, d, src, origin, m9, bypass, g), for work on this script; the copies are then
 # made from the build products of this checkout when the positive control is not
 # among them, and the last line says that the self-test was partial.
 set -u
 
-# the same environment of its own as scripts/check.sh
-if [ "${VTB_SELFTEST_ENV:-}" != clean ]; then
-  exec env -i VTB_SELFTEST_ENV=clean HOME="${HOME:-}" PATH="${PATH:-/usr/bin:/bin}" TMPDIR="${TMPDIR:-/tmp}" \
-    LC_ALL=C PYTHONUTF8=1 PYTHONIOENCODING=utf-8 PYTHONDONTWRITEBYTECODE=1 \
-    LAKE_ARTIFACT_CACHE=false LAKE_NO_CACHE=true \
-    CHECK_REPLAY_JOBS="${CHECK_REPLAY_JOBS:-1}" CHECK_SCAN_JOBS="${CHECK_SCAN_JOBS:-2}" \
-    CHECK_BUILD_JOBS="${CHECK_BUILD_JOBS:-}" SELFTEST_KEEP="${SELFTEST_KEEP:-0}" \
-    SELFTEST_ONLY="${SELFTEST_ONLY:-}" \
-    sh "$0" "$@"
-fi
+# an environment of its own, as scripts/check.sh gives itself
+case "${1:-}" in
+  --clean-environment) shift ;;
+  *)
+    exec env -i HOME="${HOME:-}" PATH="${PATH:-/usr/bin:/bin}" TMPDIR="${TMPDIR:-/tmp}" \
+      LC_ALL=C PYTHONUTF8=1 PYTHONIOENCODING=utf-8 PYTHONDONTWRITEBYTECODE=1 \
+      LAKE_ARTIFACT_CACHE=false LAKE_NO_CACHE=true LAKE_CONFIG=/nonexistent/lake-config.toml \
+      CHECK_REPLAY_JOBS="${CHECK_REPLAY_JOBS:-1}" CHECK_SCAN_JOBS="${CHECK_SCAN_JOBS:-2}" \
+      CHECK_BUILD_JOBS="${CHECK_BUILD_JOBS:-}" SELFTEST_KEEP="${SELFTEST_KEEP:-0}" \
+      SELFTEST_ONLY="${SELFTEST_ONLY:-}" \
+      sh "$0" --clean-environment "$@" ;;
+esac
 ROOT="$(cd "$(dirname "$0")/.." && pwd)" || exit 2
 cd "$ROOT" || exit 2
 LIBRARY=VoltageToBit
@@ -272,13 +276,16 @@ else
   mkdir -p "$TMP/cfg"
   cp -R "$LIBRARY" "$LIBRARY.lean" scripts designs lakefile.toml lake-manifest.json lean-toolchain "$TMP/cfg/"
   rm -rf "$TMP/cfg/scripts/__pycache__"
-  # the unchanged configuration passes step 2's comparison (and then stops, for want of Lean)
+  # the unchanged configuration passes step 2's comparison; the copy has no dependencies
   (cd "$TMP/cfg" && PATH="$SAFE_PATH" sh scripts/check.sh --quick) >"$TMP/cfg.log" 2>&1
-  if present "$TMP/cfg.log" "pinned: lakefile.toml" && present "$TMP/cfg.log" "pinned: lake-manifest.json" \
-      && present "$TMP/cfg.log" "pinned: lean-toolchain" && absent "$TMP/cfg.log" "NOT THE PINNED FILE"; then
-    pass "(cfg) the unchanged configuration files are accepted as the pinned ones"
+  c_status=$?
+  if [ "$c_status" = 1 ] && present "$TMP/cfg.log" "pinned: lakefile.toml" && present "$TMP/cfg.log" "pinned: lake-manifest.json" \
+      && present "$TMP/cfg.log" "pinned: lean-toolchain" && absent "$TMP/cfg.log" "NOT THE PINNED FILE" \
+      && present "$TMP/cfg.log" "NOT READY: .lake/packages/mathlib is missing" \
+      && present "$TMP/cfg.log" "CHECK FAILED: config" && absent "$TMP/cfg.log" "== 3."; then
+    pass "(cfg) the unchanged configuration files are accepted as the pinned ones; in a copy without the dependencies check.sh then stops at step config and says that .lake/packages/mathlib is missing"
   else
-    flunk "(cfg) the unchanged configuration files are not accepted"
+    flunk "(cfg) the unchanged configuration files are not accepted, or a copy without dependencies did not stop at step config (exit status $c_status)"
     show_tail "$TMP/cfg.log"
   fi
   # name | file | what must be reported | python expression that maps the text `t` of the file to the changed text
@@ -588,6 +595,37 @@ EOF
       flunk "(src) the scan reported the last two modules, which were meant to show what only the audit sees; update these controls"
     fi
   fi
+fi
+fi
+
+# ---------------------------------------------------------------------------
+if want origin; then
+echo "== (origin) compiled files of the library that come from another directory =="
+# check.sh gives its tools no LEAN_PATH of the caller, so this cannot be staged through it: the
+# audit program is run by hand, with a second copy of the compiled library in front of the
+# search path.
+copy_project origin "$BASE"
+mkdir -p "$TMP/planted"
+cp -R "$TMP/origin/.lake/build/lib/lean/." "$TMP/planted/"
+# shellcheck disable=SC2016
+(cd "$TMP/origin" && lake env sh -c 'LEAN_PATH="$1:$LEAN_PATH" exec lean --run scripts/Audit.lean --root "$2" --allow scripts/allowlist.txt' \
+  sh "$TMP/planted" "$LIBRARY") >"$TMP/origin.log" 2>&1
+o_status=$?
+if [ "$o_status" = 1 ] && absent "$TMP/origin.log" "AUDIT OK"; then
+  verdict "(origin) the audit refuses compiled files of the library that the search path takes from another directory than .lake/build of the project" "$TMP/origin.log" \
+    "$LIBRARY: [origin] a module of the library, but its compiled file was not loaded from .lake/build/lib/lean of this project" \
+    "AUDIT FAILED"
+else
+  flunk "(origin) the audit program exited with status $o_status, or it said AUDIT OK"
+  show_tail "$TMP/origin.log"
+fi
+(cd "$TMP/origin" && lake env lean --run scripts/Audit.lean --root "$LIBRARY" --allow scripts/allowlist.txt) >"$TMP/origin.log" 2>&1
+o_status=$?
+if [ "$o_status" = 0 ] && present "$TMP/origin.log" "AUDIT OK"; then
+  pass "(origin) without the second copy the same command passes"
+else
+  flunk "(origin) the audit program does not pass on the copy itself (exit status $o_status), so the refusal above shows nothing"
+  show_tail "$TMP/origin.log"
 fi
 fi
 

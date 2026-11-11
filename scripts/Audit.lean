@@ -30,6 +30,10 @@ What it refuses, each with the name of the declaration:
              axiom list for each declaration when it compiles a file, and
              that list is what `#print axioms` shows for an imported
              declaration; the two must agree.
+* origin     A module of the imported environment whose compiled file was not
+             loaded from where it belongs: a module of the library from
+             `.lake/build/lib/lean` of this project, any other module from
+             `.lake/packages` or from the toolchain.
 * kinds      A declaration of the library that is an axiom, an `opaque`
              constant, a quotient primitive, or `unsafe`; or `partial`, unless
              it is the auxiliary `f._unsafe_rec` that Lean stores for a
@@ -223,6 +227,26 @@ unsafe def main (args : List String) : IO UInt32 := do
   let out (s : String) : IO Unit := IO.println s
   let mut refused : Array String := #[]
 
+  -- where the compiled files were loaded from (the search path is the one `importModules` used)
+  let here ← IO.FS.realPath (← IO.currentDir)
+  let under (dir file : System.FilePath) : Bool := (dir.toString ++ "/").isPrefixOf file.toString
+  let buildLib := here / ".lake" / "build" / "lib" / "lean"
+  let packages ← IO.FS.realPath (here / ".lake" / "packages")
+  let toolchainLib ← IO.FS.realPath (← getLibDir (← getBuildDir))
+  let mut fromBuild := 0
+  let mut fromPackages := 0
+  let mut fromToolchain := 0
+  for m in moduleNames do
+    let file ← IO.FS.realPath (← findOLean m)
+    if isLibraryModule m then
+      if under buildLib file then fromBuild := fromBuild + 1
+      else refused := refused.push s!"{m}: [origin] a module of the library, but its compiled file was not loaded from \
+        .lake/build/lib/lean of this project"
+    else if under packages file then fromPackages := fromPackages + 1
+    else if under toolchainLib file then fromToolchain := fromToolchain + 1
+    else refused := refused.push s!"{m}: [origin] its compiled file was loaded neither from .lake/packages nor from \
+      the toolchain"
+
   -- modules
   let mut byRoot : Std.HashMap String Nat := {}
   for m in moduleNames do
@@ -245,6 +269,8 @@ unsafe def main (args : List String) : IO UInt32 := do
   let roots := byRoot.toArray.qsort (·.1 < ·.1) |>.toList.map fun (r, n) => s!"{r} {n}"
   out s!"imported environment: {moduleNames.size} modules, {total} declarations"
   out s!"  modules by the first part of their name: {", ".intercalate roots}"
+  out s!"  compiled files loaded from .lake/build of this project (the library): {fromBuild}; from .lake/packages: \
+    {fromPackages}; from the toolchain: {fromToolchain}"
   out s!"  declarations marked unsafe or partial (they exist for the compiler; the replay tools leave \
     them out, and the kernel lets no safe definition or theorem refer to them): {compilerOnly}"
 

@@ -15,9 +15,10 @@
 # A full run deletes this project's own build products (.lake/build and
 # .lake/config) and compiles the library again; do not start one while
 # something else uses them. The script does not write to .lake/packages, the
-# prebuilt Mathlib. `lake build` compiles a module there only if the library
-# imports a module of a dependency that is not compiled yet; step 3 then
-# names it.
+# prebuilt Mathlib, and downloads nothing: step 2 stops the run unless every
+# dependency is checked out there at its pinned revision. `lake build`
+# compiles a module there only if the library imports a module of a
+# dependency that is not compiled yet; step 3 then names it.
 #
 # Steps. Each prints "RESULT <step>: ok" or "RESULT <step>: FAILED"; a tool
 # that is not installed prints "RESULT <step>: NOT RUN" (see Tools).
@@ -26,8 +27,10 @@
 #   2 config           lakefile.toml, lake-manifest.json and lean-toolchain are,
 #                      byte for byte, the files pinned in
 #                      scripts/pinned-config.sha256; there is no lakefile.lean;
-#                      the `lean` that runs reports the version that
-#                      lean-toolchain names. A failure here always ends the run
+#                      every dependency is checked out in .lake/packages at
+#                      the revision that lake-manifest.json gives; the `lean`
+#                      that runs reports the version that lean-toolchain names.
+#                      A failure here always ends the run
 #   3 build            `lake build VoltageToBit` (the library, by name) exits
 #                      with status 0. In a full run every module of the library
 #                      is compiled in this step (step 6 checks that Lake
@@ -49,8 +52,10 @@
 #                      those Lean generates for every structure, and no entry in
 #                      an environment extension outside the allow-list; no
 #                      declaration written in a source file has an
-#                      instance-implicit binder or a universe parameter. The
-#                      head of scripts/Audit.lean lists the rules
+#                      instance-implicit binder or a universe parameter; the
+#                      compiled files of the library were loaded from
+#                      .lake/build of this project. The head of
+#                      scripts/Audit.lean lists the rules
 #   6 import-closure   the .lean files of the library, the modules of the
 #                      library in the audited environment and, in a full run,
 #                      the modules that step 3 compiled are the same set
@@ -85,21 +90,24 @@
 #   at the end, sources-unchanged: the checked files have the digests they had
 #                      before step 1 (reported only when it fails)
 #
-# Tools. The script starts itself again with an environment of its own: HOME,
-# PATH, TMPDIR and the CHECK_* variables below are passed on, a few variables
-# are set by the script, and nothing else is, so LEAN_PATH, ELAN_TOOLCHAIN,
-# LAKE_* and the like have no effect. `lean` is found once through PATH in the
-# project directory; every Lean tool is then run from the bin directory of
-# that toolchain (`lean --print-prefix`) and from nowhere else. Step 2 fails
-# unless that `lean` reports the version that lean-toolchain names, and the
-# record identifies the programs of the toolchain by a digest. python3, git
-# and the standard utilities come from PATH and are trusted, and so is the
-# toolchain that PATH leads to. `lake help check` of the toolchain names the
-# checkers it bundles; the record quotes the sentence. A tool that is not in the bin
-# directory is reported as NOT RUN, by name, in the output, in the record and
-# in the last line, and is not counted; the last line then begins differently
-# (see Exit status). Only leanchecker is required: without it steps 7 and 10
-# fail.
+# Tools. The script starts itself again under `env -i`, with an environment of
+# its own: HOME, PATH, TMPDIR and the CHECK_* variables below are passed on, a
+# few variables are set by the script, and nothing else is, so LEAN_PATH,
+# ELAN_TOOLCHAIN, LAKE_* and the like have no effect; it stops with status 2
+# if its environment is then anything else. Step 5 also reads where every
+# compiled file was loaded from: those of the library from .lake/build of this
+# project, the others from .lake/packages or from the toolchain. `lean` is
+# found once through PATH in the project directory; every Lean tool is then
+# run from the bin directory of that toolchain (`lean --print-prefix`) and
+# from nowhere else. Step 2 fails unless that `lean` reports the version that
+# lean-toolchain names, and the record identifies the programs of the
+# toolchain by a digest. python3, git and the standard utilities come from
+# PATH and are trusted, and so is the toolchain that PATH leads to. `lake help
+# check` of the toolchain names the checkers it bundles; the record quotes the
+# sentence. A tool that is not in the bin directory is reported as NOT RUN, by
+# name, in the output, in the record and in the last line, and is not counted;
+# the last line then begins differently (see Exit status). Only leanchecker is
+# required: without it steps 7 and 10 fail.
 #   leanchecker           Lean's own kernel (steps 7, 9 and 10). Its source is
 #                         in the toolchain: src/lean/LeanChecker.lean.
 #   leanchecker-paranoid  Lean's own kernel again, in an executable of its
@@ -212,15 +220,28 @@
 # Negative controls for this script: scripts/selftest.sh.
 set -u
 
-# An environment of our own: nothing but these variables reaches the tools.
-if [ "${VTB_CHECK_ENV:-}" != clean ]; then
-  exec env -i VTB_CHECK_ENV=clean HOME="${HOME:-}" PATH="${PATH:-/usr/bin:/bin}" TMPDIR="${TMPDIR:-/tmp}" \
-    LC_ALL=C PYTHONUTF8=1 PYTHONIOENCODING=utf-8 PYTHONDONTWRITEBYTECODE=1 \
-    LAKE_ARTIFACT_CACHE=false LAKE_NO_CACHE=true LAKE_CONFIG=/nonexistent/lake-config.toml \
-    LEAN_ABORT_ON_PANIC=1 \
-    CHECK_REPLAY_JOBS="${CHECK_REPLAY_JOBS:-1}" CHECK_SCAN_JOBS="${CHECK_SCAN_JOBS:-2}" \
-    CHECK_BUILD_JOBS="${CHECK_BUILD_JOBS:-}" \
-    sh "$0" "$@"
+# An environment of our own: nothing but these variables reaches the tools. The script starts
+# itself again under `env -i`, and then makes sure that its environment is what it asked for.
+case "${1:-}" in
+  --clean-environment) shift ;;
+  *)
+    exec env -i HOME="${HOME:-}" PATH="${PATH:-/usr/bin:/bin}" TMPDIR="${TMPDIR:-/tmp}" \
+      LC_ALL=C PYTHONUTF8=1 PYTHONIOENCODING=utf-8 PYTHONDONTWRITEBYTECODE=1 \
+      LAKE_ARTIFACT_CACHE=false LAKE_NO_CACHE=true LAKE_CONFIG=/nonexistent/lake-config.toml \
+      LEAN_ABORT_ON_PANIC=1 \
+      CHECK_REPLAY_JOBS="${CHECK_REPLAY_JOBS:-1}" CHECK_SCAN_JOBS="${CHECK_SCAN_JOBS:-2}" \
+      CHECK_BUILD_JOBS="${CHECK_BUILD_JOBS:-}" \
+      sh "$0" --clean-environment "$@" ;;
+esac
+# PWD, OLDPWD, SHLVL and _ are what a shell adds by itself; any other line is a variable (or
+# the rest of a value with a line break) that the script did not ask for
+if env | grep -q -v -E '^(HOME|PATH|TMPDIR|LC_ALL|PYTHONUTF8|PYTHONIOENCODING|PYTHONDONTWRITEBYTECODE|LAKE_ARTIFACT_CACHE|LAKE_NO_CACHE|LAKE_CONFIG|LEAN_ABORT_ON_PANIC|CHECK_REPLAY_JOBS|CHECK_SCAN_JOBS|CHECK_BUILD_JOBS|PWD|OLDPWD|SHLVL|_)=' \
+    || [ "${LC_ALL:-}" != C ] || [ "${LAKE_ARTIFACT_CACHE:-}" != false ] || [ "${LAKE_NO_CACHE:-}" != true ] \
+    || [ "${LAKE_CONFIG:-}" != /nonexistent/lake-config.toml ] || [ "${LEAN_ABORT_ON_PANIC:-}" != 1 ] \
+    || [ "${PYTHONUTF8:-}" != 1 ] || [ "${PYTHONDONTWRITEBYTECODE:-}" != 1 ] \
+    || [ -z "${CHECK_REPLAY_JOBS+set}" ] || [ -z "${CHECK_SCAN_JOBS+set}" ] || [ -z "${CHECK_BUILD_JOBS+set}" ]; then
+  echo "check.sh: the environment is not the one this script gives itself (--clean-environment is not an option for the command line)" >&2
+  exit 2
 fi
 cd "$(dirname "$0")/.." || exit 2
 
@@ -423,7 +444,7 @@ fi
 
 # ---------------------------------------------------------------------------
 echo "== 2. build configuration: the pinned files and the pinned toolchain =="
-python3 -c 'import hashlib, json, os, sys
+python3 -c 'import hashlib, json, os, subprocess, sys
 pin_file = sys.argv[1]
 expected = ["lakefile.toml", "lake-manifest.json", "lean-toolchain"]
 status = 0
@@ -462,19 +483,32 @@ if status == 0:
         elif section == "[[require]]" and line.strip():
             wanted.append(line.strip())
     print("lakefile.toml requires: " + ", ".join(wanted))
-    for package in json.load(open("lake-manifest.json", encoding="utf-8"))["packages"]:
+    manifest = json.load(open("lake-manifest.json", encoding="utf-8"))
+    for package in manifest["packages"]:
         how = "required by lakefile.toml" if not package.get("inherited") else "required by a dependency"
         url = package.get("url")
         rev = package.get("rev")
         name = package["name"]
-        print(f"lake-manifest.json: {name} at {rev} from {url} ({how})")
+        # the checkout that Lake will use must be there and at that revision already:
+        # otherwise `lake` would fetch it or move it
+        where = os.path.join(manifest.get("packagesDir", ".lake/packages"), name)
+        if not os.path.isdir(where):
+            print(f"NOT READY: {where} is missing; fetch and build the dependencies first (`lake build`): this script does not download anything")
+            status = 1
+            continue
+        head = subprocess.run(["git", "-C", where, "rev-parse", "HEAD"], capture_output=True, text=True)
+        if head.returncode != 0 or head.stdout.strip() != rev:
+            print(f"NOT AT THE PINNED REVISION: {where} is at {head.stdout.strip() or head.stderr.strip()[:100]}; lake-manifest.json says {rev}")
+            status = 1
+        else:
+            print(f"lake-manifest.json: {name} at {rev} from {url} ({how}); {where} is checked out at that revision")
 sys.exit(status)' scripts/pinned-config.sha256 >"$TMP/config.txt" 2>&1
 status=$?
 cat "$TMP/config.txt"
 MATHLIB_REV="$(sed -n 's/^lake-manifest.json: mathlib at \([0-9a-f]*\) .*/\1/p' "$TMP/config.txt")"
 if [ "$status" != 0 ]; then
   # With another configuration `lake` may fetch or rebuild dependencies, or run a program.
-  stop config "the build configuration is not the pinned one; nothing further is run, because with another configuration \`lake\` may download or rebuild dependencies. A deliberate change is made by editing scripts/pinned-config.sha256"
+  stop config "the build configuration is not the pinned one, or the dependencies are not checked out at the pinned revisions; nothing further is run, because \`lake\` could then download, move or rebuild dependencies. A deliberate change of the configuration is made by editing scripts/pinned-config.sha256"
 fi
 PREFIX="$(lean --print-prefix 2>"$TMP/prefix.err")"
 status=$?
@@ -527,8 +561,8 @@ esac
   echo "  config:    lakefile.toml, lake-manifest.json and lean-toolchain are the files pinned in"
   echo "             scripts/pinned-config.sha256"
   echo "  toolchain: $TOOLCHAIN (lean-toolchain); $LEAN_VERSION"
-  echo "  mathlib:   $MATHLIB_REV (lake-manifest.json); used as compiled in .lake/packages, not"
-  echo "             recompiled"
+  echo "  mathlib:   $MATHLIB_REV (lake-manifest.json; .lake/packages/mathlib is checked out at"
+  echo "             that revision); used as compiled there, not recompiled"
 } >>"$RECORD"
 TOOLCHAIN_NOTE=""
 if [ "$TOOLCHAIN" != "$DESCRIBED_FOR" ]; then
