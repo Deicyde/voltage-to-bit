@@ -3,7 +3,8 @@
 \usepackage{lmodern}
 \usepackage[utf8]{inputenc}
 \usepackage[a4paper,margin=25mm]{geometry}
-\usepackage[hidelinks]{hyperref}
+% no hyperref: pdftotext -bbox-layout (poppler 26.04.0) aborts on a PDF built with it,
+% and the overlay's exporter reads the PDF that way
 \pdftrailerid{}
 \raggedright
 \hyphenpenalty=10000
