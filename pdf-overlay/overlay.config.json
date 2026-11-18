@@ -1,0 +1,36 @@
+{
+  "schema": "formal-companion/overlay-config",
+  "schema_version": 1,
+  "source_id": "voltage-to-bit-reading-guide",
+  "title": "Reading the trusted specification of voltage-to-bit",
+  "lede": "Each passage of the reading guide, and the Lean declarations it tells you to read.",
+  "back_link": {
+    "href": "../../index.html",
+    "text": "Back to the site"
+  },
+  "display": {},
+  "storage_key": "voltage-to-bit-reading-guide",
+  "pdf": {
+    "file_name": "voltage-to-bit-reading-guide.pdf",
+    "cache_dir": ".lake/overlay-pdf",
+    "route": "/__overlay_pdf__/voltage-to-bit-reading-guide.pdf"
+  },
+  "site": {
+    "output_root": ".lake/build/guide-site",
+    "index": "index.html",
+    "mount": "pdf-overlay",
+    "link_text": "Annotated reading guide"
+  },
+  "build": {
+    "commands": [
+      [
+        "python3",
+        "guide/make_site.py"
+      ]
+    ]
+  },
+  "serve": {
+    "host": "127.0.0.1",
+    "port": 8000
+  }
+}
