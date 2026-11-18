@@ -1,0 +1,254 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage[hidelinks]{hyperref}
+\pdftrailerid{}
+\raggedright
+\hyphenpenalty=10000
+\exhyphenpenalty=10000
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\newcommand{\lean}[1]{\texttt{#1}}
+\newcommand{\at}[1]{\texttt{#1}}
+\title{Reading the trusted specification of voltage-to-bit}
+\author{A reading guide}
+\date{}
+\begin{document}
+\maketitle
+
+% @passage how-to-use
+\section{How to use this guide}
+A theorem is as good as its statement. Lean's kernel checks every proof in this
+repository, and six checkers bundled with Lean check them again, so what you
+have to read is the statements of the main theorems and the definitions those
+statements use. This guide lists exactly those lines, in the order to read
+them, with what each says in words and what to check. There are two paths.
+Path A, Section 2, is about eighty lines of Lean and is enough to trust the
+theorem about the illustrative 1.8 V inverter. Path B, Section 3, covers the
+theorem about every design record that passes the arithmetic checks: it keeps
+the definitions of Path A except the record and its theorem, and adds about
+sixty-five lines, about 120 in all. Section 4 lists the statements that show the hypotheses
+can be met, Section 5 what Lean and Mathlib supply, and Section 6 what you can
+skip. Line numbers refer to the Lean files of this repository at the commit
+this guide was added in; the Lean code has not changed since commit 24bdbcc.
+% @end how-to-use
+
+\section{Path A: the theorem about the illustrative inverter}
+
+% @passage psq
+\subsection{The positive part squared}
+\lean{psq}, in \at{VoltageToBit/Model/PosSq.lean} line 13. It takes a real
+number to the square of its positive part: zero for a number at or below zero,
+and its square above. It is the only nonlinear function of the transistor law.
+% @end psq
+
+% @passage params
+\subsection{The five device parameters}
+\lean{Params}, in \at{VoltageToBit/Model/Device.lean} line 35. A parameter
+point has five real fields: the supply voltage, the transconductance factors of
+the NMOS and the PMOS transistor, and their two threshold voltages, where the
+PMOS threshold is given as a magnitude. Nothing here requires a field to be
+positive; the parameter box of the design record does that.
+% @end params
+
+% @passage currents
+\subsection{The transistor currents}
+\lean{In}, \lean{Ip} and \lean{Inet}, in the same file, lines 48 to 56. The
+NMOS current flows from the output node to ground, the PMOS current from the
+supply into the output node, and the net current into the node is the PMOS
+current minus the NMOS current. Each is half the transconductance factor times
+a difference of two positive parts squared: the symmetric square law. Check the
+signs: a high input should make the NMOS conduct and the net current negative.
+For an output below ground or above the supply the same formulas describe
+conduction in the reverse direction.
+% @end currents
+
+% @passage design
+\subsection{The design record}
+\lean{Design}, in \at{VoltageToBit/Model/Inverter.lean} line 26. A record of
+twenty-one real numbers and nothing else: the bounds of the parameter box, the
+range of the node capacitance, the bound on the unmodelled current, the four
+logic thresholds, the two ends of the safe voltage domain, and two split
+points that only the proofs use. Nothing constrains the numbers here.
+% @end design
+
+% @passage box
+\subsection{The parameter box}
+\lean{Design.InBox}, in the same file, line 68. A parameter point is in the
+box when each of its five fields lies in the closed interval the record gives
+for it. Check that every one of the ten bounds is used, in the right direction.
+% @end box
+
+% @passage safe
+\subsection{The safe voltage domain}
+\lean{Design.Safe}, in the same file, line 81. The closed interval from the
+lower end to the upper end of the safe domain that the record names.
+% @end safe
+
+% @passage trajectory
+\subsection{Trajectories: the dynamics}
+\lean{IsTrajectory}, in the same file, line 200. This is the heart of the
+specification, so read every word of it. A function of time is a trajectory on
+a closed interval for a given input when it is continuous on that interval and,
+at every instant before the end, it has a right derivative and there is a
+capacitance value in the record's range such that, if the output is in the safe
+domain at that instant, some parameter point of the box makes the capacitance
+times the derivative equal to the net current up to the bound on the unmodelled
+current. Four things to check. The derivative is one sided, from the right. The
+capacitance and the parameter point may be different at every instant. Outside
+the safe domain nothing is asked of the current, only continuity and a right
+derivative, which is why every theorem assumes that the run starts in the safe
+domain. And nothing at all is asked of the input: it can be any function.
+% @end trajectory
+
+% @passage record
+\subsection{The illustrative record}
+\lean{Examples.illustrative}, in \at{VoltageToBit/Examples/IllustrativeDesign.lean}
+line 15. The twenty-one numbers of the concrete instance, in volts, microamperes,
+femtofarads and nanoseconds. The file is generated from
+\at{designs/illustrative-1v8.json}, and the first step of the checking script
+fails when the two disagree. The numbers are plausible orders of magnitude, not
+fitted to any process or measurement.
+% @end record
+
+% @passage guarantee
+\subsection{The theorem}
+\lean{Examples.illustrative\_guarantee}, in \at{VoltageToBit/Examples/Illustrative.lean}
+line 93. For every input and every trajectory of the illustrative record on an
+interval whose output at the start is between minus 0.10 and 2.08 volts: the
+output stays between
+those two values; whenever the input is at most 0.40 volts on a window inside
+the interval, the output is at least 1.35 volts from 3.43 nanoseconds after the
+start of the window to its end; and whenever the input is at least 1.25 volts on
+such a window, the output is at most 0.25 volts from 2.57 nanoseconds after its
+start. Check the numbers, that the window lies inside the interval, and that the
+conclusion is claimed only up to the end of the window. The two deadlines round
+up the closed forms 7250 over 2119 and 4575 over 1787 nanoseconds.
+% @end guarantee
+
+\section{Path B: the theorem about every admissible record}
+
+% @passage admissible
+\subsection{The arithmetic checks}
+\lean{Design.Admissible}, in \at{VoltageToBit/Model/Inverter.lean} line 142.
+Twenty-six conditions on the numbers of a record: the box is consistent and its
+lower bounds of the supply and the transconductances are positive, the threshold
+bounds are not negative, the capacitance range is positive, the bound on the
+unmodelled current is not negative, the safe domain reaches ground and the
+highest supply, the thresholds are ordered with a gap between the two input
+thresholds, and six current margins exceed the bound on the unmodelled current.
+This is a hypothesis. You need it to be checkable arithmetic that some record
+passes, as Section 4 shows, and not to be the right condition: a wrong condition
+would only make a proof fail.
+% @end admissible
+
+% @passage margins
+\subsection{The current margins}
+\lean{Design.Iup}, \lean{Design.Idn}, \lean{Design.RhiP}, \lean{Design.RhiN},
+\lean{Design.RloN} and \lean{Design.RloP}, in the same file, lines 89 to 117.
+Closed-form currents at the worst corner of the box: the pull-up and the
+pull-down margin at a given level, and four restoring currents at the two ends
+of the safe domain. They are numbers computed from the record. The proofs show
+that the transistor law really delivers at least these currents, and would fail
+otherwise, so they need not be right. Read the two that the deadlines use, the
+pull-up and the pull-down margin, to know what a deadline is.
+% @end margins
+
+% @passage deadlines
+\subsection{The two deadlines}
+\lean{Design.tauUp} and \lean{Design.tauDn}, in the same file, lines 128 and
+138. The rising deadline is the largest capacitance times the distance from the
+lower end of the safe domain to the high output threshold, divided by the
+pull-up margin at that threshold less the bound on the unmodelled current; the
+falling deadline is the mirror image. Lean divides by zero to zero, but the
+arithmetic checks keep both denominators positive.
+% @end deadlines
+
+% @passage decoding
+\subsection{Decoding to bits}
+\lean{decode}, \lean{Design.decodeIn}, \lean{Design.decodeOut} and
+\lean{Design.tau}, in the same file, lines 217 to 267. A voltage at or below
+the low threshold decodes to false, one at or above the high threshold to true,
+and one in between to no bit at all. Inputs use the input thresholds, outputs
+the output thresholds, and the deadline of an input bit is the rising one for a
+low input and the falling one for a high input.
+% @end decoding
+
+% @passage general
+\subsection{The four general statements}
+\lean{IsTrajectory.safe}, \lean{IsTrajectory.rise}, \lean{IsTrajectory.fall}
+and \lean{IsTrajectory.decoded}, in \at{VoltageToBit/Proofs/Guarantee.lean}
+lines 83, 156, 178 and 201. For an admissible record and a trajectory that
+starts in the safe domain: the output stays in the safe domain; a valid low
+input on a window inside the interval gives a valid high output from the rising
+deadline after the start of the window to its end; a valid high input gives a
+valid low output after the falling deadline; and the same in decoded form.
+% @end general
+
+\section{Statements that show the hypotheses can be met}
+
+% @passage admissible-instance
+\subsection{The record passes the checks}
+\lean{Examples.illustrative\_admissible}, in
+\at{VoltageToBit/Examples/Illustrative.lean} line 35. The illustrative record
+satisfies all twenty-six conditions, so the general theorem applies to it.
+% @end admissible-instance
+
+% @passage existence
+\subsection{Runs exist}
+\lean{exists\_trajectory}, in \at{VoltageToBit/Proofs/Existence.lean} line 325,
+and \lean{Examples.illustrative\_scenario}, in
+\at{VoltageToBit/Examples/Illustrative.lean} line 204. For an admissible record,
+a continuous input and any start in the safe domain a trajectory exists, so the
+theorems are not about an empty set of runs; and one explicit run of the
+illustrative record shows both logic directions. The second statement also
+uses the definitions of its input, disturbance and nominal parameters.
+% @end existence
+
+% @passage brackets
+\subsection{How tight the deadlines are}
+\lean{Examples.rise\_deadline\_bracket} and
+\lean{Examples.fall\_deadline\_bracket}, in
+\at{VoltageToBit/Examples/DeadlineBrackets.lean} lines 109 and 140. For the
+illustrative record a rising deadline below 2.168 nanoseconds is false and one
+of 2.26 nanoseconds or more holds; a falling deadline below 1.0234 nanoseconds
+is false and one of 1.425 nanoseconds or more holds.
+% @end brackets
+
+% @passage steps
+\subsection{Where the theorem says nothing}
+\lean{Examples.stepL\_no\_trajectory} and \lean{Examples.step\_input\_scope}, in
+\at{VoltageToBit/Examples/InputClass.lean} lines 324 and 387. For a step input
+that keeps its old value at the jump instant, no trajectory of the illustrative
+record on the interval from 0 to 10 nanoseconds starts in the safe domain, so
+for that input the theorem holds vacuously there. The step that takes its new
+value at the jump instant has trajectories on that interval from every safe
+start.
+% @end steps
+
+% @passage trusted
+\section{What Lean and Mathlib supply}
+You trust Lean's kernel and the definitions of Mathlib that the statements use:
+the real numbers, closed and half-open intervals, continuity on a set, the
+derivative within a set, which at a point with the set of times from that point
+on is the right derivative, the maximum of two numbers and the absolute value.
+Lean's division by zero gives zero. The checking script replays every proof with
+Lean's kernel and has an export of the library, with everything it depends on,
+checked by six checkers; the README, section Reproduce, says what a pass
+establishes.
+% @end trusted
+
+% @passage skip
+\section{What you can skip}
+Every proof, because Lean checks it. Everything under
+\at{VoltageToBit/Proofs/} except the four statements of Path B and the
+statement of \lean{exists\_trajectory}. The other
+example files, except the statements of Section 4. The doc comments and the
+documents, which are prose: where they differ from the Lean, the Lean is right.
+The checking scripts, which show that the checks were run, and the numerical
+experiments, which simulate the model and say nothing about a device.
+% @end skip
+
+\end{document}
