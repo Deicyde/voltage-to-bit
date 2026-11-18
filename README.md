@@ -312,6 +312,7 @@ machine.
 | `VoltageToBit/Examples/Illustrative.lean` | admissibility of the concrete instance, its guarantee with numbers, explicit runs |
 | `VoltageToBit/Examples/RefinedDeadlines.lean`, `Limits.lean`, `DeadlineBrackets.lean` | proved deadlines, what is false below them, and the cap on `ε_I` |
 | `VoltageToBit/Examples/NegativeControls.lean`, `InputClass.lean`, `TwoStage.lean` | negative controls, the input class, a two-stage witness |
+| `guide/` | a reading guide of the trusted specification: exactly which definitions and statements to read, and its annotated PDF overlay (`annotations/`, `pdf-overlay/`) |
 | `docs/interface.md` | the frozen interface: definitions and what is proved |
 | `docs/assumptions.md` | the assumption register, by type of evidence |
 | `docs/model.md` | the model and its physical reading |
