@@ -1,0 +1,24 @@
+{
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.In",
+        "module": "VoltageToBit.Model.Device"
+      },
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "VoltageToBit.In"
+          },
+          "destination": {
+            "fragment": "L48"
+          },
+          "snippet": {
+            "line": 48,
+            "text": "noncomputable def In (θ : Params) (u v : ℝ) : ℝ :=\n  θ.kn / 2 * (psq (u - θ.Vtn) - psq (u - v - θ.Vtn))"
+          }
+        }
+      }
+    }
+  ]
+}

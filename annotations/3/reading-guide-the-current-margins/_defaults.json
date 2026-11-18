@@ -1,0 +1,36 @@
+{
+  "id": "reading-guide:the-current-margins",
+  "subject": {
+    "location": {
+      "page": 3,
+      "rect": [0.108968, 0.359232, 0.781299, 0.169924]
+    },
+    "title": "The current margins",
+    "extensions": {
+      "org.mathlib-initiative.formal-companion.overlay": {
+        "region": "p003-r012-019"
+      }
+    }
+  },
+  "object": {
+    "role": "key",
+    "extensions": {
+      "org.mathlib-initiative.formal-companion.overlay": {
+        "declaration": {
+          "kind": "def"
+        },
+        "destination": {
+          "href": "https://github.com/Deicyde/voltage-to-bit/blob/250cb35b47d502fd5ef7356039665dc63518aace/VoltageToBit/Model/Inverter.lean"
+        }
+      }
+    }
+  },
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [3],
+        "printed": [3]
+      }
+    }
+  }
+}

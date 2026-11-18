@@ -1,0 +1,24 @@
+{
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.Idn",
+        "module": "VoltageToBit.Model.Inverter"
+      },
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "VoltageToBit.Design.Idn"
+          },
+          "destination": {
+            "fragment": "L99"
+          },
+          "snippet": {
+            "line": 99,
+            "text": "noncomputable def Idn (c : ℝ) : ℝ :=\n  D.knlo / 2 * (psq (D.VIH - D.Vtnhi) - psq (D.VIH - c - D.Vtnhi))\n    - D.kphi / 2 * psq (D.VDDhi - D.VIH - D.Vtplo)"
+          }
+        }
+      }
+    }
+  ]
+}

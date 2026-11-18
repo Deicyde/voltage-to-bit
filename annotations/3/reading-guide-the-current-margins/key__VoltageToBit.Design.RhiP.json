@@ -1,0 +1,24 @@
+{
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.RhiP",
+        "module": "VoltageToBit.Model.Inverter"
+      },
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "VoltageToBit.Design.RhiP"
+          },
+          "destination": {
+            "fragment": "L104"
+          },
+          "snippet": {
+            "line": 104,
+            "text": "noncomputable def RhiP : ℝ :=\n  D.kplo / 2 * (psq (D.VDDlo - D.uHi - D.Vtphi + (D.Vhi - D.VDDhi))\n    - psq (D.VDDlo - D.uHi - D.Vtphi))"
+          }
+        }
+      }
+    }
+  ]
+}

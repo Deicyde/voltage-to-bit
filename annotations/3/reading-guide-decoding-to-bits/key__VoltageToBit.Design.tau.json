@@ -1,0 +1,24 @@
+{
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.tau",
+        "module": "VoltageToBit.Model.Inverter"
+      },
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "VoltageToBit.Design.tau"
+          },
+          "destination": {
+            "fragment": "L267"
+          },
+          "snippet": {
+            "line": 267,
+            "text": "noncomputable def tau (inBit : Bool) : ℝ := if inBit then D.tauDn else D.tauUp"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.decode",
+        "module": "VoltageToBit.Model.Inverter"
+      },
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "VoltageToBit.decode"
+          },
+          "destination": {
+            "fragment": "L217"
+          },
+          "snippet": {
+            "line": 217,
+            "text": "noncomputable def decode (lo hi x : ℝ) : Option Bool :=\n  if x ≤ lo then some false else if hi ≤ x then some true else none"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.uRamp",
+        "module": "VoltageToBit.Examples.Illustrative"
+      },
+      "role": "support",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "VoltageToBit.Examples.uRamp",
+            "kind": "def"
+          },
+          "destination": {
+            "fragment": "L165",
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/250cb35b47d502fd5ef7356039665dc63518aace/VoltageToBit/Examples/Illustrative.lean"
+          },
+          "snippet": {
+            "line": 165,
+            "text": "noncomputable def uRamp (t : ℝ) : ℝ := max 0 (min 1.8 (1.8 - 9 * (t - 4)))"
+          }
+        }
+      }
+    }
+  ]
+}

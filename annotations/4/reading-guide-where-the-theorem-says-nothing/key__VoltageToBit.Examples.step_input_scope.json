@@ -1,0 +1,26 @@
+{
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.step_input_scope",
+        "module": "VoltageToBit.Examples.InputClass"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "VoltageToBit.Examples.step_input_scope",
+            "kind": "theorem"
+          },
+          "destination": {
+            "fragment": "L387"
+          },
+          "snippet": {
+            "line": 387,
+            "text": "theorem step_input_scope :\n    (uStepL 4 = 1.8 ∧ uStepR 4 = 0 ∧ ∀ t : ℝ, t ≠ 4 → uStepL t = uStepR t) ∧\n    (¬ ∃ v : ℝ → ℝ, v 0 ∈ Icc (-0.10 : ℝ) 2.08 ∧ IsTrajectory illustrative uStepL v 0 10) ∧\n    (∀ v₀ ∈ Icc (-0.10 : ℝ) 2.08,\n      ∃ v : ℝ → ℝ, v 0 = v₀ ∧ IsTrajectory illustrative uStepR v 0 10) := by"
+          }
+        }
+      }
+    }
+  ]
+}

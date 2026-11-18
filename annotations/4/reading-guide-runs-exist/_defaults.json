@@ -1,0 +1,23 @@
+{
+  "id": "reading-guide:runs-exist",
+  "subject": {
+    "location": {
+      "page": 4,
+      "rect": [0.108968, 0.278763, 0.781299, 0.15383]
+    },
+    "title": "Runs exist",
+    "extensions": {
+      "org.mathlib-initiative.formal-companion.overlay": {
+        "region": "p004-r007-013"
+      }
+    }
+  },
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [4],
+        "printed": [4]
+      }
+    }
+  }
+}

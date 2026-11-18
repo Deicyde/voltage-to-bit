@@ -1,0 +1,32 @@
+{
+  "id": "reading-guide:where-the-theorem-says-nothing",
+  "subject": {
+    "location": {
+      "page": 4,
+      "rect": [0.108968, 0.570329, 0.781299, 0.155923]
+    },
+    "title": "Where the theorem says nothing",
+    "extensions": {
+      "org.mathlib-initiative.formal-companion.overlay": {
+        "region": "p004-r020-026"
+      }
+    }
+  },
+  "object": {
+    "extensions": {
+      "org.mathlib-initiative.formal-companion.overlay": {
+        "destination": {
+          "href": "https://github.com/Deicyde/voltage-to-bit/blob/250cb35b47d502fd5ef7356039665dc63518aace/VoltageToBit/Examples/InputClass.lean"
+        }
+      }
+    }
+  },
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [4],
+        "printed": [4]
+      }
+    }
+  }
+}

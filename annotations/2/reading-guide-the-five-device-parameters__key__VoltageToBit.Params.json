@@ -1,0 +1,50 @@
+{
+  "id": "reading-guide:the-five-device-parameters",
+  "subject": [
+    {
+      "location": {
+        "page": 1,
+        "rect": [0.108968, 0.616813, 0.781299, 0.121643]
+      },
+      "title": "The five device parameters",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p001-r019-023"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Params",
+        "module": "VoltageToBit.Model.Device"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "VoltageToBit.Params",
+            "kind": "structure"
+          },
+          "destination": {
+            "fragment": "L35",
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/250cb35b47d502fd5ef7356039665dc63518aace/VoltageToBit/Model/Device.lean"
+          },
+          "snippet": {
+            "line": 35,
+            "text": "structure Params where\n  /-- supply voltage -/\n  VDD : ℝ\n  /-- NMOS transconductance parameter `k_n` -/\n  kn : ℝ\n  /-- PMOS transconductance parameter `k_p` -/\n  kp : ℝ\n  /-- NMOS threshold voltage -/\n  Vtn : ℝ\n  /-- PMOS threshold voltage magnitude -/\n  Vtp : ℝ"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [1],
+        "printed": [1]
+      }
+    }
+  }
+}

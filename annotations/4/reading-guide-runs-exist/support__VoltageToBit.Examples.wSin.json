@@ -1,0 +1,27 @@
+{
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.wSin",
+        "module": "VoltageToBit.Examples.Illustrative"
+      },
+      "role": "support",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "VoltageToBit.Examples.wSin",
+            "kind": "def"
+          },
+          "destination": {
+            "fragment": "L181",
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/250cb35b47d502fd5ef7356039665dc63518aace/VoltageToBit/Examples/Illustrative.lean"
+          },
+          "snippet": {
+            "line": 181,
+            "text": "noncomputable def wSin (t : ℝ) : ℝ := 2 * Real.sin t"
+          }
+        }
+      }
+    }
+  ]
+}

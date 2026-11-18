@@ -1,0 +1,36 @@
+{
+  "id": "reading-guide:the-transistor-currents",
+  "subject": {
+    "location": {
+      "page": 1,
+      "rect": [0.108968, 0.738456, 0.781299, 0.157514]
+    },
+    "title": "The transistor currents",
+    "extensions": {
+      "org.mathlib-initiative.formal-companion.overlay": {
+        "region": "p001-r024-031"
+      }
+    }
+  },
+  "object": {
+    "role": "key",
+    "extensions": {
+      "org.mathlib-initiative.formal-companion.overlay": {
+        "declaration": {
+          "kind": "def"
+        },
+        "destination": {
+          "href": "https://github.com/Deicyde/voltage-to-bit/blob/250cb35b47d502fd5ef7356039665dc63518aace/VoltageToBit/Model/Device.lean"
+        }
+      }
+    }
+  },
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [1],
+        "printed": [1]
+      }
+    }
+  }
+}

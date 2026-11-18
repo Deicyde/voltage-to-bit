@@ -1,0 +1,24 @@
+{
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.RhiN",
+        "module": "VoltageToBit.Model.Inverter"
+      },
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "VoltageToBit.Design.RhiN"
+          },
+          "destination": {
+            "fragment": "L109"
+          },
+          "snippet": {
+            "line": 109,
+            "text": "noncomputable def RhiN : ℝ :=\n  D.knlo / 2 * (psq (D.uHi - D.Vtnhi) - psq (D.uHi - D.Vhi - D.Vtnhi))"
+          }
+        }
+      }
+    }
+  ]
+}

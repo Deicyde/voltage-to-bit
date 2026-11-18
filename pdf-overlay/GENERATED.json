@@ -1,0 +1,245 @@
+{
+  "schema": "formal-companion/overlay-generated",
+  "schema_version": 3,
+  "generator": {
+    "name": "formal-companion",
+    "version": "0.2.0",
+    "commit": "274b1ee4596d0666455ae3bbfdf6adafa4c7b587"
+  },
+  "format": {
+    "package": "literature-links",
+    "version": "1.0.1",
+    "commit": "789af9af85ae7590d7149cb8312f09cfac0752b4",
+    "tag": "v1.0.1"
+  },
+  "instance_files": [
+    "overlay.config.json"
+  ],
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "c624f8b98ea6236079323785e71ac8d59d744263ff7ebbe3114eb6214684de0f"
+    },
+    {
+      "path": "THIRD_PARTY.md",
+      "sha256": "5c8edbb1218a07c2ef240192ca711971c8064e9fb96dab7692fd156ad39c385b"
+    },
+    {
+      "path": "schema/overlay-config-v1.schema.json",
+      "sha256": "8c92daeb858c6c5ee9a72d8b3b1d9ac3c041299f572fe6f995057c1c4f55e316"
+    },
+    {
+      "path": "tools/build_site.py",
+      "sha256": "2f6cca5add954df245853a0b6645697eee3a5ed686d866de5dc1d1cd000d923c"
+    },
+    {
+      "path": "tools/check_generated.py",
+      "sha256": "c521a240fe440c73833f7e48302b7617027112faadd38fa6f009ab6d43e4a9f9"
+    },
+    {
+      "path": "tools/literature_links/__init__.py",
+      "sha256": "9d1e7fb5494ee9bdd88ce05a8dcfcf478674fd06573fb38cda0fdb7eb6fa6ae2"
+    },
+    {
+      "path": "tools/literature_links/__main__.py",
+      "sha256": "42e1507a2bd4e3ab9e856c59434480b58aeb4babddd1afb0efa0191d7bf119e1"
+    },
+    {
+      "path": "tools/literature_links/cli.py",
+      "sha256": "b8a1c8e1fff7815cd0dd2a526db4e4c8cc3df7285b291a0761a97bdf757d6774"
+    },
+    {
+      "path": "tools/literature_links/companion.py",
+      "sha256": "fd7409e71c37ac51a560c841aaa27dd7f1a451e34da7112a9d78fef82d0c5186"
+    },
+    {
+      "path": "tools/literature_links/discovery.py",
+      "sha256": "dbf60c983fb4975a137352b3c9bbebfd4aec6e918aa04439b286612197c84036"
+    },
+    {
+      "path": "tools/literature_links/py.typed",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tools/literature_links/schema/companion.schema.json",
+      "sha256": "9387537f21e69dc368357fcc8939fffa3c6846d33ab2b3a3b7c2a20a4350a797"
+    },
+    {
+      "path": "tools/literature_links/schemacheck.py",
+      "sha256": "e75c42cc8fd7a297492903f8d404618cf397e7f591155b2502e3ce69fd18bbd0"
+    },
+    {
+      "path": "tools/overlay_annotations.py",
+      "sha256": "869fc31950d64fdbd52504b5819d96828ec6763fcb08f0cda6561be40f22eb6a"
+    },
+    {
+      "path": "tools/serve.py",
+      "sha256": "08317f2a08efe62aaa45c998cc9258551869923a1857063312ddd8f5b2780378"
+    },
+    {
+      "path": "tools/verso_extract.py",
+      "sha256": "ea285ea7084dbbc714cbdfa7e976227105586be768671e2e285dd8577407f0f8"
+    },
+    {
+      "path": "vendor/katex/LICENSE",
+      "sha256": "766ccc1f306c885aa45542a9846bbd0a505b27a0374f146778171c2254ce18e3"
+    },
+    {
+      "path": "vendor/katex/README.md",
+      "sha256": "2e2b60e1f93a18e1881be2e213ae36a92302dee75712536cecbb226a8be13390"
+    },
+    {
+      "path": "vendor/katex/katex.mjs",
+      "sha256": "5f0c3749f8b28ce1a63b68de34d3950bb4aa1a9e0130865e4b09ecc9a250c8b7"
+    },
+    {
+      "path": "vendor/pdfjs/LICENSE",
+      "sha256": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594"
+    },
+    {
+      "path": "vendor/pdfjs/PINNED.md",
+      "sha256": "fe251b44aeba59dfcf860877949bf74d3f7ce59e6d9eb08ce92b3b341ee70191"
+    },
+    {
+      "path": "vendor/pdfjs/pdf.min.mjs",
+      "sha256": "9fab0c910bf1484835c5c2aeb68f7eb3dfce7f9eb435a004526c5af86d70890c"
+    },
+    {
+      "path": "vendor/pdfjs/pdf.worker.min.mjs",
+      "sha256": "bc0d1b88ea0b66196b1d36a58ac243c6d92adfe725624e2a9fdd381bdf8ef434"
+    },
+    {
+      "path": "viewer/index.html",
+      "sha256": "c79cdebc7f78d9962adbcf895238ad872e4f85c510e9918973e2b86f93f49405"
+    },
+    {
+      "path": "viewer/viewer-core.js",
+      "sha256": "08695c6a7f3bfdacf05508b13b7e9db55d29a18d709b9b6934d4271abc1378ee"
+    },
+    {
+      "path": "viewer/viewer-layout.js",
+      "sha256": "d32c779f81b15685388d90d983709ab6737982eed35818779666cbe5712f1b45"
+    },
+    {
+      "path": "viewer/viewer-math.js",
+      "sha256": "ef0fc8e4283e134628ab94a1bf9ad17eea0c04bf8acdf91eabba5753ffc73266"
+    },
+    {
+      "path": "viewer/viewer-search.js",
+      "sha256": "ce9c6a0dafef98986f26545c1bfec467dc41cb8bcdebcd7b41be64b62dad028c"
+    },
+    {
+      "path": "viewer/viewer.css",
+      "sha256": "b22d4ba21a1d8a8467bab92a550965bd15b463a4d6c5f022b1e8bd9ac7f79e65"
+    },
+    {
+      "path": "viewer/viewer.js",
+      "sha256": "2e803cad637f548a4fa998b649781295e803285e8a9f7db67688449e83058c5a"
+    }
+  ],
+  "annotations": {
+    "bundle": {
+      "path": "annotations.bundle.json",
+      "sha256": "12e52e8121d18f6054f4e56acdfe09a9f0d3c1d595e3b200c2bd5ce03fb09afc"
+    },
+    "count": 40,
+    "directory": "annotations",
+    "export": {
+      "commit": "250cb35b47d502fd5ef7356039665dc63518aace",
+      "convention": "roadmap-locators",
+      "source_id": "voltage-to-bit-reading-guide"
+    },
+    "extension": "org.mathlib-initiative.formal-companion.overlay",
+    "inputs": [
+      {
+        "path": "guide/blueprint/roadmap/instances/admissible-instance.md",
+        "sha256": "7ba7461c477800013f48f57d3d140440c61ad6bfa51dfc8a6b0940d3f0785d57"
+      },
+      {
+        "path": "guide/blueprint/roadmap/instances/brackets.md",
+        "sha256": "80e08aeecc54431e30fa0ae07783c837eb7767614216f0bf32b9486d49c67046"
+      },
+      {
+        "path": "guide/blueprint/roadmap/instances/existence-support.md",
+        "sha256": "84c5f88772267f31719415392a8445c76f4694640e7b7b290e646b3c21e03fee"
+      },
+      {
+        "path": "guide/blueprint/roadmap/instances/existence.md",
+        "sha256": "c0e413bcf35e338ece510490b2e0f191fd701250887b56412c649aaf33a0160f"
+      },
+      {
+        "path": "guide/blueprint/roadmap/instances/steps-support.md",
+        "sha256": "b645fb342a6ad47a4d3b8bc1a719721fe59421230dfa59661877034a222e67df"
+      },
+      {
+        "path": "guide/blueprint/roadmap/instances/steps.md",
+        "sha256": "28f6243dd63e7e28278255cc04fcb943732389da2e8ff92b6bb8be7cbb8b3fff"
+      },
+      {
+        "path": "guide/blueprint/roadmap/path-a/box.md",
+        "sha256": "63a4f2b99de7f13fa107fd0ee85e4c5566860b0296c62d7845ab1884aaf8f6ed"
+      },
+      {
+        "path": "guide/blueprint/roadmap/path-a/currents.md",
+        "sha256": "00e1d7a63775b36874115d4875532406dc083894393a28b49db69a834e589b40"
+      },
+      {
+        "path": "guide/blueprint/roadmap/path-a/design.md",
+        "sha256": "f6af8b74d7c3d7ec8ff28891bb86860755656d73e0bd66cbc301dbe2f29f55fb"
+      },
+      {
+        "path": "guide/blueprint/roadmap/path-a/guarantee.md",
+        "sha256": "8d65c6c233f1999312527e89a0934e3e5f672638a2a96815a0bce8e63890deb9"
+      },
+      {
+        "path": "guide/blueprint/roadmap/path-a/params.md",
+        "sha256": "93db9d7dc94c4c6f1a7dd0f4bd4f2d5c7408938ef4547acfb115155c5c688c33"
+      },
+      {
+        "path": "guide/blueprint/roadmap/path-a/psq.md",
+        "sha256": "e84ca58168ce9cbd23f01f615bd0be8a597a6c85bd27fa1267a2b220e49244ed"
+      },
+      {
+        "path": "guide/blueprint/roadmap/path-a/record.md",
+        "sha256": "737c89c653ab6ad736de6f320e2ff7dfc7842098cba10a205e2c4689fb2d0ddc"
+      },
+      {
+        "path": "guide/blueprint/roadmap/path-a/safe.md",
+        "sha256": "f1304350bf615e18720eef5c5bb571a9fca513abd6d236268d6d1c5ef3744bb5"
+      },
+      {
+        "path": "guide/blueprint/roadmap/path-a/trajectory.md",
+        "sha256": "59b937db842d4275061a36da8a0143d70364e69b036313fbd1f3044c260e9c05"
+      },
+      {
+        "path": "guide/blueprint/roadmap/path-b/admissible.md",
+        "sha256": "ad722a0691b52f6bf997ae2694b7a62651ab1445355b39879783603a82173b03"
+      },
+      {
+        "path": "guide/blueprint/roadmap/path-b/deadlines.md",
+        "sha256": "2ebc63aaedb59689d99f4b153671ba8418b8a51ad82cdb8d975e076c1cb9a701"
+      },
+      {
+        "path": "guide/blueprint/roadmap/path-b/decoding.md",
+        "sha256": "3bfc19deec38746d6c52d6a5bb93e538f49801c23bd02482caaa97b648d1a8f2"
+      },
+      {
+        "path": "guide/blueprint/roadmap/path-b/general.md",
+        "sha256": "8349734cfeed8fc9e5b859fa6bf91ca59727384a1d5f017f62e710670a555f83"
+      },
+      {
+        "path": "guide/blueprint/roadmap/path-b/margins.md",
+        "sha256": "17bac61f81d82cf4cf4aac84445eaf1c8d0ed303975d55fe03c445cce91f9486"
+      },
+      {
+        "path": "guide/blueprint/sources/reading-guide-locators.md",
+        "sha256": "0bd677ee7ec983324a8d141691f1bce81f5d8140023885d7c32871896e56b8bc"
+      },
+      {
+        "path": "guide/reading-guide.tex",
+        "sha256": "196cdb343b4188fb32452fb174e45e73c34ff7aea0696c134bd1e7788cc9f8cc"
+      }
+    ],
+    "manifest_sha256": "bcbd4a7da9e5de1ab2133cf33e610b6d8ea44eda4fe12ae1d2abd9d013247ec4"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "id": "reading-guide:the-four-general-statements",
+  "subject": {
+    "title": "The four general statements"
+  },
+  "object": {
+    "role": "key",
+    "extensions": {
+      "org.mathlib-initiative.formal-companion.overlay": {
+        "declaration": {
+          "kind": "theorem"
+        },
+        "destination": {
+          "href": "https://github.com/Deicyde/voltage-to-bit/blob/250cb35b47d502fd5ef7356039665dc63518aace/VoltageToBit/Proofs/Guarantee.lean"
+        }
+      }
+    }
+  },
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [3, 4],
+        "printed": [3, 4]
+      }
+    }
+  }
+}
