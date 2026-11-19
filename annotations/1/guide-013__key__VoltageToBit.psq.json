@@ -1,0 +1,63 @@
+{
+  "id": "guide-013",
+  "subject": [
+    {
+      "location": {
+        "page": 1,
+        "rect": [
+          0.380165,
+          0.213021,
+          0.150467,
+          0.015014
+        ]
+      },
+      "title": "positive part squared",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p001-b013"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.psq",
+        "module": "VoltageToBit.Model.PosSq",
+        "lines": [
+          12,
+          13
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/PosSq.lean",
+            "fragment": "L12-L13"
+          },
+          "snippet": {
+            "line": 12,
+            "text": "noncomputable def psq (x : ℝ) : ℝ := (max x 0) ^ 2"
+          },
+          "declaration": {
+            "id": "VoltageToBit.psq",
+            "kind": "def"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          1
+        ],
+        "printed": [
+          1
+        ]
+      }
+    }
+  }
+}

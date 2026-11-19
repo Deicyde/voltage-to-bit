@@ -1,0 +1,63 @@
+{
+  "id": "guide-019",
+  "subject": [
+    {
+      "location": {
+        "page": 1,
+        "rect": [
+          0.341814,
+          0.394431,
+          0.182742,
+          0.030125
+        ]
+      },
+      "title": "NMOS triode",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p001-b019"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.In_triode",
+        "module": "VoltageToBit.Model.Device",
+        "lines": [
+          65,
+          69
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Device.lean",
+            "fragment": "L65-L69"
+          },
+          "snippet": {
+            "line": 65,
+            "text": "theorem In_triode {θ : Params} {u v : ℝ} (hv0 : 0 ≤ v) (hv : v ≤ u - θ.Vtn) :\n    In θ u v = θ.kn * ((u - θ.Vtn) * v - v ^ 2 / 2) := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.In_triode",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          1
+        ],
+        "printed": [
+          1
+        ]
+      }
+    }
+  }
+}

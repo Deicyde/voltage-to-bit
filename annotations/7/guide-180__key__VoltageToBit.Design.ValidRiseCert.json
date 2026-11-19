@@ -1,0 +1,63 @@
+{
+  "id": "guide-180",
+  "subject": [
+    {
+      "location": {
+        "page": 4,
+        "rect": [
+          0.070436,
+          0.29478,
+          0.560379,
+          0.01366
+        ]
+      },
+      "title": "a rising certificate",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p004-b180"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.ValidRiseCert",
+        "module": "VoltageToBit.Proofs.Certificate",
+        "lines": [
+          34,
+          40
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Certificate.lean",
+            "fragment": "L34-L40"
+          },
+          "snippet": {
+            "line": 34,
+            "text": "def ValidRiseCert (c : ℝ) (cs : List ℝ) (τ : ℝ) : Prop :=\n  RiseSegs D.Vlo (D.upSegs (c :: cs)) ∧\n    finalLevel D.Vlo (D.upSegs (c :: cs)) = D.VOH ∧\n    riseTime D.Vlo (D.upSegs (c :: cs)) ≤ τ"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.ValidRiseCert",
+            "kind": "def"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          4
+        ],
+        "printed": [
+          4
+        ]
+      }
+    }
+  }
+}

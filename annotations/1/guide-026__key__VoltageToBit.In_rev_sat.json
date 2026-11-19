@@ -1,0 +1,63 @@
+{
+  "id": "guide-026",
+  "subject": [
+    {
+      "location": {
+        "page": 1,
+        "rect": [
+          0.678826,
+          0.460846,
+          0.171097,
+          0.027877
+        ]
+      },
+      "title": "NMOS reverse saturation",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p001-b026"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.In_rev_sat",
+        "module": "VoltageToBit.Model.Device",
+        "lines": [
+          117,
+          121
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Device.lean",
+            "fragment": "L117-L121"
+          },
+          "snippet": {
+            "line": 117,
+            "text": "theorem In_rev_sat {θ : Params} {u v : ℝ} (hu : u ≤ θ.Vtn) (hv : θ.Vtn ≤ u - v) :\n    In θ u v = -(θ.kn / 2 * (u - v - θ.Vtn) ^ 2) := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.In_rev_sat",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          1
+        ],
+        "printed": [
+          1
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "id": "guide-388",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.498823,
+          0.452238,
+          0.110486,
+          0.008328
+        ]
+      },
+      "title": "module Examples/DeadlineBrackets",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b388"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "module": "VoltageToBit.Examples.DeadlineBrackets",
+        "lines": [
+          1,
+          98
+        ]
+      },
+      "role": "key",
+      "title": "VoltageToBit.Examples.DeadlineBrackets, lines 1–98: import VoltageToBit.Examples.Limits",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/DeadlineBrackets.lean",
+            "fragment": "L1-L98"
+          },
+          "snippet": {
+            "line": 1,
+            "text": "import VoltageToBit.Examples.Limits\nimport VoltageToBit.Examples.RefinedDeadlines\n\n/-!\n# Deadline brackets for the illustrative instance\n\nHow tight are the proved deadlines? For each direction this file puts the two\nends of the answer into one statement, a *bracket*: the deadlines for which the\nclaim of the guarantee is **false**, and the deadlines for which it is\n**proved** for every trajectory. The brackets prove nothing new: the false\nends come from `Examples/Limits.lean` and the proved ends from\n`Examples/RefinedDeadlines.lean`.\n\nThe claim in question is the one of `illustrative_guarantee`, with the deadline\n`τ` as the only thing that changes. Rise: for every input and every trajectory\nof the illustrative record that starts in the safe domain `[-0.10, 2.08]` V,\nif the input is valid-low (`u ≤ 0.40` V) on `[s, e)` then the output is\nvalid-high (`v ≥ 1.35` V) on `[s + τ, e]`. Fall: the same with a valid-high\ninput (`u ≥ 1.25` V) and a valid-low output (`v ≤ 0.25` V).\n\n| Direction | claim is false for | claim is proved for | statement |\n| --- | --- | --- | --- |\n| rise (low in, high out) | every `τ < 2.168 ns` | every `τ ≥ 2.26 ns` | `rise_deadline_bracket` |\n| fall (high in, low out) | every `τ < 1.0234 ns` | every `τ ≥ 1.425 ns` | `fall_deadline_bracket` |\n\n## What each end means\n\n* **False for `τ`.** The claim speaks about every input and every trajectory,\n  and it has a counterexample: an input that is valid throughout and a\n  trajectory that starts in the safe domain whose output is still not valid at"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

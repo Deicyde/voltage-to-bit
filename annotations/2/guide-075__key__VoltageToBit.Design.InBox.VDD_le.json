@@ -1,0 +1,63 @@
+{
+  "id": "guide-075",
+  "subject": [
+    {
+      "location": {
+        "page": 2,
+        "rect": [
+          0.070436,
+          0.294488,
+          0.086991,
+          0.015092
+        ]
+      },
+      "title": "VDD le",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p002-b075"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.InBox.VDD_le",
+        "module": "VoltageToBit.Model.Inverter",
+        "lines": [
+          70,
+          70
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Inverter.lean",
+            "fragment": "L70"
+          },
+          "snippet": {
+            "line": 70,
+            "text": "  VDD_le : θ.VDD ≤ D.VDDhi"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.InBox.VDD_le",
+            "kind": "field"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          2
+        ],
+        "printed": [
+          2
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "id": "guide-222",
+  "subject": [
+    {
+      "location": {
+        "page": 5,
+        "rect": [
+          0.070436,
+          0.286452,
+          0.43702,
+          0.013462
+        ]
+      },
+      "title": "constant-parameter solutions stay near their supply",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p005-b222"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.solution_safe_atSupply",
+        "module": "VoltageToBit.Proofs.AtSupply",
+        "lines": [
+          204,
+          216
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/AtSupply.lean",
+            "fragment": "L204-L216"
+          },
+          "snippet": {
+            "line": 204,
+            "text": "theorem solution_safe_atSupply {D : Design} {θ : Params} {u v : ℝ → ℝ} {a b : ℝ}\n    {Cf w : ℝ → ℝ} (hD : D.Admissible) (hθ : D.InBox θ)\n    (hCf : ∀ x, D.Clo ≤ Cf x ∧ Cf x ≤ D.Chi)\n    (hw : ∀ t ∈ Ico a b, |w t| ≤ D.eps) (hcont : ContinuousOn v (Icc a b))\n    (hode : ∀ t ∈ Ico a b, ∃ v' : ℝ, HasDerivWithinAt v v' (Ici t) t ∧\n      Cf (v t) * v' = Inet θ (u t) (v t) + w t)\n    (h0 : v a ∈ Icc D.Vlo (θ.VDD + (D.Vhi - D.VDDhi))) :\n    ∀ t ∈ Icc a b, v t ∈ Icc D.Vlo (θ.VDD + (D.Vhi - D.VDDhi)) :="
+          },
+          "declaration": {
+            "id": "VoltageToBit.solution_safe_atSupply",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          5
+        ],
+        "printed": [
+          5
+        ]
+      }
+    }
+  }
+}

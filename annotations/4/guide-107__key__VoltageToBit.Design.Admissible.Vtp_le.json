@@ -1,0 +1,63 @@
+{
+  "id": "guide-107",
+  "subject": [
+    {
+      "location": {
+        "page": 2,
+        "rect": [
+          0.575154,
+          0.793954,
+          0.070013,
+          0.014499
+        ]
+      },
+      "title": "Vtp le",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p002-b107"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.Admissible.Vtp_le",
+        "module": "VoltageToBit.Model.Inverter",
+        "lines": [
+          150,
+          150
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Inverter.lean",
+            "fragment": "L150"
+          },
+          "snippet": {
+            "line": 150,
+            "text": "  Vtp_le : D.Vtplo ≤ D.Vtphi"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.Admissible.Vtp_le",
+            "kind": "field"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          2
+        ],
+        "printed": [
+          2
+        ]
+      }
+    }
+  }
+}

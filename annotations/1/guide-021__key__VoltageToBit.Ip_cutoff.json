@@ -1,0 +1,63 @@
+{
+  "id": "guide-021",
+  "subject": [
+    {
+      "location": {
+        "page": 1,
+        "rect": [
+          0.15094,
+          0.428025,
+          0.179115,
+          0.027735
+        ]
+      },
+      "title": "PMOS cutoff",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p001-b021"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Ip_cutoff",
+        "module": "VoltageToBit.Model.Device",
+        "lines": [
+          77,
+          81
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Device.lean",
+            "fragment": "L77-L81"
+          },
+          "snippet": {
+            "line": 77,
+            "text": "theorem Ip_cutoff {θ : Params} {u v : ℝ} (hu : θ.VDD - θ.Vtp ≤ u) (hv : v ≤ θ.VDD) :\n    Ip θ u v = 0 := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Ip_cutoff",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          1
+        ],
+        "printed": [
+          1
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "id": "guide-056",
+  "subject": [
+    {
+      "location": {
+        "page": 2,
+        "rect": [
+          0.354764,
+          0.13366,
+          0.028115,
+          0.016373
+        ]
+      },
+      "title": "Vtphi",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p002-b056"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.Vtphi",
+        "module": "VoltageToBit.Model.Inverter",
+        "lines": [
+          41,
+          41
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Inverter.lean",
+            "fragment": "L41"
+          },
+          "snippet": {
+            "line": 41,
+            "text": "  Vtphi : ℝ"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.Vtphi",
+            "kind": "field"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          2
+        ],
+        "printed": [
+          2
+        ]
+      }
+    }
+  }
+}

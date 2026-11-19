@@ -1,0 +1,63 @@
+{
+  "id": "guide-145",
+  "subject": [
+    {
+      "location": {
+        "page": 3,
+        "rect": [
+          0.749617,
+          0.449222,
+          0.056421,
+          0.009877
+        ]
+      },
+      "title": "(F) the guaranteed region",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p003-b145"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.IsTrajectory.fall",
+        "module": "VoltageToBit.Proofs.Guarantee",
+        "lines": [
+          175,
+          195
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Guarantee.lean",
+            "fragment": "L175-L195"
+          },
+          "snippet": {
+            "line": 175,
+            "text": "theorem fall (hD : D.Admissible) (h : IsTrajectory D u v a b)\n    (h0 : v a ∈ D.Safe) {s e : ℝ} (hs : a ≤ s) (he : e ≤ b)\n    (hu : ∀ t ∈ Ico s e, D.VIH ≤ u t) :\n    ∀ t ∈ Icc s e, s + D.tauDn ≤ t → v t ≤ D.VOL := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.IsTrajectory.fall",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          3
+        ],
+        "printed": [
+          3
+        ]
+      }
+    }
+  }
+}

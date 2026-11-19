@@ -1,0 +1,59 @@
+{
+  "id": "guide-372",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.078007,
+          0.404923,
+          0.043963,
+          0.008328
+        ]
+      },
+      "title": "module Model/Device",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b372"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "module": "VoltageToBit.Model.Device",
+        "lines": [
+          95,
+          103
+        ]
+      },
+      "role": "key",
+      "title": "VoltageToBit.Model.Device, lines 95–103: ## Agreement with the textbook piecewise law (reverse operat",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Device.lean",
+            "fragment": "L95-L103"
+          },
+          "snippet": {
+            "line": 95,
+            "text": "/-! ## Agreement with the textbook piecewise law (reverse operation)\n\nWhen the output node is below ground the NMOS terminals exchange roles: the\noutput node acts as the source, with gate-source voltage `u - v` and\ndrain-source voltage `-v`, and the current flows from ground into the node.\nWhen the output node is above the supply the same happens to the PMOS, with\nsource-gate voltage `v - u` and source-drain voltage `v - VDD`. The lemmas below\nstate that `In` and `Ip` are then minus the textbook forward law in the\nexchanged frame. -/"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

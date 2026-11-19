@@ -1,0 +1,63 @@
+{
+  "id": "guide-221",
+  "subject": [
+    {
+      "location": {
+        "page": 5,
+        "rect": [
+          0.070436,
+          0.271908,
+          0.285453,
+          0.012762
+        ]
+      },
+      "title": "constant-parameter solutions are runs at their supply",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p005-b221"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.IsTrajectory.of_ode_atSupply",
+        "module": "VoltageToBit.Proofs.AtSupply",
+        "lines": [
+          194,
+          202
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/AtSupply.lean",
+            "fragment": "L194-L202"
+          },
+          "snippet": {
+            "line": 194,
+            "text": "theorem IsTrajectory.of_ode_atSupply {D : Design} {θ : Params} {u v : ℝ → ℝ} {a b : ℝ}\n    {Cf w : ℝ → ℝ} (hθ : D.InBox θ) (hCf : ∀ x, D.Clo ≤ Cf x ∧ Cf x ≤ D.Chi)\n    (hw : ∀ t ∈ Ico a b, |w t| ≤ D.eps) (hcont : ContinuousOn v (Icc a b))\n    (hode : ∀ t ∈ Ico a b, ∃ v' : ℝ, HasDerivWithinAt v v' (Ici t) t ∧\n      Cf (v t) * v' = Inet θ (u t) (v t) + w t) :\n    IsTrajectory (D.atSupply θ.VDD) u v a b :="
+          },
+          "declaration": {
+            "id": "VoltageToBit.IsTrajectory.of_ode_atSupply",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          5
+        ],
+        "printed": [
+          5
+        ]
+      }
+    }
+  }
+}

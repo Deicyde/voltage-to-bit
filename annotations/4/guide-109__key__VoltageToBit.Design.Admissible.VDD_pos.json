@@ -1,0 +1,63 @@
+{
+  "id": "guide-109",
+  "subject": [
+    {
+      "location": {
+        "page": 2,
+        "rect": [
+          0.169725,
+          0.80898,
+          0.059541,
+          0.013462
+        ]
+      },
+      "title": "VDD pos",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p002-b109"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.Admissible.VDD_pos",
+        "module": "VoltageToBit.Model.Inverter",
+        "lines": [
+          143,
+          143
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Inverter.lean",
+            "fragment": "L143"
+          },
+          "snippet": {
+            "line": 143,
+            "text": "  VDD_pos : 0 < D.VDDlo"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.Admissible.VDD_pos",
+            "kind": "field"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          2
+        ],
+        "printed": [
+          2
+        ]
+      }
+    }
+  }
+}

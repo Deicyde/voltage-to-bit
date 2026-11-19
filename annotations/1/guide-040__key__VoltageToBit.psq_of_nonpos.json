@@ -1,0 +1,63 @@
+{
+  "id": "guide-040",
+  "subject": [
+    {
+      "location": {
+        "page": 1,
+        "rect": [
+          0.318121,
+          0.593582,
+          0.116942,
+          0.009983
+        ]
+      },
+      "title": "psq of nonpos",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p001-b040"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.psq_of_nonpos",
+        "module": "VoltageToBit.Model.PosSq",
+        "lines": [
+          20,
+          21
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/PosSq.lean",
+            "fragment": "L20-L21"
+          },
+          "snippet": {
+            "line": 20,
+            "text": "theorem psq_of_nonpos {x : ℝ} (h : x ≤ 0) : psq x = 0 := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.psq_of_nonpos",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          1
+        ],
+        "printed": [
+          1
+        ]
+      }
+    }
+  }
+}

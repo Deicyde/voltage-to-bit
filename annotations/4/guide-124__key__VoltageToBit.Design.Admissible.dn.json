@@ -1,0 +1,63 @@
+{
+  "id": "guide-124",
+  "subject": [
+    {
+      "location": {
+        "page": 2,
+        "rect": [
+          0.274451,
+          0.870516,
+          0.084783,
+          0.012472
+        ]
+      },
+      "title": "dn",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p002-b124"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.Admissible.dn",
+        "module": "VoltageToBit.Model.Inverter",
+        "lines": [
+          170,
+          171
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Inverter.lean",
+            "fragment": "L170-L171"
+          },
+          "snippet": {
+            "line": 170,
+            "text": "  dn : D.eps < D.Idn D.VOL"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.Admissible.dn",
+            "kind": "field"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          2
+        ],
+        "printed": [
+          2
+        ]
+      }
+    }
+  }
+}

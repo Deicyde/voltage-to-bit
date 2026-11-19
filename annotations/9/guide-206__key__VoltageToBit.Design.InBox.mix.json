@@ -1,0 +1,63 @@
+{
+  "id": "guide-206",
+  "subject": [
+    {
+      "location": {
+        "page": 4,
+        "rect": [
+          0.405975,
+          0.837491,
+          0.257744,
+          0.011284
+        ]
+      },
+      "title": "the box is convex",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p004-b206"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.InBox.mix",
+        "module": "VoltageToBit.Proofs.ModelError",
+        "lines": [
+          153,
+          165
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/ModelError.lean",
+            "fragment": "L153-L165"
+          },
+          "snippet": {
+            "line": 153,
+            "text": "theorem InBox.mix {θ₁ θ₂ : Params} (h₁ : D.InBox θ₁) (h₂ : D.InBox θ₂) {s : ℝ}\n    (hs : s ∈ Icc (0 : ℝ) 1) : D.InBox (Params.mix θ₁ θ₂ s) where"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.InBox.mix",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          4
+        ],
+        "printed": [
+          4
+        ]
+      }
+    }
+  }
+}

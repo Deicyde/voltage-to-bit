@@ -1,0 +1,59 @@
+{
+  "id": "guide-370",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.361925,
+          0.332972,
+          0.097495,
+          0.010286
+        ]
+      },
+      "title": "the library root",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b370"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "module": "VoltageToBit",
+        "lines": [
+          1,
+          22
+        ]
+      },
+      "role": "key",
+      "title": "VoltageToBit, lines 1–22: import VoltageToBit.Model.PosSq",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit.lean",
+            "fragment": "L1-L22"
+          },
+          "snippet": {
+            "line": 1,
+            "text": "import VoltageToBit.Model.PosSq\nimport VoltageToBit.Model.Device\nimport VoltageToBit.Model.Inverter\nimport VoltageToBit.Proofs.Reach\nimport VoltageToBit.Proofs.Margins\nimport VoltageToBit.Proofs.Guarantee\nimport VoltageToBit.Proofs.Existence\nimport VoltageToBit.Proofs.Concat\nimport VoltageToBit.Proofs.AtSupply\nimport VoltageToBit.Proofs.NonVacuity\nimport VoltageToBit.Proofs.Certificate\nimport VoltageToBit.Proofs.ModelError\nimport VoltageToBit.Proofs.Contamination\nimport VoltageToBit.Proofs.Chain\nimport VoltageToBit.Examples.IllustrativeDesign\nimport VoltageToBit.Examples.Illustrative\nimport VoltageToBit.Examples.NegativeControls\nimport VoltageToBit.Examples.RefinedDeadlines\nimport VoltageToBit.Examples.Limits\nimport VoltageToBit.Examples.DeadlineBrackets\nimport VoltageToBit.Examples.InputClass\nimport VoltageToBit.Examples.TwoStage"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

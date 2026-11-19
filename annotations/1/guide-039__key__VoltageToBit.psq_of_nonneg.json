@@ -1,0 +1,63 @@
+{
+  "id": "guide-039",
+  "subject": [
+    {
+      "location": {
+        "page": 1,
+        "rect": [
+          0.181522,
+          0.591989,
+          0.12484,
+          0.011576
+        ]
+      },
+      "title": "psq of nonneg",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p001-b039"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.psq_of_nonneg",
+        "module": "VoltageToBit.Model.PosSq",
+        "lines": [
+          17,
+          18
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/PosSq.lean",
+            "fragment": "L17-L18"
+          },
+          "snippet": {
+            "line": 17,
+            "text": "theorem psq_of_nonneg {x : ℝ} (h : 0 ≤ x) : psq x = x ^ 2 := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.psq_of_nonneg",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          1
+        ],
+        "printed": [
+          1
+        ]
+      }
+    }
+  }
+}

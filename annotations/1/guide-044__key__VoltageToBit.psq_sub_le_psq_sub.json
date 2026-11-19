@@ -1,0 +1,63 @@
+{
+  "id": "guide-044",
+  "subject": [
+    {
+      "location": {
+        "page": 1,
+        "rect": [
+          0.420745,
+          0.60891,
+          0.394592,
+          0.010942
+        ]
+      },
+      "title": "the comparison behind every margin",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p001-b044"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.psq_sub_le_psq_sub",
+        "module": "VoltageToBit.Model.PosSq",
+        "lines": [
+          53,
+          62
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/PosSq.lean",
+            "fragment": "L53-L62"
+          },
+          "snippet": {
+            "line": 53,
+            "text": "theorem psq_sub_le_psq_sub {p q p' q' : ℝ} (hqp : q ≤ p) (hq : q ≤ q')\n    (hd : p - q ≤ p' - q') : psq p - psq q ≤ psq p' - psq q' := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.psq_sub_le_psq_sub",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          1
+        ],
+        "printed": [
+          1
+        ]
+      }
+    }
+  }
+}

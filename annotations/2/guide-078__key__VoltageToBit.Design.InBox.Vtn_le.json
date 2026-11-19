@@ -1,0 +1,63 @@
+{
+  "id": "guide-078",
+  "subject": [
+    {
+      "location": {
+        "page": 2,
+        "rect": [
+          0.337255,
+          0.294488,
+          0.074532,
+          0.014756
+        ]
+      },
+      "title": "Vtn le",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p002-b078"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.InBox.Vtn_le",
+        "module": "VoltageToBit.Model.Inverter",
+        "lines": [
+          76,
+          76
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Inverter.lean",
+            "fragment": "L76"
+          },
+          "snippet": {
+            "line": 76,
+            "text": "  Vtn_le : θ.Vtn ≤ D.Vtnhi"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.InBox.Vtn_le",
+            "kind": "field"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          2
+        ],
+        "printed": [
+          2
+        ]
+      }
+    }
+  }
+}

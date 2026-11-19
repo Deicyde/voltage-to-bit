@@ -140,86 +140,11 @@
   "annotations": {
     "bundle": {
       "path": "annotations.bundle.json",
-      "sha256": "709644731a390db353490e914adf4525b200d2542591a39824b9f7d460359886"
+      "sha256": "e42d49a060ebf412056f4ca4b5e43f0710403c36bdd07503523fc8c31affb518"
     },
-    "count": 43,
+    "count": 456,
     "directory": "annotations",
-    "export": {
-      "commit": "1c0d671a1d7e80aa42cf1b4eda785beec14d480d",
-      "convention": "roadmap-locators",
-      "source_id": "voltage-to-bit-reading-guide"
-    },
     "extension": "org.mathlib-initiative.formal-companion.overlay",
-    "inputs": [
-      {
-        "path": "guide/blueprint/roadmap/instance/existence.md",
-        "sha256": "3feca9dd918518cae4fee4fee89e5943be9fe9092d101f2555da7387e79bc6c1"
-      },
-      {
-        "path": "guide/blueprint/roadmap/instance/instance.md",
-        "sha256": "f736291effe70ca591a6fe421d174d432c274fe50df571623f82ee59e910a810"
-      },
-      {
-        "path": "guide/blueprint/roadmap/instance/tightness.md",
-        "sha256": "372e0c867c0b8a072d852c3309f653791247eb8b0da2bbd246daf8c47b021d7e"
-      },
-      {
-        "path": "guide/blueprint/roadmap/model/bits.md",
-        "sha256": "dfd03b1ff97760c27b36f1214650e0bb97413d10471e94548d57781f15b5a3b0"
-      },
-      {
-        "path": "guide/blueprint/roadmap/model/circuit.md",
-        "sha256": "f18b566b7317e6f32ce96d74e6265acfe0456843f83f84a032ca02e385ca1a4b"
-      },
-      {
-        "path": "guide/blueprint/roadmap/model/dynamics.md",
-        "sha256": "3198bc3ac1ea42fb71823f7d60975654ad34eb9ed3d4f85ed6bfc0e9ea092675"
-      },
-      {
-        "path": "guide/blueprint/roadmap/model/uncertainty.md",
-        "sha256": "f6017c06affb00ea749cfd18868365e109b1ee3a9668e553d7ee919701f2f79c"
-      },
-      {
-        "path": "guide/blueprint/roadmap/scope/limits-support.md",
-        "sha256": "22317027274a4ed04eccf6ba977408e299d28515adfe2561b7c62652c710b84c"
-      },
-      {
-        "path": "guide/blueprint/roadmap/scope/limits.md",
-        "sha256": "dd3f52c549dc0a8f7d264e5f396fd46b48c7254b488b267fc33887380a8014e5"
-      },
-      {
-        "path": "guide/blueprint/roadmap/scope/models.md",
-        "sha256": "8bd71f19cd12bf22c4284568996aeef6848f5b6aa63b99d18b5eaee64c077129"
-      },
-      {
-        "path": "guide/blueprint/roadmap/theorem/checks-support.md",
-        "sha256": "9e2eeb378e0c9d53724451a0547657f05df8fa6895a3cb88dade40ec0b1d79a4"
-      },
-      {
-        "path": "guide/blueprint/roadmap/theorem/checks.md",
-        "sha256": "756d177fbac3529d3184122a67a2df368e08ee85ea5594acf1981cc5d42c02e2"
-      },
-      {
-        "path": "guide/blueprint/roadmap/theorem/deadlines-support.md",
-        "sha256": "b2fc5098f6567eb14448af279c1b4c6d9c9a91eccee6ffdddfbb310d430bdbd7"
-      },
-      {
-        "path": "guide/blueprint/roadmap/theorem/deadlines.md",
-        "sha256": "9a3c2ca69c9a83356062095081acd19b7df89bbc97fbe2bbff03bd065417420b"
-      },
-      {
-        "path": "guide/blueprint/roadmap/theorem/guarantee.md",
-        "sha256": "1d0ae45c1ebe6424f52a88798f75bc2df30345b038bfed5fa9c09c1616af47cf"
-      },
-      {
-        "path": "guide/blueprint/sources/reading-guide-locators.md",
-        "sha256": "ef9cf0affe960c1664df6a4eb1b7cae470e2bd47e24fb90fe5e054819ac45d87"
-      },
-      {
-        "path": "guide/reading-guide.tex",
-        "sha256": "8b6f194d57475383a39e9d725693516ccdb48876664abf83775893ad04d00cf9"
-      }
-    ],
-    "manifest_sha256": "0459f2dddf83755d795c2fc31d200cfb46956a147ff8398c363a63d52f4b8b53"
+    "manifest_sha256": "cd4645178b0f27c4b887436028f3503e28c0fd4dfb1d94becb8a03b056566069"
   }
 }

@@ -1,0 +1,63 @@
+{
+  "id": "guide-266",
+  "subject": [
+    {
+      "location": {
+        "page": 5,
+        "rect": [
+          0.070436,
+          0.935309,
+          0.082557,
+          0.010314
+        ]
+      },
+      "title": "illustrative: Vlo",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p005-b266"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.illustrative",
+        "module": "VoltageToBit.Examples.IllustrativeDesign",
+        "lines": [
+          33,
+          33
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/IllustrativeDesign.lean",
+            "fragment": "L33"
+          },
+          "snippet": {
+            "line": 33,
+            "text": "Vlo := (-0.10)"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.illustrative",
+            "kind": "def"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          5
+        ],
+        "printed": [
+          5
+        ]
+      }
+    }
+  }
+}

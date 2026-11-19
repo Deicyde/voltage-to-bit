@@ -1,0 +1,59 @@
+{
+  "id": "guide-382",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.360751,
+          0.451314,
+          0.061607,
+          0.010175
+        ]
+      },
+      "title": "module Proofs/AtSupply",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b382"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "module": "VoltageToBit.Proofs.AtSupply",
+        "lines": [
+          1,
+          59
+        ]
+      },
+      "role": "key",
+      "title": "VoltageToBit.Proofs.AtSupply, lines 1–59: import VoltageToBit.Proofs.Existence",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/AtSupply.lean",
+            "fragment": "L1-L59"
+          },
+          "snippet": {
+            "line": 1,
+            "text": "import VoltageToBit.Proofs.Existence\n\n/-!\n# The safe domain measured from the actual supply\n\nThe safe domain of a design record is one fixed interval `[Vlo, Vhi]` with\n`Vhi` above the *highest* supply of the box. For a run at a lower supply value\n`V0` that interval reaches far above the rail (0.46 V above it at the lowest\nsupply of the illustrative record), into a region where the square law is\nleast credible as a description of a real device.\n\nThis file shows that, for a run at *one* supply value, nothing is lost by\nmeasuring the top of the domain from that supply: restricting an admissible\nrecord to a single supply value `V0` of its range, with safe domain\n`[Vlo, V0 + (Vhi - VDDhi)]`, gives an admissible record again. No condition\nbeyond admissibility is needed. Every theorem about admissible records then\napplies to the restricted record.\n\n* `Design.atSupply`, `Design.Admissible.atSupply`, `Design.InBox.atSupply`:\n  the restriction and its admissibility.\n* `Design.Admissible.uHi_lt`, `Design.Admissible.RhiN_atSupply`: why no extra\n  condition is needed. The margin `hiP` forces the split point `uHi` below\n  `VDDlo - Vtphi + (Vhi - VDDhi)`; with nonnegative thresholds\n  (`Admissible.Vtn_nonneg`, `Admissible.Vtp_nonneg`) the worst-corner NMOS is\n  then saturated, or off, at the top of the domain of the record and of each\n  of its restrictions, so the margin `RhiN` is the same number for all of them.\n* `trajectory_safe_atSupply`: every trajectory of the restricted record that\n  starts in `[Vlo, V0 + (Vhi - VDDhi)]` stays there. The restricted record\n  differs from `D` only in its supply range, which is the single value `V0`,\n  and in the top of its safe domain; the other parameters may still move"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

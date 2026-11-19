@@ -1,0 +1,63 @@
+{
+  "id": "guide-159",
+  "subject": [
+    {
+      "location": {
+        "page": 3,
+        "rect": [
+          0.290901,
+          0.872323,
+          0.243377,
+          0.031379
+        ]
+      },
+      "title": "slope while discharging",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p003-b159"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.IsTrajectory.slope_dn",
+        "module": "VoltageToBit.Proofs.Guarantee",
+        "lines": [
+          133,
+          151
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Guarantee.lean",
+            "fragment": "L133-L151"
+          },
+          "snippet": {
+            "line": 133,
+            "text": "theorem slope_dn (hD : D.Admissible) (h : IsTrajectory D u v a b)\n    (h0 : v a ∈ D.Safe) {c t : ℝ} (hc : 0 ≤ c) (hmargin : D.eps < D.Idn c)\n    (ht : t ∈ Ico a b) (hu : D.VIH ≤ u t) (hv : c ≤ v t) :\n    rderiv v t ≤ -((D.Idn c - D.eps) / D.Chi) := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.IsTrajectory.slope_dn",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          3
+        ],
+        "printed": [
+          3
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "id": "guide-205",
+  "subject": [
+    {
+      "location": {
+        "page": 4,
+        "rect": [
+          0.405975,
+          0.823289,
+          0.27834,
+          0.011284
+        ]
+      },
+      "title": "interpolation stays in range",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p004-b205"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.interp_mem",
+        "module": "VoltageToBit.Proofs.ModelError",
+        "lines": [
+          144,
+          151
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/ModelError.lean",
+            "fragment": "L144-L151"
+          },
+          "snippet": {
+            "line": 144,
+            "text": "private theorem interp_mem {lo hi x y s : ℝ} (hx : lo ≤ x) (hx' : x ≤ hi) (hy : lo ≤ y)\n    (hy' : y ≤ hi) (hs0 : 0 ≤ s) (hs1 : s ≤ 1) :\n    lo ≤ x + s * (y - x) ∧ x + s * (y - x) ≤ hi := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.interp_mem",
+            "kind": "theorem",
+            "private": true
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          4
+        ],
+        "printed": [
+          4
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "id": "guide-194",
+  "subject": [
+    {
+      "location": {
+        "page": 4,
+        "rect": [
+          0.547298,
+          0.596794,
+          0.290279,
+          0.011284
+        ]
+      },
+      "title": "solutions with drifting parameters are runs",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p004-b194"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.IsTrajectory.of_ode_varying",
+        "module": "VoltageToBit.Proofs.Existence",
+        "lines": [
+          65,
+          80
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Existence.lean",
+            "fragment": "L65-L80"
+          },
+          "snippet": {
+            "line": 65,
+            "text": "theorem IsTrajectory.of_ode_varying {D : Design} {θ : ℝ → Params} {u v : ℝ → ℝ} {a b : ℝ}\n    {Cf w : ℝ → ℝ} (hθ : ∀ t ∈ Ico a b, D.InBox (θ t))\n    (hCf : ∀ x, D.Clo ≤ Cf x ∧ Cf x ≤ D.Chi)\n    (hw : ∀ t ∈ Ico a b, |w t| ≤ D.eps) (hcont : ContinuousOn v (Icc a b))\n    (hode : ∀ t ∈ Ico a b, ∃ v' : ℝ, HasDerivWithinAt v v' (Ici t) t ∧\n      Cf (v t) * v' = Inet (θ t) (u t) (v t) + w t) :\n    IsTrajectory D u v a b where"
+          },
+          "declaration": {
+            "id": "VoltageToBit.IsTrajectory.of_ode_varying",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          4
+        ],
+        "printed": [
+          4
+        ]
+      }
+    }
+  }
+}

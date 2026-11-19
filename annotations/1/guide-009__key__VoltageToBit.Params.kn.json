@@ -1,0 +1,63 @@
+{
+  "id": "guide-009",
+  "subject": [
+    {
+      "location": {
+        "page": 1,
+        "rect": [
+          0.459919,
+          0.193488,
+          0.02041,
+          0.011812
+        ]
+      },
+      "title": "NMOS transconductance",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p001-b009"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Params.kn",
+        "module": "VoltageToBit.Model.Device",
+        "lines": [
+          38,
+          39
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Device.lean",
+            "fragment": "L38-L39"
+          },
+          "snippet": {
+            "line": 38,
+            "text": "  kn : ℝ"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Params.kn",
+            "kind": "field"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          1
+        ],
+        "printed": [
+          1
+        ]
+      }
+    }
+  }
+}

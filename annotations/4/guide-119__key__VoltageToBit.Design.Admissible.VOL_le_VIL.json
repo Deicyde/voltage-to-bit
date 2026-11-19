@@ -1,0 +1,63 @@
+{
+  "id": "guide-119",
+  "subject": [
+    {
+      "location": {
+        "page": 2,
+        "rect": [
+          0.169725,
+          0.856203,
+          0.076143,
+          0.010713
+        ]
+      },
+      "title": "VOL le VIL",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p002-b119"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.Admissible.VOL_le_VIL",
+        "module": "VoltageToBit.Model.Inverter",
+        "lines": [
+          163,
+          164
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Inverter.lean",
+            "fragment": "L163-L164"
+          },
+          "snippet": {
+            "line": 163,
+            "text": "  VOL_le_VIL : D.VOL ≤ D.VIL"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.Admissible.VOL_le_VIL",
+            "kind": "field"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          2
+        ],
+        "printed": [
+          2
+        ]
+      }
+    }
+  }
+}

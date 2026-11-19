@@ -1,0 +1,63 @@
+{
+  "id": "guide-037",
+  "subject": [
+    {
+      "location": {
+        "page": 1,
+        "rect": [
+          0.070436,
+          0.569731,
+          0.811507,
+          0.016913
+        ]
+      },
+      "title": "net current is Lipschitz in v",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p001-b037"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.abs_Inet_sub_le",
+        "module": "VoltageToBit.Model.Device",
+        "lines": [
+          188,
+          209
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Device.lean",
+            "fragment": "L188-L209"
+          },
+          "snippet": {
+            "line": 188,
+            "text": "theorem abs_Inet_sub_le (θ : Params) (hkn : 0 ≤ θ.kn) (hkp : 0 ≤ θ.kp) (u v₁ v₂ : ℝ) :\n    |Inet θ u v₁ - Inet θ u v₂| ≤\n      (θ.kp / 2 * (|v₁ - u - θ.Vtp| + |v₂ - u - θ.Vtp|)\n        + θ.kn / 2 * (|u - v₁ - θ.Vtn| + |u - v₂ - θ.Vtn|)) * |v₁ - v₂| := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.abs_Inet_sub_le",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          1
+        ],
+        "printed": [
+          1
+        ]
+      }
+    }
+  }
+}

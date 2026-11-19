@@ -1,0 +1,63 @@
+{
+  "id": "guide-177",
+  "subject": [
+    {
+      "location": {
+        "page": 4,
+        "rect": [
+          0.070436,
+          0.246048,
+          0.432288,
+          0.012104
+        ]
+      },
+      "title": "fall through a list of levels",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p004-b177"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.fall_chain",
+        "module": "VoltageToBit.Proofs.Reach",
+        "lines": [
+          236,
+          271
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Reach.lean",
+            "fragment": "L236-L271"
+          },
+          "snippet": {
+            "line": 236,
+            "text": "theorem fall_chain {v v' : ℝ → ℝ} {a b : ℝ}\n    (hv : ContinuousOn v (Icc a b))\n    (hv' : ∀ t ∈ Ico a b, HasDerivWithinAt v (v' t) (Ici t) t) :\n    ∀ (rest : List (ℝ × ℝ)) (c m h s : ℝ), FallSegs h ((c, m) :: rest) →\n      (∀ p ∈ (c, m) :: rest, ∀ t ∈ Ico a b, p.1 ≤ v t → v' t ≤ -p.2) →\n      s ∈ Icc a b → v s ≤ h →\n      ∀ t ∈ Icc s b, s + fallTime h ((c, m) :: rest) ≤ t →\n        v t ≤ finalLevel h ((c, m) :: rest) := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.fall_chain",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          4
+        ],
+        "printed": [
+          4
+        ]
+      }
+    }
+  }
+}

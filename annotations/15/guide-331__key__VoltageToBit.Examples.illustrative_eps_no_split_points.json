@@ -1,0 +1,63 @@
+{
+  "id": "guide-331",
+  "subject": [
+    {
+      "location": {
+        "page": 6,
+        "rect": [
+          0.070436,
+          0.661794,
+          0.394452,
+          0.010175
+        ]
+      },
+      "title": "no split points help beyond 2.3802",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p006-b331"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.illustrative_eps_no_split_points",
+        "module": "VoltageToBit.Examples.Limits",
+        "lines": [
+          331,
+          352
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/Limits.lean",
+            "fragment": "L331-L352"
+          },
+          "snippet": {
+            "line": 331,
+            "text": "theorem illustrative_eps_no_split_points (e x y : ℝ) (he : 2.3802 ≤ e) :\n    ¬ ({ illustrative with eps := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.illustrative_eps_no_split_points",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          6
+        ],
+        "printed": [
+          6
+        ]
+      }
+    }
+  }
+}

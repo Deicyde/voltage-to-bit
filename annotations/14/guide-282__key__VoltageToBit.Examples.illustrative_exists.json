@@ -1,0 +1,63 @@
+{
+  "id": "guide-282",
+  "subject": [
+    {
+      "location": {
+        "page": 6,
+        "rect": [
+          0.070436,
+          0.136936,
+          0.790457,
+          0.01366
+        ]
+      },
+      "title": "runs exist for it",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p006-b282"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.illustrative_exists",
+        "module": "VoltageToBit.Examples.Illustrative",
+        "lines": [
+          115,
+          140
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/Illustrative.lean",
+            "fragment": "L115-L140"
+          },
+          "snippet": {
+            "line": 115,
+            "text": "theorem illustrative_exists (θ : Params) (hθ : illustrative.InBox θ) (Cf : ℝ → ℝ)\n    (hCf : ∀ x, Cf x ∈ Icc (5 : ℝ) 20) (Kc : ℝ)\n    (hCfLip : ∀ x ∈ Icc (-0.10 : ℝ) 2.08, ∀ y ∈ Icc (-0.10 : ℝ) 2.08,\n      |Cf x - Cf y| ≤ Kc * |x - y|)\n    (u w : ℝ → ℝ) (hu : Continuous u) (hw : Continuous w)\n    (a b : ℝ) (hab : a ≤ b) (hwb : ∀ t ∈ Icc a b, |w t| ≤ 2) (v₀ : ℝ)\n    (hv₀ : v₀ ∈ Icc (-0.10 : ℝ) 2.08) :\n    ∃ v : ℝ → ℝ, v a = v₀ ∧ IsTrajectory illustrative u v a b := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.illustrative_exists",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          6
+        ],
+        "printed": [
+          6
+        ]
+      }
+    }
+  }
+}

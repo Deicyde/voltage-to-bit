@@ -1,0 +1,63 @@
+{
+  "id": "guide-330",
+  "subject": [
+    {
+      "location": {
+        "page": 6,
+        "rect": [
+          0.595237,
+          0.642045,
+          0.076164,
+          0.013986
+        ]
+      },
+      "title": "illustrativeEps tauDn",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p006-b330"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.illustrativeEps_tauDn",
+        "module": "VoltageToBit.Examples.Limits",
+        "lines": [
+          328,
+          329
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/Limits.lean",
+            "fragment": "L328-L329"
+          },
+          "snippet": {
+            "line": 328,
+            "text": "theorem illustrativeEps_tauDn : illustrativeEps.tauDn = 366000 / 139159 := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.illustrativeEps_tauDn",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          6
+        ],
+        "printed": [
+          6
+        ]
+      }
+    }
+  }
+}

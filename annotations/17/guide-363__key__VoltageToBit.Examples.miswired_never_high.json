@@ -1,0 +1,63 @@
+{
+  "id": "guide-363",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.247265,
+          0.199227,
+          0.509615,
+          0.012104
+        ]
+      },
+      "title": "it never goes high",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b363"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.miswired_never_high",
+        "module": "VoltageToBit.Examples.NegativeControls",
+        "lines": [
+          384,
+          426
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/NegativeControls.lean",
+            "fragment": "L384-L426"
+          },
+          "snippet": {
+            "line": 384,
+            "text": "theorem miswired_never_high {u v : ℝ → ℝ} {a b : ℝ}\n    (hcont : ContinuousOn v (Icc a b))\n    (hincl : ∀ t ∈ Ico a b, ∃ v' c : ℝ, HasDerivWithinAt v v' (Ici t) t ∧\n      (5 : ℝ) ≤ c ∧ c ≤ 20 ∧ |c * v' - InetSwapped nominal (u t) (v t)| ≤ 2)\n    (hu : ∀ t ∈ Ico a b, u t ≤ 0.40) (h0 : v a < 1.35) :\n    ∀ t ∈ Icc a b, v t < 1.35 := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.miswired_never_high",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

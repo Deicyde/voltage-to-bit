@@ -1,0 +1,63 @@
+{
+  "id": "guide-293",
+  "subject": [
+    {
+      "location": {
+        "page": 6,
+        "rect": [
+          0.708016,
+          0.214916,
+          0.127004,
+          0.009737
+        ]
+      },
+      "title": "uRamp low",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p006-b293"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.uRamp_low",
+        "module": "VoltageToBit.Examples.Illustrative",
+        "lines": [
+          175,
+          178
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/Illustrative.lean",
+            "fragment": "L175-L178"
+          },
+          "snippet": {
+            "line": 175,
+            "text": "theorem uRamp_low {t : ℝ} (ht : 4.16 ≤ t) : uRamp t ≤ 0.40 := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.uRamp_low",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          6
+        ],
+        "printed": [
+          6
+        ]
+      }
+    }
+  }
+}

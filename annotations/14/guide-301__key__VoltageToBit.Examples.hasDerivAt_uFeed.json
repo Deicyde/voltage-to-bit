@@ -1,0 +1,63 @@
+{
+  "id": "guide-301",
+  "subject": [
+    {
+      "location": {
+        "page": 6,
+        "rect": [
+          0.839275,
+          0.271573,
+          0.088329,
+          0.013976
+        ]
+      },
+      "title": "hasDerivAt uFeed",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p006-b301"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.hasDerivAt_uFeed",
+        "module": "VoltageToBit.Examples.Illustrative",
+        "lines": [
+          271,
+          276
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/Illustrative.lean",
+            "fragment": "L271-L276"
+          },
+          "snippet": {
+            "line": 271,
+            "text": "theorem hasDerivAt_uFeed (t : ℝ) : HasDerivAt uFeed (2 * Real.cos (10 * t)) t := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.hasDerivAt_uFeed",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          6
+        ],
+        "printed": [
+          6
+        ]
+      }
+    }
+  }
+}

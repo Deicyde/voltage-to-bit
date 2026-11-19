@@ -1,0 +1,63 @@
+{
+  "id": "guide-325",
+  "subject": [
+    {
+      "location": {
+        "page": 6,
+        "rect": [
+          0.575539,
+          0.606408,
+          0.277992,
+          0.012104
+        ]
+      },
+      "title": "above a line",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p006-b325"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.ge_line_of_rderiv_ge",
+        "module": "VoltageToBit.Examples.Limits",
+        "lines": [
+          193,
+          206
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/Limits.lean",
+            "fragment": "L193-L206"
+          },
+          "snippet": {
+            "line": 193,
+            "text": "theorem ge_line_of_rderiv_ge {v v' : ℝ → ℝ} {a b h m : ℝ}\n    (hv : ContinuousOn v (Icc a b))\n    (hv' : ∀ t ∈ Ico a b, HasDerivWithinAt v (v' t) (Ici t) t)\n    (hh : h ≤ v a) (hm : ∀ t ∈ Ico a b, -m ≤ v' t) :\n    ∀ t ∈ Icc a b, h - m * (t - a) ≤ v t := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.ge_line_of_rderiv_ge",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          6
+        ],
+        "printed": [
+          6
+        ]
+      }
+    }
+  }
+}

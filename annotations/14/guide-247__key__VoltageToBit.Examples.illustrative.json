@@ -1,0 +1,63 @@
+{
+  "id": "guide-247",
+  "subject": [
+    {
+      "location": {
+        "page": 5,
+        "rect": [
+          0.070436,
+          0.865243,
+          0.03465,
+          0.01168
+        ]
+      },
+      "title": "the illustrative record",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p005-b247"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.illustrative",
+        "module": "VoltageToBit.Examples.IllustrativeDesign",
+        "lines": [
+          10,
+          36
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/IllustrativeDesign.lean",
+            "fragment": "L10-L36"
+          },
+          "snippet": {
+            "line": 10,
+            "text": "noncomputable def illustrative : Design where\n  VDDlo := 1.62\n  VDDhi := 1.98\n  knlo := 160\n  knhi := 240\n  kplo := 80\n  kphi := 120\n  Vtnlo := 0.45\n  Vtnhi := 0.60\n  Vtplo := 0.45\n  Vtphi := 0.60\n  Clo := 5\n  Chi := 20\n  eps := 2\n  VIL := 0.40\n  VIH := 1.25\n  VOL := 0.25\n  VOH := 1.35\n  Vlo := (-0.10)\n  Vhi := 2.08\n  uHi := 0.77\n  uLo := 0.74"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.illustrative",
+            "kind": "def"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          5
+        ],
+        "printed": [
+          5
+        ]
+      }
+    }
+  }
+}

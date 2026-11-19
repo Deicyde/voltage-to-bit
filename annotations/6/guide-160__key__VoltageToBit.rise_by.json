@@ -1,0 +1,63 @@
+{
+  "id": "guide-160",
+  "subject": [
+    {
+      "location": {
+        "page": 3,
+        "rect": [
+          0.589636,
+          0.823451,
+          0.234411,
+          0.027735
+        ]
+      },
+      "title": "rise by a deadline",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p003-b160"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.rise_by",
+        "module": "VoltageToBit.Proofs.Reach",
+        "lines": [
+          47,
+          83
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Reach.lean",
+            "fragment": "L47-L83"
+          },
+          "snippet": {
+            "line": 47,
+            "text": "theorem rise_by {v v' : ℝ → ℝ} {a b c l m : ℝ}\n    (hv : ContinuousOn v (Icc a b))\n    (hv' : ∀ t ∈ Ico a b, HasDerivWithinAt v (v' t) (Ici t) t)\n    (hm : 0 < m) (hl : l ≤ v a)\n    (hslope : ∀ t ∈ Ico a b, v t ≤ c → m ≤ v' t) :\n    ∀ t ∈ Icc a b, a + (c - l) / m ≤ t → c ≤ v t := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.rise_by",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          3
+        ],
+        "printed": [
+          3
+        ]
+      }
+    }
+  }
+}

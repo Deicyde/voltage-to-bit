@@ -1,0 +1,63 @@
+{
+  "id": "guide-025",
+  "subject": [
+    {
+      "location": {
+        "page": 1,
+        "rect": [
+          0.341814,
+          0.45923,
+          0.26036,
+          0.03111
+        ]
+      },
+      "title": "NMOS reverse triode",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p001-b025"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.In_rev_triode",
+        "module": "VoltageToBit.Model.Device",
+        "lines": [
+          111,
+          115
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Device.lean",
+            "fragment": "L111-L115"
+          },
+          "snippet": {
+            "line": 111,
+            "text": "theorem In_rev_triode {θ : Params} {u v : ℝ} (hv : v ≤ 0) (hu : θ.Vtn ≤ u) :\n    In θ u v = -(θ.kn * ((u - v - θ.Vtn) * (-v) - (-v) ^ 2 / 2)) := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.In_rev_triode",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          1
+        ],
+        "printed": [
+          1
+        ]
+      }
+    }
+  }
+}

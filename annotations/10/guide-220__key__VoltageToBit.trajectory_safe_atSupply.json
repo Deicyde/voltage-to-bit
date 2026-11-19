@@ -1,0 +1,63 @@
+{
+  "id": "guide-220",
+  "subject": [
+    {
+      "location": {
+        "page": 5,
+        "rect": [
+          0.070436,
+          0.256665,
+          0.328465,
+          0.013462
+        ]
+      },
+      "title": "runs at one supply stay near it",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p005-b220"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.trajectory_safe_atSupply",
+        "module": "VoltageToBit.Proofs.AtSupply",
+        "lines": [
+          177,
+          192
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/AtSupply.lean",
+            "fragment": "L177-L192"
+          },
+          "snippet": {
+            "line": 177,
+            "text": "theorem trajectory_safe_atSupply {D : Design} (hD : D.Admissible) {V0 : ℝ}\n    (h1 : D.VDDlo ≤ V0) (h2 : V0 ≤ D.VDDhi) {u v : ℝ → ℝ} {a b : ℝ}\n    (h : IsTrajectory (D.atSupply V0) u v a b)\n    (h0 : v a ∈ Icc D.Vlo (V0 + (D.Vhi - D.VDDhi))) :\n    ∀ t ∈ Icc a b, v t ∈ Icc D.Vlo (V0 + (D.Vhi - D.VDDhi)) :="
+          },
+          "declaration": {
+            "id": "VoltageToBit.trajectory_safe_atSupply",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          5
+        ],
+        "printed": [
+          5
+        ]
+      }
+    }
+  }
+}

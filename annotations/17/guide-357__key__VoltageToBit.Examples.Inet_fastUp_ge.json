@@ -1,0 +1,63 @@
+{
+  "id": "guide-357",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.497399,
+          0.125149,
+          0.281267,
+          0.01197
+        ]
+      },
+      "title": "Inet fastUp ge",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b357"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.Inet_fastUp_ge",
+        "module": "VoltageToBit.Examples.NegativeControls",
+        "lines": [
+          190,
+          199
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/NegativeControls.lean",
+            "fragment": "L190-L199"
+          },
+          "snippet": {
+            "line": 190,
+            "text": "theorem Inet_fastUp_ge {x : ℝ} (h1 : -0.10 ≤ x) (h2 : x ≤ 1.35) :\n    (167.454 : ℝ) ≤ Inet fastUp (-1) x := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.Inet_fastUp_ge",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

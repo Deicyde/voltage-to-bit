@@ -1,0 +1,63 @@
+{
+  "id": "guide-112",
+  "subject": [
+    {
+      "location": {
+        "page": 2,
+        "rect": [
+          0.475265,
+          0.811126,
+          0.052645,
+          0.010314
+        ]
+      },
+      "title": "C pos",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p002-b112"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.Admissible.C_pos",
+        "module": "VoltageToBit.Model.Inverter",
+        "lines": [
+          155,
+          155
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Inverter.lean",
+            "fragment": "L155"
+          },
+          "snippet": {
+            "line": 155,
+            "text": "  C_pos : 0 < D.Clo"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.Admissible.C_pos",
+            "kind": "field"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          2
+        ],
+        "printed": [
+          2
+        ]
+      }
+    }
+  }
+}

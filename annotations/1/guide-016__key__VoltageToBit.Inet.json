@@ -1,0 +1,63 @@
+{
+  "id": "guide-016",
+  "subject": [
+    {
+      "location": {
+        "page": 1,
+        "rect": [
+          0.380165,
+          0.278391,
+          0.268136,
+          0.014089
+        ]
+      },
+      "title": "net current into the output",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p001-b016"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Inet",
+        "module": "VoltageToBit.Model.Device",
+        "lines": [
+          55,
+          56
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Device.lean",
+            "fragment": "L55-L56"
+          },
+          "snippet": {
+            "line": 55,
+            "text": "noncomputable def Inet (θ : Params) (u v : ℝ) : ℝ := Ip θ u v - In θ u v"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Inet",
+            "kind": "def"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          1
+        ],
+        "printed": [
+          1
+        ]
+      }
+    }
+  }
+}

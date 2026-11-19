@@ -1,0 +1,63 @@
+{
+  "id": "guide-236",
+  "subject": [
+    {
+      "location": {
+        "page": 5,
+        "rect": [
+          0.070436,
+          0.671737,
+          0.58896,
+          0.011284
+        ]
+      },
+      "title": "a two-stage run restoring a low bit",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p005-b236"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.chain_witness",
+        "module": "VoltageToBit.Examples.TwoStage",
+        "lines": [
+          86,
+          116
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/TwoStage.lean",
+            "fragment": "L86-L116"
+          },
+          "snippet": {
+            "line": 86,
+            "text": "theorem chain_witness :\n    ∃ u v₁ v₂ : ℝ → ℝ, (∀ t, u t ≤ 0.40) ∧\n      IsTrajectory illustrative u v₁ 0 10 ∧ IsTrajectory illustrative v₁ v₂ 0 10 ∧\n      v₁ 0 = 1 ∧ v₂ 0 = 1 ∧\n      (∀ t ∈ Icc (3.43 : ℝ) 10, 1.35 ≤ v₁ t) ∧ ∀ t ∈ Icc (6 : ℝ) 10, v₂ t ≤ 0.25 := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.chain_witness",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          5
+        ],
+        "printed": [
+          5
+        ]
+      }
+    }
+  }
+}

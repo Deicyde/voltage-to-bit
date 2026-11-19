@@ -1,0 +1,63 @@
+{
+  "id": "guide-176",
+  "subject": [
+    {
+      "location": {
+        "page": 4,
+        "rect": [
+          0.785975,
+          0.227145,
+          0.08066,
+          0.00993
+        ]
+      },
+      "title": "fallTime nonneg",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p004-b176"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.fallTime_nonneg",
+        "module": "VoltageToBit.Proofs.Reach",
+        "lines": [
+          227,
+          234
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Reach.lean",
+            "fragment": "L227-L234"
+          },
+          "snippet": {
+            "line": 227,
+            "text": "theorem fallTime_nonneg : ∀ (segs : List (ℝ × ℝ)) (h : ℝ), FallSegs h segs → 0 ≤ fallTime h segs\n  | [], _, _ => le_rfl\n  | (c, m) :: rest, h, hs => by\n    obtain ⟨hch, hm, hrest⟩ :="
+          },
+          "declaration": {
+            "id": "VoltageToBit.fallTime_nonneg",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          4
+        ],
+        "printed": [
+          4
+        ]
+      }
+    }
+  }
+}

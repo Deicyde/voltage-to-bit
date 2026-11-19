@@ -1,0 +1,63 @@
+{
+  "id": "guide-175",
+  "subject": [
+    {
+      "location": {
+        "page": 4,
+        "rect": [
+          0.727246,
+          0.227338,
+          0.046971,
+          0.009811
+        ]
+      },
+      "title": "finalLevel le mem",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p004-b175"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.FallSegs.finalLevel_le_mem",
+        "module": "VoltageToBit.Proofs.Reach",
+        "lines": [
+          218,
+          225
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Reach.lean",
+            "fragment": "L218-L225"
+          },
+          "snippet": {
+            "line": 218,
+            "text": "theorem FallSegs.finalLevel_le_mem :\n    ∀ {segs : List (ℝ × ℝ)} {h : ℝ}, FallSegs h segs → ∀ p ∈ segs, finalLevel h segs ≤ p.1\n  | [], _, _, p, hp => by simp at hp\n  | (c, m) :: rest, _, hs, p, hp => by\n    rcases List.mem_cons.mp hp with rfl | hp'\n    · exact FallSegs.finalLevel_le hs.2.2\n    · exact FallSegs.finalLevel_le_mem hs.2.2 p hp'"
+          },
+          "declaration": {
+            "id": "VoltageToBit.FallSegs.finalLevel_le_mem",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          4
+        ],
+        "printed": [
+          4
+        ]
+      }
+    }
+  }
+}

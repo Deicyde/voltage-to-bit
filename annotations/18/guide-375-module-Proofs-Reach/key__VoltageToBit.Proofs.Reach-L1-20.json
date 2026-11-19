@@ -1,0 +1,59 @@
+{
+  "id": "guide-375",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.237524,
+          0.404923,
+          0.040393,
+          0.008328
+        ]
+      },
+      "title": "module Proofs/Reach",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b375"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "module": "VoltageToBit.Proofs.Reach",
+        "lines": [
+          1,
+          20
+        ]
+      },
+      "role": "key",
+      "title": "VoltageToBit.Proofs.Reach, lines 1–20: import Mathlib.Analysis.Calculus.MeanValue",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Reach.lean",
+            "fragment": "L1-L20"
+          },
+          "snippet": {
+            "line": 1,
+            "text": "import Mathlib.Analysis.Calculus.MeanValue\n\n/-!\n# Scalar reachability lemmas\n\nGeneric facts about a real signal `v` on `[a, b]` that is continuous and has a\nright derivative `v' t` at every `t ∈ [a, b)`. Nothing here mentions circuits.\n\n* `barrier_le`, `barrier_ge`: a level that the signal can only leave \"inwards\"\n  is never crossed.\n* `rise_by`, `fall_by`: if the slope is at least `m > 0` towards a level `c`\n  whenever the signal is on the wrong side of `c`, then the signal is on the\n  right side of `c` from an explicit deadline on, and stays there.\n* `rise_chain`, `fall_chain`: the same with a list of intermediate levels, each\n  with its own slope bound. The deadline is a sum over segments.\n-/\n\nnamespace VoltageToBit\n\nopen Set"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

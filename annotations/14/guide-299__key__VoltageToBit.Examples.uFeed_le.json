@@ -1,0 +1,63 @@
+{
+  "id": "guide-299",
+  "subject": [
+    {
+      "location": {
+        "page": 6,
+        "rect": [
+          0.662183,
+          0.272532,
+          0.063261,
+          0.011197
+        ]
+      },
+      "title": "uFeed le",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p006-b299"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.uFeed_le",
+        "module": "VoltageToBit.Examples.Illustrative",
+        "lines": [
+          267,
+          269
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/Illustrative.lean",
+            "fragment": "L267-L269"
+          },
+          "snippet": {
+            "line": 267,
+            "text": "theorem uFeed_le (t : ℝ) : uFeed t ≤ 0.40 := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.uFeed_le",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          6
+        ],
+        "printed": [
+          6
+        ]
+      }
+    }
+  }
+}

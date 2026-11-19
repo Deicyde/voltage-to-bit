@@ -1,0 +1,63 @@
+{
+  "id": "guide-189",
+  "subject": [
+    {
+      "location": {
+        "page": 4,
+        "rect": [
+          0.128742,
+          0.527744,
+          0.182816,
+          0.011284
+        ]
+      },
+      "title": "clamp is 1-Lipschitz",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p004-b189"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.abs_clamp_sub_le",
+        "module": "VoltageToBit.Proofs.Existence",
+        "lines": [
+          108,
+          112
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Existence.lean",
+            "fragment": "L108-L112"
+          },
+          "snippet": {
+            "line": 108,
+            "text": "theorem abs_clamp_sub_le (lo hi x y : ℝ) : |clamp lo hi x - clamp lo hi y| ≤ |x - y| := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.abs_clamp_sub_le",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          4
+        ],
+        "printed": [
+          4
+        ]
+      }
+    }
+  }
+}

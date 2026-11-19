@@ -1,0 +1,63 @@
+{
+  "id": "guide-014",
+  "subject": [
+    {
+      "location": {
+        "page": 1,
+        "rect": [
+          0.380165,
+          0.233379,
+          0.365805,
+          0.016583
+        ]
+      },
+      "title": "NMOS current",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p001-b014"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.In",
+        "module": "VoltageToBit.Model.Device",
+        "lines": [
+          47,
+          49
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Device.lean",
+            "fragment": "L47-L49"
+          },
+          "snippet": {
+            "line": 47,
+            "text": "noncomputable def In (θ : Params) (u v : ℝ) : ℝ :=\n  θ.kn / 2 * (psq (u - θ.Vtn) - psq (u - v - θ.Vtn))"
+          },
+          "declaration": {
+            "id": "VoltageToBit.In",
+            "kind": "def"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          1
+        ],
+        "printed": [
+          1
+        ]
+      }
+    }
+  }
+}

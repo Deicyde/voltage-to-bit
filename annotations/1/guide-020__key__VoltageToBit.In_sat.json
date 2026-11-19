@@ -1,0 +1,63 @@
+{
+  "id": "guide-020",
+  "subject": [
+    {
+      "location": {
+        "page": 1,
+        "rect": [
+          0.678826,
+          0.395555,
+          0.154812,
+          0.027877
+        ]
+      },
+      "title": "NMOS saturation",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p001-b020"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.In_sat",
+        "module": "VoltageToBit.Model.Device",
+        "lines": [
+          71,
+          75
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Device.lean",
+            "fragment": "L71-L75"
+          },
+          "snippet": {
+            "line": 71,
+            "text": "theorem In_sat {θ : Params} {u v : ℝ} (hu : θ.Vtn ≤ u) (hv : u - θ.Vtn ≤ v) :\n    In θ u v = θ.kn / 2 * (u - θ.Vtn) ^ 2 := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.In_sat",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          1
+        ],
+        "printed": [
+          1
+        ]
+      }
+    }
+  }
+}

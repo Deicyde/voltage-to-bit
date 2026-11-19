@@ -1,0 +1,63 @@
+{
+  "id": "guide-143",
+  "subject": [
+    {
+      "location": {
+        "page": 3,
+        "rect": [
+          0.23068,
+          0.4382,
+          0.101304,
+          0.018402
+        ]
+      },
+      "title": "the slope while charging",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p003-b143"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.IsTrajectory.slope_up",
+        "module": "VoltageToBit.Proofs.Guarantee",
+        "lines": [
+          113,
+          131
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Guarantee.lean",
+            "fragment": "L113-L131"
+          },
+          "snippet": {
+            "line": 113,
+            "text": "theorem slope_up (hD : D.Admissible) (h : IsTrajectory D u v a b)\n    (h0 : v a ∈ D.Safe) {c t : ℝ} (hc : c ≤ D.VDDlo) (hmargin : D.eps < D.Iup c)\n    (ht : t ∈ Ico a b) (hu : u t ≤ D.VIL) (hv : v t ≤ c) :\n    (D.Iup c - D.eps) / D.Chi ≤ rderiv v t := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.IsTrajectory.slope_up",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          3
+        ],
+        "printed": [
+          3
+        ]
+      }
+    }
+  }
+}

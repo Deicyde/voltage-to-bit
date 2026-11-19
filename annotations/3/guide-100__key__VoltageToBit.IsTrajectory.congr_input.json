@@ -1,0 +1,63 @@
+{
+  "id": "guide-100",
+  "subject": [
+    {
+      "location": {
+        "page": 2,
+        "rect": [
+          0.457594,
+          0.623011,
+          0.287025,
+          0.013681
+        ]
+      },
+      "title": "only the input on the interval matters",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p002-b100"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.IsTrajectory.congr_input",
+        "module": "VoltageToBit.Proofs.Concat",
+        "lines": [
+          40,
+          46
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Concat.lean",
+            "fragment": "L40-L46"
+          },
+          "snippet": {
+            "line": 40,
+            "text": "theorem congr_input {v : ℝ → ℝ} (h : IsTrajectory D u v a b)\n    (hu : ∀ t ∈ Ico a b, u t = u' t) : IsTrajectory D u' v a b where"
+          },
+          "declaration": {
+            "id": "VoltageToBit.IsTrajectory.congr_input",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          2
+        ],
+        "printed": [
+          2
+        ]
+      }
+    }
+  }
+}

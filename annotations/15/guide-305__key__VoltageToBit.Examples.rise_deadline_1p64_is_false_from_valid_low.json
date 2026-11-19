@@ -1,0 +1,63 @@
+{
+  "id": "guide-305",
+  "subject": [
+    {
+      "location": {
+        "page": 6,
+        "rect": [
+          0.076035,
+          0.404226,
+          0.174257,
+          0.011284
+        ]
+      },
+      "title": "false even from 0.25 V",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p006-b305"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.rise_deadline_1p64_is_false_from_valid_low",
+        "module": "VoltageToBit.Examples.DeadlineBrackets",
+        "lines": [
+          162,
+          178
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/DeadlineBrackets.lean",
+            "fragment": "L162-L178"
+          },
+          "snippet": {
+            "line": 162,
+            "text": "theorem rise_deadline_1p64_is_false_from_valid_low :\n    ∃ u v : ℝ → ℝ, (∀ t, u t ≤ 0.40) ∧\n      IsTrajectory illustrative u v 0 10 ∧ v 0 = 0.25 ∧ v 1.64 < 1.35 := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.rise_deadline_1p64_is_false_from_valid_low",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          6
+        ],
+        "printed": [
+          6
+        ]
+      }
+    }
+  }
+}

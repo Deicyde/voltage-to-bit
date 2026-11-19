@@ -1,0 +1,63 @@
+{
+  "id": "guide-008",
+  "subject": [
+    {
+      "location": {
+        "page": 1,
+        "rect": [
+          0.418616,
+          0.19362,
+          0.033556,
+          0.01168
+        ]
+      },
+      "title": "supply voltage",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p001-b008"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Params.VDD",
+        "module": "VoltageToBit.Model.Device",
+        "lines": [
+          36,
+          37
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Device.lean",
+            "fragment": "L36-L37"
+          },
+          "snippet": {
+            "line": 36,
+            "text": "  VDD : ℝ"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Params.VDD",
+            "kind": "field"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          1
+        ],
+        "printed": [
+          1
+        ]
+      }
+    }
+  }
+}

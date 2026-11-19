@@ -1,0 +1,63 @@
+{
+  "id": "guide-011",
+  "subject": [
+    {
+      "location": {
+        "page": 1,
+        "rect": [
+          0.514851,
+          0.19362,
+          0.026538,
+          0.01168
+        ]
+      },
+      "title": "NMOS threshold",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p001-b011"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Params.Vtn",
+        "module": "VoltageToBit.Model.Device",
+        "lines": [
+          42,
+          43
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Device.lean",
+            "fragment": "L42-L43"
+          },
+          "snippet": {
+            "line": 42,
+            "text": "  Vtn : ℝ"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Params.Vtn",
+            "kind": "field"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          1
+        ],
+        "printed": [
+          1
+        ]
+      }
+    }
+  }
+}

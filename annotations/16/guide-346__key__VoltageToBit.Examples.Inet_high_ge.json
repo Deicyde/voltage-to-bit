@@ -1,0 +1,63 @@
+{
+  "id": "guide-346",
+  "subject": [
+    {
+      "location": {
+        "page": 6,
+        "rect": [
+          0.671389,
+          0.860192,
+          0.206929,
+          0.011284
+        ]
+      },
+      "title": "Inet high ge",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p006-b346"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.Inet_high_ge",
+        "module": "VoltageToBit.Examples.InputClass",
+        "lines": [
+          206,
+          216
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/InputClass.lean",
+            "fragment": "L206-L216"
+          },
+          "snippet": {
+            "line": 206,
+            "text": "theorem Inet_high_ge {θ : Params} (hθ : illustrative.InBox θ) {x : ℝ}\n    (h2 : x ≤ -0.02) : 3.8 ≤ Inet θ 1.8 x := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.Inet_high_ge",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          6
+        ],
+        "printed": [
+          6
+        ]
+      }
+    }
+  }
+}

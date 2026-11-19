@@ -1,0 +1,59 @@
+{
+  "id": "guide-386",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.518854,
+          0.404923,
+          0.070424,
+          0.008328
+        ]
+      },
+      "title": "module Examples/Illustrative",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b386"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "module": "VoltageToBit.Examples.Illustrative",
+        "lines": [
+          416,
+          416
+        ]
+      },
+      "role": "key",
+      "title": "VoltageToBit.Examples.Illustrative, lines 416–416: end VoltageToBit.Examples",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/Illustrative.lean",
+            "fragment": "L416"
+          },
+          "snippet": {
+            "line": 416,
+            "text": "end VoltageToBit.Examples"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

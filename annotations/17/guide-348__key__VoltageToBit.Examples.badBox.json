@@ -1,0 +1,63 @@
+{
+  "id": "guide-348",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.247265,
+          0.074262,
+          0.127301,
+          0.01242
+        ]
+      },
+      "title": "an inverted NMOS range",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b348"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.badBox",
+        "module": "VoltageToBit.Examples.NegativeControls",
+        "lines": [
+          87,
+          89
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/NegativeControls.lean",
+            "fragment": "L87-L89"
+          },
+          "snippet": {
+            "line": 87,
+            "text": "noncomputable def badBox : Design := { illustrative with knlo := 300 }"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.badBox",
+            "kind": "def"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

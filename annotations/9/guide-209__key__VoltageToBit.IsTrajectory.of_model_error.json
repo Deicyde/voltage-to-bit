@@ -1,0 +1,63 @@
+{
+  "id": "guide-209",
+  "subject": [
+    {
+      "location": {
+        "page": 4,
+        "rect": [
+          0.405975,
+          0.870817,
+          0.472749,
+          0.011284
+        ]
+      },
+      "title": "another current law",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p004-b209"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.IsTrajectory.of_model_error",
+        "module": "VoltageToBit.Proofs.ModelError",
+        "lines": [
+          219,
+          241
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/ModelError.lean",
+            "fragment": "L219-L241"
+          },
+          "snippet": {
+            "line": 219,
+            "text": "theorem IsTrajectory.of_model_error {D : Design} {u v : ℝ → ℝ} {a b : ℝ}\n    {J : ℝ → ℝ → ℝ} {w : ℝ → ℝ} {εm εw : ℝ} (hbudget : εm + εw ≤ D.eps)\n    (hJ : ∀ t ∈ Ico a b, ∀ x ∈ D.Safe,\n      ∃ θ : Params, D.InBox θ ∧ |J t x - Inet θ (u t) x| ≤ εm)\n    (hw : ∀ t ∈ Ico a b, |w t| ≤ εw)\n    (hcont : ContinuousOn v (Icc a b))\n    (hode : ∀ t ∈ Ico a b, ∃ v' c : ℝ, HasDerivWithinAt v v' (Ici t) t ∧\n      D.Clo ≤ c ∧ c ≤ D.Chi ∧ c * v' = J t (v t) + w t) :\n    IsTrajectory D u v a b where"
+          },
+          "declaration": {
+            "id": "VoltageToBit.IsTrajectory.of_model_error",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          4
+        ],
+        "printed": [
+          4
+        ]
+      }
+    }
+  }
+}

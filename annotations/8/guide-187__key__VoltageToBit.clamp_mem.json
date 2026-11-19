@@ -1,0 +1,63 @@
+{
+  "id": "guide-187",
+  "subject": [
+    {
+      "location": {
+        "page": 4,
+        "rect": [
+          0.128742,
+          0.512303,
+          0.14096,
+          0.011284
+        ]
+      },
+      "title": "clamp mem",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p004-b187"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.clamp_mem",
+        "module": "VoltageToBit.Proofs.Existence",
+        "lines": [
+          101,
+          102
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Existence.lean",
+            "fragment": "L101-L102"
+          },
+          "snippet": {
+            "line": 101,
+            "text": "theorem clamp_mem {lo hi : ℝ} (h : lo ≤ hi) (x : ℝ) : clamp lo hi x ∈ Icc lo hi :="
+          },
+          "declaration": {
+            "id": "VoltageToBit.clamp_mem",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          4
+        ],
+        "printed": [
+          4
+        ]
+      }
+    }
+  }
+}

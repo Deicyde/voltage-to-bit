@@ -1,0 +1,63 @@
+{
+  "id": "guide-204",
+  "subject": [
+    {
+      "location": {
+        "page": 4,
+        "rect": [
+          0.405975,
+          0.810223,
+          0.248393,
+          0.011284
+        ]
+      },
+      "title": "current along the mix is continuous",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p004-b204"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.continuous_Inet_mix",
+        "module": "VoltageToBit.Proofs.ModelError",
+        "lines": [
+          133,
+          138
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/ModelError.lean",
+            "fragment": "L133-L138"
+          },
+          "snippet": {
+            "line": 133,
+            "text": "theorem continuous_Inet_mix (θ₁ θ₂ : Params) (u x : ℝ) :\n    Continuous (fun s : ℝ => Inet (Params.mix θ₁ θ₂ s) u x) := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.continuous_Inet_mix",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          4
+        ],
+        "printed": [
+          4
+        ]
+      }
+    }
+  }
+}

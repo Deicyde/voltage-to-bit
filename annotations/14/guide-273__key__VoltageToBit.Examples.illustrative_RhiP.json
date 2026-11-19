@@ -1,0 +1,63 @@
+{
+  "id": "guide-273",
+  "subject": [
+    {
+      "location": {
+        "page": 6,
+        "rect": [
+          0.547802,
+          0.04456,
+          0.071202,
+          0.015092
+        ]
+      },
+      "title": "illustrative RhiP",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p006-b273"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.illustrative_RhiP",
+        "module": "VoltageToBit.Examples.Illustrative",
+        "lines": [
+          51,
+          52
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/Illustrative.lean",
+            "fragment": "L51-L52"
+          },
+          "snippet": {
+            "line": 51,
+            "text": "theorem illustrative_RhiP : illustrative.RhiP = 2.4 := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.illustrative_RhiP",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          6
+        ],
+        "printed": [
+          6
+        ]
+      }
+    }
+  }
+}

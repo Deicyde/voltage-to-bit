@@ -1,0 +1,63 @@
+{
+  "id": "guide-097",
+  "subject": [
+    {
+      "location": {
+        "page": 2,
+        "rect": [
+          0.132416,
+          0.588399,
+          0.234257,
+          0.012104
+        ]
+      },
+      "title": "a run has its right derivative",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p002-b097"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.IsTrajectory.hasDeriv",
+        "module": "VoltageToBit.Proofs.Guarantee",
+        "lines": [
+          59,
+          63
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Guarantee.lean",
+            "fragment": "L59-L63"
+          },
+          "snippet": {
+            "line": 59,
+            "text": "theorem hasDeriv (h : IsTrajectory D u v a b) :\n    ∀ t ∈ Ico a b, HasDerivWithinAt v (rderiv v t) (Ici t) t := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.IsTrajectory.hasDeriv",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          2
+        ],
+        "printed": [
+          2
+        ]
+      }
+    }
+  }
+}

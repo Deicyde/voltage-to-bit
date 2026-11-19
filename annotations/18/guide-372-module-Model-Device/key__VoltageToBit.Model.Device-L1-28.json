@@ -1,0 +1,59 @@
+{
+  "id": "guide-372",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.078007,
+          0.404923,
+          0.043963,
+          0.008328
+        ]
+      },
+      "title": "module Model/Device",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b372"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "module": "VoltageToBit.Model.Device",
+        "lines": [
+          1,
+          28
+        ]
+      },
+      "role": "key",
+      "title": "VoltageToBit.Model.Device, lines 1–28: import VoltageToBit.Model.PosSq",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Device.lean",
+            "fragment": "L1-L28"
+          },
+          "snippet": {
+            "line": 1,
+            "text": "import VoltageToBit.Model.PosSq\n\n/-!\n# Device law: symmetric Shichman–Hodges square law\n\nTwo transistors of a static CMOS inverter, as functions of the gate voltage `u`\n(the inverter input) and the drain voltage `v` (the inverter output node).\n\n* NMOS: source at ground (0), gate `u`, drain `v`.\n  `In θ u v` is the current from the output node to ground.\n* PMOS: source at the supply `θ.VDD`, gate `u`, drain `v`.\n  `Ip θ u v` is the current from the supply into the output node.\n  `θ.Vtp` is the *magnitude* of the PMOS threshold.\n\nThe single expression `(k/2) * (psq (V_GS - V_t) - psq (V_GD - V_t))` equals the\ntextbook piecewise cutoff / triode / saturation law in forward operation (see\nthe `*_cutoff`, `*_triode`, `*_sat` lemmas below) and, with source and drain\nexchanged, in reverse operation when the output node is outside `[0, VDD]`\n(the `*_rev_*` lemmas).\n\nOmitted on purpose: channel-length modulation, body effect, subthreshold\nconduction, velocity saturation, junction diodes. See `docs/model.md`.\n\nUnits are a convention of the design record (V, µA, fF, ns; `k` in µA/V²);\nthe mathematics here is unit-free.\n-/\n\nnamespace VoltageToBit"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

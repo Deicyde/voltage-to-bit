@@ -1,0 +1,63 @@
+{
+  "id": "guide-185",
+  "subject": [
+    {
+      "location": {
+        "page": 4,
+        "rect": [
+          0.401733,
+          0.382855,
+          0.258035,
+          0.014089
+        ]
+      },
+      "title": "a falling certificate proves its deadline",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p004-b185"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.IsTrajectory.fall_of_cert",
+        "module": "VoltageToBit.Proofs.Certificate",
+        "lines": [
+          132,
+          148
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Certificate.lean",
+            "fragment": "L132-L148"
+          },
+          "snippet": {
+            "line": 132,
+            "text": "theorem fall_of_cert (hD : D.Admissible)\n    (h : IsTrajectory D u v a b) (h0 : v a ∈ D.Safe) {c : ℝ} {cs : List ℝ} {τ : ℝ}\n    (hcert : D.ValidFallCert c cs τ)\n    {s e : ℝ} (hs : a ≤ s) (he : e ≤ b) (hu : ∀ t ∈ Ico s e, D.VIH ≤ u t) :\n    ∀ t ∈ Icc s e, s + τ ≤ t → v t ≤ D.VOL := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.IsTrajectory.fall_of_cert",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          4
+        ],
+        "printed": [
+          4
+        ]
+      }
+    }
+  }
+}

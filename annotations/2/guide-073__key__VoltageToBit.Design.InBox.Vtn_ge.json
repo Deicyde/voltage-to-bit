@@ -1,0 +1,63 @@
+{
+  "id": "guide-073",
+  "subject": [
+    {
+      "location": {
+        "page": 2,
+        "rect": [
+          0.337255,
+          0.278096,
+          0.073808,
+          0.014756
+        ]
+      },
+      "title": "Vtn ge",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p002-b073"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.InBox.Vtn_ge",
+        "module": "VoltageToBit.Model.Inverter",
+        "lines": [
+          75,
+          75
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Inverter.lean",
+            "fragment": "L75"
+          },
+          "snippet": {
+            "line": 75,
+            "text": "  Vtn_ge : D.Vtnlo ≤ θ.Vtn"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.InBox.Vtn_ge",
+            "kind": "field"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          2
+        ],
+        "printed": [
+          2
+        ]
+      }
+    }
+  }
+}

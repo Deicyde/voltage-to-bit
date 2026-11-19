@@ -1,0 +1,63 @@
+{
+  "id": "guide-053",
+  "subject": [
+    {
+      "location": {
+        "page": 2,
+        "rect": [
+          0.238278,
+          0.13366,
+          0.027392,
+          0.014756
+        ]
+      },
+      "title": "Vtnlo",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p002-b053"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.Vtnlo",
+        "module": "VoltageToBit.Model.Inverter",
+        "lines": [
+          36,
+          37
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Inverter.lean",
+            "fragment": "L36-L37"
+          },
+          "snippet": {
+            "line": 36,
+            "text": "  Vtnlo : ℝ"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.Vtnlo",
+            "kind": "field"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          2
+        ],
+        "printed": [
+          2
+        ]
+      }
+    }
+  }
+}

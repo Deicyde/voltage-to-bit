@@ -1,0 +1,63 @@
+{
+  "id": "guide-015",
+  "subject": [
+    {
+      "location": {
+        "page": 1,
+        "rect": [
+          0.380165,
+          0.255308,
+          0.41205,
+          0.017738
+        ]
+      },
+      "title": "PMOS current",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p001-b015"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Ip",
+        "module": "VoltageToBit.Model.Device",
+        "lines": [
+          51,
+          53
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Device.lean",
+            "fragment": "L51-L53"
+          },
+          "snippet": {
+            "line": 51,
+            "text": "noncomputable def Ip (θ : Params) (u v : ℝ) : ℝ :=\n  θ.kp / 2 * (psq (θ.VDD - u - θ.Vtp) - psq (v - u - θ.Vtp))"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Ip",
+            "kind": "def"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          1
+        ],
+        "printed": [
+          1
+        ]
+      }
+    }
+  }
+}

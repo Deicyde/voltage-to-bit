@@ -1,0 +1,59 @@
+{
+  "id": "guide-381",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.354093,
+          0.428581,
+          0.074922,
+          0.008328
+        ]
+      },
+      "title": "module Proofs/ModelError",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b381"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "module": "VoltageToBit.Proofs.ModelError",
+        "lines": [
+          1,
+          114
+        ]
+      },
+      "role": "key",
+      "title": "VoltageToBit.Proofs.ModelError, lines 1–114: import VoltageToBit.Proofs.Guarantee",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/ModelError.lean",
+            "fragment": "L1-L114"
+          },
+          "snippet": {
+            "line": 1,
+            "text": "import VoltageToBit.Proofs.Guarantee\n\n/-!\n# What another description of the node must satisfy to be covered\n\nThe trajectory notion allows, at each instant, any parameter point of the box\nand an additive current error of at most `eps`. This file turns that into the\nexact obligation linking the square-law model to any other description of the\nsame node (a higher-fidelity device model, or the physical device).\n\n* `Design.exists_inBox_of_between`: if a current lies between the net currents\n  of two box members (each relaxed by `ε`), then some box member reproduces it\n  to within `ε`. The box is convex and the device law is continuous in its\n  parameters, so the intermediate value theorem applies along the segment.\n* `IsTrajectory.of_model_error`: if on the safe domain the \"true\" net current\n  `J t x` is within `εm` of *some* box member's current, and an additional\n  disturbance is bounded by `εw`, with `εm + εw ≤ eps`, then every solution of\n  `c * v' = J t (v t) + w t` is a trajectory.\n* `IsTrajectory.of_sandwich`: the same with the hypothesis as a sandwich:\n  `J t x` lies between the currents of two box members, up to `εm`.\n* `IsTrajectory.of_static_sandwich`: the checkable form of the obligation, for\n  a model `J x y` that is a function of the input voltage and the node voltage\n  only, and an explicit set `U` of input values. The sandwich is required for\n  `x ∈ U` and `y` in the safe domain, and the input waveform is required to\n  stay in `U`.\n* `slew_bound_of_rderiv`: a waveform that is continuous on `[a, b]` and has at\n  every instant of `[a, b)` a right derivative of magnitude at most `S` moves\n  by at most `S * (t - s)` between two instants `s ≤ t` of `[a, b]`. The\n  continuity is needed: a bound on the right derivative alone is not a slew\n  bound."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

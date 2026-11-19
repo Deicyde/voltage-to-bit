@@ -1,0 +1,63 @@
+{
+  "id": "guide-218",
+  "subject": [
+    {
+      "location": {
+        "page": 5,
+        "rect": [
+          0.070436,
+          0.240985,
+          0.250463,
+          0.013462
+        ]
+      },
+      "title": "admissible at every supply value",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p005-b218"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.Admissible.atSupply",
+        "module": "VoltageToBit.Proofs.AtSupply",
+        "lines": [
+          98,
+          165
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/AtSupply.lean",
+            "fragment": "L98-L165"
+          },
+          "snippet": {
+            "line": 98,
+            "text": "theorem Admissible.atSupply {D : Design} (hD : D.Admissible) {V0 : ℝ}\n    (h1 : D.VDDlo ≤ V0) (h2 : V0 ≤ D.VDDhi) :\n    (D.atSupply V0).Admissible := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.Admissible.atSupply",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          5
+        ],
+        "printed": [
+          5
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "id": "guide-257",
+  "subject": [
+    {
+      "location": {
+        "page": 5,
+        "rect": [
+          0.363207,
+          0.903112,
+          0.074578,
+          0.014499
+        ]
+      },
+      "title": "illustrative: Vtphi",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p005-b257"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.illustrative",
+        "module": "VoltageToBit.Examples.IllustrativeDesign",
+        "lines": [
+          25,
+          25
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/IllustrativeDesign.lean",
+            "fragment": "L25"
+          },
+          "snippet": {
+            "line": 25,
+            "text": "Vtphi := 0.60"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.illustrative",
+            "kind": "def"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          5
+        ],
+        "printed": [
+          5
+        ]
+      }
+    }
+  }
+}

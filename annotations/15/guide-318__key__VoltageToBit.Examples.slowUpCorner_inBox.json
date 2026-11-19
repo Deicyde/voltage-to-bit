@@ -1,0 +1,63 @@
+{
+  "id": "guide-318",
+  "subject": [
+    {
+      "location": {
+        "page": 6,
+        "rect": [
+          0.26604,
+          0.572119,
+          0.043611,
+          0.011443
+        ]
+      },
+      "title": "slowUpCorner inBox",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p006-b318"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.slowUpCorner_inBox",
+        "module": "VoltageToBit.Examples.Limits",
+        "lines": [
+          91,
+          92
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/Limits.lean",
+            "fragment": "L91-L92"
+          },
+          "snippet": {
+            "line": 91,
+            "text": "theorem slowUpCorner_inBox : illustrative.InBox slowUpCorner := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.slowUpCorner_inBox",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          6
+        ],
+        "printed": [
+          6
+        ]
+      }
+    }
+  }
+}

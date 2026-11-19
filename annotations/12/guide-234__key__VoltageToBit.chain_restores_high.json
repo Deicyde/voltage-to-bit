@@ -1,0 +1,63 @@
+{
+  "id": "guide-234",
+  "subject": [
+    {
+      "location": {
+        "page": 5,
+        "rect": [
+          0.399739,
+          0.638373,
+          0.322154,
+          0.01139
+        ]
+      },
+      "title": "two copies restore a high bit",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p005-b234"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.chain_restores_high",
+        "module": "VoltageToBit.Proofs.Chain",
+        "lines": [
+          91,
+          97
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Chain.lean",
+            "fragment": "L91-L97"
+          },
+          "snippet": {
+            "line": 91,
+            "text": "theorem chain_restores_high {D : Design} (hD : D.Admissible)\n    (h₁ : IsTrajectory D u v₁ a b) (h₂ : IsTrajectory D v₁ v₂ a b)\n    (h₁0 : v₁ a ∈ D.Safe) (h₂0 : v₂ a ∈ D.Safe) {s e : ℝ} (hs : a ≤ s) (he : e ≤ b)\n    (hu : ∀ t ∈ Ico s e, D.VIH ≤ u t) :\n    ∀ t ∈ Icc s e, s + D.tauDn + D.tauUp ≤ t → D.VOH ≤ v₂ t :="
+          },
+          "declaration": {
+            "id": "VoltageToBit.chain_restores_high",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          5
+        ],
+        "printed": [
+          5
+        ]
+      }
+    }
+  }
+}

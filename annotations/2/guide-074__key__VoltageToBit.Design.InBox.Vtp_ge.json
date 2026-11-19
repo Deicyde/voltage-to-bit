@@ -1,0 +1,63 @@
+{
+  "id": "guide-074",
+  "subject": [
+    {
+      "location": {
+        "page": 2,
+        "rect": [
+          0.429426,
+          0.278096,
+          0.072429,
+          0.016373
+        ]
+      },
+      "title": "Vtp ge",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p002-b074"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.InBox.Vtp_ge",
+        "module": "VoltageToBit.Model.Inverter",
+        "lines": [
+          77,
+          77
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Inverter.lean",
+            "fragment": "L77"
+          },
+          "snippet": {
+            "line": 77,
+            "text": "  Vtp_ge : D.Vtplo ≤ θ.Vtp"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.InBox.Vtp_ge",
+            "kind": "field"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          2
+        ],
+        "printed": [
+          2
+        ]
+      }
+    }
+  }
+}

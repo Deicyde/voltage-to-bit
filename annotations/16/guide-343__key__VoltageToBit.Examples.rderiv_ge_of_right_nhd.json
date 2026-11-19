@@ -1,0 +1,63 @@
+{
+  "id": "guide-343",
+  "subject": [
+    {
+      "location": {
+        "page": 6,
+        "rect": [
+          0.414574,
+          0.833043,
+          0.46611,
+          0.012104
+        ]
+      },
+      "title": "a lower bound on a right derivative",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p006-b343"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.rderiv_ge_of_right_nhd",
+        "module": "VoltageToBit.Examples.InputClass",
+        "lines": [
+          124,
+          178
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/InputClass.lean",
+            "fragment": "L124-L178"
+          },
+          "snippet": {
+            "line": 124,
+            "text": "theorem rderiv_ge_of_right_nhd {v : ℝ → ℝ} {t0 δ m d0 : ℝ} (hδ : 0 < δ)\n    (hcont : ContinuousOn v (Icc t0 (t0 + δ)))\n    (h0 : HasDerivWithinAt v d0 (Ici t0) t0)\n    (hder : ∀ t ∈ Ioo t0 (t0 + δ), ∃ d, HasDerivWithinAt v d (Ici t) t ∧ m ≤ d) :\n    m ≤ d0 := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.rderiv_ge_of_right_nhd",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          6
+        ],
+        "printed": [
+          6
+        ]
+      }
+    }
+  }
+}

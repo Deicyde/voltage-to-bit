@@ -1,0 +1,63 @@
+{
+  "id": "guide-355",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.247265,
+          0.125149,
+          0.191754,
+          0.01197
+        ]
+      },
+      "title": "fast pull-up corner",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b355"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.fastUp",
+        "module": "VoltageToBit.Examples.NegativeControls",
+        "lines": [
+          182,
+          185
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/NegativeControls.lean",
+            "fragment": "L182-L185"
+          },
+          "snippet": {
+            "line": 182,
+            "text": "def fastUp : Params := ⟨1.98, 240, 120, 0.45, 0.45⟩"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.fastUp",
+            "kind": "def"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

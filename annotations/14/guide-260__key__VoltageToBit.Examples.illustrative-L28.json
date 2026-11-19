@@ -1,0 +1,63 @@
+{
+  "id": "guide-260",
+  "subject": [
+    {
+      "location": {
+        "page": 5,
+        "rect": [
+          0.070436,
+          0.920825,
+          0.038222,
+          0.008546
+        ]
+      },
+      "title": "illustrative: eps",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p005-b260"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.illustrative",
+        "module": "VoltageToBit.Examples.IllustrativeDesign",
+        "lines": [
+          28,
+          28
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/IllustrativeDesign.lean",
+            "fragment": "L28"
+          },
+          "snippet": {
+            "line": 28,
+            "text": "eps := 2"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.illustrative",
+            "kind": "def"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          5
+        ],
+        "printed": [
+          5
+        ]
+      }
+    }
+  }
+}

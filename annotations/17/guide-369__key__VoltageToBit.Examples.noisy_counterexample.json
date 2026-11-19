@@ -1,0 +1,63 @@
+{
+  "id": "guide-369",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.247265,
+          0.239155,
+          0.35855,
+          0.011284
+        ]
+      },
+      "title": "the guarantee is then false",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b369"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.noisy_counterexample",
+        "module": "VoltageToBit.Examples.NegativeControls",
+        "lines": [
+          445,
+          462
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/NegativeControls.lean",
+            "fragment": "L445-L462"
+          },
+          "snippet": {
+            "line": 445,
+            "text": "theorem noisy_counterexample (T : ℝ) :\n    ∃ u v : ℝ → ℝ, (∀ t, u t ≤ noisy.VIL) ∧ v 0 ∈ noisy.Safe ∧\n      IsTrajectory noisy u v 0 T ∧ ∀ t, v t < noisy.VOH := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.noisy_counterexample",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

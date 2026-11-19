@@ -1,0 +1,63 @@
+{
+  "id": "guide-364",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.247265,
+          0.213113,
+          0.50017,
+          0.011284
+        ]
+      },
+      "title": "a run that never goes high",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b364"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.miswired_counterexample",
+        "module": "VoltageToBit.Examples.NegativeControls",
+        "lines": [
+          351,
+          367
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/NegativeControls.lean",
+            "fragment": "L351-L367"
+          },
+          "snippet": {
+            "line": 351,
+            "text": "theorem miswired_counterexample (T : ℝ) :\n    ∃ u v : ℝ → ℝ, (∀ t, u t ≤ 0.40) ∧ v 0 ∈ Icc (-0.10 : ℝ) 2.08 ∧\n      ContinuousOn v (Icc 0 T) ∧\n      (∀ t ∈ Ico (0 : ℝ) T, ∃ v' c : ℝ, HasDerivWithinAt v v' (Ici t) t ∧\n        (5 : ℝ) ≤ c ∧ c ≤ 20 ∧ |c * v' - InetSwapped nominal (u t) (v t)| ≤ 2) ∧\n      ∀ t, v t < 1.35 := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.miswired_counterexample",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

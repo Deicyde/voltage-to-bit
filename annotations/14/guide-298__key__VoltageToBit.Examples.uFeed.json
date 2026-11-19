@@ -1,0 +1,63 @@
+{
+  "id": "guide-298",
+  "subject": [
+    {
+      "location": {
+        "page": 6,
+        "rect": [
+          0.500615,
+          0.271759,
+          0.149809,
+          0.01197
+        ]
+      },
+      "title": "a moving valid-low input",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p006-b298"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.uFeed",
+        "module": "VoltageToBit.Examples.Illustrative",
+        "lines": [
+          255,
+          257
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/Illustrative.lean",
+            "fragment": "L255-L257"
+          },
+          "snippet": {
+            "line": 255,
+            "text": "noncomputable def uFeed (t : ℝ) : ℝ := 0.2 + 0.2 * Real.sin (10 * t)"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.uFeed",
+            "kind": "def"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          6
+        ],
+        "printed": [
+          6
+        ]
+      }
+    }
+  }
+}

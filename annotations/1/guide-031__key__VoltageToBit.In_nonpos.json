@@ -1,0 +1,63 @@
+{
+  "id": "guide-031",
+  "subject": [
+    {
+      "location": {
+        "page": 1,
+        "rect": [
+          0.375735,
+          0.532198,
+          0.152631,
+          0.010228
+        ]
+      },
+      "title": "NMOS reverse below ground",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p001-b031"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.In_nonpos",
+        "module": "VoltageToBit.Model.Device",
+        "lines": [
+          149,
+          153
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Device.lean",
+            "fragment": "L149-L153"
+          },
+          "snippet": {
+            "line": 149,
+            "text": "theorem In_nonpos {θ : Params} {u v : ℝ} (hk : 0 ≤ θ.kn) (hv : v ≤ 0) : In θ u v ≤ 0 := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.In_nonpos",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          1
+        ],
+        "printed": [
+          1
+        ]
+      }
+    }
+  }
+}

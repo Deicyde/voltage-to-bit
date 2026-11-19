@@ -1,0 +1,63 @@
+{
+  "id": "guide-317",
+  "subject": [
+    {
+      "location": {
+        "page": 6,
+        "rect": [
+          0.070436,
+          0.571591,
+          0.183844,
+          0.01197
+        ]
+      },
+      "title": "slow pull-up corner",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p006-b317"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.slowUpCorner",
+        "module": "VoltageToBit.Examples.Limits",
+        "lines": [
+          85,
+          89
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/Limits.lean",
+            "fragment": "L85-L89"
+          },
+          "snippet": {
+            "line": 85,
+            "text": "def slowUpCorner : Params := ⟨1.62, 240, 80, 0.60, 0.60⟩"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.slowUpCorner",
+            "kind": "def"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          6
+        ],
+        "printed": [
+          6
+        ]
+      }
+    }
+  }
+}

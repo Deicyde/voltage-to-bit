@@ -1,0 +1,63 @@
+{
+  "id": "guide-126",
+  "subject": [
+    {
+      "location": {
+        "page": 2,
+        "rect": [
+          0.475265,
+          0.869122,
+          0.053991,
+          0.013462
+        ]
+      },
+      "title": "hiN",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p002-b126"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.Admissible.hiN",
+        "module": "VoltageToBit.Model.Inverter",
+        "lines": [
+          174,
+          174
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Inverter.lean",
+            "fragment": "L174"
+          },
+          "snippet": {
+            "line": 174,
+            "text": "  hiN : D.eps < D.RhiN"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.Admissible.hiN",
+            "kind": "field"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          2
+        ],
+        "printed": [
+          2
+        ]
+      }
+    }
+  }
+}

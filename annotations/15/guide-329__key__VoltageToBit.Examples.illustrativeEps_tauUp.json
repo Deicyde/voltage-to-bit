@@ -1,0 +1,63 @@
+{
+  "id": "guide-329",
+  "subject": [
+    {
+      "location": {
+        "page": 6,
+        "rect": [
+          0.507313,
+          0.642045,
+          0.076164,
+          0.013986
+        ]
+      },
+      "title": "illustrativeEps tauUp",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p006-b329"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.illustrativeEps_tauUp",
+        "module": "VoltageToBit.Examples.Limits",
+        "lines": [
+          324,
+          326
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/Limits.lean",
+            "fragment": "L324-L326"
+          },
+          "snippet": {
+            "line": 324,
+            "text": "theorem illustrativeEps_tauUp : illustrativeEps.tauUp = 290000 / 80959 := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.illustrativeEps_tauUp",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          6
+        ],
+        "printed": [
+          6
+        ]
+      }
+    }
+  }
+}

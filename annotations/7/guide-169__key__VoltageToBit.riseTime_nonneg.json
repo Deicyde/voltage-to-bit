@@ -1,0 +1,63 @@
+{
+  "id": "guide-169",
+  "subject": [
+    {
+      "location": {
+        "page": 4,
+        "rect": [
+          0.601981,
+          0.129246,
+          0.082734,
+          0.00993
+        ]
+      },
+      "title": "riseTime nonneg",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p004-b169"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.riseTime_nonneg",
+        "module": "VoltageToBit.Proofs.Reach",
+        "lines": [
+          142,
+          149
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Reach.lean",
+            "fragment": "L142-L149"
+          },
+          "snippet": {
+            "line": 142,
+            "text": "theorem riseTime_nonneg : ∀ (segs : List (ℝ × ℝ)) (l : ℝ), RiseSegs l segs → 0 ≤ riseTime l segs\n  | [], _, _ => le_rfl\n  | (c, m) :: rest, l, h => by\n    obtain ⟨hlc, hm, hrest⟩ :="
+          },
+          "declaration": {
+            "id": "VoltageToBit.riseTime_nonneg",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          4
+        ],
+        "printed": [
+          4
+        ]
+      }
+    }
+  }
+}

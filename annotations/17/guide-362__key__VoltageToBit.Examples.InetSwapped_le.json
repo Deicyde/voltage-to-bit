@@ -1,0 +1,63 @@
+{
+  "id": "guide-362",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.247265,
+          0.185342,
+          0.33358,
+          0.012104
+        ]
+      },
+      "title": "InetSwapped le",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b362"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.InetSwapped_le",
+        "module": "VoltageToBit.Examples.NegativeControls",
+        "lines": [
+          369,
+          382
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/NegativeControls.lean",
+            "fragment": "L369-L382"
+          },
+          "snippet": {
+            "line": 369,
+            "text": "theorem InetSwapped_le {u L : ℝ} (hu : u ≤ 0.40) (hL1 : 1.2 ≤ L) :\n    InetSwapped nominal u L ≤ -(50 * (L - 0.9) ^ 2) := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.InetSwapped_le",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

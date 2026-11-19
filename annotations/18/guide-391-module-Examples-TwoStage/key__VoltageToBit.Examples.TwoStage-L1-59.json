@@ -1,0 +1,59 @@
+{
+  "id": "guide-391",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.685172,
+          0.427657,
+          0.06281,
+          0.010175
+        ]
+      },
+      "title": "module Examples/TwoStage",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b391"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "module": "VoltageToBit.Examples.TwoStage",
+        "lines": [
+          1,
+          59
+        ]
+      },
+      "role": "key",
+      "title": "VoltageToBit.Examples.TwoStage, lines 1–59: import VoltageToBit.Examples.Illustrative",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/TwoStage.lean",
+            "fragment": "L1-L59"
+          },
+          "snippet": {
+            "line": 1,
+            "text": "import VoltageToBit.Examples.Illustrative\nimport VoltageToBit.Proofs.Chain\nimport VoltageToBit.Proofs.Concat\n\n/-!\n# Two illustrative stages in series: an actual run\n\n`Proofs/Chain.lean` proves that two stages in series restore a bit\n(`chain_low`, `chain_high`, `chain_restores_low`, `chain_restores_high`). These\nare implications about a pair of trajectories in which the input of the second\nstage is the output of the first; that file has no existence statement. The\nexistence theorem of the library cannot be applied to the second stage as it\nstands: it asks for an input that is continuous on all of ℝ, and the output of\na first stage is only known to be continuous on the time interval. This file\nsupplies the missing witness for the illustrative record.\n\n* `exists_second_stage`: for any input that is continuous on `[0, 10]`, in\n  particular for the output of a first-stage trajectory, there is a\n  second-stage trajectory on `[0, 10]`, from any initial state in the safe\n  domain.\n* `chain_witness`: an actual two-stage run on `[0, 10]` ns. The first input is\n  held at 0 V (valid-low) and both outputs start at 1.0 V, which decodes to\n  *undefined* (`illustrative_initial_undefined`). The first output is\n  valid-high throughout `[3.43, 10]` ns and the second output is valid-low\n  throughout `[6, 10]` ns. The last fact is obtained from `chain_restores_low`,\n  so the hypotheses of that corollary can be met and its conclusion is about a\n  window of positive length.\n* `chain_witness_high`: the mirror image, for `chain_restores_high`. The first\n  input is held at 1.8 V (valid-high); the first output is valid-low throughout\n  `[2.57, 10]` ns and the second output is valid-high throughout `[6, 10]` ns."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

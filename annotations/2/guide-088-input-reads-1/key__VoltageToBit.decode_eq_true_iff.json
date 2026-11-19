@@ -1,0 +1,63 @@
+{
+  "id": "guide-088",
+  "subject": [
+    {
+      "location": {
+        "page": 2,
+        "rect": [
+          0.654546,
+          0.145367,
+          0.009659,
+          0.007905
+        ]
+      },
+      "title": "input reads 1",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p002-b088"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.decode_eq_true_iff",
+        "module": "VoltageToBit.Model.Inverter",
+        "lines": [
+          225,
+          232
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Inverter.lean",
+            "fragment": "L225-L232"
+          },
+          "snippet": {
+            "line": 225,
+            "text": "theorem decode_eq_true_iff {lo hi x : ℝ} (h : lo < hi) :\n    decode lo hi x = some true ↔ hi ≤ x := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.decode_eq_true_iff",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          2
+        ],
+        "printed": [
+          2
+        ]
+      }
+    }
+  }
+}

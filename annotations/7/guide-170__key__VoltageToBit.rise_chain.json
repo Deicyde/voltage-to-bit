@@ -1,0 +1,63 @@
+{
+  "id": "guide-170",
+  "subject": [
+    {
+      "location": {
+        "page": 4,
+        "rect": [
+          0.431785,
+          0.141031,
+          0.420861,
+          0.012104
+        ]
+      },
+      "title": "rise through a list of levels",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p004-b170"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.rise_chain",
+        "module": "VoltageToBit.Proofs.Reach",
+        "lines": [
+          151,
+          191
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Reach.lean",
+            "fragment": "L151-L191"
+          },
+          "snippet": {
+            "line": 151,
+            "text": "theorem rise_chain {v v' : ℝ → ℝ} {a b : ℝ}\n    (hv : ContinuousOn v (Icc a b))\n    (hv' : ∀ t ∈ Ico a b, HasDerivWithinAt v (v' t) (Ici t) t) :\n    ∀ (rest : List (ℝ × ℝ)) (c m l s : ℝ), RiseSegs l ((c, m) :: rest) →\n      (∀ p ∈ (c, m) :: rest, ∀ t ∈ Ico a b, v t ≤ p.1 → p.2 ≤ v' t) →\n      s ∈ Icc a b → l ≤ v s →\n      ∀ t ∈ Icc s b, s + riseTime l ((c, m) :: rest) ≤ t →\n        finalLevel l ((c, m) :: rest) ≤ v t := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.rise_chain",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          4
+        ],
+        "printed": [
+          4
+        ]
+      }
+    }
+  }
+}

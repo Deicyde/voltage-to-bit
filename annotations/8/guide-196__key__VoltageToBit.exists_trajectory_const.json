@@ -1,0 +1,63 @@
+{
+  "id": "guide-196",
+  "subject": [
+    {
+      "location": {
+        "page": 4,
+        "rect": [
+          0.548146,
+          0.664386,
+          0.288585,
+          0.011284
+        ]
+      },
+      "title": "runs exist, constant capacitance",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p004-b196"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.exists_trajectory_const",
+        "module": "VoltageToBit.Proofs.Existence",
+        "lines": [
+          342,
+          352
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Existence.lean",
+            "fragment": "L342-L352"
+          },
+          "snippet": {
+            "line": 342,
+            "text": "theorem exists_trajectory_const {D : Design} {θ : Params} (hD : D.Admissible)\n    (hθ : D.InBox θ) {C : ℝ} (hC1 : D.Clo ≤ C) (hC2 : C ≤ D.Chi) {u w : ℝ → ℝ}\n    (hu : Continuous u) (hw : Continuous w) {a b : ℝ} (hab : a ≤ b)\n    (hwb : ∀ t ∈ Icc a b, |w t| ≤ D.eps) {v₀ : ℝ} (hv₀ : v₀ ∈ D.Safe) :\n    ∃ v : ℝ → ℝ, v a = v₀ ∧ IsTrajectory D u v a b :="
+          },
+          "declaration": {
+            "id": "VoltageToBit.exists_trajectory_const",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          4
+        ],
+        "printed": [
+          4
+        ]
+      }
+    }
+  }
+}

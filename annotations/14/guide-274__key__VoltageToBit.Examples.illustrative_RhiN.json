@@ -1,0 +1,63 @@
+{
+  "id": "guide-274",
+  "subject": [
+    {
+      "location": {
+        "page": 6,
+        "rect": [
+          0.633283,
+          0.04456,
+          0.088809,
+          0.015092
+        ]
+      },
+      "title": "illustrative RhiN",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p006-b274"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.illustrative_RhiN",
+        "module": "VoltageToBit.Examples.Illustrative",
+        "lines": [
+          54,
+          55
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/Illustrative.lean",
+            "fragment": "L54-L55"
+          },
+          "snippet": {
+            "line": 54,
+            "text": "theorem illustrative_RhiN : illustrative.RhiN = 2.312 := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.illustrative_RhiN",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          6
+        ],
+        "printed": [
+          6
+        ]
+      }
+    }
+  }
+}

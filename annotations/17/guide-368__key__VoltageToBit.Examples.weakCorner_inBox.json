@@ -1,0 +1,63 @@
+{
+  "id": "guide-368",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.673927,
+          0.226617,
+          0.046446,
+          0.009568
+        ]
+      },
+      "title": "weakCorner inBox",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b368"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.weakCorner_inBox",
+        "module": "VoltageToBit.Examples.NegativeControls",
+        "lines": [
+          438,
+          439
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/NegativeControls.lean",
+            "fragment": "L438-L439"
+          },
+          "snippet": {
+            "line": 438,
+            "text": "theorem weakCorner_inBox : noisy.InBox weakCorner := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.weakCorner_inBox",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

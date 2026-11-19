@@ -1,0 +1,63 @@
+{
+  "id": "guide-360",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.543787,
+          0.151244,
+          0.300629,
+          0.012104
+        ]
+      },
+      "title": "falling slew unbounded",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b360"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.valid_high_fall_slew_unbounded",
+        "module": "VoltageToBit.Examples.NegativeControls",
+        "lines": [
+          300,
+          340
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/NegativeControls.lean",
+            "fragment": "L300-L340"
+          },
+          "snippet": {
+            "line": 300,
+            "text": "theorem valid_high_fall_slew_unbounded (M : ℝ) :\n    ∃ (u v : ℝ → ℝ) (d : ℝ), (∀ t, 1.25 ≤ u t) ∧ v 0 = 1.35 ∧\n      IsTrajectory illustrative u v 0 10 ∧ HasDerivWithinAt v d (Ici 0) 0 ∧ d < -M := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.valid_high_fall_slew_unbounded",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

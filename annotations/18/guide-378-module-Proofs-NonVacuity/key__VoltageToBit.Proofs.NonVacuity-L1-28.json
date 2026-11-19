@@ -1,0 +1,59 @@
+{
+  "id": "guide-378",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.22038,
+          0.474971,
+          0.074683,
+          0.010175
+        ]
+      },
+      "title": "module Proofs/NonVacuity",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b378"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "module": "VoltageToBit.Proofs.NonVacuity",
+        "lines": [
+          1,
+          28
+        ]
+      },
+      "role": "key",
+      "title": "VoltageToBit.Proofs.NonVacuity, lines 1–28: import VoltageToBit.Proofs.Existence",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/NonVacuity.lean",
+            "fragment": "L1-L28"
+          },
+          "snippet": {
+            "line": 1,
+            "text": "import VoltageToBit.Proofs.Existence\n\n/-!\n# Admissible records are not degenerate\n\nThe guarantee is a universally quantified implication, so it is worth proving\nthat its hypotheses can be met and its conclusion is not about an empty window,\n**for every admissible record**, not only for one example.\n\n* `Admissible.exists_inBox`: the parameter box is nonempty.\n* `Admissible.zero_mem_safe`, `Admissible.VOL_mem_safe`, `Admissible.VOH_mem_safe`:\n  the safe domain is nonempty and contains both valid output bands' edges.\n* `Admissible.VOL_lt_VOH`: the two valid output bands are disjoint, so decoding\n  is unambiguous and the undefined band has positive width.\n* `Admissible.tauUp_pos`, `Admissible.tauDn_pos`: the deadlines are positive.\n* `Admissible.exists_rise_run`, `Admissible.exists_fall_run`: there is an actual\n  trajectory, starting from the *opposite* valid output level, with a valid\n  input held for longer than the deadline, on which the conclusion holds over a\n  window of positive length.\n-/\n\nnamespace VoltageToBit\n\nopen Set\n\nnamespace Design.Admissible\n\nvariable {D : Design}"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

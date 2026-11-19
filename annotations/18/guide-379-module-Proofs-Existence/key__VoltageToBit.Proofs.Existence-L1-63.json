@@ -1,0 +1,59 @@
+{
+  "id": "guide-379",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.360608,
+          0.381266,
+          0.061892,
+          0.008328
+        ]
+      },
+      "title": "module Proofs/Existence",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b379"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "module": "VoltageToBit.Proofs.Existence",
+        "lines": [
+          1,
+          63
+        ]
+      },
+      "role": "key",
+      "title": "VoltageToBit.Proofs.Existence, lines 1–63: import Mathlib.Analysis.ODE.ExistUnique",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Existence.lean",
+            "fragment": "L1-L63"
+          },
+          "snippet": {
+            "line": 1,
+            "text": "import Mathlib.Analysis.ODE.ExistUnique\nimport VoltageToBit.Proofs.Guarantee\n\n/-!\n# Trajectories exist\n\nThe guarantee in `Proofs/Guarantee.lean` quantifies over all trajectories. This\nfile shows the quantifier is not empty.\n\n* `IsTrajectory.of_ode`: every solution of the ordinary differential equation\n  `Cf (v) * dv/dt = Inet θ u v + w t`, with parameters `θ` in the box, a\n  capacitance function `Cf` within `[Clo, Chi]` and a disturbance `|w| ≤ eps`,\n  is a trajectory of the inclusion. `IsTrajectory.of_ode_varying` allows the\n  parameter point to move within the box as time passes.\n* `exists_solution`: for an admissible record, a parameter point `θ` of the\n  box, continuous input `u`, continuous disturbance `w` with `|w| ≤ eps` on\n  `[a, b]` (`a ≤ b`), a voltage-dependent capacitance `Cf` that stays at or\n  above `Clo` and is Lipschitz on the safe domain, and any initial state in the\n  safe domain, the ODE has a solution on all of `[a, b]`, and it stays in the\n  safe domain.\n  The proof applies Picard–Lindelöf to a vector field clamped to the safe\n  domain (so it is globally Lipschitz and bounded, giving a solution on the\n  whole interval at once) and then uses the boundary margins to show that the\n  solution never leaves the safe domain, where clamping does nothing.\n* `exists_trajectory`: the combination. Its conclusion is only that *some*\n  trajectory exists from the given initial state; it does not mention `θ`,\n  `Cf` or `w`, which serve to build it. A run with given data is\n  `exists_solution` followed by `IsTrajectory.of_ode`.\n* `solution_unique`: two solutions with the same initial state in the safe\n  domain coincide. \"Solution\" means here what `exists_solution` provides: a"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

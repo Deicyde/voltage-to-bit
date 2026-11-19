@@ -1,0 +1,63 @@
+{
+  "id": "guide-365",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.247265,
+          0.22667,
+          0.126662,
+          0.009647
+        ]
+      },
+      "title": "a noisy record",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b365"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.noisy",
+        "module": "VoltageToBit.Examples.NegativeControls",
+        "lines": [
+          430,
+          432
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/NegativeControls.lean",
+            "fragment": "L430-L432"
+          },
+          "snippet": {
+            "line": 430,
+            "text": "noncomputable def noisy : Design := { illustrative with eps := 10.76 }"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.noisy",
+            "kind": "def"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

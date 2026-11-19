@@ -1,0 +1,63 @@
+{
+  "id": "guide-214",
+  "subject": [
+    {
+      "location": {
+        "page": 5,
+        "rect": [
+          0.345757,
+          0.059303,
+          0.513231,
+          0.053688
+        ]
+      },
+      "title": "charge balance with coupling capacitors",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p005-b214"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.IsTrajectory.of_charge_balance",
+        "module": "VoltageToBit.Proofs.ModelError",
+        "lines": [
+          312,
+          428
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/ModelError.lean",
+            "fragment": "L312-L428"
+          },
+          "snippet": {
+            "line": 312,
+            "text": "theorem IsTrajectory.of_charge_balance {D : Design} {θ : Params} {u g v du dg w : ℝ → ℝ}\n    {a b : ℝ} {CL CM Cc Su Sg εw : ℝ} (hCM : 0 ≤ CM) (hCc : 0 ≤ Cc)\n    (hClo : 0 < D.Clo) (hC1 : D.Clo ≤ CL + CM + Cc) (hC2 : CL + CM + Cc ≤ D.Chi)\n    (hbudget : CM * Su + Cc * Sg + εw ≤ D.eps) (hθ : D.InBox θ)\n    (hu : ∀ t ∈ Ico a b, HasDerivWithinAt u (du t) (Ici t) t)\n    (hg : ∀ t ∈ Ico a b, HasDerivWithinAt g (dg t) (Ici t) t)\n    (hSu : ∀ t ∈ Ico a b, |du t| ≤ Su) (hSg : ∀ t ∈ Ico a b, |dg t| ≤ Sg)\n    (hw : ∀ t ∈ Ico a b, |w t| ≤ εw)\n    (hqcont : ContinuousOn (fun s => CL * v s + CM * (v s - u s) + Cc * (v s - g s)) (Icc a b))\n    (hucont : ContinuousOn u (Icc a b)) (hgcont : ContinuousOn g (Icc a b))\n    (hq : ∀ t ∈ Ico a b, HasDerivWithinAt\n      (fun s => CL * v s + CM * (v s - u s) + Cc * (v s - g s))\n      (Inet θ (u t) (v t) + w t) (Ici t) t) :\n    IsTrajectory D u v a b := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.IsTrajectory.of_charge_balance",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          5
+        ],
+        "printed": [
+          5
+        ]
+      }
+    }
+  }
+}

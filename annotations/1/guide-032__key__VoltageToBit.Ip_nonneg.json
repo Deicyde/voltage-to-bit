@@ -1,0 +1,63 @@
+{
+  "id": "guide-032",
+  "subject": [
+    {
+      "location": {
+        "page": 1,
+        "rect": [
+          0.540125,
+          0.532198,
+          0.170714,
+          0.010954
+        ]
+      },
+      "title": "PMOS charges below supply",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p001-b032"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Ip_nonneg",
+        "module": "VoltageToBit.Model.Device",
+        "lines": [
+          155,
+          159
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Device.lean",
+            "fragment": "L155-L159"
+          },
+          "snippet": {
+            "line": 155,
+            "text": "theorem Ip_nonneg {θ : Params} {u v : ℝ} (hk : 0 ≤ θ.kp) (hv : v ≤ θ.VDD) : 0 ≤ Ip θ u v := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Ip_nonneg",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          1
+        ],
+        "printed": [
+          1
+        ]
+      }
+    }
+  }
+}

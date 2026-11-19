@@ -1,0 +1,63 @@
+{
+  "id": "guide-178",
+  "subject": [
+    {
+      "location": {
+        "page": 4,
+        "rect": [
+          0.070436,
+          0.266747,
+          0.216316,
+          0.019438
+        ]
+      },
+      "title": "rising slopes from the margin",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p004-b178"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.upSegs",
+        "module": "VoltageToBit.Proofs.Certificate",
+        "lines": [
+          24,
+          27
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Certificate.lean",
+            "fragment": "L24-L27"
+          },
+          "snippet": {
+            "line": 24,
+            "text": "noncomputable def upSegs (cs : List ℝ) : List (ℝ × ℝ) :=\n  cs.map fun c => (c, (D.Iup c - D.eps) / D.Chi)"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.upSegs",
+            "kind": "def"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          4
+        ],
+        "printed": [
+          4
+        ]
+      }
+    }
+  }
+}

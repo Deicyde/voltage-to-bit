@@ -1,0 +1,59 @@
+{
+  "id": "guide-371",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.079951,
+          0.380342,
+          0.040075,
+          0.010175
+        ]
+      },
+      "title": "module Model/PosSq",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b371"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "module": "VoltageToBit.Model.PosSq",
+        "lines": [
+          1,
+          10
+        ]
+      },
+      "role": "key",
+      "title": "VoltageToBit.Model.PosSq, lines 1–10: import Mathlib.Analysis.Calculus.MeanValue",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/PosSq.lean",
+            "fragment": "L1-L10"
+          },
+          "snippet": {
+            "line": 1,
+            "text": "import Mathlib.Analysis.Calculus.MeanValue\n\n/-!\n# Positive-part square\n\n`psq x = (max x 0)²` is the building block of the square-law device model.\nThis file collects the order and Lipschitz facts used later. No circuit content.\n-/\n\nnamespace VoltageToBit"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

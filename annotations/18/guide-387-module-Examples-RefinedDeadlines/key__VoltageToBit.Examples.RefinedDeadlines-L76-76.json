@@ -1,0 +1,59 @@
+{
+  "id": "guide-387",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.499225,
+          0.428581,
+          0.109682,
+          0.008328
+        ]
+      },
+      "title": "module Examples/RefinedDeadlines",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b387"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "module": "VoltageToBit.Examples.RefinedDeadlines",
+        "lines": [
+          76,
+          76
+        ]
+      },
+      "role": "key",
+      "title": "VoltageToBit.Examples.RefinedDeadlines, lines 76–76: end VoltageToBit.Examples",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/RefinedDeadlines.lean",
+            "fragment": "L76"
+          },
+          "snippet": {
+            "line": 76,
+            "text": "end VoltageToBit.Examples"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

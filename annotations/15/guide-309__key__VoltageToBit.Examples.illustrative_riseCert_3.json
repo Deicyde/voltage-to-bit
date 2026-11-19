@@ -1,0 +1,63 @@
+{
+  "id": "guide-309",
+  "subject": [
+    {
+      "location": {
+        "page": 6,
+        "rect": [
+          0.388665,
+          0.43226,
+          0.089069,
+          0.011284
+        ]
+      },
+      "title": "3 levels prove 2.34",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p006-b309"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.illustrative_riseCert_3",
+        "module": "VoltageToBit.Examples.Illustrative",
+        "lines": [
+          409,
+          414
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/Illustrative.lean",
+            "fragment": "L409-L414"
+          },
+          "snippet": {
+            "line": 409,
+            "text": "theorem illustrative_riseCert_3 : illustrative.ValidRiseCert 1.0 [1.2, 1.35] 2.34 := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.illustrative_riseCert_3",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          6
+        ],
+        "printed": [
+          6
+        ]
+      }
+    }
+  }
+}

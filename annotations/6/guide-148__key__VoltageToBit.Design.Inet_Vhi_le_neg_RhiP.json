@@ -1,0 +1,63 @@
+{
+  "id": "guide-148",
+  "subject": [
+    {
+      "location": {
+        "page": 3,
+        "rect": [
+          0.075812,
+          0.614291,
+          0.20512,
+          0.013462
+        ]
+      },
+      "title": "top of the range, PMOS branch",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p003-b148"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.Inet_Vhi_le_neg_RhiP",
+        "module": "VoltageToBit.Proofs.Margins",
+        "lines": [
+          101,
+          129
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Margins.lean",
+            "fragment": "L101-L129"
+          },
+          "snippet": {
+            "line": 101,
+            "text": "theorem Inet_Vhi_le_neg_RhiP (hD : D.Admissible) (hθ : D.InBox θ) {u : ℝ} (hu : u ≤ D.uHi) :\n    Inet θ u D.Vhi ≤ -D.RhiP := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.Inet_Vhi_le_neg_RhiP",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          3
+        ],
+        "printed": [
+          3
+        ]
+      }
+    }
+  }
+}

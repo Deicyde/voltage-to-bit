@@ -1,0 +1,63 @@
+{
+  "id": "guide-342",
+  "subject": [
+    {
+      "location": {
+        "page": 6,
+        "rect": [
+          0.414574,
+          0.819977,
+          0.475513,
+          0.011284
+        ]
+      },
+      "title": "the local obstruction",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p006-b342"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.no_trajectory_through_left_continuous_jump",
+        "module": "VoltageToBit.Examples.InputClass",
+        "lines": [
+          235,
+          301
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/InputClass.lean",
+            "fragment": "L235-L301"
+          },
+          "snippet": {
+            "line": 235,
+            "text": "theorem no_trajectory_through_left_continuous_jump {u v : ℝ → ℝ} {a b t0 : ℝ}\n    (h : IsTrajectory illustrative u v a b) (h0 : v a ∈ illustrative.Safe)\n    (hat0 : a ≤ t0) (ht0b : t0 + 0.002 ≤ b)\n    (hu0 : u t0 = 1.8) (hu1 : ∀ t ∈ Ioo t0 (t0 + 0.002), u t = 0)\n    (hv1 : -0.02 ≤ v t0) (hv2 : v t0 ≤ 0.25) : False := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.no_trajectory_through_left_continuous_jump",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          6
+        ],
+        "printed": [
+          6
+        ]
+      }
+    }
+  }
+}

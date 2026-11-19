@@ -1,0 +1,59 @@
+{
+  "id": "guide-389",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.695349,
+          0.381266,
+          0.042456,
+          0.008328
+        ]
+      },
+      "title": "module Examples/Limits",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b389"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "module": "VoltageToBit.Examples.Limits",
+        "lines": [
+          354,
+          354
+        ]
+      },
+      "role": "key",
+      "title": "VoltageToBit.Examples.Limits, lines 354–354: end VoltageToBit.Examples",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/Limits.lean",
+            "fragment": "L354"
+          },
+          "snippet": {
+            "line": 354,
+            "text": "end VoltageToBit.Examples"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

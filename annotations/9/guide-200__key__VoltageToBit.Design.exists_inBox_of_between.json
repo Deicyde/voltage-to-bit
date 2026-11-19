@@ -1,0 +1,63 @@
+{
+  "id": "guide-200",
+  "subject": [
+    {
+      "location": {
+        "page": 4,
+        "rect": [
+          0.084716,
+          0.941472,
+          0.211012,
+          0.011284
+        ]
+      },
+      "title": "a current between two box members (conclusion)",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p004-b200"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.exists_inBox_of_between",
+        "module": "VoltageToBit.Proofs.ModelError",
+        "lines": [
+          167,
+          189
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/ModelError.lean",
+            "fragment": "L167-L189"
+          },
+          "snippet": {
+            "line": 167,
+            "text": "theorem exists_inBox_of_between {θ₁ θ₂ : Params} (h₁ : D.InBox θ₁) (h₂ : D.InBox θ₂)\n    {u x J ε : ℝ} (hε : 0 ≤ ε) (hlo : Inet θ₁ u x - ε ≤ J) (hhi : J ≤ Inet θ₂ u x + ε) :\n    ∃ θ : Params, D.InBox θ ∧ |J - Inet θ u x| ≤ ε := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.exists_inBox_of_between",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          4
+        ],
+        "printed": [
+          4
+        ]
+      }
+    }
+  }
+}

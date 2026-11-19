@@ -1,0 +1,63 @@
+{
+  "id": "guide-167",
+  "subject": [
+    {
+      "location": {
+        "page": 4,
+        "rect": [
+          0.490204,
+          0.129193,
+          0.041288,
+          0.010057
+        ]
+      },
+      "title": "le finalLevel",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p004-b167"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.RiseSegs.le_finalLevel",
+        "module": "VoltageToBit.Proofs.Reach",
+        "lines": [
+          128,
+          131
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Reach.lean",
+            "fragment": "L128-L131"
+          },
+          "snippet": {
+            "line": 128,
+            "text": "theorem RiseSegs.le_finalLevel :\n    ∀ {segs : List (ℝ × ℝ)} {l : ℝ}, RiseSegs l segs → l ≤ finalLevel l segs\n  | [], _, _ => le_rfl\n  | (_, _) :: _, _, h => le_trans h.1 (RiseSegs.le_finalLevel h.2.2)"
+          },
+          "declaration": {
+            "id": "VoltageToBit.RiseSegs.le_finalLevel",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          4
+        ],
+        "printed": [
+          4
+        ]
+      }
+    }
+  }
+}

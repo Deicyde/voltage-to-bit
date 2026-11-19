@@ -1,0 +1,63 @@
+{
+  "id": "guide-128",
+  "subject": [
+    {
+      "location": {
+        "page": 2,
+        "rect": [
+          0.662806,
+          0.869122,
+          0.052755,
+          0.013462
+        ]
+      },
+      "title": "loP",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p002-b128"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.Admissible.loP",
+        "module": "VoltageToBit.Model.Inverter",
+        "lines": [
+          176,
+          176
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Inverter.lean",
+            "fragment": "L176"
+          },
+          "snippet": {
+            "line": 176,
+            "text": "  loP : D.eps < D.RloP"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.Admissible.loP",
+            "kind": "field"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          2
+        ],
+        "printed": [
+          2
+        ]
+      }
+    }
+  }
+}

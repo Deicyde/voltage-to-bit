@@ -1,0 +1,63 @@
+{
+  "id": "guide-057",
+  "subject": [
+    {
+      "location": {
+        "page": 2,
+        "rect": [
+          0.238278,
+          0.151973,
+          0.025866,
+          0.01168
+        ]
+      },
+      "title": "Clo",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p002-b057"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.Clo",
+        "module": "VoltageToBit.Model.Inverter",
+        "lines": [
+          42,
+          43
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Inverter.lean",
+            "fragment": "L42-L43"
+          },
+          "snippet": {
+            "line": 42,
+            "text": "  Clo : ℝ"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.Clo",
+            "kind": "field"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          2
+        ],
+        "printed": [
+          2
+        ]
+      }
+    }
+  }
+}

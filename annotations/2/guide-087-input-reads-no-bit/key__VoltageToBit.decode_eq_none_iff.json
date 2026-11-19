@@ -1,0 +1,63 @@
+{
+  "id": "guide-087",
+  "subject": [
+    {
+      "location": {
+        "page": 2,
+        "rect": [
+          0.652562,
+          0.212047,
+          0.013626,
+          0.008381
+        ]
+      },
+      "title": "input reads no bit",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p002-b087"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.decode_eq_none_iff",
+        "module": "VoltageToBit.Model.Inverter",
+        "lines": [
+          234,
+          243
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Inverter.lean",
+            "fragment": "L234-L243"
+          },
+          "snippet": {
+            "line": 234,
+            "text": "theorem decode_eq_none_iff {lo hi x : ℝ} :\n    decode lo hi x = none ↔ lo < x ∧ x < hi := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.decode_eq_none_iff",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          2
+        ],
+        "printed": [
+          2
+        ]
+      }
+    }
+  }
+}

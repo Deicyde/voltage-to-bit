@@ -1,0 +1,63 @@
+{
+  "id": "guide-010",
+  "subject": [
+    {
+      "location": {
+        "page": 1,
+        "rect": [
+          0.488074,
+          0.193488,
+          0.01903,
+          0.013429
+        ]
+      },
+      "title": "PMOS transconductance",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p001-b010"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Params.kp",
+        "module": "VoltageToBit.Model.Device",
+        "lines": [
+          40,
+          41
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Device.lean",
+            "fragment": "L40-L41"
+          },
+          "snippet": {
+            "line": 40,
+            "text": "  kp : ℝ"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Params.kp",
+            "kind": "field"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          1
+        ],
+        "printed": [
+          1
+        ]
+      }
+    }
+  }
+}

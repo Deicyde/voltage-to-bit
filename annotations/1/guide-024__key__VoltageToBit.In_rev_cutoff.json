@@ -1,0 +1,63 @@
+{
+  "id": "guide-024",
+  "subject": [
+    {
+      "location": {
+        "page": 1,
+        "rect": [
+          0.15094,
+          0.460917,
+          0.139399,
+          0.027735
+        ]
+      },
+      "title": "NMOS reverse cutoff",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p001-b024"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.In_rev_cutoff",
+        "module": "VoltageToBit.Model.Device",
+        "lines": [
+          105,
+          109
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Device.lean",
+            "fragment": "L105-L109"
+          },
+          "snippet": {
+            "line": 105,
+            "text": "theorem In_rev_cutoff {θ : Params} {u v : ℝ} (hv : v ≤ 0) (hu : u - v ≤ θ.Vtn) :\n    In θ u v = 0 := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.In_rev_cutoff",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          1
+        ],
+        "printed": [
+          1
+        ]
+      }
+    }
+  }
+}

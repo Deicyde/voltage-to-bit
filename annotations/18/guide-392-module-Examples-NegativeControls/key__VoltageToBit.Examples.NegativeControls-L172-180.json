@@ -1,0 +1,59 @@
+{
+  "id": "guide-392",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.661731,
+          0.451314,
+          0.109692,
+          0.010175
+        ]
+      },
+      "title": "module Examples/NegativeControls",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b392"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "module": "VoltageToBit.Examples.NegativeControls",
+        "lines": [
+          172,
+          180
+        ]
+      },
+      "role": "key",
+      "title": "VoltageToBit.Examples.NegativeControls, lines 172–180: ### The input range cannot be dropped",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/NegativeControls.lean",
+            "fragment": "L172-L180"
+          },
+          "snippet": {
+            "line": 172,
+            "text": "/-! ### The input range cannot be dropped\n\n`illustrative_no_early_high` and the two slew bounds assume an input range.\nThe valid-input classes of the guarantee do not have one: the valid-low class\n`u ≤ 0.40` V has no lower bound and the valid-high class `1.25 V ≤ u` has no\nupper bound. For these classes the three statements fail, as shown below.\nThese are facts about the input class of the theorems, not about a device: the\nclass contains input values far outside any range in which a device model has\na meaning (finding E1-03 of `docs/adversarial-review.md`). -/"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "id": "guide-058",
+  "subject": [
+    {
+      "location": {
+        "page": 2,
+        "rect": [
+          0.26909,
+          0.151973,
+          0.026589,
+          0.01168
+        ]
+      },
+      "title": "Chi",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p002-b058"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.Chi",
+        "module": "VoltageToBit.Model.Inverter",
+        "lines": [
+          44,
+          44
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Inverter.lean",
+            "fragment": "L44"
+          },
+          "snippet": {
+            "line": 44,
+            "text": "  Chi : ℝ"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.Chi",
+            "kind": "field"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          2
+        ],
+        "printed": [
+          2
+        ]
+      }
+    }
+  }
+}

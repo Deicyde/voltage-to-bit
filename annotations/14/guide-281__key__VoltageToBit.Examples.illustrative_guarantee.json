@@ -1,0 +1,63 @@
+{
+  "id": "guide-281",
+  "subject": [
+    {
+      "location": {
+        "page": 6,
+        "rect": [
+          0.070436,
+          0.093462,
+          0.675395,
+          0.034565
+        ]
+      },
+      "title": "the guarantee in numbers",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p006-b281"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.illustrative_guarantee",
+        "module": "VoltageToBit.Examples.Illustrative",
+        "lines": [
+          77,
+          113
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/Illustrative.lean",
+            "fragment": "L77-L113"
+          },
+          "snippet": {
+            "line": 77,
+            "text": "theorem illustrative_guarantee (u v : ℝ → ℝ)\n    (a b : ℝ) (h : IsTrajectory illustrative u v a b) (h0 : v a ∈ Icc (-0.10 : ℝ) 2.08) :\n    (∀ t ∈ Icc a b, v t ∈ Icc (-0.10 : ℝ) 2.08) ∧\n    (∀ s e : ℝ, a ≤ s → e ≤ b → (∀ t ∈ Ico s e, u t ≤ 0.40) →\n      ∀ t ∈ Icc s e, s + 3.43 ≤ t → 1.35 ≤ v t) ∧\n    (∀ s e : ℝ, a ≤ s → e ≤ b → (∀ t ∈ Ico s e, 1.25 ≤ u t) →\n      ∀ t ∈ Icc s e, s + 2.57 ≤ t → v t ≤ 0.25) := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.illustrative_guarantee",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          6
+        ],
+        "printed": [
+          6
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "id": "guide-047",
+  "subject": [
+    {
+      "location": {
+        "page": 2,
+        "rect": [
+          0.238278,
+          0.100877,
+          0.033556,
+          0.015092
+        ]
+      },
+      "title": "VDDlo",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p002-b047"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.VDDlo",
+        "module": "VoltageToBit.Model.Inverter",
+        "lines": [
+          27,
+          28
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Inverter.lean",
+            "fragment": "L27-L28"
+          },
+          "snippet": {
+            "line": 27,
+            "text": "  VDDlo : ℝ"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.VDDlo",
+            "kind": "field"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          2
+        ],
+        "printed": [
+          2
+        ]
+      }
+    }
+  }
+}

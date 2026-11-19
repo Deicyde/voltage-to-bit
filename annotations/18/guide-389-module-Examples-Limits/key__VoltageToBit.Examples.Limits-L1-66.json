@@ -1,0 +1,59 @@
+{
+  "id": "guide-389",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.695349,
+          0.381266,
+          0.042456,
+          0.008328
+        ]
+      },
+      "title": "module Examples/Limits",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b389"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "module": "VoltageToBit.Examples.Limits",
+        "lines": [
+          1,
+          66
+        ]
+      },
+      "role": "key",
+      "title": "VoltageToBit.Examples.Limits, lines 1–66: import VoltageToBit.Examples.Illustrative",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/Limits.lean",
+            "fragment": "L1-L66"
+          },
+          "snippet": {
+            "line": 1,
+            "text": "import VoltageToBit.Examples.Illustrative\n\n/-!\n# Limits for the illustrative inverter: how far any proposal can go\n\nNone of the statements here improves the guarantee. They say where improvement\nstops.\n\n| Quantity | Refuted below | Statement | Proved at |\n| --- | --- | --- | --- |\n| Rise deadline | 2.168 ns | `rise_deadline_counterexample` | 2.26 ns |\n| Fall deadline | 1.0234 ns | `fall_deadline_counterexample` | 1.425 ns |\n\nThe proved values are those of `Examples/RefinedDeadlines.lean`\n(`illustrative_guarantee_refined`). For a deadline at or above the refuted\nvalue and below the proved value the library has no statement in either\ndirection. `Examples/DeadlineBrackets.lean` puts the two ends of each row into\none statement and says what each end means. The numerical experiments\n(`docs/discrepancy-report.md`, section 2) observed worst-case delays of about\n2.2512 ns (rise) and 1.3945 ns (fall). Those two numbers are observations of a\nsimulation of the model, not theorems.\n\nThis file is the one place where the slow corners and the slow runs are\ndefined; the other example files use them from here.\n\n* `slowUpCorner`, `slowDnCorner`: the two slow corners of the parameter box.\n* `slow_rise_run`, `slow_fall_run`: the slow runs. For every initial state in\n  the safe domain there is a solution on `[0, 10]` of the node equation at the\n  slow corner, with the largest capacitance (20 fF), the input held at the edge\n  of its valid band and the disturbance held at its adverse bound. Its"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

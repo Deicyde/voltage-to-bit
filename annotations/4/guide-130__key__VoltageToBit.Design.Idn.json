@@ -1,0 +1,63 @@
+{
+  "id": "guide-130",
+  "subject": [
+    {
+      "location": {
+        "page": 3,
+        "rect": [
+          0.070436,
+          0.042674,
+          0.583291,
+          0.021223
+        ]
+      },
+      "title": "pull-down margin",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p003-b130"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.Idn",
+        "module": "VoltageToBit.Model.Inverter",
+        "lines": [
+          93,
+          101
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Inverter.lean",
+            "fragment": "L93-L101"
+          },
+          "snippet": {
+            "line": 93,
+            "text": "noncomputable def Idn (c : ℝ) : ℝ :=\n  D.knlo / 2 * (psq (D.VIH - D.Vtnhi) - psq (D.VIH - c - D.Vtnhi))\n    - D.kphi / 2 * psq (D.VDDhi - D.VIH - D.Vtplo)"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.Idn",
+            "kind": "def"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          3
+        ],
+        "printed": [
+          3
+        ]
+      }
+    }
+  }
+}

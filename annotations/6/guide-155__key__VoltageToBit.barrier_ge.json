@@ -1,0 +1,63 @@
+{
+  "id": "guide-155",
+  "subject": [
+    {
+      "location": {
+        "page": 3,
+        "rect": [
+          0.348258,
+          0.767687,
+          0.213293,
+          0.027735
+        ]
+      },
+      "title": "barrier from below",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p003-b155"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.barrier_ge",
+        "module": "VoltageToBit.Proofs.Reach",
+        "lines": [
+          34,
+          45
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Reach.lean",
+            "fragment": "L34-L45"
+          },
+          "snippet": {
+            "line": 34,
+            "text": "theorem barrier_ge {v v' : ℝ → ℝ} {a b c : ℝ}\n    (hv : ContinuousOn v (Icc a b))\n    (hv' : ∀ t ∈ Ico a b, HasDerivWithinAt v (v' t) (Ici t) t)\n    (ha : c ≤ v a)\n    (hbound : ∀ t ∈ Ico a b, v t = c → 0 < v' t) :\n    ∀ t ∈ Icc a b, c ≤ v t := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.barrier_ge",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          3
+        ],
+        "printed": [
+          3
+        ]
+      }
+    }
+  }
+}

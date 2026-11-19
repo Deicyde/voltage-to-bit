@@ -1,0 +1,63 @@
+{
+  "id": "guide-344",
+  "subject": [
+    {
+      "location": {
+        "page": 6,
+        "rect": [
+          0.414574,
+          0.846928,
+          0.506531,
+          0.011482
+        ]
+      },
+      "title": "the box in numbers",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p006-b344"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.illustrative_box_bounds",
+        "module": "VoltageToBit.Examples.InputClass",
+        "lines": [
+          182,
+          187
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/InputClass.lean",
+            "fragment": "L182-L187"
+          },
+          "snippet": {
+            "line": 182,
+            "text": "theorem illustrative_box_bounds {θ : Params} (hθ : illustrative.InBox θ) :\n    (1.62 ≤ θ.VDD ∧ θ.VDD ≤ 1.98) ∧ (160 ≤ θ.kn ∧ θ.kn ≤ 240) ∧ (80 ≤ θ.kp ∧ θ.kp ≤ 120) ∧\n    (0.45 ≤ θ.Vtn ∧ θ.Vtn ≤ 0.60) ∧ (0.45 ≤ θ.Vtp ∧ θ.Vtp ≤ 0.60) :="
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.illustrative_box_bounds",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          6
+        ],
+        "printed": [
+          6
+        ]
+      }
+    }
+  }
+}

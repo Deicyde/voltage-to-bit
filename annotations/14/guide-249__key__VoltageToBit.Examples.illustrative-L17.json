@@ -1,0 +1,63 @@
+{
+  "id": "guide-249",
+  "subject": [
+    {
+      "location": {
+        "page": 5,
+        "rect": [
+          0.170632,
+          0.888086,
+          0.079396,
+          0.013462
+        ]
+      },
+      "title": "illustrative: VDDhi",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p005-b249"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.illustrative",
+        "module": "VoltageToBit.Examples.IllustrativeDesign",
+        "lines": [
+          17,
+          17
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/IllustrativeDesign.lean",
+            "fragment": "L17"
+          },
+          "snippet": {
+            "line": 17,
+            "text": "VDDhi := 1.98"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.illustrative",
+            "kind": "def"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          5
+        ],
+        "printed": [
+          5
+        ]
+      }
+    }
+  }
+}

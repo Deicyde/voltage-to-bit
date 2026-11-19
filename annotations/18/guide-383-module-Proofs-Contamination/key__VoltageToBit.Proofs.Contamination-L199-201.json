@@ -1,0 +1,59 @@
+{
+  "id": "guide-383",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.343688,
+          0.475895,
+          0.095732,
+          0.008328
+        ]
+      },
+      "title": "module Proofs/Contamination",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b383"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "module": "VoltageToBit.Proofs.Contamination",
+        "lines": [
+          199,
+          201
+        ]
+      },
+      "role": "key",
+      "title": "VoltageToBit.Proofs.Contamination, lines 199–201: end IsTrajectory",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Contamination.lean",
+            "fragment": "L199-L201"
+          },
+          "snippet": {
+            "line": 199,
+            "text": "end IsTrajectory\n\nend VoltageToBit"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

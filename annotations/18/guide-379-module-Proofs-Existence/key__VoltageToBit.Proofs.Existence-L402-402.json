@@ -1,0 +1,59 @@
+{
+  "id": "guide-379",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.360608,
+          0.381266,
+          0.061892,
+          0.008328
+        ]
+      },
+      "title": "module Proofs/Existence",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b379"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "module": "VoltageToBit.Proofs.Existence",
+        "lines": [
+          402,
+          402
+        ]
+      },
+      "role": "key",
+      "title": "VoltageToBit.Proofs.Existence, lines 402–402: end VoltageToBit",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Existence.lean",
+            "fragment": "L402"
+          },
+          "snippet": {
+            "line": 402,
+            "text": "end VoltageToBit"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

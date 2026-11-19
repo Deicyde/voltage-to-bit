@@ -1,0 +1,63 @@
+{
+  "id": "guide-006",
+  "subject": [
+    {
+      "location": {
+        "page": 1,
+        "rect": [
+          0.341472,
+          0.28414,
+          0.009114,
+          0.005873
+        ]
+      },
+      "title": "disturbance bound",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p001-b006"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.eps",
+        "module": "VoltageToBit.Model.Inverter",
+        "lines": [
+          45,
+          46
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Inverter.lean",
+            "fragment": "L45-L46"
+          },
+          "snippet": {
+            "line": 45,
+            "text": "  eps : ℝ"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.eps",
+            "kind": "field"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          1
+        ],
+        "printed": [
+          1
+        ]
+      }
+    }
+  }
+}

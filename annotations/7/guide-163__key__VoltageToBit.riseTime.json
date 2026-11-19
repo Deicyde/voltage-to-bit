@@ -1,0 +1,63 @@
+{
+  "id": "guide-163",
+  "subject": [
+    {
+      "location": {
+        "page": 4,
+        "rect": [
+          0.431785,
+          0.084132,
+          0.365625,
+          0.017148
+        ]
+      },
+      "title": "time of a rising list",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p004-b163"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.riseTime",
+        "module": "VoltageToBit.Proofs.Reach",
+        "lines": [
+          104,
+          108
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Reach.lean",
+            "fragment": "L104-L108"
+          },
+          "snippet": {
+            "line": 104,
+            "text": "noncomputable def riseTime (l : ℝ) : List (ℝ × ℝ) → ℝ\n  | [] => 0\n  | (c, m) :: rest => (c - l) / m + riseTime c rest"
+          },
+          "declaration": {
+            "id": "VoltageToBit.riseTime",
+            "kind": "def"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          4
+        ],
+        "printed": [
+          4
+        ]
+      }
+    }
+  }
+}

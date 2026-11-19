@@ -1,0 +1,63 @@
+{
+  "id": "guide-067",
+  "subject": [
+    {
+      "location": {
+        "page": 2,
+        "rect": [
+          0.233527,
+          0.236934,
+          0.022893,
+          0.008678
+        ]
+      },
+      "title": "uHi",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p002-b067"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.uHi",
+        "module": "VoltageToBit.Model.Inverter",
+        "lines": [
+          58,
+          59
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Inverter.lean",
+            "fragment": "L58-L59"
+          },
+          "snippet": {
+            "line": 58,
+            "text": "  uHi : ℝ"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.uHi",
+            "kind": "field"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          2
+        ],
+        "printed": [
+          2
+        ]
+      }
+    }
+  }
+}

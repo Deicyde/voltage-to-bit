@@ -1,0 +1,63 @@
+{
+  "id": "guide-104",
+  "subject": [
+    {
+      "location": {
+        "page": 2,
+        "rect": [
+          0.274451,
+          0.793954,
+          0.06205,
+          0.013113
+        ]
+      },
+      "title": "kn le",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p002-b104"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.Admissible.kn_le",
+        "module": "VoltageToBit.Model.Inverter",
+        "lines": [
+          146,
+          146
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Inverter.lean",
+            "fragment": "L146"
+          },
+          "snippet": {
+            "line": 146,
+            "text": "  kn_le : D.knlo ≤ D.knhi"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.Admissible.kn_le",
+            "kind": "field"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          2
+        ],
+        "printed": [
+          2
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "id": "guide-080",
+  "subject": [
+    {
+      "location": {
+        "page": 2,
+        "rect": [
+          0.070436,
+          0.320134,
+          0.264842,
+          0.053095
+        ]
+      },
+      "title": "three-valued decoding",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p002-b080"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.decode",
+        "module": "VoltageToBit.Model.Inverter",
+        "lines": [
+          208,
+          218
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Inverter.lean",
+            "fragment": "L208-L218"
+          },
+          "snippet": {
+            "line": 208,
+            "text": "noncomputable def decode (lo hi x : ℝ) : Option Bool :=\n  if x ≤ lo then some false else if hi ≤ x then some true else none"
+          },
+          "declaration": {
+            "id": "VoltageToBit.decode",
+            "kind": "def"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          2
+        ],
+        "printed": [
+          2
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "id": "guide-288",
+  "subject": [
+    {
+      "location": {
+        "page": 6,
+        "rect": [
+          0.070436,
+          0.30385,
+          0.240593,
+          0.011284
+        ]
+      },
+      "title": "the ramp input",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p006-b288"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.uRamp",
+        "module": "VoltageToBit.Examples.Illustrative",
+        "lines": [
+          163,
+          165
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/Illustrative.lean",
+            "fragment": "L163-L165"
+          },
+          "snippet": {
+            "line": 163,
+            "text": "noncomputable def uRamp (t : ℝ) : ℝ := max 0 (min 1.8 (1.8 - 9 * (t - 4)))"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.uRamp",
+            "kind": "def"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          6
+        ],
+        "printed": [
+          6
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "id": "guide-284",
+  "subject": [
+    {
+      "location": {
+        "page": 6,
+        "rect": [
+          0.070436,
+          0.17257,
+          0.659291,
+          0.01366
+        ]
+      },
+      "title": "runs at one supply stay within 0.10 V of it",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p006-b284"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.illustrative_safe_atSupply",
+        "module": "VoltageToBit.Examples.Illustrative",
+        "lines": [
+          384,
+          405
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/Illustrative.lean",
+            "fragment": "L384-L405"
+          },
+          "snippet": {
+            "line": 384,
+            "text": "theorem illustrative_safe_atSupply (θ : Params) (hθ : illustrative.InBox θ)\n    (Cf w u v : ℝ → ℝ) (a b : ℝ) (hCf : ∀ x, Cf x ∈ Icc (5 : ℝ) 20)\n    (hw : ∀ t ∈ Ico a b, |w t| ≤ 2) (hcont : ContinuousOn v (Icc a b))\n    (hode : ∀ t ∈ Ico a b, ∃ v' : ℝ, HasDerivWithinAt v v' (Ici t) t ∧\n      Cf (v t) * v' = Inet θ (u t) (v t) + w t)\n    (h0 : v a ∈ Icc (-0.10 : ℝ) (θ.VDD + 0.10)) :\n    ∀ t ∈ Icc a b, v t ∈ Icc (-0.10 : ℝ) (θ.VDD + 0.10) := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.illustrative_safe_atSupply",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          6
+        ],
+        "printed": [
+          6
+        ]
+      }
+    }
+  }
+}

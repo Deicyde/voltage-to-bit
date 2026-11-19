@@ -1,0 +1,63 @@
+{
+  "id": "guide-092",
+  "subject": [
+    {
+      "location": {
+        "page": 2,
+        "rect": [
+          0.888009,
+          0.201961,
+          0.012152,
+          0.008275
+        ]
+      },
+      "title": "the safe range",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p002-b092"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.Safe",
+        "module": "VoltageToBit.Model.Inverter",
+        "lines": [
+          80,
+          81
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Inverter.lean",
+            "fragment": "L80-L81"
+          },
+          "snippet": {
+            "line": 80,
+            "text": "def Safe : Set ℝ := Icc D.Vlo D.Vhi"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.Safe",
+            "kind": "def"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          2
+        ],
+        "printed": [
+          2
+        ]
+      }
+    }
+  }
+}

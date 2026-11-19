@@ -1,0 +1,59 @@
+{
+  "id": "guide-386",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.518854,
+          0.404923,
+          0.070424,
+          0.008328
+        ]
+      },
+      "title": "module Examples/Illustrative",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b386"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "module": "VoltageToBit.Examples.Illustrative",
+        "lines": [
+          1,
+          31
+        ]
+      },
+      "role": "key",
+      "title": "VoltageToBit.Examples.Illustrative, lines 1–31: import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/Illustrative.lean",
+            "fragment": "L1-L31"
+          },
+          "snippet": {
+            "line": 1,
+            "text": "import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic\nimport VoltageToBit.Examples.IllustrativeDesign\nimport VoltageToBit.Proofs.Existence\nimport VoltageToBit.Proofs.AtSupply\nimport VoltageToBit.Proofs.Certificate\nimport VoltageToBit.Proofs.ModelError\n\n/-!\n# A concrete instance: the illustrative 1.8 V-class inverter\n\nAll numbers come from `designs/illustrative-1v8.json` (units V, µA, fF, ns).\nThey are **illustrative**: plausible orders of magnitude, not fitted to any\nprocess, device model or measurement.\n\n* `illustrative_admissible`: the record satisfies every numeric condition.\n* `illustrative_guarantee`: the universal guarantee with explicit numbers.\n* `illustrative_exists`: trajectories exist from every initial state in the\n  safe domain, for every continuous input and every interval.\n* `illustrative_scenario`: one fully explicit run (nominal parameters, a\n  concrete input waveform, a concrete nonzero disturbance, an initial state in\n  the undefined band) in which both logic directions occur and each is followed\n  by an observation window of positive length.\n* `illustrative_feedthrough_scenario`: one explicit run in which the output\n  node has a gate-drain capacitance and one aggressor, the input keeps moving,\n  and the displacement currents fit the allowance. It is the witness that the\n  hypotheses of `IsTrajectory.of_charge_balance` can be met.\n-/\n\nnamespace VoltageToBit.Examples\n"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "id": "guide-380",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.368082,
+          0.404923,
+          0.046945,
+          0.008328
+        ]
+      },
+      "title": "module Proofs/Concat",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b380"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "module": "VoltageToBit.Proofs.Concat",
+        "lines": [
+          1,
+          38
+        ]
+      },
+      "role": "key",
+      "title": "VoltageToBit.Proofs.Concat, lines 1–38: import VoltageToBit.Proofs.Existence",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Concat.lean",
+            "fragment": "L1-L38"
+          },
+          "snippet": {
+            "line": 1,
+            "text": "import VoltageToBit.Proofs.Existence\n\n/-!\n# Gluing trajectories, and existence for a step input\n\nThe trajectory notion is pointwise in time: at each instant it relates the\nright derivative of the output to the value of the input at that same instant.\nTwo consequences are recorded here.\n\n* `IsTrajectory.congr_input`: only the input values on `[a, b)` matter.\n* `IsTrajectory.concat`: trajectories on `[a, c]` and `[c, b]` that agree at\n  `c` glue to a trajectory on `[a, b]`.\n* `exists_trajectory_step`: trajectories exist for an input with one jump, of\n  the form \"`u₁` before `c`, `u₂` from `c` on\" with `u₁`, `u₂` continuous.\n  This covers the ideal digital edge.\n\nA caution that follows from the same pointwise character. The value the input\ntakes *at* a jump instant matters: the step above is right-continuous (it takes\nthe new value at `c`). For an input that keeps its old value at the jump\ninstant and takes the new value only strictly after it, the right derivative\nof any candidate output is dictated by the new value while the inclusion at\nthat instant refers to the old one. A trajectory that starts in the safe\ndomain then need not exist on an interval containing the jump, and where none\nexists the guarantee says nothing. For the illustrative record, such a step\nfrom 1.8 V to 0 V at `t = 4` and the interval `[0, 10]`, none exists\n(`Examples.stepL_no_trajectory` in `Examples/InputClass.lean`). For a general\nrecord, existence is proved only for continuous inputs and for right-continuous\nsteps.\n-/\n"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

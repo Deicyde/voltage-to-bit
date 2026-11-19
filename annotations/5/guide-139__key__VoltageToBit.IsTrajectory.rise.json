@@ -1,0 +1,63 @@
+{
+  "id": "guide-139",
+  "subject": [
+    {
+      "location": {
+        "page": 3,
+        "rect": [
+          0.087235,
+          0.28628,
+          0.459353,
+          0.014089
+        ]
+      },
+      "title": "(R) low in, high out",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p003-b139"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.IsTrajectory.rise",
+        "module": "VoltageToBit.Proofs.Guarantee",
+        "lines": [
+          153,
+          173
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Guarantee.lean",
+            "fragment": "L153-L173"
+          },
+          "snippet": {
+            "line": 153,
+            "text": "theorem rise (hD : D.Admissible) (h : IsTrajectory D u v a b)\n    (h0 : v a ∈ D.Safe) {s e : ℝ} (hs : a ≤ s) (he : e ≤ b)\n    (hu : ∀ t ∈ Ico s e, u t ≤ D.VIL) :\n    ∀ t ∈ Icc s e, s + D.tauUp ≤ t → D.VOH ≤ v t := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.IsTrajectory.rise",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          3
+        ],
+        "printed": [
+          3
+        ]
+      }
+    }
+  }
+}

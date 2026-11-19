@@ -1,0 +1,59 @@
+{
+  "id": "guide-373",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.074132,
+          0.428581,
+          0.051713,
+          0.008328
+        ]
+      },
+      "title": "module Model/Inverter",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b373"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "module": "VoltageToBit.Model.Inverter",
+        "lines": [
+          1,
+          23
+        ]
+      },
+      "role": "key",
+      "title": "VoltageToBit.Model.Inverter, lines 1–23: import VoltageToBit.Model.Device",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Inverter.lean",
+            "fragment": "L1-L23"
+          },
+          "snippet": {
+            "line": 1,
+            "text": "import VoltageToBit.Model.Device\n\n/-!\n# The uncertain inverter: design record, trajectories, decoding\n\n* `Design`: a record of numbers: a parameter box, a capacitance range, a\n  disturbance bound, logic thresholds, a safe voltage domain, and two\n  auxiliary split points.\n* `Design.InBox`: membership of a parameter choice in the box.\n* `Design.Iup`, `Design.Idn`, `Design.RhiP`, `Design.RhiN`, `Design.RloN`,\n  `Design.RloP`: closed-form worst-corner current margins. They are *numbers\n  computed from the record*; the theorems in `Proofs/Margins.lean` show that the\n  device law really provides at least these currents.\n* `Design.Admissible`: the finite list of numeric conditions a record must\n  satisfy. Nothing in it mentions trajectories or the conclusion.\n* `IsTrajectory`: the dynamics, as a differential inclusion over capacitance,\n  parameter point and current error.\n* `decode`: three-valued decoding of a voltage.\n-/\n\nnamespace VoltageToBit\n\nopen Set"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

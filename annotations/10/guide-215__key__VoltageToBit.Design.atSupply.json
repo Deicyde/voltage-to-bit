@@ -1,0 +1,63 @@
+{
+  "id": "guide-215",
+  "subject": [
+    {
+      "location": {
+        "page": 5,
+        "rect": [
+          0.070436,
+          0.209599,
+          0.381728,
+          0.013462
+        ]
+      },
+      "title": "the record at one supply value",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p005-b215"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.atSupply",
+        "module": "VoltageToBit.Proofs.AtSupply",
+        "lines": [
+          61,
+          64
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/AtSupply.lean",
+            "fragment": "L61-L64"
+          },
+          "snippet": {
+            "line": 61,
+            "text": "noncomputable def atSupply (D : Design) (V0 : ℝ) : Design :=\n  { D with VDDlo := V0, VDDhi := V0, Vhi := V0 + (D.Vhi - D.VDDhi) }"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.atSupply",
+            "kind": "def"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          5
+        ],
+        "printed": [
+          5
+        ]
+      }
+    }
+  }
+}

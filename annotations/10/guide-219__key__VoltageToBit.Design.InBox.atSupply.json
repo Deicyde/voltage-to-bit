@@ -1,0 +1,63 @@
+{
+  "id": "guide-219",
+  "subject": [
+    {
+      "location": {
+        "page": 5,
+        "rect": [
+          0.332659,
+          0.242121,
+          0.185735,
+          0.012762
+        ]
+      },
+      "title": "a box point is in its own restricted box",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p005-b219"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.InBox.atSupply",
+        "module": "VoltageToBit.Proofs.AtSupply",
+        "lines": [
+          167,
+          173
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/AtSupply.lean",
+            "fragment": "L167-L173"
+          },
+          "snippet": {
+            "line": 167,
+            "text": "theorem InBox.atSupply {D : Design} {θ : Params} (hθ : D.InBox θ) :\n    (D.atSupply θ.VDD).InBox θ :="
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.InBox.atSupply",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          5
+        ],
+        "printed": [
+          5
+        ]
+      }
+    }
+  }
+}

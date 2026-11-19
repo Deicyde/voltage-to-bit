@@ -1,0 +1,59 @@
+{
+  "id": "guide-374",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.231235,
+          0.380342,
+          0.052971,
+          0.010175
+        ]
+      },
+      "title": "module Proofs/Margins",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b374"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "module": "VoltageToBit.Proofs.Margins",
+        "lines": [
+          1,
+          24
+        ]
+      },
+      "role": "key",
+      "title": "VoltageToBit.Proofs.Margins, lines 1–24: import VoltageToBit.Model.Inverter",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Margins.lean",
+            "fragment": "L1-L24"
+          },
+          "snippet": {
+            "line": 1,
+            "text": "import VoltageToBit.Model.Inverter\n\n/-!\n# Current margins derived from the device law\n\nThe closed-form numbers `Iup`, `Idn`, `RhiP`, `RhiN`, `RloN`, `RloP` of a\ndesign record are shown to be genuine bounds on the net device current\n`Inet θ u v`, for every parameter choice in the box. Each proof is a chain of\nmonotonicity steps on `psq`; no margin is assumed.\n\n* `Inet_ge_Iup`: for `u ≤ VIL` and `v ≤ c ≤ VDDlo`, the net current into the\n  node is at least `Iup c`.\n* `Inet_le_neg_Idn`: for `VIH ≤ u` and `0 ≤ c ≤ v`, the net current out of the\n  node is at least `Idn c`.\n* `Inet_Vhi_lt`, `Inet_Vlo_gt`: at the two ends of the safe domain the device\n  current points strictly inwards by more than `eps`, for **every** input\n  value `u`.\n-/\n\nnamespace VoltageToBit\n\nnamespace Design\n\nvariable {D : Design} {θ : Params}"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "id": "guide-223",
+  "subject": [
+    {
+      "location": {
+        "page": 5,
+        "rect": [
+          0.070436,
+          0.385057,
+          0.421481,
+          0.020364
+        ]
+      },
+      "title": "largest charging current",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p005-b223"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.IchargeMax",
+        "module": "VoltageToBit.Proofs.Contamination",
+        "lines": [
+          30,
+          34
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Contamination.lean",
+            "fragment": "L30-L34"
+          },
+          "snippet": {
+            "line": 30,
+            "text": "noncomputable def IchargeMax (D : Design) (ulo uhi : ℝ) : ℝ :=\n  D.kphi / 2 * psq (D.VDDhi - ulo - D.Vtplo) + D.knhi / 2 * psq (uhi - D.Vlo - D.Vtnlo)"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.IchargeMax",
+            "kind": "def"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          5
+        ],
+        "printed": [
+          5
+        ]
+      }
+    }
+  }
+}

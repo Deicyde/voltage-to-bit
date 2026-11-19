@@ -1,0 +1,63 @@
+{
+  "id": "guide-173",
+  "subject": [
+    {
+      "location": {
+        "page": 4,
+        "rect": [
+          0.613384,
+          0.227567,
+          0.04666,
+          0.009354
+        ]
+      },
+      "title": "pos",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p004-b173"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.FallSegs.pos",
+        "module": "VoltageToBit.Proofs.Reach",
+        "lines": [
+          203,
+          209
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Reach.lean",
+            "fragment": "L203-L209"
+          },
+          "snippet": {
+            "line": 203,
+            "text": "theorem FallSegs.pos : ∀ {segs : List (ℝ × ℝ)} {h : ℝ}, FallSegs h segs → ∀ p ∈ segs, 0 < p.2\n  | [], _, _, p, hp => by simp at hp\n  | (c, m) :: rest, _, hs, p, hp => by\n    obtain ⟨-, hm, hrest⟩ :="
+          },
+          "declaration": {
+            "id": "VoltageToBit.FallSegs.pos",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          4
+        ],
+        "printed": [
+          4
+        ]
+      }
+    }
+  }
+}

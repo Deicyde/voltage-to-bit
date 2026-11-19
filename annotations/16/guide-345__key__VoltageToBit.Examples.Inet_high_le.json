@@ -1,0 +1,63 @@
+{
+  "id": "guide-345",
+  "subject": [
+    {
+      "location": {
+        "page": 6,
+        "rect": [
+          0.414574,
+          0.860192,
+          0.245055,
+          0.011284
+        ]
+      },
+      "title": "Inet high le",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p006-b345"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.Inet_high_le",
+        "module": "VoltageToBit.Examples.InputClass",
+        "lines": [
+          189,
+          204
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/InputClass.lean",
+            "fragment": "L189-L204"
+          },
+          "snippet": {
+            "line": 189,
+            "text": "theorem Inet_high_le {θ : Params} (hθ : illustrative.InBox θ) {x : ℝ} (h1 : -0.02 ≤ x)\n    (h2 : x ≤ 0.25) : Inet θ 1.8 x ≤ 6.6 := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.Inet_high_le",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          6
+        ],
+        "printed": [
+          6
+        ]
+      }
+    }
+  }
+}

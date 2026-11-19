@@ -1,0 +1,63 @@
+{
+  "id": "guide-349",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.381566,
+          0.075979,
+          0.092322,
+          0.008328
+        ]
+      },
+      "title": "badBox not admissible",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b349"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.badBox_not_admissible",
+        "module": "VoltageToBit.Examples.NegativeControls",
+        "lines": [
+          91,
+          93
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/NegativeControls.lean",
+            "fragment": "L91-L93"
+          },
+          "snippet": {
+            "line": 91,
+            "text": "theorem badBox_not_admissible : ¬ badBox.Admissible := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.badBox_not_admissible",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

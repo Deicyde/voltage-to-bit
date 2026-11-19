@@ -1,0 +1,63 @@
+{
+  "id": "guide-289",
+  "subject": [
+    {
+      "location": {
+        "page": 6,
+        "rect": [
+          0.500615,
+          0.202859,
+          0.186177,
+          0.011284
+        ]
+      },
+      "title": "nominal parameters",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p006-b289"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.nominal",
+        "module": "VoltageToBit.Examples.Illustrative",
+        "lines": [
+          154,
+          158
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/Illustrative.lean",
+            "fragment": "L154-L158"
+          },
+          "snippet": {
+            "line": 154,
+            "text": "def nominal : Params := ⟨1.8, 200, 100, 0.5, 0.5⟩"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.nominal",
+            "kind": "def"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          6
+        ],
+        "printed": [
+          6
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "id": "guide-151",
+  "subject": [
+    {
+      "location": {
+        "page": 3,
+        "rect": [
+          0.075812,
+          0.707231,
+          0.191271,
+          0.013462
+        ]
+      },
+      "title": "bottom of the range, PMOS branch",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p003-b151"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.RloP_le_Inet_Vlo",
+        "module": "VoltageToBit.Proofs.Margins",
+        "lines": [
+          181,
+          204
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Margins.lean",
+            "fragment": "L181-L204"
+          },
+          "snippet": {
+            "line": 181,
+            "text": "theorem RloP_le_Inet_Vlo (hD : D.Admissible) (hθ : D.InBox θ) {u : ℝ} (hu : u ≤ D.uLo) :\n    D.RloP ≤ Inet θ u D.Vlo := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.RloP_le_Inet_Vlo",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          3
+        ],
+        "printed": [
+          3
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "id": "guide-245",
+  "subject": [
+    {
+      "location": {
+        "page": 5,
+        "rect": [
+          0.070436,
+          0.779557,
+          0.424915,
+          0.01197
+        ]
+      },
+      "title": "a run that rises",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p005-b245"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.Admissible.exists_rise_run",
+        "module": "VoltageToBit.Proofs.NonVacuity",
+        "lines": [
+          66,
+          82
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/NonVacuity.lean",
+            "fragment": "L66-L82"
+          },
+          "snippet": {
+            "line": 66,
+            "text": "theorem exists_rise_run (hD : D.Admissible) :\n    ∃ u v : ℝ → ℝ, IsTrajectory D u v 0 (D.tauUp + 1) ∧\n      v 0 = D.VOL ∧ (∀ t, u t ≤ D.VIL) ∧\n      ∀ t ∈ Icc D.tauUp (D.tauUp + 1), D.VOH ≤ v t := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.Admissible.exists_rise_run",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          5
+        ],
+        "printed": [
+          5
+        ]
+      }
+    }
+  }
+}

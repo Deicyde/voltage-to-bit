@@ -1,0 +1,63 @@
+{
+  "id": "guide-028",
+  "subject": [
+    {
+      "location": {
+        "page": 1,
+        "rect": [
+          0.341814,
+          0.492122,
+          0.316008,
+          0.03111
+        ]
+      },
+      "title": "PMOS reverse triode",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p001-b028"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Ip_rev_triode",
+        "module": "VoltageToBit.Model.Device",
+        "lines": [
+          129,
+          133
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Device.lean",
+            "fragment": "L129-L133"
+          },
+          "snippet": {
+            "line": 129,
+            "text": "theorem Ip_rev_triode {θ : Params} {u v : ℝ} (hv : θ.VDD ≤ v) (hu : u ≤ θ.VDD - θ.Vtp) :\n    Ip θ u v = -(θ.kp * ((v - u - θ.Vtp) * (v - θ.VDD) - (v - θ.VDD) ^ 2 / 2)) := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Ip_rev_triode",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          1
+        ],
+        "printed": [
+          1
+        ]
+      }
+    }
+  }
+}

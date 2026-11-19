@@ -1,0 +1,63 @@
+{
+  "id": "guide-224",
+  "subject": [
+    {
+      "location": {
+        "page": 5,
+        "rect": [
+          0.503677,
+          0.392264,
+          0.059503,
+          0.013157
+        ]
+      },
+      "title": "IchargeMax nonneg",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p005-b224"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.IchargeMax_nonneg",
+        "module": "VoltageToBit.Proofs.Contamination",
+        "lines": [
+          36,
+          42
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Contamination.lean",
+            "fragment": "L36-L42"
+          },
+          "snippet": {
+            "line": 36,
+            "text": "theorem IchargeMax_nonneg (hD : D.Admissible) (ulo uhi : ℝ) : 0 ≤ D.IchargeMax ulo uhi := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.IchargeMax_nonneg",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          5
+        ],
+        "printed": [
+          5
+        ]
+      }
+    }
+  }
+}

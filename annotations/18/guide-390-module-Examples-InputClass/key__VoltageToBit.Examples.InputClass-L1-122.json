@@ -1,0 +1,59 @@
+{
+  "id": "guide-390",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.681728,
+          0.403999,
+          0.069698,
+          0.010175
+        ]
+      },
+      "title": "module Examples/InputClass",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b390"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "module": "VoltageToBit.Examples.InputClass",
+        "lines": [
+          1,
+          122
+        ]
+      },
+      "role": "key",
+      "title": "VoltageToBit.Examples.InputClass, lines 1–122: import VoltageToBit.Examples.Illustrative",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/InputClass.lean",
+            "fragment": "L1-L122"
+          },
+          "snippet": {
+            "line": 1,
+            "text": "import VoltageToBit.Examples.Illustrative\nimport VoltageToBit.Proofs.Concat\nimport VoltageToBit.Proofs.Contamination\n\n/-!\n# The input class of the guarantee: where it has instances\n\n`illustrative_guarantee` and the general theorems `IsTrajectory.safe`, `.rise`,\n`.fall`, `.decoded` are stated for every input function `u : ℝ → ℝ` and every\ntrajectory `v` for that input that starts in the safe domain. Such a statement\nsays something about an input on an interval only if a trajectory from the\nsafe domain exists for it there. This file shows, with compiled statements\nabout the illustrative record, that this is a real restriction.\n\nTwo inputs that differ at a single instant:\n\n* `uStepL` is 1.8 V for `t ≤ 4` and 0 V afterwards. At the jump instant `t = 4`\n  it still has its **old** value.\n  `stepL_no_trajectory`: there is **no** trajectory for it on `[0, 10]` from\n  any initial state in the safe domain. So for this input the hypotheses of\n  the guarantee cannot be met with `a = 0` and `b = 10`: there the guarantee\n  holds vacuously and says nothing.\n* `uStepR` is 1.8 V for `t < 4` and 0 V from `t = 4` on. At the jump instant it\n  already has its **new** value.\n  `stepR_has_trajectory`: trajectories exist on `[0, 10]` from every initial\n  state in the safe domain (the library's `exists_trajectory_step`), and for\n  them the guarantee has content.\n\n`step_input_scope` states both facts, and that the two inputs agree at every\n`t ≠ 4`, in one statement with explicit numbers."
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

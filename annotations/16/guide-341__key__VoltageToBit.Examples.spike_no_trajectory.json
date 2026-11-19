@@ -1,0 +1,63 @@
+{
+  "id": "guide-341",
+  "subject": [
+    {
+      "location": {
+        "page": 6,
+        "rect": [
+          0.5895,
+          0.806911,
+          0.30233,
+          0.011284
+        ]
+      },
+      "title": "no run through the spike",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p006-b341"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.spike_no_trajectory",
+        "module": "VoltageToBit.Examples.InputClass",
+        "lines": [
+          442,
+          455
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/InputClass.lean",
+            "fragment": "L442-L455"
+          },
+          "snippet": {
+            "line": 442,
+            "text": "theorem spike_no_trajectory (v : ℝ → ℝ) (h : IsTrajectory illustrative uSpike v 0 10)\n    (h1 : -0.02 ≤ v 0) (h2 : v 0 ≤ 0.25) : False := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.spike_no_trajectory",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          6
+        ],
+        "printed": [
+          6
+        ]
+      }
+    }
+  }
+}

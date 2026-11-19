@@ -1,0 +1,63 @@
+{
+  "id": "guide-035",
+  "subject": [
+    {
+      "location": {
+        "page": 1,
+        "rect": [
+          0.284221,
+          0.548498,
+          0.242233,
+          0.015888
+        ]
+      },
+      "title": "PMOS below its saturation current",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p001-b035"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Ip_le_sat",
+        "module": "VoltageToBit.Model.Device",
+        "lines": [
+          174,
+          179
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Device.lean",
+            "fragment": "L174-L179"
+          },
+          "snippet": {
+            "line": 174,
+            "text": "theorem Ip_le_sat {θ : Params} {u v : ℝ} (hk : 0 ≤ θ.kp) :\n    Ip θ u v ≤ θ.kp / 2 * psq (θ.VDD - u - θ.Vtp) := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Ip_le_sat",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          1
+        ],
+        "printed": [
+          1
+        ]
+      }
+    }
+  }
+}

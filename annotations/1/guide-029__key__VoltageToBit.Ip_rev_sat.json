@@ -1,0 +1,63 @@
+{
+  "id": "guide-029",
+  "subject": [
+    {
+      "location": {
+        "page": 1,
+        "rect": [
+          0.678826,
+          0.493161,
+          0.197486,
+          0.029031
+        ]
+      },
+      "title": "PMOS reverse saturation",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p001-b029"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Ip_rev_sat",
+        "module": "VoltageToBit.Model.Device",
+        "lines": [
+          135,
+          139
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Device.lean",
+            "fragment": "L135-L139"
+          },
+          "snippet": {
+            "line": 135,
+            "text": "theorem Ip_rev_sat {θ : Params} {u v : ℝ} (hu : θ.VDD - θ.Vtp ≤ u) (hv : u + θ.Vtp ≤ v) :\n    Ip θ u v = -(θ.kp / 2 * (v - u - θ.Vtp) ^ 2) := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Ip_rev_sat",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          1
+        ],
+        "printed": [
+          1
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "id": "guide-356",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.446018,
+          0.125677,
+          0.044381,
+          0.011443
+        ]
+      },
+      "title": "fastUp inBox",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b356"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.fastUp_inBox",
+        "module": "VoltageToBit.Examples.NegativeControls",
+        "lines": [
+          187,
+          188
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/NegativeControls.lean",
+            "fragment": "L187-L188"
+          },
+          "snippet": {
+            "line": 187,
+            "text": "theorem fastUp_inBox : illustrative.InBox fastUp := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.fastUp_inBox",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "id": "guide-101",
+  "subject": [
+    {
+      "location": {
+        "page": 2,
+        "rect": [
+          0.457594,
+          0.642037,
+          0.419605,
+          0.034565
+        ]
+      },
+      "title": "gluing two runs",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p002-b101"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.IsTrajectory.concat",
+        "module": "VoltageToBit.Proofs.Concat",
+        "lines": [
+          48,
+          75
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Concat.lean",
+            "fragment": "L48-L75"
+          },
+          "snippet": {
+            "line": 48,
+            "text": "theorem concat {v₁ v₂ : ℝ → ℝ} (hac : a ≤ c) (hcb : c ≤ b)\n    (h₁ : IsTrajectory D u v₁ a c) (h₂ : IsTrajectory D u v₂ c b) (hc : v₁ c = v₂ c) :\n    IsTrajectory D u (fun t => if t ≤ c then v₁ t else v₂ t) a b := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.IsTrajectory.concat",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          2
+        ],
+        "printed": [
+          2
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "id": "guide-198",
+  "subject": [
+    {
+      "location": {
+        "page": 4,
+        "rect": [
+          0.263562,
+          0.711701,
+          0.461032,
+          0.011284
+        ]
+      },
+      "title": "runs exist for an input with one jump",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p004-b198"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.exists_trajectory_step",
+        "module": "VoltageToBit.Proofs.Concat",
+        "lines": [
+          79,
+          104
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Concat.lean",
+            "fragment": "L79-L104"
+          },
+          "snippet": {
+            "line": 79,
+            "text": "theorem exists_trajectory_step {D : Design} {θ : Params} (hD : D.Admissible)\n    (hθ : D.InBox θ) {Cf : ℝ → ℝ} (hCf : ∀ x, D.Clo ≤ Cf x ∧ Cf x ≤ D.Chi) {Kc : ℝ}\n    (hCfLip : ∀ x ∈ D.Safe, ∀ y ∈ D.Safe, |Cf x - Cf y| ≤ Kc * |x - y|)\n    {u₁ u₂ w : ℝ → ℝ} (hu₁ : Continuous u₁) (hu₂ : Continuous u₂) (hw : Continuous w)\n    {a c b : ℝ} (hac : a ≤ c) (hcb : c ≤ b) (hwb : ∀ t ∈ Icc a b, |w t| ≤ D.eps)\n    {v₀ : ℝ} (hv₀ : v₀ ∈ D.Safe) :\n    ∃ v : ℝ → ℝ, v a = v₀ ∧\n      IsTrajectory D (fun t => if t < c then u₁ t else u₂ t) v a b := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.exists_trajectory_step",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          4
+        ],
+        "printed": [
+          4
+        ]
+      }
+    }
+  }
+}

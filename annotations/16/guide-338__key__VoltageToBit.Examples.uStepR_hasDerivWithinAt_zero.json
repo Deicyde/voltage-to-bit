@@ -1,0 +1,63 @@
+{
+  "id": "guide-338",
+  "subject": [
+    {
+      "location": {
+        "page": 6,
+        "rect": [
+          0.414574,
+          0.793026,
+          0.149037,
+          0.012104
+        ]
+      },
+      "title": "the ideal step has right derivative 0",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p006-b338"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.uStepR_hasDerivWithinAt_zero",
+        "module": "VoltageToBit.Examples.InputClass",
+        "lines": [
+          401,
+          419
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/InputClass.lean",
+            "fragment": "L401-L419"
+          },
+          "snippet": {
+            "line": 401,
+            "text": "theorem uStepR_hasDerivWithinAt_zero : ∀ t : ℝ, HasDerivWithinAt uStepR 0 (Ici t) t := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.uStepR_hasDerivWithinAt_zero",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          6
+        ],
+        "printed": [
+          6
+        ]
+      }
+    }
+  }
+}

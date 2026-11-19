@@ -1,0 +1,63 @@
+{
+  "id": "guide-195",
+  "subject": [
+    {
+      "location": {
+        "page": 4,
+        "rect": [
+          0.568848,
+          0.63059,
+          0.247179,
+          0.011284
+        ]
+      },
+      "title": "runs exist",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p004-b195"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.exists_trajectory",
+        "module": "VoltageToBit.Proofs.Existence",
+        "lines": [
+          317,
+          340
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Existence.lean",
+            "fragment": "L317-L340"
+          },
+          "snippet": {
+            "line": 317,
+            "text": "theorem exists_trajectory {D : Design} {θ : Params} (hD : D.Admissible) (hθ : D.InBox θ)\n    {Cf : ℝ → ℝ} (hCf : ∀ x, D.Clo ≤ Cf x ∧ Cf x ≤ D.Chi) {Kc : ℝ}\n    (hCfLip : ∀ x ∈ D.Safe, ∀ y ∈ D.Safe, |Cf x - Cf y| ≤ Kc * |x - y|)\n    {u w : ℝ → ℝ} (hu : Continuous u) (hw : Continuous w) {a b : ℝ} (hab : a ≤ b)\n    (hwb : ∀ t ∈ Icc a b, |w t| ≤ D.eps) {v₀ : ℝ} (hv₀ : v₀ ∈ D.Safe) :\n    ∃ v : ℝ → ℝ, v a = v₀ ∧ IsTrajectory D u v a b := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.exists_trajectory",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          4
+        ],
+        "printed": [
+          4
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "id": "guide-240",
+  "subject": [
+    {
+      "location": {
+        "page": 5,
+        "rect": [
+          0.403366,
+          0.762373,
+          0.036744,
+          0.008875
+        ]
+      },
+      "title": "zero mem safe",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p005-b240"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.Admissible.zero_mem_safe",
+        "module": "VoltageToBit.Proofs.NonVacuity",
+        "lines": [
+          39,
+          40
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/NonVacuity.lean",
+            "fragment": "L39-L40"
+          },
+          "snippet": {
+            "line": 39,
+            "text": "theorem zero_mem_safe (hD : D.Admissible) : (0 : ℝ) ∈ D.Safe :="
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.Admissible.zero_mem_safe",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          5
+        ],
+        "printed": [
+          5
+        ]
+      }
+    }
+  }
+}

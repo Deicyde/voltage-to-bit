@@ -1,0 +1,63 @@
+{
+  "id": "guide-351",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.247265,
+          0.091938,
+          0.483093,
+          0.011284
+        ]
+      },
+      "title": "no valid high within 38 ps",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b351"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.illustrative_no_early_high",
+        "module": "VoltageToBit.Examples.NegativeControls",
+        "lines": [
+          105,
+          121
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/NegativeControls.lean",
+            "fragment": "L105-L121"
+          },
+          "snippet": {
+            "line": 105,
+            "text": "theorem illustrative_no_early_high (u v : ℝ → ℝ)\n    (a b : ℝ) (h : IsTrajectory illustrative u v a b) (h0 : v a ∈ illustrative.Safe)\n    (s e : ℝ) (hs : a ≤ s) (he : e ≤ b) (hu : ∀ t ∈ Ico s e, 0 ≤ u t ∧ u t ≤ 0.40)\n    (hvs : v s ≤ 0.25) :\n    ∀ t ∈ Icc s e, t ≤ s + 0.038 → v t < 1.35 := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.illustrative_no_early_high",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "id": "guide-384",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.371652,
+          0.499553,
+          0.039805,
+          0.008328
+        ]
+      },
+      "title": "module Proofs/Chain",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b384"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "module": "VoltageToBit.Proofs.Chain",
+        "lines": [
+          1,
+          49
+        ]
+      },
+      "role": "key",
+      "title": "VoltageToBit.Proofs.Chain, lines 1–49: import VoltageToBit.Proofs.NonVacuity",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Chain.lean",
+            "fragment": "L1-L49"
+          },
+          "snippet": {
+            "line": 1,
+            "text": "import VoltageToBit.Proofs.NonVacuity\n\n/-!\n# Two stages in series: the output bit is usable as an input bit\n\nA corollary of the single-inverter guarantee, included because it is the point\nof the threshold ordering `VOL ≤ VIL < VIH ≤ VOH`: a valid output of one stage\nis a valid input of the next, so the digital abstraction composes.\n\nThe first stage has design `D₁`, the second `D₂`; compatibility of the two is\nthe pair of inequalities `D₂.VIH ≤ D₁.VOH` and `D₁.VOL ≤ D₂.VIL`. For two\ncopies of one admissible design these hold by the static discipline\n(`chain_restores_low`, `chain_restores_high`).\n\nModelling caveat. Each stage is still the one-node model. The gate capacitance\nof the second stage and any coupling between its input and its output are not\nmodelled as extra state; they are covered only if the stages' capacitance\nbounds and error bounds `eps` contain them. That is an assumption about the\nenvironment, not something proved here.\n\nFor the illustrative record the assumption is not physically plausible. The\nonly bounds the library has on the first stage's output slew come from\n`IsTrajectory.rise_at_most` and `IsTrajectory.fall_at_most`, and they hold only\nfor first-stage inputs confined to a range. Two of them are stated: about\n29 V/ns rising for inputs in `[0, 0.40]` V and about 58 V/ns falling for inputs\nin `[1.25, 1.98]` V (`Examples.illustrative_max_rise_slew`,\n`Examples.illustrative_max_fall_slew`). The same lemmas give about 32 V/ns\nfalling for inputs in `[0, 0.40]` V and about 65 V/ns rising for inputs in\n`[1.25, 1.98]` V, so the magnitude of the slew is bounded by about 65 V/ns for\ninputs that stay in one of the two ranges. A switching input moves between the"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

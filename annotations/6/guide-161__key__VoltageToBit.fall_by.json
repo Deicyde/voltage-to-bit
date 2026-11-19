@@ -1,0 +1,63 @@
+{
+  "id": "guide-161",
+  "subject": [
+    {
+      "location": {
+        "page": 3,
+        "rect": [
+          0.589636,
+          0.874145,
+          0.249324,
+          0.027735
+        ]
+      },
+      "title": "fall by a deadline",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p003-b161"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.fall_by",
+        "module": "VoltageToBit.Proofs.Reach",
+        "lines": [
+          85,
+          100
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Reach.lean",
+            "fragment": "L85-L100"
+          },
+          "snippet": {
+            "line": 85,
+            "text": "theorem fall_by {v v' : ℝ → ℝ} {a b c h m : ℝ}\n    (hv : ContinuousOn v (Icc a b))\n    (hv' : ∀ t ∈ Ico a b, HasDerivWithinAt v (v' t) (Ici t) t)\n    (hm : 0 < m) (hh : v a ≤ h)\n    (hslope : ∀ t ∈ Ico a b, c ≤ v t → v' t ≤ -m) :\n    ∀ t ∈ Icc a b, a + (h - c) / m ≤ t → v t ≤ c := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.fall_by",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          3
+        ],
+        "printed": [
+          3
+        ]
+      }
+    }
+  }
+}

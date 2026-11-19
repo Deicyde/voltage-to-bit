@@ -1,0 +1,63 @@
+{
+  "id": "guide-087",
+  "subject": [
+    {
+      "location": {
+        "page": 2,
+        "rect": [
+          0.652562,
+          0.212047,
+          0.013626,
+          0.008381
+        ]
+      },
+      "title": "input reads no bit",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p002-b087"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.decodeIn",
+        "module": "VoltageToBit.Model.Inverter",
+        "lines": [
+          249,
+          253
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Inverter.lean",
+            "fragment": "L249-L253"
+          },
+          "snippet": {
+            "line": 249,
+            "text": "noncomputable def decodeIn (x : ℝ) : Option Bool := decode D.VIL D.VIH x"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.decodeIn",
+            "kind": "def"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          2
+        ],
+        "printed": [
+          2
+        ]
+      }
+    }
+  }
+}

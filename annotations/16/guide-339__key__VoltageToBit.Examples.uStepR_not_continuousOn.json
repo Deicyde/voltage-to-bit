@@ -1,0 +1,63 @@
+{
+  "id": "guide-339",
+  "subject": [
+    {
+      "location": {
+        "page": 6,
+        "rect": [
+          0.57537,
+          0.793845,
+          0.17816,
+          0.011284
+        ]
+      },
+      "title": "and is not continuous",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p006-b339"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.uStepR_not_continuousOn",
+        "module": "VoltageToBit.Examples.InputClass",
+        "lines": [
+          421,
+          435
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/InputClass.lean",
+            "fragment": "L421-L435"
+          },
+          "snippet": {
+            "line": 421,
+            "text": "theorem uStepR_not_continuousOn : ¬ ContinuousOn uStepR (Icc (0 : ℝ) 10) := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.uStepR_not_continuousOn",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          6
+        ],
+        "printed": [
+          6
+        ]
+      }
+    }
+  }
+}

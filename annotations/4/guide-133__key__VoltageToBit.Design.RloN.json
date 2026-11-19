@@ -1,0 +1,63 @@
+{
+  "id": "guide-133",
+  "subject": [
+    {
+      "location": {
+        "page": 3,
+        "rect": [
+          0.070436,
+          0.125547,
+          0.356014,
+          0.019673
+        ]
+      },
+      "title": "restoring current at the bottom, NMOS",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p003-b133"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.RloN",
+        "module": "VoltageToBit.Model.Inverter",
+        "lines": [
+          112,
+          114
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Inverter.lean",
+            "fragment": "L112-L114"
+          },
+          "snippet": {
+            "line": 112,
+            "text": "noncomputable def RloN : ℝ :=\n  D.knlo / 2 * (psq (D.uLo - D.Vlo - D.Vtnhi) - psq (D.uLo - D.Vtnhi))"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.RloN",
+            "kind": "def"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          3
+        ],
+        "printed": [
+          3
+        ]
+      }
+    }
+  }
+}

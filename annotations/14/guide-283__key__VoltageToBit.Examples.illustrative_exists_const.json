@@ -1,0 +1,63 @@
+{
+  "id": "guide-283",
+  "subject": [
+    {
+      "location": {
+        "page": 6,
+        "rect": [
+          0.070436,
+          0.151915,
+          0.19277,
+          0.009964
+        ]
+      },
+      "title": "runs exist, constant capacitance",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p006-b283"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.illustrative_exists_const",
+        "module": "VoltageToBit.Examples.Illustrative",
+        "lines": [
+          142,
+          150
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/Illustrative.lean",
+            "fragment": "L142-L150"
+          },
+          "snippet": {
+            "line": 142,
+            "text": "theorem illustrative_exists_const (θ : Params) (hθ : illustrative.InBox θ) (C : ℝ)\n    (hC : C ∈ Icc (5 : ℝ) 20) (u w : ℝ → ℝ) (hu : Continuous u) (hw : Continuous w)\n    (a b : ℝ) (hab : a ≤ b) (hwb : ∀ t ∈ Icc a b, |w t| ≤ 2) (v₀ : ℝ)\n    (hv₀ : v₀ ∈ Icc (-0.10 : ℝ) 2.08) :\n    ∃ v : ℝ → ℝ, v a = v₀ ∧ IsTrajectory illustrative u v a b :="
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.illustrative_exists_const",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          6
+        ],
+        "printed": [
+          6
+        ]
+      }
+    }
+  }
+}

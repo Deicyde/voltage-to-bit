@@ -1,0 +1,63 @@
+{
+  "id": "guide-280",
+  "subject": [
+    {
+      "location": {
+        "page": 6,
+        "rect": [
+          0.324725,
+          0.071122,
+          0.06985,
+          0.012734
+        ]
+      },
+      "title": "illustrative tauDn le",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p006-b280"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.illustrative_tauDn_le",
+        "module": "VoltageToBit.Examples.Illustrative",
+        "lines": [
+          72,
+          73
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/Illustrative.lean",
+            "fragment": "L72-L73"
+          },
+          "snippet": {
+            "line": 72,
+            "text": "theorem illustrative_tauDn_le : illustrative.tauDn ≤ 2.57 := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.illustrative_tauDn_le",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          6
+        ],
+        "printed": [
+          6
+        ]
+      }
+    }
+  }
+}

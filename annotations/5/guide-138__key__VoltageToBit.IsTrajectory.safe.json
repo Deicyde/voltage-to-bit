@@ -1,0 +1,63 @@
+{
+  "id": "guide-138",
+  "subject": [
+    {
+      "location": {
+        "page": 3,
+        "rect": [
+          0.087235,
+          0.2649,
+          0.344523,
+          0.01366
+        ]
+      },
+      "title": "(S) the output stays safe",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p003-b138"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.IsTrajectory.safe",
+        "module": "VoltageToBit.Proofs.Guarantee",
+        "lines": [
+          81,
+          111
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Guarantee.lean",
+            "fragment": "L81-L111"
+          },
+          "snippet": {
+            "line": 81,
+            "text": "theorem safe (hD : D.Admissible) (h : IsTrajectory D u v a b)\n    (h0 : v a ∈ D.Safe) : ∀ t ∈ Icc a b, v t ∈ D.Safe := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.IsTrajectory.safe",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          3
+        ],
+        "printed": [
+          3
+        ]
+      }
+    }
+  }
+}

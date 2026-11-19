@@ -1,0 +1,63 @@
+{
+  "id": "guide-172",
+  "subject": [
+    {
+      "location": {
+        "page": 4,
+        "rect": [
+          0.312833,
+          0.226564,
+          0.288792,
+          0.011284
+        ]
+      },
+      "title": "a valid falling list",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p004-b172"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.FallSegs",
+        "module": "VoltageToBit.Proofs.Reach",
+        "lines": [
+          198,
+          201
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Reach.lean",
+            "fragment": "L198-L201"
+          },
+          "snippet": {
+            "line": 198,
+            "text": "def FallSegs (h : ℝ) : List (ℝ × ℝ) → Prop\n  | [] => True\n  | (c, m) :: rest => c ≤ h ∧ 0 < m ∧ FallSegs c rest"
+          },
+          "declaration": {
+            "id": "VoltageToBit.FallSegs",
+            "kind": "def"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          4
+        ],
+        "printed": [
+          4
+        ]
+      }
+    }
+  }
+}

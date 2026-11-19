@@ -1,0 +1,63 @@
+{
+  "id": "guide-190",
+  "subject": [
+    {
+      "location": {
+        "page": 4,
+        "rect": [
+          0.114995,
+          0.583544,
+          0.318429,
+          0.017505
+        ]
+      },
+      "title": "the clamped right-hand side",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p004-b190"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.clampedField",
+        "module": "VoltageToBit.Proofs.Existence",
+        "lines": [
+          114,
+          116
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Existence.lean",
+            "fragment": "L114-L116"
+          },
+          "snippet": {
+            "line": 114,
+            "text": "noncomputable def clampedField (D : Design) (θ : Params) (Cf u w : ℝ → ℝ) (t x : ℝ) : ℝ :=\n  (Inet θ (u t) (clamp D.Vlo D.Vhi x) + w t) / Cf (clamp D.Vlo D.Vhi x)"
+          },
+          "declaration": {
+            "id": "VoltageToBit.clampedField",
+            "kind": "def"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          4
+        ],
+        "printed": [
+          4
+        ]
+      }
+    }
+  }
+}

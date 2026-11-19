@@ -1,0 +1,63 @@
+{
+  "id": "guide-114",
+  "subject": [
+    {
+      "location": {
+        "page": 2,
+        "rect": [
+          0.274451,
+          0.824005,
+          0.054069,
+          0.014499
+        ]
+      },
+      "title": "Vtp nonneg",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p002-b114"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.Admissible.Vtp_nonneg",
+        "module": "VoltageToBit.Model.Inverter",
+        "lines": [
+          153,
+          154
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Inverter.lean",
+            "fragment": "L153-L154"
+          },
+          "snippet": {
+            "line": 153,
+            "text": "  Vtp_nonneg : 0 ≤ D.Vtplo"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.Admissible.Vtp_nonneg",
+            "kind": "field"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          2
+        ],
+        "printed": [
+          2
+        ]
+      }
+    }
+  }
+}

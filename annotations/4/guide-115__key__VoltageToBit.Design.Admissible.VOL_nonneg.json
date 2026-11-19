@@ -1,0 +1,63 @@
+{
+  "id": "guide-115",
+  "subject": [
+    {
+      "location": {
+        "page": 2,
+        "rect": [
+          0.376873,
+          0.826151,
+          0.059181,
+          0.010713
+        ]
+      },
+      "title": "VOL nonneg",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p002-b115"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.Admissible.VOL_nonneg",
+        "module": "VoltageToBit.Model.Inverter",
+        "lines": [
+          162,
+          162
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Inverter.lean",
+            "fragment": "L162"
+          },
+          "snippet": {
+            "line": 162,
+            "text": "  VOL_nonneg : 0 ≤ D.VOL"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.Admissible.VOL_nonneg",
+            "kind": "field"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          2
+        ],
+        "printed": [
+          2
+        ]
+      }
+    }
+  }
+}

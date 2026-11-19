@@ -1,0 +1,63 @@
+{
+  "id": "guide-156",
+  "subject": [
+    {
+      "location": {
+        "page": 3,
+        "rect": [
+          0.075812,
+          0.823451,
+          0.144402,
+          0.027735
+        ]
+      },
+      "title": "pull-up margin holds",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p003-b156"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.Inet_ge_Iup",
+        "module": "VoltageToBit.Proofs.Margins",
+        "lines": [
+          26,
+          62
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Margins.lean",
+            "fragment": "L26-L62"
+          },
+          "snippet": {
+            "line": 26,
+            "text": "theorem Inet_ge_Iup (hD : D.Admissible) (hθ : D.InBox θ) {u v c : ℝ}\n    (hu : u ≤ D.VIL) (hv : v ≤ c) (hc : c ≤ D.VDDlo) :\n    D.Iup c ≤ Inet θ u v := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.Inet_ge_Iup",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          3
+        ],
+        "printed": [
+          3
+        ]
+      }
+    }
+  }
+}

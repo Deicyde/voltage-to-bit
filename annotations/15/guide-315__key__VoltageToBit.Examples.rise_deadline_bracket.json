@@ -1,0 +1,63 @@
+{
+  "id": "guide-315",
+  "subject": [
+    {
+      "location": {
+        "page": 6,
+        "rect": [
+          0.070436,
+          0.549589,
+          0.36698,
+          0.012274
+        ]
+      },
+      "title": "rise: false below, true from",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p006-b315"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.rise_deadline_bracket",
+        "module": "VoltageToBit.Examples.DeadlineBrackets",
+        "lines": [
+          100,
+          129
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/DeadlineBrackets.lean",
+            "fragment": "L100-L129"
+          },
+          "snippet": {
+            "line": 100,
+            "text": "theorem rise_deadline_bracket (τ : ℝ) :\n    (τ < 2.168 → ¬ ∀ (u v : ℝ → ℝ) (a b : ℝ), IsTrajectory illustrative u v a b →\n        v a ∈ Icc (-0.10 : ℝ) 2.08 →\n        ∀ s e : ℝ, a ≤ s → e ≤ b → (∀ t ∈ Ico s e, u t ≤ 0.40) →\n          ∀ t ∈ Icc s e, s + τ ≤ t → 1.35 ≤ v t) ∧\n    (2.26 ≤ τ → ∀ (u v : ℝ → ℝ) (a b : ℝ), IsTrajectory illustrative u v a b →\n        v a ∈ Icc (-0.10 : ℝ) 2.08 →\n        ∀ s e : ℝ, a ≤ s → e ≤ b → (∀ t ∈ Ico s e, u t ≤ 0.40) →\n          ∀ t ∈ Icc s e, s + τ ≤ t → 1.35 ≤ v t) := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.rise_deadline_bracket",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          6
+        ],
+        "printed": [
+          6
+        ]
+      }
+    }
+  }
+}

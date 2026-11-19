@@ -1,0 +1,63 @@
+{
+  "id": "guide-121",
+  "subject": [
+    {
+      "location": {
+        "page": 2,
+        "rect": [
+          0.376873,
+          0.856203,
+          0.080754,
+          0.010713
+        ]
+      },
+      "title": "VIH le VOH",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p002-b121"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.Admissible.VIH_le_VOH",
+        "module": "VoltageToBit.Model.Inverter",
+        "lines": [
+          166,
+          166
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Inverter.lean",
+            "fragment": "L166"
+          },
+          "snippet": {
+            "line": 166,
+            "text": "  VIH_le_VOH : D.VIH ≤ D.VOH"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Design.Admissible.VIH_le_VOH",
+            "kind": "field"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          2
+        ],
+        "printed": [
+          2
+        ]
+      }
+    }
+  }
+}

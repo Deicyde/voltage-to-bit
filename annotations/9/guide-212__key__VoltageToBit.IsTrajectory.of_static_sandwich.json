@@ -1,0 +1,63 @@
+{
+  "id": "guide-212",
+  "subject": [
+    {
+      "location": {
+        "page": 4,
+        "rect": [
+          0.405975,
+          0.910834,
+          0.477699,
+          0.027735
+        ]
+      },
+      "title": "the static sandwich",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p004-b212"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.IsTrajectory.of_static_sandwich",
+        "module": "VoltageToBit.Proofs.ModelError",
+        "lines": [
+          262,
+          287
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/ModelError.lean",
+            "fragment": "L262-L287"
+          },
+          "snippet": {
+            "line": 262,
+            "text": "theorem IsTrajectory.of_static_sandwich {D : Design} {u v : ℝ → ℝ} {a b : ℝ}\n    {J : ℝ → ℝ → ℝ} {U : Set ℝ} {w : ℝ → ℝ} {εm εw : ℝ} (hεm : 0 ≤ εm)\n    (hbudget : εm + εw ≤ D.eps)\n    (hU : ∀ t ∈ Ico a b, u t ∈ U)\n    (hJ : ∀ x ∈ U, ∀ y ∈ D.Safe, ∃ θ₁ θ₂ : Params, D.InBox θ₁ ∧ D.InBox θ₂ ∧\n      Inet θ₁ x y - εm ≤ J x y ∧ J x y ≤ Inet θ₂ x y + εm)\n    (hw : ∀ t ∈ Ico a b, |w t| ≤ εw)\n    (hcont : ContinuousOn v (Icc a b))\n    (hode : ∀ t ∈ Ico a b, ∃ v' c : ℝ, HasDerivWithinAt v v' (Ici t) t ∧\n      D.Clo ≤ c ∧ c ≤ D.Chi ∧ c * v' = J (u t) (v t) + w t) :\n    IsTrajectory D u v a b :="
+          },
+          "declaration": {
+            "id": "VoltageToBit.IsTrajectory.of_static_sandwich",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          4
+        ],
+        "printed": [
+          4
+        ]
+      }
+    }
+  }
+}

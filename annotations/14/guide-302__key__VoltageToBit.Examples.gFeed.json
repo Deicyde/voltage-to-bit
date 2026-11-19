@@ -1,0 +1,63 @@
+{
+  "id": "guide-302",
+  "subject": [
+    {
+      "location": {
+        "page": 6,
+        "rect": [
+          0.500615,
+          0.287517,
+          0.140769,
+          0.011284
+        ]
+      },
+      "title": "an aggressor",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p006-b302"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.gFeed",
+        "module": "VoltageToBit.Examples.Illustrative",
+        "lines": [
+          259,
+          261
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/Illustrative.lean",
+            "fragment": "L259-L261"
+          },
+          "snippet": {
+            "line": 259,
+            "text": "noncomputable def gFeed (t : ℝ) : ℝ := 0.9 + 0.5 * Real.sin (10 * t)"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.gFeed",
+            "kind": "def"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          6
+        ],
+        "printed": [
+          6
+        ]
+      }
+    }
+  }
+}

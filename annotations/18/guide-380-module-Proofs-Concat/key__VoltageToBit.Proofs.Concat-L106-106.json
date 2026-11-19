@@ -1,0 +1,59 @@
+{
+  "id": "guide-380",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.368082,
+          0.404923,
+          0.046945,
+          0.008328
+        ]
+      },
+      "title": "module Proofs/Concat",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b380"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "module": "VoltageToBit.Proofs.Concat",
+        "lines": [
+          106,
+          106
+        ]
+      },
+      "role": "key",
+      "title": "VoltageToBit.Proofs.Concat, lines 106–106: end VoltageToBit",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Concat.lean",
+            "fragment": "L106"
+          },
+          "snippet": {
+            "line": 106,
+            "text": "end VoltageToBit"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

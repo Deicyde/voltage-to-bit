@@ -1,0 +1,63 @@
+{
+  "id": "guide-327",
+  "subject": [
+    {
+      "location": {
+        "page": 6,
+        "rect": [
+          0.070436,
+          0.643977,
+          0.332063,
+          0.010175
+        ]
+      },
+      "title": "a larger provable disturbance",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p006-b327"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.illustrativeEps",
+        "module": "VoltageToBit.Examples.Limits",
+        "lines": [
+          314,
+          317
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/Limits.lean",
+            "fragment": "L314-L317"
+          },
+          "snippet": {
+            "line": 314,
+            "text": "noncomputable def illustrativeEps : Design :=\n  { illustrative with eps := 2.3801, uHi := 0.772486, uLo := 0.742506 }"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.illustrativeEps",
+            "kind": "def"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          6
+        ],
+        "printed": [
+          6
+        ]
+      }
+    }
+  }
+}

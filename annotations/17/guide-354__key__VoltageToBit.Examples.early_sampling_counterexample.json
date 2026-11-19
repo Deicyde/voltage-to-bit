@@ -1,0 +1,63 @@
+{
+  "id": "guide-354",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.593032,
+          0.110702,
+          0.281109,
+          0.011284
+        ]
+      },
+      "title": "38 ps is too early",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b354"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.early_sampling_counterexample",
+        "module": "VoltageToBit.Examples.NegativeControls",
+        "lines": [
+          150,
+          170
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/NegativeControls.lean",
+            "fragment": "L150-L170"
+          },
+          "snippet": {
+            "line": 150,
+            "text": "theorem early_sampling_counterexample :\n    ∃ u v : ℝ → ℝ, (∀ t, u t ≤ 0.40) ∧ v 0 = 0.25 ∧\n      IsTrajectory illustrative u v 0 10 ∧ v 0.038 < 1.35 := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.early_sampling_counterexample",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}

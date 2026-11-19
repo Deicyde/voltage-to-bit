@@ -1,0 +1,63 @@
+{
+  "id": "guide-353",
+  "subject": [
+    {
+      "location": {
+        "page": 7,
+        "rect": [
+          0.412076,
+          0.105004,
+          0.173957,
+          0.01997
+        ]
+      },
+      "title": "largest falling slew",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p007-b353"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.illustrative_max_fall_slew",
+        "module": "VoltageToBit.Examples.NegativeControls",
+        "lines": [
+          136,
+          148
+        ]
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "destination": {
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/NegativeControls.lean",
+            "fragment": "L136-L148"
+          },
+          "snippet": {
+            "line": 136,
+            "text": "theorem illustrative_max_fall_slew :\n    (illustrative.IdischargeMax 1.25 1.98 + illustrative.eps) / illustrative.Clo\n      = 58.3144 := by"
+          },
+          "declaration": {
+            "id": "VoltageToBit.Examples.illustrative_max_fall_slew",
+            "kind": "theorem"
+          }
+        }
+      }
+    }
+  ],
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [
+          7
+        ],
+        "printed": [
+          7
+        ]
+      }
+    }
+  }
+}
