@@ -140,11 +140,11 @@
   "annotations": {
     "bundle": {
       "path": "annotations.bundle.json",
-      "sha256": "e42d49a060ebf412056f4ca4b5e43f0710403c36bdd07503523fc8c31affb518"
+      "sha256": "11e23c4671a25028b3edbcd7746911467500ab73400ae280a974dc61a0f42e3c"
     },
     "count": 456,
     "directory": "annotations",
     "extension": "org.mathlib-initiative.formal-companion.overlay",
-    "manifest_sha256": "cd4645178b0f27c4b887436028f3503e28c0fd4dfb1d94becb8a03b056566069"
+    "manifest_sha256": "34abfcb73c2dca14f0e535b8e2cb79a9e3493d29943ca37cb6963777c2f049f0"
   }
 }

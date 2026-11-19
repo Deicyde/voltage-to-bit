@@ -3,10 +3,10 @@
   "subject": [
     {
       "location": {
-        "page": 6,
+        "page": 7,
         "rect": [
           0.414574,
-          0.806911,
+          0.27831,
           0.163167,
           0.011284
         ]
@@ -14,7 +14,7 @@
       "title": "a one-instant spike",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
-          "region": "p006-b340"
+          "region": "p007-b340"
         }
       }
     }
@@ -33,7 +33,7 @@
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "destination": {
-            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/InputClass.lean",
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/789bf375b9251fac5190fb3e1af27424709b7a01/VoltageToBit/Examples/InputClass.lean",
             "fragment": "L439-L440"
           },
           "snippet": {
@@ -52,10 +52,10 @@
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
         "physical": [
-          6
+          7
         ],
         "printed": [
-          6
+          7
         ]
       }
     }

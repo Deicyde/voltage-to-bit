@@ -3,10 +3,10 @@
   "subject": [
     {
       "location": {
-        "page": 5,
+        "page": 6,
         "rect": [
           0.591755,
-          0.762743,
+          0.172375,
           0.042315,
           0.010967
         ]
@@ -14,7 +14,7 @@
       "title": "tauUp pos",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
-          "region": "p005-b243"
+          "region": "p006-b243"
         }
       }
     }
@@ -33,7 +33,7 @@
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "destination": {
-            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/NonVacuity.lean",
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/789bf375b9251fac5190fb3e1af27424709b7a01/VoltageToBit/Proofs/NonVacuity.lean",
             "fragment": "L50-L56"
           },
           "snippet": {
@@ -52,10 +52,10 @@
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
         "physical": [
-          5
+          6
         ],
         "printed": [
-          5
+          6
         ]
       }
     }

@@ -6,9 +6,9 @@
         "page": 2,
         "rect": [
           0.076035,
-          0.701616,
-          0.239952,
-          0.012104
+          0.701811,
+          0.303299,
+          0.027735
         ]
       },
       "title": "(ii) with the canonical right derivative",
@@ -33,7 +33,7 @@
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "destination": {
-            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Guarantee.lean",
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/789bf375b9251fac5190fb3e1af27424709b7a01/VoltageToBit/Proofs/Guarantee.lean",
             "fragment": "L65-L73"
           },
           "snippet": {

@@ -6,12 +6,12 @@
         "page": 6,
         "rect": [
           0.070436,
-          0.17257,
+          0.503294,
           0.659291,
           0.01366
         ]
       },
-      "title": "runs at one supply stay within 0.10 V of it",
+      "title": "runs at one supply stay within 0.10 V of its rails",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "p006-b284"
@@ -33,7 +33,7 @@
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "destination": {
-            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/Illustrative.lean",
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/789bf375b9251fac5190fb3e1af27424709b7a01/VoltageToBit/Examples/Illustrative.lean",
             "fragment": "L384-L405"
           },
           "snippet": {

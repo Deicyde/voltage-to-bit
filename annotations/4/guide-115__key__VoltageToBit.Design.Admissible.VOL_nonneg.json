@@ -6,7 +6,7 @@
         "page": 2,
         "rect": [
           0.376873,
-          0.826151,
+          0.841692,
           0.059181,
           0.010713
         ]
@@ -33,7 +33,7 @@
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "destination": {
-            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Model/Inverter.lean",
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/789bf375b9251fac5190fb3e1af27424709b7a01/VoltageToBit/Model/Inverter.lean",
             "fragment": "L162"
           },
           "snippet": {

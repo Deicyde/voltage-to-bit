@@ -3,10 +3,10 @@
   "subject": [
     {
       "location": {
-        "page": 5,
+        "page": 6,
         "rect": [
           0.267668,
-          0.920284,
+          0.329916,
           0.0779,
           0.010275
         ]
@@ -14,7 +14,7 @@
       "title": "illustrative: VIH",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
-          "region": "p005-b262"
+          "region": "p006-b262"
         }
       }
     }
@@ -33,7 +33,7 @@
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "destination": {
-            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/IllustrativeDesign.lean",
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/789bf375b9251fac5190fb3e1af27424709b7a01/VoltageToBit/Examples/IllustrativeDesign.lean",
             "fragment": "L30"
           },
           "snippet": {
@@ -52,10 +52,10 @@
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
         "physical": [
-          5
+          6
         ],
         "printed": [
-          5
+          6
         ]
       }
     }

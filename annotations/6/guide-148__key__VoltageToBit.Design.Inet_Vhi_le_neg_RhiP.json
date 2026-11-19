@@ -6,7 +6,7 @@
         "page": 3,
         "rect": [
           0.075812,
-          0.614291,
+          0.628545,
           0.20512,
           0.013462
         ]
@@ -33,7 +33,7 @@
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "destination": {
-            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Margins.lean",
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/789bf375b9251fac5190fb3e1af27424709b7a01/VoltageToBit/Proofs/Margins.lean",
             "fragment": "L101-L129"
           },
           "snippet": {

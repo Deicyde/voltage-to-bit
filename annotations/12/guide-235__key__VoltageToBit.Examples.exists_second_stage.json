@@ -3,18 +3,18 @@
   "subject": [
     {
       "location": {
-        "page": 5,
+        "page": 6,
         "rect": [
           0.247158,
-          0.655108,
-          0.380211,
+          0.064741,
+          0.543025,
           0.011284
         ]
       },
       "title": "a second stage can be driven",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
-          "region": "p005-b235"
+          "region": "p006-b235"
         }
       }
     }
@@ -33,7 +33,7 @@
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "destination": {
-            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/TwoStage.lean",
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/789bf375b9251fac5190fb3e1af27424709b7a01/VoltageToBit/Examples/TwoStage.lean",
             "fragment": "L61-L84"
           },
           "snippet": {
@@ -52,10 +52,10 @@
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
         "physical": [
-          5
+          6
         ],
         "printed": [
-          5
+          6
         ]
       }
     }

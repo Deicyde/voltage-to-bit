@@ -6,8 +6,8 @@
         "page": 6,
         "rect": [
           0.500615,
-          0.300583,
-          0.316218,
+          0.631307,
+          0.42785,
           0.041989
         ]
       },
@@ -33,7 +33,7 @@
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "destination": {
-            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/Illustrative.lean",
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/789bf375b9251fac5190fb3e1af27424709b7a01/VoltageToBit/Examples/Illustrative.lean",
             "fragment": "L285-L380"
           },
           "snippet": {

@@ -5,9 +5,9 @@
       "location": {
         "page": 5,
         "rect": [
-          0.310736,
-          0.457987,
-          0.228541,
+          0.070436,
+          0.789314,
+          0.305291,
           0.01997
         ]
       },
@@ -33,7 +33,7 @@
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "destination": {
-            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Contamination.lean",
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/789bf375b9251fac5190fb3e1af27424709b7a01/VoltageToBit/Proofs/Contamination.lean",
             "fragment": "L161-L197"
           },
           "snippet": {

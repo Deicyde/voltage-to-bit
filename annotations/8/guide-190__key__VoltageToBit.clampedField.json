@@ -5,8 +5,8 @@
       "location": {
         "page": 4,
         "rect": [
-          0.114995,
-          0.583544,
+          0.075812,
+          0.567232,
           0.318429,
           0.017505
         ]
@@ -33,7 +33,7 @@
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "destination": {
-            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/Existence.lean",
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/789bf375b9251fac5190fb3e1af27424709b7a01/VoltageToBit/Proofs/Existence.lean",
             "fragment": "L114-L116"
           },
           "snippet": {

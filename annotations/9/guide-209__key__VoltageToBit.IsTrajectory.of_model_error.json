@@ -3,10 +3,10 @@
   "subject": [
     {
       "location": {
-        "page": 4,
+        "page": 5,
         "rect": [
           0.405975,
-          0.870817,
+          0.157792,
           0.472749,
           0.011284
         ]
@@ -14,7 +14,7 @@
       "title": "another current law",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
-          "region": "p004-b209"
+          "region": "p005-b209"
         }
       }
     }
@@ -33,7 +33,7 @@
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "destination": {
-            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Proofs/ModelError.lean",
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/789bf375b9251fac5190fb3e1af27424709b7a01/VoltageToBit/Proofs/ModelError.lean",
             "fragment": "L219-L241"
           },
           "snippet": {
@@ -52,10 +52,10 @@
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
         "physical": [
-          4
+          5
         ],
         "printed": [
-          4
+          5
         ]
       }
     }

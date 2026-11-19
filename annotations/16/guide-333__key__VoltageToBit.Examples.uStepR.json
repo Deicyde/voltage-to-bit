@@ -3,10 +3,10 @@
   "subject": [
     {
       "location": {
-        "page": 6,
+        "page": 7,
         "rect": [
           0.076035,
-          0.825832,
+          0.297231,
           0.166608,
           0.011284
         ]
@@ -14,7 +14,7 @@
       "title": "new value at the jump",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
-          "region": "p006-b333"
+          "region": "p007-b333"
         }
       }
     }
@@ -33,7 +33,7 @@
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "destination": {
-            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/InputClass.lean",
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/789bf375b9251fac5190fb3e1af27424709b7a01/VoltageToBit/Examples/InputClass.lean",
             "fragment": "L309-L311"
           },
           "snippet": {
@@ -52,10 +52,10 @@
     "org.mathlib-initiative.formal-companion.overlay": {
       "locator": {
         "physical": [
-          6
+          7
         ],
         "printed": [
-          6
+          7
         ]
       }
     }

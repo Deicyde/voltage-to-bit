@@ -6,12 +6,12 @@
         "page": 7,
         "rect": [
           0.412076,
-          0.105004,
+          0.486479,
           0.173957,
           0.01997
         ]
       },
-      "title": "largest falling slew",
+      "title": "a bound on the falling slew for u in 1.25 to 1.98",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "region": "p007-b353"
@@ -33,7 +33,7 @@
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
           "destination": {
-            "href": "https://github.com/Deicyde/voltage-to-bit/blob/381d214ff2d180773060c2dfd07e3062a4b885a5/VoltageToBit/Examples/NegativeControls.lean",
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/789bf375b9251fac5190fb3e1af27424709b7a01/VoltageToBit/Examples/NegativeControls.lean",
             "fragment": "L136-L148"
           },
           "snippet": {
