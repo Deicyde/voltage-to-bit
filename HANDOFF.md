@@ -202,9 +202,9 @@ Full processor correctness, a general SystemVerilog-to-Lean compiler, Maxwell-to
 
 The following absolute paths exist on the originating machine. Agents on another machine should fetch the pinned repository instead. The local source directory is a verified source/configuration snapshot with an additional audit probe; it is not a complete Git checkout containing all repository documentation.
 
-- Source snapshot: `/Users/jack/Documents/Codex/2026-11-07/are/work/assembly-audit-7359bfe/source`
-- Git blob hash manifest: `/Users/jack/Documents/Codex/2026-11-07/are/work/assembly-audit-7359bfe/source-hashes.json`
-- Independent probe: `/Users/jack/Documents/Codex/2026-11-07/are/work/assembly-audit-7359bfe/source/TrustBoundaryProbe.lean`
+- Source snapshot: `<local workspace>/assembly-audit-7359bfe/source`
+- Git blob hash manifest: `<local workspace>/assembly-audit-7359bfe/source-hashes.json`
+- Independent probe: `<local workspace>/assembly-audit-7359bfe/source/TrustBoundaryProbe.lean`
 
 For a fresh checkout of the pinned repository, the baseline commands are:
 
