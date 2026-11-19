@@ -1,0 +1,53 @@
+# Publish the annotated reading guide (guide/, annotations/, pdf-overlay/) on GitHub Pages.
+# Adapted from formal-companion's templates/informalize/site/workflows/pages.yml.
+# serve.py --build-only fetches the guide's PDF from the address the annotations name,
+# checks it against their sha256, writes the landing page (guide/make_site.py), copies
+# the viewer and the CC BY 4.0 PDF into .lake/build/guide-site, which is uploaded.
+name: pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check the generated overlay
+        run: python3 pdf-overlay/tools/check_generated.py
+      - name: Build the site with the verified PDF
+        run: python3 pdf-overlay/tools/serve.py --build-only
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .lake/build/guide-site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
