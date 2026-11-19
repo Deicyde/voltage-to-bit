@@ -35,7 +35,8 @@ It reports, one line per problem, and exits 1 when there is one:
   `literature_links` scan reads them with no problem; the bundle beside it
   has its recorded sha256 and holds exactly the records that scan reads,
   defaults applied (each one it does not hold is named); at least one record
-  is of the PDF the config's `source_id` names;
+  is of the PDF the config's `source_id` names; no item a record calls
+  formalized lacks a record that links a `key` declaration;
 * every curation input the export read still has the sha256 recorded for it,
   so a companion that changed its curation and did not re-export fails here.
 """
@@ -72,7 +73,7 @@ CONFIG_KEYS = {
     "display", "storage_key", "pdf", "site", "build", "serve",
 }
 REQUIRED_CONFIG_KEYS = {"schema", "schema_version", "source_id", "title", "pdf", "site"}
-PDF_KEYS = {"file_name", "cache_dir", "route", "publish"}
+PDF_KEYS = {"file_name", "cache_dir", "route", "publish", "remote"}
 REQUIRED_PDF_KEYS = {"file_name"}
 PUBLISH_KEYS = {"license"}
 SITE_KEYS = {"output_root", "index", "mount", "link_text"}
@@ -274,6 +275,12 @@ def config_problems(value: Any, label: str = CONFIG_NAME) -> list[str]:
             if "license" in publish and not (isinstance(found, str) and found in OPEN_LICENSES):
                 out.append(f"{label}.pdf.publish.license: expected one of "
                            f"{', '.join(OPEN_LICENSES)}, got {found!r}")
+        if "remote" in pdf:
+            if not isinstance(pdf["remote"], bool):
+                out.append(f"{label}.pdf.remote: expected true or false")
+            elif pdf["remote"] and "publish" in pdf:
+                out.append(f"{label}.pdf: remote and publish are two ways to show one PDF; "
+                           f"name one")
 
     if "site" in value:
         site = _keys(value["site"], SITE_KEYS, set(), f"{label}.site", out)
@@ -485,6 +492,7 @@ def annotations_problems(overlay: Path, source_id: str | None) -> list[str]:
                                                    for r in records.values()):
         out.append(f"no annotation is a record of the PDF {source_id!r}, which "
                    f"{CONFIG_NAME} names")
+    out += overlay_annotations.key_problems(records)
     out += inputs_problems(root, block.get("inputs"), exported="export" in block)
     return out
 

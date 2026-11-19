@@ -1,0 +1,25 @@
+{
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.rise_deadline_bracket",
+        "module": "VoltageToBit.Examples.DeadlineBrackets"
+      },
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "VoltageToBit.Examples.rise_deadline_bracket"
+          },
+          "destination": {
+            "fragment": "L109",
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/412ea9a8f99f9a3c686e8686382a83a32ed8f5d9/VoltageToBit/Examples/DeadlineBrackets.lean"
+          },
+          "snippet": {
+            "line": 109,
+            "text": "theorem rise_deadline_bracket (τ : ℝ) :\n    (τ < 2.168 → ¬ ∀ (u v : ℝ → ℝ) (a b : ℝ), IsTrajectory illustrative u v a b →\n        v a ∈ Icc (-0.10 : ℝ) 2.08 →\n        ∀ s e : ℝ, a ≤ s → e ≤ b → (∀ t ∈ Ico s e, u t ≤ 0.40) →\n          ∀ t ∈ Icc s e, s + τ ≤ t → 1.35 ≤ v t) ∧\n    (2.26 ≤ τ → ∀ (u v : ℝ → ℝ) (a b : ℝ), IsTrajectory illustrative u v a b →\n        v a ∈ Icc (-0.10 : ℝ) 2.08 →\n        ∀ s e : ℝ, a ≤ s → e ≤ b → (∀ t ∈ Ico s e, u t ≤ 0.40) →\n          ∀ t ∈ Icc s e, s + τ ≤ t → 1.35 ≤ v t) := by"
+          }
+        }
+      }
+    }
+  ]
+}

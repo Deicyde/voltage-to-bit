@@ -1,0 +1,25 @@
+{
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.exists_solution",
+        "module": "VoltageToBit.Proofs.Existence"
+      },
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "VoltageToBit.exists_solution"
+          },
+          "destination": {
+            "fragment": "L249",
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/412ea9a8f99f9a3c686e8686382a83a32ed8f5d9/VoltageToBit/Proofs/Existence.lean"
+          },
+          "snippet": {
+            "line": 249,
+            "text": "theorem exists_solution {D : Design} {θ : Params} (hD : D.Admissible) (hθ : D.InBox θ)\n    {Cf : ℝ → ℝ} (hCf : ∀ x, D.Clo ≤ Cf x) {Kc : ℝ}\n    (hCfLip : ∀ x ∈ D.Safe, ∀ y ∈ D.Safe, |Cf x - Cf y| ≤ Kc * |x - y|)\n    {u w : ℝ → ℝ} (hu : Continuous u) (hw : Continuous w)\n    {a b : ℝ} (hab : a ≤ b) (hwb : ∀ t ∈ Icc a b, |w t| ≤ D.eps) {v₀ : ℝ}\n    (hv₀ : v₀ ∈ D.Safe) :\n    ∃ v : ℝ → ℝ, v a = v₀ ∧ (∀ t ∈ Icc a b, v t ∈ D.Safe) ∧\n      ∀ t ∈ Icc a b,\n        HasDerivWithinAt v ((Inet θ (u t) (v t) + w t) / Cf (v t)) (Icc a b) t := by"
+          }
+        }
+      }
+    }
+  ]
+}

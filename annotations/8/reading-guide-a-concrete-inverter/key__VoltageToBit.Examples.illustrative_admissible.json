@@ -1,0 +1,26 @@
+{
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.illustrative_admissible",
+        "module": "VoltageToBit.Examples.Illustrative"
+      },
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "VoltageToBit.Examples.illustrative_admissible",
+            "kind": "theorem"
+          },
+          "destination": {
+            "fragment": "L35",
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/412ea9a8f99f9a3c686e8686382a83a32ed8f5d9/VoltageToBit/Examples/Illustrative.lean"
+          },
+          "snippet": {
+            "line": 35,
+            "text": "theorem illustrative_admissible : illustrative.Admissible := by"
+          }
+        }
+      }
+    }
+  ]
+}

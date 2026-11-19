@@ -4,7 +4,7 @@
   "generator": {
     "name": "formal-companion",
     "version": "0.2.0",
-    "commit": "274b1ee4596d0666455ae3bbfdf6adafa4c7b587"
+    "commit": "c04f6c59fab4b742f0666618ec7dcd603a0f9070"
   },
   "format": {
     "package": "literature-links",
@@ -18,7 +18,7 @@
   "files": [
     {
       "path": "README.md",
-      "sha256": "c624f8b98ea6236079323785e71ac8d59d744263ff7ebbe3114eb6214684de0f"
+      "sha256": "92bd579475aacec017db27bcbfd225ddcc73fbc457f0428ba9ef11e4d8e27fac"
     },
     {
       "path": "THIRD_PARTY.md",
@@ -26,15 +26,15 @@
     },
     {
       "path": "schema/overlay-config-v1.schema.json",
-      "sha256": "8c92daeb858c6c5ee9a72d8b3b1d9ac3c041299f572fe6f995057c1c4f55e316"
+      "sha256": "140262a36d8bf211774ce2be9a315116cb08bce2f40df57b21ca73bbbbe6c1c0"
     },
     {
       "path": "tools/build_site.py",
-      "sha256": "2f6cca5add954df245853a0b6645697eee3a5ed686d866de5dc1d1cd000d923c"
+      "sha256": "c296cb98bdfb9f5fc326fa50bacf218903294c847aeeef846ff417d768299882"
     },
     {
       "path": "tools/check_generated.py",
-      "sha256": "c521a240fe440c73833f7e48302b7617027112faadd38fa6f009ab6d43e4a9f9"
+      "sha256": "09324508a8230a1a848c511f29b897b91061684a59c684772ba0c1e5bc035ce4"
     },
     {
       "path": "tools/literature_links/__init__.py",
@@ -70,11 +70,11 @@
     },
     {
       "path": "tools/overlay_annotations.py",
-      "sha256": "869fc31950d64fdbd52504b5819d96828ec6763fcb08f0cda6561be40f22eb6a"
+      "sha256": "af94fd7188dd8be8cb95eee31ba6290efda05d0092bad8972cd20969dd3599d2"
     },
     {
       "path": "tools/serve.py",
-      "sha256": "08317f2a08efe62aaa45c998cc9258551869923a1857063312ddd8f5b2780378"
+      "sha256": "acc591fb9ed489eadf16b6746931b67245af39c414e28508611c648d7975387a"
     },
     {
       "path": "tools/verso_extract.py",
@@ -114,7 +114,7 @@
     },
     {
       "path": "viewer/viewer-core.js",
-      "sha256": "08695c6a7f3bfdacf05508b13b7e9db55d29a18d709b9b6934d4271abc1378ee"
+      "sha256": "aee68d0aa4a750dc9cec590d4458d9aad70ba88f008dabb75b33fa5fa2b8f6d9"
     },
     {
       "path": "viewer/viewer-layout.js",
@@ -134,112 +134,92 @@
     },
     {
       "path": "viewer/viewer.js",
-      "sha256": "2e803cad637f548a4fa998b649781295e803285e8a9f7db67688449e83058c5a"
+      "sha256": "6329aa60875a03f5bc42c508f90cbade15167936b633d1d23ad7760118b420b9"
     }
   ],
   "annotations": {
     "bundle": {
       "path": "annotations.bundle.json",
-      "sha256": "b4ae0133b804b6c027025e3fdebdb4637ef1e0a080e47a642b5eaaf979a487e5"
+      "sha256": "dfecf905b7ba257361649ab7f74d00df4e0e40072fb6d24ef1ef413be5788726"
     },
-    "count": 40,
+    "count": 43,
     "directory": "annotations",
     "export": {
-      "commit": "7c6925a075a4b3d6ab8c8894fc6efadbd786c8ad",
+      "commit": "412ea9a8f99f9a3c686e8686382a83a32ed8f5d9",
       "convention": "roadmap-locators",
       "source_id": "voltage-to-bit-reading-guide"
     },
     "extension": "org.mathlib-initiative.formal-companion.overlay",
     "inputs": [
       {
-        "path": "guide/blueprint/roadmap/instances/admissible-instance.md",
-        "sha256": "7ba7461c477800013f48f57d3d140440c61ad6bfa51dfc8a6b0940d3f0785d57"
+        "path": "guide/blueprint/roadmap/instance/existence.md",
+        "sha256": "3feca9dd918518cae4fee4fee89e5943be9fe9092d101f2555da7387e79bc6c1"
       },
       {
-        "path": "guide/blueprint/roadmap/instances/brackets.md",
-        "sha256": "80e08aeecc54431e30fa0ae07783c837eb7767614216f0bf32b9486d49c67046"
+        "path": "guide/blueprint/roadmap/instance/instance.md",
+        "sha256": "f736291effe70ca591a6fe421d174d432c274fe50df571623f82ee59e910a810"
       },
       {
-        "path": "guide/blueprint/roadmap/instances/existence-support.md",
-        "sha256": "84c5f88772267f31719415392a8445c76f4694640e7b7b290e646b3c21e03fee"
+        "path": "guide/blueprint/roadmap/instance/tightness.md",
+        "sha256": "372e0c867c0b8a072d852c3309f653791247eb8b0da2bbd246daf8c47b021d7e"
       },
       {
-        "path": "guide/blueprint/roadmap/instances/existence.md",
-        "sha256": "c0e413bcf35e338ece510490b2e0f191fd701250887b56412c649aaf33a0160f"
+        "path": "guide/blueprint/roadmap/model/bits.md",
+        "sha256": "dfd03b1ff97760c27b36f1214650e0bb97413d10471e94548d57781f15b5a3b0"
       },
       {
-        "path": "guide/blueprint/roadmap/instances/steps-support.md",
-        "sha256": "b645fb342a6ad47a4d3b8bc1a719721fe59421230dfa59661877034a222e67df"
+        "path": "guide/blueprint/roadmap/model/circuit.md",
+        "sha256": "f18b566b7317e6f32ce96d74e6265acfe0456843f83f84a032ca02e385ca1a4b"
       },
       {
-        "path": "guide/blueprint/roadmap/instances/steps.md",
-        "sha256": "28f6243dd63e7e28278255cc04fcb943732389da2e8ff92b6bb8be7cbb8b3fff"
+        "path": "guide/blueprint/roadmap/model/dynamics.md",
+        "sha256": "3198bc3ac1ea42fb71823f7d60975654ad34eb9ed3d4f85ed6bfc0e9ea092675"
       },
       {
-        "path": "guide/blueprint/roadmap/path-a/box.md",
-        "sha256": "63a4f2b99de7f13fa107fd0ee85e4c5566860b0296c62d7845ab1884aaf8f6ed"
+        "path": "guide/blueprint/roadmap/model/uncertainty.md",
+        "sha256": "f6017c06affb00ea749cfd18868365e109b1ee3a9668e553d7ee919701f2f79c"
       },
       {
-        "path": "guide/blueprint/roadmap/path-a/currents.md",
-        "sha256": "00e1d7a63775b36874115d4875532406dc083894393a28b49db69a834e589b40"
+        "path": "guide/blueprint/roadmap/scope/limits-support.md",
+        "sha256": "22317027274a4ed04eccf6ba977408e299d28515adfe2561b7c62652c710b84c"
       },
       {
-        "path": "guide/blueprint/roadmap/path-a/design.md",
-        "sha256": "f6af8b74d7c3d7ec8ff28891bb86860755656d73e0bd66cbc301dbe2f29f55fb"
+        "path": "guide/blueprint/roadmap/scope/limits.md",
+        "sha256": "dd3f52c549dc0a8f7d264e5f396fd46b48c7254b488b267fc33887380a8014e5"
       },
       {
-        "path": "guide/blueprint/roadmap/path-a/guarantee.md",
-        "sha256": "8d65c6c233f1999312527e89a0934e3e5f672638a2a96815a0bce8e63890deb9"
+        "path": "guide/blueprint/roadmap/scope/models.md",
+        "sha256": "8bd71f19cd12bf22c4284568996aeef6848f5b6aa63b99d18b5eaee64c077129"
       },
       {
-        "path": "guide/blueprint/roadmap/path-a/params.md",
-        "sha256": "93db9d7dc94c4c6f1a7dd0f4bd4f2d5c7408938ef4547acfb115155c5c688c33"
+        "path": "guide/blueprint/roadmap/theorem/checks-support.md",
+        "sha256": "9e2eeb378e0c9d53724451a0547657f05df8fa6895a3cb88dade40ec0b1d79a4"
       },
       {
-        "path": "guide/blueprint/roadmap/path-a/psq.md",
-        "sha256": "e84ca58168ce9cbd23f01f615bd0be8a597a6c85bd27fa1267a2b220e49244ed"
+        "path": "guide/blueprint/roadmap/theorem/checks.md",
+        "sha256": "756d177fbac3529d3184122a67a2df368e08ee85ea5594acf1981cc5d42c02e2"
       },
       {
-        "path": "guide/blueprint/roadmap/path-a/record.md",
-        "sha256": "737c89c653ab6ad736de6f320e2ff7dfc7842098cba10a205e2c4689fb2d0ddc"
+        "path": "guide/blueprint/roadmap/theorem/deadlines-support.md",
+        "sha256": "b2fc5098f6567eb14448af279c1b4c6d9c9a91eccee6ffdddfbb310d430bdbd7"
       },
       {
-        "path": "guide/blueprint/roadmap/path-a/safe.md",
-        "sha256": "f1304350bf615e18720eef5c5bb571a9fca513abd6d236268d6d1c5ef3744bb5"
+        "path": "guide/blueprint/roadmap/theorem/deadlines.md",
+        "sha256": "9a3c2ca69c9a83356062095081acd19b7df89bbc97fbe2bbff03bd065417420b"
       },
       {
-        "path": "guide/blueprint/roadmap/path-a/trajectory.md",
-        "sha256": "59b937db842d4275061a36da8a0143d70364e69b036313fbd1f3044c260e9c05"
-      },
-      {
-        "path": "guide/blueprint/roadmap/path-b/admissible.md",
-        "sha256": "ad722a0691b52f6bf997ae2694b7a62651ab1445355b39879783603a82173b03"
-      },
-      {
-        "path": "guide/blueprint/roadmap/path-b/deadlines.md",
-        "sha256": "2ebc63aaedb59689d99f4b153671ba8418b8a51ad82cdb8d975e076c1cb9a701"
-      },
-      {
-        "path": "guide/blueprint/roadmap/path-b/decoding.md",
-        "sha256": "3bfc19deec38746d6c52d6a5bb93e538f49801c23bd02482caaa97b648d1a8f2"
-      },
-      {
-        "path": "guide/blueprint/roadmap/path-b/general.md",
-        "sha256": "8349734cfeed8fc9e5b859fa6bf91ca59727384a1d5f017f62e710670a555f83"
-      },
-      {
-        "path": "guide/blueprint/roadmap/path-b/margins.md",
-        "sha256": "17bac61f81d82cf4cf4aac84445eaf1c8d0ed303975d55fe03c445cce91f9486"
+        "path": "guide/blueprint/roadmap/theorem/guarantee.md",
+        "sha256": "1d0ae45c1ebe6424f52a88798f75bc2df30345b038bfed5fa9c09c1616af47cf"
       },
       {
         "path": "guide/blueprint/sources/reading-guide-locators.md",
-        "sha256": "671ab70daf2e77a9ede60b532737f1157a12bee085db15170f74e7f1fb7a2c9b"
+        "sha256": "ee6d00296a1e17433ceca244c13d2605aa2eff5305c8f8b06aaae0878c336d65"
       },
       {
         "path": "guide/reading-guide.tex",
-        "sha256": "0423687f14bfc82be1bb63b3b016071999307634e2d256d116ae4442a68999e0"
+        "sha256": "621631697c54689565d6db4c1f29bdb5112706881c2f9314b2abdf8ecbaf6dfc"
       }
     ],
-    "manifest_sha256": "e90fac8bbca92d7be6c7e1afab101b4b37d3c03f777868dbb66f4ac350a92a18"
+    "manifest_sha256": "2ab1f068f8423b3c1b649133a494cd5c83ec6ffe4b73cd6f9d7b141315d0f0fc"
   }
 }

@@ -1,0 +1,26 @@
+{
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Params",
+        "module": "VoltageToBit.Model.Device"
+      },
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "VoltageToBit.Params",
+            "kind": "structure"
+          },
+          "destination": {
+            "fragment": "L35",
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/412ea9a8f99f9a3c686e8686382a83a32ed8f5d9/VoltageToBit/Model/Device.lean"
+          },
+          "snippet": {
+            "line": 35,
+            "text": "structure Params where\n  /-- supply voltage -/\n  VDD : ℝ\n  /-- NMOS transconductance parameter `k_n` -/\n  kn : ℝ\n  /-- PMOS transconductance parameter `k_p` -/\n  kp : ℝ\n  /-- NMOS threshold voltage -/\n  Vtn : ℝ\n  /-- PMOS threshold voltage magnitude -/\n  Vtp : ℝ"
+          }
+        }
+      }
+    }
+  ]
+}

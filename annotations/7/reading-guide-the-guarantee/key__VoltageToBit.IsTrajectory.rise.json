@@ -1,0 +1,24 @@
+{
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.IsTrajectory.rise",
+        "module": "VoltageToBit.Proofs.Guarantee"
+      },
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "VoltageToBit.IsTrajectory.rise"
+          },
+          "destination": {
+            "fragment": "L156"
+          },
+          "snippet": {
+            "line": 156,
+            "text": "theorem rise (hD : D.Admissible) (h : IsTrajectory D u v a b)\n    (h0 : v a ∈ D.Safe) {s e : ℝ} (hs : a ≤ s) (he : e ≤ b)\n    (hu : ∀ t ∈ Ico s e, u t ≤ D.VIL) :\n    ∀ t ∈ Icc s e, s + D.tauUp ≤ t → D.VOH ≤ v t := by"
+          }
+        }
+      }
+    }
+  ]
+}

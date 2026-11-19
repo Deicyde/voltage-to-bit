@@ -1,0 +1,36 @@
+{
+  "id": "reading-guide:the-guarantee",
+  "subject": {
+    "location": {
+      "page": 2,
+      "rect": [0.108968, 0.674226, 0.782104, 0.182106]
+    },
+    "title": "The guarantee",
+    "extensions": {
+      "org.mathlib-initiative.formal-companion.overlay": {
+        "region": "p002-r026-034"
+      }
+    }
+  },
+  "object": {
+    "role": "key",
+    "extensions": {
+      "org.mathlib-initiative.formal-companion.overlay": {
+        "declaration": {
+          "kind": "theorem"
+        },
+        "destination": {
+          "href": "https://github.com/Deicyde/voltage-to-bit/blob/412ea9a8f99f9a3c686e8686382a83a32ed8f5d9/VoltageToBit/Proofs/Guarantee.lean"
+        }
+      }
+    }
+  },
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [2],
+        "printed": [2]
+      }
+    }
+  }
+}

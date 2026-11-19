@@ -1,0 +1,23 @@
+{
+  "id": "reading-guide:what-is-not-claimed",
+  "subject": {
+    "title": "What is not claimed"
+  },
+  "object": {
+    "extensions": {
+      "org.mathlib-initiative.formal-companion.overlay": {
+        "destination": {
+          "href": "https://github.com/Deicyde/voltage-to-bit/blob/412ea9a8f99f9a3c686e8686382a83a32ed8f5d9/VoltageToBit/Examples/InputClass.lean"
+        }
+      }
+    }
+  },
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [3, 4],
+        "printed": [3, 4]
+      }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.InBox",
+        "module": "VoltageToBit.Model.Inverter"
+      },
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "VoltageToBit.Design.InBox"
+          },
+          "destination": {
+            "fragment": "L68"
+          },
+          "snippet": {
+            "line": 68,
+            "text": "structure InBox (θ : Params) : Prop where\n  VDD_ge : D.VDDlo ≤ θ.VDD\n  VDD_le : θ.VDD ≤ D.VDDhi\n  kn_ge : D.knlo ≤ θ.kn\n  kn_le : θ.kn ≤ D.knhi\n  kp_ge : D.kplo ≤ θ.kp\n  kp_le : θ.kp ≤ D.kphi\n  Vtn_ge : D.Vtnlo ≤ θ.Vtn\n  Vtn_le : θ.Vtn ≤ D.Vtnhi\n  Vtp_ge : D.Vtplo ≤ θ.Vtp\n  Vtp_le : θ.Vtp ≤ D.Vtphi"
+          }
+        }
+      }
+    }
+  ]
+}

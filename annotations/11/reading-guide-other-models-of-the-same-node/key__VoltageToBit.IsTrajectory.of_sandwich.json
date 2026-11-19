@@ -1,0 +1,24 @@
+{
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.IsTrajectory.of_sandwich",
+        "module": "VoltageToBit.Proofs.ModelError"
+      },
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "VoltageToBit.IsTrajectory.of_sandwich"
+          },
+          "destination": {
+            "fragment": "L247"
+          },
+          "snippet": {
+            "line": 247,
+            "text": "theorem IsTrajectory.of_sandwich {D : Design} {u v : ℝ → ℝ} {a b : ℝ}\n    {J : ℝ → ℝ → ℝ} {w : ℝ → ℝ} {εm εw : ℝ} (hεm : 0 ≤ εm) (hbudget : εm + εw ≤ D.eps)\n    (hJ : ∀ t ∈ Ico a b, ∀ x ∈ D.Safe, ∃ θ₁ θ₂ : Params, D.InBox θ₁ ∧ D.InBox θ₂ ∧\n      Inet θ₁ (u t) x - εm ≤ J t x ∧ J t x ≤ Inet θ₂ (u t) x + εm)\n    (hw : ∀ t ∈ Ico a b, |w t| ≤ εw)\n    (hcont : ContinuousOn v (Icc a b))\n    (hode : ∀ t ∈ Ico a b, ∃ v' c : ℝ, HasDerivWithinAt v v' (Ici t) t ∧\n      D.Clo ≤ c ∧ c ≤ D.Chi ∧ c * v' = J t (v t) + w t) :\n    IsTrajectory D u v a b :="
+          }
+        }
+      }
+    }
+  ]
+}

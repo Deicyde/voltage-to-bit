@@ -1,0 +1,24 @@
+{
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.IsTrajectory.of_charge_balance",
+        "module": "VoltageToBit.Proofs.ModelError"
+      },
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "VoltageToBit.IsTrajectory.of_charge_balance"
+          },
+          "destination": {
+            "fragment": "L384"
+          },
+          "snippet": {
+            "line": 384,
+            "text": "theorem IsTrajectory.of_charge_balance {D : Design} {θ : Params} {u g v du dg w : ℝ → ℝ}\n    {a b : ℝ} {CL CM Cc Su Sg εw : ℝ} (hCM : 0 ≤ CM) (hCc : 0 ≤ Cc)\n    (hClo : 0 < D.Clo) (hC1 : D.Clo ≤ CL + CM + Cc) (hC2 : CL + CM + Cc ≤ D.Chi)\n    (hbudget : CM * Su + Cc * Sg + εw ≤ D.eps) (hθ : D.InBox θ)\n    (hu : ∀ t ∈ Ico a b, HasDerivWithinAt u (du t) (Ici t) t)\n    (hg : ∀ t ∈ Ico a b, HasDerivWithinAt g (dg t) (Ici t) t)\n    (hSu : ∀ t ∈ Ico a b, |du t| ≤ Su) (hSg : ∀ t ∈ Ico a b, |dg t| ≤ Sg)\n    (hw : ∀ t ∈ Ico a b, |w t| ≤ εw)\n    (hqcont : ContinuousOn (fun s => CL * v s + CM * (v s - u s) + Cc * (v s - g s)) (Icc a b))\n    (hucont : ContinuousOn u (Icc a b)) (hgcont : ContinuousOn g (Icc a b))\n    (hq : ∀ t ∈ Ico a b, HasDerivWithinAt\n      (fun s => CL * v s + CM * (v s - u s) + Cc * (v s - g s))\n      (Inet θ (u t) (v t) + w t) (Ici t) t) :\n    IsTrajectory D u v a b := by"
+          }
+        }
+      }
+    }
+  ]
+}

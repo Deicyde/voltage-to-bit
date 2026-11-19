@@ -1,0 +1,50 @@
+{
+  "subject": [
+    {
+      "location": {
+        "page": 3,
+        "rect": [0.108968, 0.79072, 0.782104, 0.117732]
+      },
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p003-r032-036"
+        }
+      }
+    },
+    {
+      "location": {
+        "page": 4,
+        "rect": [0.108968, 0.085888, 0.782104, 0.064475]
+      },
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p004-r000-003"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.uStepR",
+        "module": "VoltageToBit.Examples.InputClass"
+      },
+      "role": "support",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "VoltageToBit.Examples.uStepR",
+            "kind": "def"
+          },
+          "destination": {
+            "fragment": "L311"
+          },
+          "snippet": {
+            "line": 311,
+            "text": "noncomputable def uStepR (t : ℝ) : ℝ := if t < 4 then 1.8 else 0"
+          }
+        }
+      }
+    }
+  ]
+}

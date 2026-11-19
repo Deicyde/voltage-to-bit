@@ -1,0 +1,50 @@
+{
+  "subject": [
+    {
+      "location": {
+        "page": 3,
+        "rect": [0.108968, 0.79072, 0.782104, 0.117732]
+      },
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p003-r032-036"
+        }
+      }
+    },
+    {
+      "location": {
+        "page": 4,
+        "rect": [0.108968, 0.085888, 0.782104, 0.064475]
+      },
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p004-r000-003"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.stepL_no_trajectory",
+        "module": "VoltageToBit.Examples.InputClass"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "VoltageToBit.Examples.stepL_no_trajectory",
+            "kind": "theorem"
+          },
+          "destination": {
+            "fragment": "L324"
+          },
+          "snippet": {
+            "line": 324,
+            "text": "theorem stepL_no_trajectory (v : ℝ → ℝ) (h : IsTrajectory illustrative uStepL v 0 10)\n    (h0 : v 0 ∈ illustrative.Safe) : False := by"
+          }
+        }
+      }
+    }
+  ]
+}

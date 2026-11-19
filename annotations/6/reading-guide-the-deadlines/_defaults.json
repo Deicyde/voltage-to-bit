@@ -1,0 +1,35 @@
+{
+  "id": "reading-guide:the-deadlines",
+  "subject": {
+    "location": {
+      "page": 2,
+      "rect": [0.108968, 0.525897, 0.782104, 0.148328]
+    },
+    "title": "The deadlines",
+    "extensions": {
+      "org.mathlib-initiative.formal-companion.overlay": {
+        "region": "p002-r020-025"
+      }
+    }
+  },
+  "object": {
+    "extensions": {
+      "org.mathlib-initiative.formal-companion.overlay": {
+        "declaration": {
+          "kind": "def"
+        },
+        "destination": {
+          "href": "https://github.com/Deicyde/voltage-to-bit/blob/412ea9a8f99f9a3c686e8686382a83a32ed8f5d9/VoltageToBit/Model/Inverter.lean"
+        }
+      }
+    }
+  },
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [2],
+        "printed": [2]
+      }
+    }
+  }
+}

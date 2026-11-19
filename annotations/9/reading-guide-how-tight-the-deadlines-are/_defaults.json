@@ -1,0 +1,33 @@
+{
+  "id": "reading-guide:how-tight-the-deadlines-are",
+  "subject": {
+    "location": {
+      "page": 3,
+      "rect": [0.108968, 0.281361, 0.782104, 0.148328]
+    },
+    "title": "How tight the deadlines are",
+    "extensions": {
+      "org.mathlib-initiative.formal-companion.overlay": {
+        "region": "p003-r010-015"
+      }
+    }
+  },
+  "object": {
+    "role": "key",
+    "extensions": {
+      "org.mathlib-initiative.formal-companion.overlay": {
+        "declaration": {
+          "kind": "theorem"
+        }
+      }
+    }
+  },
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [3],
+        "printed": [3]
+      }
+    }
+  }
+}

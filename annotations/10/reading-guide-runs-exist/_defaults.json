@@ -1,0 +1,33 @@
+{
+  "id": "reading-guide:runs-exist",
+  "subject": {
+    "location": {
+      "page": 3,
+      "rect": [0.108968, 0.429689, 0.782104, 0.148328]
+    },
+    "title": "Runs exist",
+    "extensions": {
+      "org.mathlib-initiative.formal-companion.overlay": {
+        "region": "p003-r016-021"
+      }
+    }
+  },
+  "object": {
+    "role": "key",
+    "extensions": {
+      "org.mathlib-initiative.formal-companion.overlay": {
+        "declaration": {
+          "kind": "theorem"
+        }
+      }
+    }
+  },
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [3],
+        "printed": [3]
+      }
+    }
+  }
+}

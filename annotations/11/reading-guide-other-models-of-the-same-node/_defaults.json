@@ -1,0 +1,36 @@
+{
+  "id": "reading-guide:other-models-of-the-same-node",
+  "subject": {
+    "location": {
+      "page": 3,
+      "rect": [0.108968, 0.578017, 0.782104, 0.212703]
+    },
+    "title": "Other models of the same node",
+    "extensions": {
+      "org.mathlib-initiative.formal-companion.overlay": {
+        "region": "p003-r022-031"
+      }
+    }
+  },
+  "object": {
+    "role": "key",
+    "extensions": {
+      "org.mathlib-initiative.formal-companion.overlay": {
+        "declaration": {
+          "kind": "theorem"
+        },
+        "destination": {
+          "href": "https://github.com/Deicyde/voltage-to-bit/blob/412ea9a8f99f9a3c686e8686382a83a32ed8f5d9/VoltageToBit/Proofs/ModelError.lean"
+        }
+      }
+    }
+  },
+  "extensions": {
+    "org.mathlib-initiative.formal-companion.overlay": {
+      "locator": {
+        "physical": [3],
+        "printed": [3]
+      }
+    }
+  }
+}

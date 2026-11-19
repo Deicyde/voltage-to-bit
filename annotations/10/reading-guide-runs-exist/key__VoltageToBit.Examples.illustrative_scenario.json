@@ -1,0 +1,25 @@
+{
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Examples.illustrative_scenario",
+        "module": "VoltageToBit.Examples.Illustrative"
+      },
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "VoltageToBit.Examples.illustrative_scenario"
+          },
+          "destination": {
+            "fragment": "L204",
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/412ea9a8f99f9a3c686e8686382a83a32ed8f5d9/VoltageToBit/Examples/Illustrative.lean"
+          },
+          "snippet": {
+            "line": 204,
+            "text": "theorem illustrative_scenario :\n    ∃ v : ℝ → ℝ, v 0 = 1 ∧\n      (∀ t ∈ Icc (0 : ℝ) 10,\n        HasDerivWithinAt v ((Inet nominal (uRamp t) (v t) + wSin t) / 10) (Icc 0 10) t) ∧\n      IsTrajectory illustrative uRamp v 0 10 ∧\n      (∀ t ∈ Icc (0 : ℝ) 10, v t ∈ Icc (-0.10 : ℝ) 2.08) ∧\n      (∀ t ∈ Icc (2.57 : ℝ) 4, illustrative.decodeOut (v t) = some false) ∧\n      (∀ t ∈ Icc (7.59 : ℝ) 10, illustrative.decodeOut (v t) = some true) := by"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.tauDn",
+        "module": "VoltageToBit.Model.Inverter"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "VoltageToBit.Design.tauDn"
+          },
+          "destination": {
+            "fragment": "L138"
+          },
+          "snippet": {
+            "line": 138,
+            "text": "noncomputable def tauDn : ℝ := D.Chi * (D.Vhi - D.VOL) / (D.Idn D.VOL - D.eps)"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "subject": [
+    {
+      "location": {
+        "page": 1,
+        "rect": [0.108968, 0.754733, 0.782104, 0.165982]
+      },
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p001-r024-031"
+        }
+      }
+    },
+    {
+      "location": {
+        "page": 2,
+        "rect": [0.108968, 0.085888, 0.782104, 0.078978]
+      },
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "region": "p002-r000-003"
+        }
+      }
+    }
+  ],
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.Safe",
+        "module": "VoltageToBit.Model.Inverter"
+      },
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "VoltageToBit.Design.Safe",
+            "kind": "def"
+          },
+          "destination": {
+            "fragment": "L81"
+          },
+          "snippet": {
+            "line": 81,
+            "text": "def Safe : Set ℝ := Icc D.Vlo D.Vhi"
+          }
+        }
+      }
+    }
+  ]
+}

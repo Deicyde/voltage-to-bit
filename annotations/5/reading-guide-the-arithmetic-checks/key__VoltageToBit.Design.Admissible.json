@@ -1,0 +1,26 @@
+{
+  "object": [
+    {
+      "location": {
+        "declaration": "VoltageToBit.Design.Admissible",
+        "module": "VoltageToBit.Model.Inverter"
+      },
+      "role": "key",
+      "extensions": {
+        "org.mathlib-initiative.formal-companion.overlay": {
+          "declaration": {
+            "id": "VoltageToBit.Design.Admissible",
+            "kind": "structure"
+          },
+          "destination": {
+            "fragment": "L142"
+          },
+          "snippet": {
+            "line": 142,
+            "text": "structure Admissible : Prop where\n  VDD_pos : 0 < D.VDDlo\n  VDD_le : D.VDDlo ≤ D.VDDhi\n  kn_pos : 0 < D.knlo\n  kn_le : D.knlo ≤ D.knhi\n  kp_pos : 0 < D.kplo\n  kp_le : D.kplo ≤ D.kphi\n  Vtn_le : D.Vtnlo ≤ D.Vtnhi\n  Vtp_le : D.Vtplo ≤ D.Vtphi\n  /-- the NMOS threshold is nonnegative for every parameter point of the box -/\n  Vtn_nonneg : 0 ≤ D.Vtnlo\n  /-- the PMOS threshold magnitude is nonnegative for every parameter point of the box -/\n  Vtp_nonneg : 0 ≤ D.Vtplo\n  C_pos : 0 < D.Clo\n  C_le : D.Clo ≤ D.Chi\n  eps_nonneg : 0 ≤ D.eps\n  /-- the safe domain extends to or below ground -/\n  Vlo_le : D.Vlo ≤ 0\n  /-- the safe domain extends to or above the highest supply -/\n  Vhi_ge : D.VDDhi ≤ D.Vhi\n  VOL_nonneg : 0 ≤ D.VOL\n  /-- static discipline: `VOL ≤ VIL < VIH ≤ VOH` -/\n  VOL_le_VIL : D.VOL ≤ D.VIL\n  VIL_lt_VIH : D.VIL < D.VIH\n  VIH_le_VOH : D.VIH ≤ D.VOH\n  VOH_le : D.VOH ≤ D.VDDlo\n  /-- pull-up margin exceeds the disturbance bound -/\n  up : D.eps < D.Iup D.VOH\n  /-- pull-down margin exceeds the disturbance bound -/\n  dn : D.eps < D.Idn D.VOL\n  /-- boundary restoring currents exceed the disturbance bound -/\n  hiP : D.eps < D.RhiP\n  hiN : D.eps < D.RhiN\n  loN : D.eps < D.RloN\n  loP : D.eps < D.RloP"
+          }
+        }
+      }
+    }
+  ]
+}
