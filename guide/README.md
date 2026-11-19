@@ -22,7 +22,11 @@ overlay: 18 passages, 40 links, stored as
 annotations in [`../annotations/`](../annotations/), with the viewer in
 [`../pdf-overlay/`](../pdf-overlay/).
 
-To open it, from the repository root:
+It is published at
+<https://deicyde.github.io/voltage-to-bit/pdf-overlay/viewer/index.html>
+by `.github/workflows/pages.yml` on every push to `main`.
+
+To open it locally instead, from the repository root:
 
 ```sh
 mkdir -p .lake/overlay-pdf && cp guide/reading-guide.pdf .lake/overlay-pdf/voltage-to-bit-reading-guide.pdf
@@ -30,10 +34,10 @@ python3 pdf-overlay/tools/serve.py --build
 ```
 
 and open the viewer address it prints (`/pdf-overlay/viewer/index.html`). The
-first line puts the PDF into the viewer's cache. The annotations name the PDF's
-address in this repository on GitHub, which needs a login while the repository
-is private, so the server cannot fetch it there itself; it checks the cached
-file against the sha256 the annotations pin.
+first line puts the PDF into the viewer's cache, so nothing is downloaded; without
+it the server fetches the PDF from the address in this repository that the
+annotations name. Either way it checks the file against the sha256 the
+annotations pin.
 
 ## How it is made
 
