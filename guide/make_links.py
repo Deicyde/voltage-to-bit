@@ -221,7 +221,7 @@ def parse(path: Path) -> LeanFile:
                 head = next(lines[k - 1].strip() for k in range(a, b + 1) if not blank(lines[k - 1]))
                 head = head.removeprefix("/-!").removeprefix("/-").strip() or head
                 lf.frames.append(Span(rel, module, a, b, None, "module", "\n".join(lines[a - 1:min(b, a + 29)]),
-                                      title=f"{module}: {head[:60]}"))
+                                      title=f"{module}, lines {a}–{b}: {head[:60]}"))
             run = []
     return lf
 
@@ -429,6 +429,11 @@ def main() -> None:
         if box.page not in sizes:
             problems.append(f"box {box.n}: page {box.page} is not in {PDF.name}")
     problems += overlaps(boxes, sizes)
+    # a recorded box does not follow a rotation, so no linked piece may sit in a rotated node
+    tex = (HERE / "reading-guide.tex").read_text(encoding="utf-8")
+    for m in re.finditer(r"\\node\[[^\]]*rotate[^\]]*\][^;]*;", tex):
+        if "\\lk" in m.group(0):
+            problems.append(f"a linked piece sits in a rotated node: {m.group(0)[:70]}")
     linked = [s for spans in resolved.values() for s in spans]
     missing = coverage(lib, linked)
     total = sum(len(lf.lines) for lf in lib.values())

@@ -345,7 +345,7 @@ $\Hyp$:\ \ $D$ admissible, $v$ a run of $D$ on $[a,b]$ for $u$, $v(a)\in\SafeS$,
   \fill[black!15] (6.2,4.4) rectangle (11,5.4);
   \draw[densely dashed] (1.2,0.6) -- (6.2,4.4);
   \node[lab] at (8.6,4.9) {\lk[(R) the guaranteed region]{IsTrajectory.rise}{$\VOH\le v$}};
-  \node[lab, rotate=35, above] at (3.2,2.9) {\lk[the slope while charging]{IsTrajectory.slope_up}{slope $\ge\frac{\Iup(c)-\varepsilon}{\Chi}$}};
+  \node[lab, right] at (4.3,1.5) {\lk[the slope while charging]{IsTrajectory.slope_up}{slope $\ge\frac{\Iup(c)-\varepsilon}{\Chi}$}};
   \foreach \x/\l in {1.2/s,11/e} {\draw (\x,-0.12) -- (\x,0.12); \node[below, lab] at (\x,-0.1) {$\l$};}
   \draw (6.2,-0.12) -- (6.2,0.12); \node[below, lab] at (6.2,-0.1) {\lk[rising deadline]{Design.tauUp}{$s+\tup$}};
   \draw[thick] (1.2,-2.1) -- (11,-2.1); \node[lab, below] at (6.1,-2.1) {$u\le\VIL$ on $[s,e)$};
@@ -357,7 +357,7 @@ $\Hyp$:\ \ $D$ admissible, $v$ a run of $D$ on $[a,b]$ for $u$, $v(a)\in\SafeS$,
   \fill[black!15] (5.2,0.6) rectangle (11,1.6);
   \draw[densely dashed] (1.2,5.4) -- (5.2,1.6);
   \node[lab] at (8.2,1.1) {\lk[(F) the guaranteed region]{IsTrajectory.fall}{$v\le\VOL$}};
-  \node[lab, rotate=-41, above] at (2.9,4.0) {\lk[the slope while discharging]{IsTrajectory.slope_dn}{slope $\le-\frac{\Idn(c)-\varepsilon}{\Chi}$}};
+  \node[lab, right] at (3.8,4.3) {\lk[the slope while discharging]{IsTrajectory.slope_dn}{slope $\le-\frac{\Idn(c)-\varepsilon}{\Chi}$}};
   \foreach \x/\l in {1.2/s,11/e} {\draw (\x,-0.12) -- (\x,0.12); \node[below, lab] at (\x,-0.1) {$\l$};}
   \draw (5.2,-0.12) -- (5.2,0.12); \node[below, lab] at (5.2,-0.1) {\lk[falling deadline]{Design.tauDn}{$s+\tdn$}};
   \draw[thick] (1.2,-2.1) -- (11,-2.1); \node[lab, below] at (6.1,-2.1) {$\VIH\le u$ on $[s,e)$};
