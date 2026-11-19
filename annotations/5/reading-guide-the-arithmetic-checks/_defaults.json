@@ -3,12 +3,12 @@
   "subject": {
     "location": {
       "page": 2,
-      "rect": [0.108968, 0.281007, 0.782104, 0.244891]
+      "rect": [0.108968, 0.345382, 0.782063, 0.244891]
     },
     "title": "The arithmetic checks",
     "extensions": {
       "org.mathlib-initiative.formal-companion.overlay": {
-        "region": "p002-r008-019"
+        "region": "p002-r012-023"
       }
     }
   },
@@ -16,7 +16,7 @@
     "extensions": {
       "org.mathlib-initiative.formal-companion.overlay": {
         "destination": {
-          "href": "https://github.com/Deicyde/voltage-to-bit/blob/412ea9a8f99f9a3c686e8686382a83a32ed8f5d9/VoltageToBit/Model/Inverter.lean"
+          "href": "https://github.com/Deicyde/voltage-to-bit/blob/1c0d671a1d7e80aa42cf1b4eda785beec14d480d/VoltageToBit/Model/Inverter.lean"
         }
       }
     }

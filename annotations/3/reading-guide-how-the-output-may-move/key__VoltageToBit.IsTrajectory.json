@@ -3,22 +3,22 @@
     {
       "location": {
         "page": 1,
-        "rect": [0.108968, 0.754733, 0.782104, 0.165982]
+        "rect": [0.108968, 0.819108, 0.782063, 0.101607]
       },
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
-          "region": "p001-r024-031"
+          "region": "p001-r028-031"
         }
       }
     },
     {
       "location": {
         "page": 2,
-        "rect": [0.108968, 0.085888, 0.782104, 0.078978]
+        "rect": [0.108968, 0.085888, 0.782063, 0.143353]
       },
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
-          "region": "p002-r000-003"
+          "region": "p002-r000-007"
         }
       }
     }

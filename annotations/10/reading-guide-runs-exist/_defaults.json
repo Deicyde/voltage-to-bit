@@ -3,12 +3,12 @@
   "subject": {
     "location": {
       "page": 3,
-      "rect": [0.108968, 0.429689, 0.782104, 0.148328]
+      "rect": [0.108968, 0.429689, 0.782063, 0.180516]
     },
     "title": "Runs exist",
     "extensions": {
       "org.mathlib-initiative.formal-companion.overlay": {
-        "region": "p003-r016-021"
+        "region": "p003-r016-023"
       }
     }
   },

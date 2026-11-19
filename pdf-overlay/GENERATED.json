@@ -140,12 +140,12 @@
   "annotations": {
     "bundle": {
       "path": "annotations.bundle.json",
-      "sha256": "dfecf905b7ba257361649ab7f74d00df4e0e40072fb6d24ef1ef413be5788726"
+      "sha256": "709644731a390db353490e914adf4525b200d2542591a39824b9f7d460359886"
     },
     "count": 43,
     "directory": "annotations",
     "export": {
-      "commit": "412ea9a8f99f9a3c686e8686382a83a32ed8f5d9",
+      "commit": "1c0d671a1d7e80aa42cf1b4eda785beec14d480d",
       "convention": "roadmap-locators",
       "source_id": "voltage-to-bit-reading-guide"
     },
@@ -213,13 +213,13 @@
       },
       {
         "path": "guide/blueprint/sources/reading-guide-locators.md",
-        "sha256": "ee6d00296a1e17433ceca244c13d2605aa2eff5305c8f8b06aaae0878c336d65"
+        "sha256": "ef9cf0affe960c1664df6a4eb1b7cae470e2bd47e24fb90fe5e054819ac45d87"
       },
       {
         "path": "guide/reading-guide.tex",
-        "sha256": "621631697c54689565d6db4c1f29bdb5112706881c2f9314b2abdf8ecbaf6dfc"
+        "sha256": "8b6f194d57475383a39e9d725693516ccdb48876664abf83775893ad04d00cf9"
       }
     ],
-    "manifest_sha256": "2ab1f068f8423b3c1b649133a494cd5c83ec6ffe4b73cd6f9d7b141315d0f0fc"
+    "manifest_sha256": "0459f2dddf83755d795c2fc31d200cfb46956a147ff8398c363a63d52f4b8b53"
   }
 }

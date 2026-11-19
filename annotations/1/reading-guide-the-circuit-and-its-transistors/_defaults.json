@@ -3,12 +3,12 @@
   "subject": {
     "location": {
       "page": 1,
-      "rect": [0.108968, 0.35248, 0.782104, 0.253986]
+      "rect": [0.108968, 0.35248, 0.782063, 0.302268]
     },
     "title": "The circuit and its transistors",
     "extensions": {
       "org.mathlib-initiative.formal-companion.overlay": {
-        "region": "p001-r007-017"
+        "region": "p001-r007-020"
       }
     }
   },

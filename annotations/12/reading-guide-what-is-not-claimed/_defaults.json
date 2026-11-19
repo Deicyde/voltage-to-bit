@@ -7,7 +7,7 @@
     "extensions": {
       "org.mathlib-initiative.formal-companion.overlay": {
         "destination": {
-          "href": "https://github.com/Deicyde/voltage-to-bit/blob/412ea9a8f99f9a3c686e8686382a83a32ed8f5d9/VoltageToBit/Examples/InputClass.lean"
+          "href": "https://github.com/Deicyde/voltage-to-bit/blob/1c0d671a1d7e80aa42cf1b4eda785beec14d480d/VoltageToBit/Examples/InputClass.lean"
         }
       }
     }

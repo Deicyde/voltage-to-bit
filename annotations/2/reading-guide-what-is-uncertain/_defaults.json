@@ -3,12 +3,12 @@
   "subject": {
     "location": {
       "page": 1,
-      "rect": [0.108968, 0.606466, 0.782104, 0.148266]
+      "rect": [0.108968, 0.654748, 0.782063, 0.16436]
     },
     "title": "What is uncertain",
     "extensions": {
       "org.mathlib-initiative.formal-companion.overlay": {
-        "region": "p001-r018-023"
+        "region": "p001-r021-027"
       }
     }
   },
@@ -20,7 +20,7 @@
           "kind": "structure"
         },
         "destination": {
-          "href": "https://github.com/Deicyde/voltage-to-bit/blob/412ea9a8f99f9a3c686e8686382a83a32ed8f5d9/VoltageToBit/Model/Inverter.lean"
+          "href": "https://github.com/Deicyde/voltage-to-bit/blob/1c0d671a1d7e80aa42cf1b4eda785beec14d480d/VoltageToBit/Model/Inverter.lean"
         }
       }
     }
