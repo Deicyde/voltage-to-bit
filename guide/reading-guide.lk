@@ -1,0 +1,392 @@
+1|1|7914296|44209566|16.54051pt|5.46666pt|1.34445pt|1|supply voltage|Params.VDD
+2|1|6461702|42757654|8.04031pt|5.46666pt|2.16667pt|1|PMOS current|Ip
+3|1|6461702|38139013|8.8035pt|5.46666pt|1.0pt|1|NMOS current|In
+4|1|9281060|39604334|12.33578pt|5.46666pt|1.37778pt|1|least capacitance|Design.Clo
+5|1|10337082|39604334|12.72461pt|5.46666pt|1.37778pt|1|largest capacitance|Design.Chi
+6|1|13370673|39222072|3.92505pt|3.44444pt|0.0pt|1|disturbance bound|Design.eps
+7|1|14880166|43994326|4.97223pt|6.94444pt|0.0pt|1|a parameter point|Params
+8|1|16380219|43994326|18.47513pt|6.83331pt|1.49998pt|1|supply voltage|Params.VDD
+9|1|17991503|43994326|10.64937pt|6.94444pt|1.49998pt|1|NMOS transconductance|Params.kn
+10|1|19089918|43994326|9.82838pt|6.94444pt|2.86108pt|1|PMOS transconductance|Params.kp
+11|1|20134529|43994326|14.2975pt|6.83331pt|1.49998pt|1|NMOS threshold|Params.Vtn
+12|1|21472028|43994326|13.47652pt|6.83331pt|2.86108pt|1|PMOS threshold magnitude|Params.Vtp
+13|1|14880166|42805504|88.06934pt|8.63992pt|2.5pt|1|positive part squared|psq
+14|1|14880166|41661175|216.25482pt|8.96107pt|3.50006pt|1|NMOS current|In
+15|1|14880166|40387591|243.78369pt|9.93329pt|3.50006pt|1|PMOS current|Ip
+16|1|14880166|39273475|158.11484pt|7.5pt|2.86108pt|1|net current into the output|Inet
+17|1|20355253|37534170|76.79181pt|14.0001pt|10.00012pt|1|psq: case form|psq_eq_ite
+18|1|5937611|32449597|66.666pt|12.92491pt|8.92491pt|1|NMOS cutoff|In_cutoff
+19|1|13384001|32449597|107.28166pt|13.93103pt|9.93103pt|1|NMOS triode|In_triode
+20|1|26531517|32449597|90.65558pt|12.98453pt|8.98453pt|1|NMOS saturation|In_sat
+21|1|5937611|30661990|105.12288pt|12.92491pt|8.92491pt|1|PMOS cutoff|Ip_cutoff
+22|1|13384001|30661990|192.11516pt|14.34569pt|10.34569pt|1|PMOS triode|Ip_triode
+23|1|26531517|30661990|116.05855pt|13.47064pt|9.47063pt|1|PMOS saturation|Ip_sat
+24|1|5937611|28847208|81.48102pt|12.92491pt|8.92491pt|1|NMOS reverse cutoff|In_rev_cutoff
+25|1|13384001|28847208|153.48616pt|14.34569pt|10.34569pt|1|NMOS reverse triode|In_rev_triode
+26|1|26531517|28847208|100.34982pt|12.98453pt|8.98453pt|1|NMOS reverse saturation|In_rev_sat
+27|1|5937611|27032426|93.00835pt|12.92491pt|8.92491pt|1|PMOS reverse cutoff|Ip_rev_cutoff
+28|1|13384001|27032426|186.61183pt|14.34569pt|10.34569pt|1|PMOS reverse triode|Ip_rev_triode
+29|1|26531517|27032426|116.05855pt|13.47064pt|9.47063pt|1|PMOS reverse saturation|Ip_rev_sat
+30|1|8294122|25397291|89.35759pt|5.55556pt|1.55556pt|1|NMOS discharges above ground|In_nonneg
+31|1|14707317|25397291|89.35759pt|5.55556pt|1.55556pt|1|NMOS reverse below ground|In_nonpos
+32|1|21120512|25397291|100.12173pt|5.55556pt|2.16667pt|1|PMOS charges below supply|Ip_nonneg
+33|1|28239146|25397291|100.12173pt|5.55556pt|2.16667pt|1|PMOS reverse above supply|Ip_nonpos
+34|1|2797019|24289370|118.76106pt|7.76665pt|3.13733pt|1|NMOS below its saturation current|In_le_sat
+35|1|11137200|24289370|142.69562pt|8.73886pt|3.13733pt|1|PMOS below its saturation current|Ip_le_sat
+36|1|21045956|24289370|117.63068pt|6.0pt|2.0pt|1|net current is continuous|continuous_Inet
+37|1|2797019|23117836|481.57065pt|8.73886pt|4.00006pt|1|net current is Lipschitz in v|abs_Inet_sub_le
+38|1|4311192|22024037|34.52228pt|5.34889pt|1.5555pt|1||psq_nonneg
+39|1|7130700|22024037|72.81418pt|6.68999pt|1.5555pt|1||psq_of_nonneg
+40|1|12459706|22024037|68.11275pt|5.34889pt|1.5555pt|1||psq_of_nonpos
+41|1|17480599|22024037|82.74393pt|5.34889pt|1.55556pt|1|psq is monotone|psq_mono
+42|1|23460361|22024037|55.28563pt|5.1555pt|1.5555pt|1|psq is continuous|continuous_psq
+43|1|2797019|21125392|200.03021pt|6.0pt|2.0pt|1|increments of psq grow|psq_incr_mono
+44|1|16463255|21125392|233.39102pt|6.15668pt|1.55556pt|1|the comparison behind every margin|psq_sub_le_psq_sub
+45|1|2797019|20142352|126.96204pt|6.0pt|2.0pt|1|psq is locally Lipschitz|abs_psq_sub_le
+46|2|2797019|50031598|8.55695pt|6.83331pt|0.0pt|2|design record|Design
+47|2|9344844|49005311|18.47513pt|8.45108pt|2.75433pt|2||Design.VDDlo
+48|2|10846899|49005311|18.47513pt|8.45108pt|2.75433pt|2||Design.VDDhi
+49|2|9344844|48100920|12.27084pt|8.45108pt|2.47217pt|2||Design.knlo
+50|2|10440295|48100920|12.7015pt|8.45108pt|2.47217pt|2||Design.knhi
+51|2|12295423|48100920|12.27084pt|8.45108pt|3.83327pt|2||Design.kplo
+52|2|13390874|48100920|12.7015pt|8.45108pt|3.83327pt|2||Design.kphi
+53|2|9344844|47196529|14.80556pt|8.45108pt|2.47217pt|2||Design.Vtnlo
+54|2|10606410|47196529|15.23622pt|8.45108pt|2.47217pt|2||Design.Vtnhi
+55|2|12627653|47196529|14.80556pt|8.45108pt|3.83327pt|2||Design.Vtplo
+56|2|13889219|47196529|15.23622pt|8.45108pt|3.83327pt|2||Design.Vtphi
+57|2|9344844|46292138|13.89722pt|6.83331pt|1.49998pt|2||Design.Clo
+58|2|10546881|46292138|14.32788pt|6.83331pt|1.49998pt|2||Design.Chi
+59|2|10702199|45387747|4.66318pt|4.30554pt|0.0pt|2||Design.eps
+60|2|9159525|44483356|15.90768pt|6.83331pt|1.49998pt|2||Design.VIL
+61|2|10857411|44483356|17.50627pt|6.83331pt|1.49998pt|2||Design.VIH
+62|2|9159525|43578965|18.11723pt|6.83331pt|1.49998pt|2||Design.VOL
+63|2|11002216|43578965|19.71582pt|6.83331pt|1.49998pt|2||Design.VOH
+64|2|9344844|42674574|12.58333pt|6.83331pt|1.49998pt|2||Design.Vlo
+65|2|10460774|42674574|13.01399pt|6.83331pt|1.49998pt|2||Design.Vhi
+66|2|12151062|42674574|55.78615pt|7.5pt|2.5pt|2|the safe range|Design.Safe
+67|2|9159525|41770183|12.12756pt|4.30554pt|1.49998pt|2||Design.uHi
+68|2|10609677|41770183|11.16908pt|4.30554pt|1.49998pt|2||Design.uLo
+69|2|2797019|40417519|40.4015pt|7.5pt|2.5pt|2|the parameter box|Design.InBox
+70|2|2797020|39227392|50.28348pt|8.45108pt|2.75433pt|2||Design.InBox.VDD_ge
+71|2|6878831|39227392|36.25343pt|8.45108pt|2.47217pt|2||Design.InBox.kn_ge
+72|2|10069393|39227392|35.43245pt|8.45108pt|3.83327pt|2||Design.InBox.kp_ge
+73|2|13206151|39227392|42.43628pt|8.45108pt|2.47217pt|2||Design.InBox.Vtn_ge
+74|2|16801912|39227392|41.6153pt|8.45108pt|3.83327pt|2||Design.InBox.Vtp_ge
+75|2|2797020|38323001|50.28348pt|8.45108pt|2.75433pt|2||Design.InBox.VDD_le
+76|2|6878831|38323001|36.6841pt|8.45108pt|2.47217pt|2||Design.InBox.kn_le
+77|2|10069393|38323001|35.86311pt|8.45108pt|3.83327pt|2||Design.InBox.kp_le
+78|2|13206151|38323001|42.86694pt|8.45108pt|2.47217pt|2||Design.InBox.Vtn_le
+79|2|16801912|38323001|42.04596pt|8.45108pt|3.83327pt|2||Design.InBox.Vtp_le
+80|2|2797019|35882444|156.15404pt|24.09993pt|19.09991pt|2|three-valued decoding|decode
+81|2|2797020|33801033|112.78897pt|6.0pt|2.0pt|2|reading a 0|decode_eq_false_iff
+82|2|2797020|32896642|153.75262pt|6.0pt|2.0pt|2|reading a 1|decode_eq_true_iff
+83|2|2797020|31992251|131.38188pt|6.0pt|2.0pt|2|reading no bit|decode_eq_none_iff
+84|2|2797019|30836195|132.81723pt|7.5pt|2.5pt|2|input decoding|Design.decodeIn
+85|2|12812049|30836195|142.0833pt|7.5pt|2.5pt|2|output decoding|Design.decodeOut
+86|2|25584291|40053668|4.25pt|5.1555pt|0.0pt|2|input reads 0|Design.decodeIn,decode_eq_false_iff
+87|2|25506919|43061367|6.6112pt|5.55556pt|0.0pt|2|input reads no bit|Design.decodeIn,decode_eq_none_iff
+88|2|25584291|46766582|4.25pt|5.1555pt|0.0pt|2|input reads 1|Design.decodeIn,decode_eq_true_iff
+89|2|31961455|39494258|4.25pt|5.1555pt|0.0pt|2|output reads 0|Design.decodeOut,decode_eq_false_iff
+90|2|31884083|43061367|6.6112pt|5.55556pt|0.0pt|2|output reads no bit|Design.decodeOut,decode_eq_none_iff
+91|2|31961455|47325991|4.25pt|5.1555pt|0.0pt|2|output reads 1|Design.decodeOut,decode_eq_true_iff
+92|2|34692150|43623690|5.73352pt|5.46666pt|0.0pt|2|the safe range|Design.Safe
+93|2|2797019|27014315|243.66956pt|7.5pt|2.5pt|3|a run of the circuit|IsTrajectory
+94|2|3452379|25834667|118.83354pt|7.5pt|2.5pt|3|continuity|IsTrajectory.cont
+95|2|3452379|24447932|313.95934pt|9.6599pt|17.93993pt|3|the current balance|IsTrajectory.incl
+96|2|3015449|15975474|141.33751pt|6.68999pt|2.0pt|3|(ii) with the canonical right derivative|IsTrajectory.balance
+97|2|5214961|22222141|137.94785pt|6.68999pt|2.0pt|3|a run has its right derivative|IsTrajectory.hasDeriv
+98|2|17900824|22357673|182.16083pt|7.9549pt|2.5pt|3|the right derivative as a function|rderiv
+99|2|17900824|21307929|189.13153pt|7.51782pt|2.5pt|3|restriction|IsTrajectory.mono
+100|2|17900824|20258185|169.35881pt|7.51782pt|2.5pt|3|only the input on the interval matters|IsTrajectory.congr_input
+101|2|17900824|18632898|248.281pt|16.29991pt|11.29991pt|3|gluing two runs|IsTrajectory.concat
+102|2|2797019|11967932|67.05658pt|6.88875pt|0.0pt|4|admissibility|Design.Admissible
+103|2|6670446|10797793|46.30298pt|7.95662pt|1.87663pt|4||Design.Admissible.VDD_le
+104|2|10756041|10797793|35.43704pt|7.95662pt|1.58337pt|4||Design.Admissible.kn_le
+105|2|14751706|10797793|35.43704pt|7.95662pt|2.75005pt|4||Design.Admissible.kp_le
+106|2|18590205|10797793|40.1773pt|7.95662pt|1.58337pt|4||Design.Admissible.Vtn_le
+107|2|22487064|10797793|40.1773pt|7.95662pt|2.75005pt|4||Design.Admissible.Vtp_le
+108|2|25906557|10797793|38.48257pt|6.14998pt|1.36935pt|4||Design.Admissible.C_le
+109|2|6670446|9968768|33.94312pt|7.95662pt|1.87663pt|4||Design.Admissible.VDD_pos
+110|2|10756041|9968768|28.31573pt|7.95662pt|1.58337pt|4||Design.Admissible.kn_pos
+111|2|14751706|9968768|28.31573pt|7.95662pt|2.75005pt|4||Design.Admissible.kp_pos
+112|2|18590205|9968768|29.8385pt|6.14998pt|1.03336pt|4||Design.Admissible.C_pos
+113|2|6670446|9139743|30.68587pt|7.95662pt|1.58337pt|4||Design.Admissible.Vtn_nonneg
+114|2|10756041|9139743|30.68587pt|7.95662pt|2.75005pt|4||Design.Admissible.Vtp_nonneg
+115|2|14751706|9139743|33.72925pt|6.14998pt|1.36935pt|4||Design.Admissible.VOL_nonneg
+116|2|18590205|9139743|21.2523pt|5.86935pt|1.36935pt|4||Design.Admissible.eps_nonneg
+117|2|6670446|8310718|28.63033pt|6.14998pt|1.36935pt|4||Design.Admissible.Vlo_le
+118|2|10756041|8310718|41.37901pt|7.95662pt|1.87663pt|4||Design.Admissible.Vhi_ge
+119|2|6670446|7481693|43.82639pt|6.14998pt|1.36935pt|4||Design.Admissible.VOL_le_VIL
+120|2|10756041|7481693|43.14975pt|6.14998pt|1.00003pt|4||Design.Admissible.VIL_lt_VIH
+121|2|14751706|7481693|46.57083pt|6.14998pt|1.36935pt|4||Design.Admissible.VIH_le_VOH
+122|2|18590205|7481693|47.46133pt|7.95662pt|1.87663pt|4||Design.Admissible.VOH_le
+123|2|6670446|6652668|50.34122pt|6.75pt|2.25pt|4||Design.Admissible.up
+124|2|10756041|6652668|48.969pt|6.75pt|2.25pt|4||Design.Admissible.dn
+125|2|14751706|6652668|30.29243pt|7.9233pt|1.90996pt|4||Design.Admissible.hiP
+126|2|18590205|6652668|30.63939pt|7.9233pt|1.90996pt|4||Design.Admissible.hiN
+127|2|22487064|6652668|30.63939pt|7.9233pt|1.90996pt|4||Design.Admissible.loN
+128|2|25906557|6652668|29.90361pt|7.9233pt|1.90996pt|4||Design.Admissible.loP
+129|2|2797019|3823964|340.9234pt|12.53441pt|3.83327pt|4|pull-up margin|Design.Iup
+130|3|2797019|51948984|345.71916pt|12.53441pt|3.83327pt|4|pull-down margin|Design.Idn
+131|3|2797019|50286488|312.16293pt|12.53441pt|3.83327pt|4|restoring current at the top, PMOS|Design.RhiP
+132|3|2797019|49080923|212.77426pt|11.5622pt|3.50006pt|4|restoring current at the top, NMOS|Design.RhiN
+133|3|2797019|47440264|210.42664pt|11.5622pt|3.50006pt|4|restoring current at the bottom, NMOS|Design.RloN
+134|3|17461352|47440264|240.21191pt|12.53441pt|3.83327pt|4|restoring current at the bottom, PMOS|Design.RloP
+135|3|2797019|42915859|92.99597pt|14.26508pt|9.7206pt|5|rising deadline|Design.tauUp
+136|3|10420776|42915859|91.82805pt|14.26508pt|9.7206pt|5|falling deadline|Design.tauDn
+137|3|17967992|42915859|92.2784pt|7.5pt|2.86108pt|5|deadline for an input bit|Design.tau
+138|3|3452379|40017818|203.586pt|7.5pt|2.5pt|5|(S) the output stays safe|IsTrajectory.safe
+139|3|3452379|38838170|271.94199pt|7.5pt|2.86108pt|5|(R) low in, high out|IsTrajectory.rise
+140|3|3452379|37569322|271.10898pt|7.5pt|2.86108pt|5|(F) high in, low out|IsTrajectory.fall
+141|3|3452379|36300474|359.78123pt|7.5pt|2.5pt|5|(B) the decoded form|IsTrajectory.decoded
+142|3|12130520|33524135|33.45834pt|5.46666pt|1.34889pt|5|(R) the guaranteed region|IsTrajectory.rise
+143|3|5807811|31121226|58.80373pt|9.47775pt|4.51512pt|5|the slope while charging|IsTrajectory.slope_up
+144|3|10030661|28444447|22.42502pt|4.90399pt|2.57777pt|5|rising deadline|Design.tauUp
+145|3|29293222|29981258|32.08612pt|5.46666pt|1.34889pt|5|(F) the guaranteed region|IsTrajectory.fall
+146|3|23637340|34624322|65.41493pt|9.47775pt|4.51512pt|5|the slope while discharging|IsTrajectory.slope_dn
+147|3|26533060|28444447|22.42502pt|4.90399pt|2.57777pt|5|falling deadline|Design.tauDn
+148|3|3006734|20778247|120.6033pt|6.92334pt|2.90991pt|6|top of the range, PMOS branch|Design.Inet_Vhi_le_neg_RhiP
+149|3|3006734|19193259|120.93646pt|6.92334pt|2.90991pt|6|top of the range, NMOS branch|Design.Inet_Vhi_le_neg_RhiN
+150|3|3006734|17235369|113.08075pt|6.92334pt|2.90991pt|6|bottom of the range, NMOS branch|Design.RloN_le_Inet_Vlo
+151|3|3006734|15650380|112.35876pt|6.92334pt|2.90991pt|6|bottom of the range, PMOS branch|Design.RloP_le_Inet_Vlo
+152|3|13635398|19995526|114.36937pt|6.0pt|2.0pt|6|inwards at the top|Design.Inet_Vhi_lt
+153|3|13635398|16452619|107.36934pt|6.0pt|2.0pt|6|inwards at the bottom|Design.Inet_Vlo_gt
+154|3|13635398|14159071|125.46844pt|12.92491pt|8.92491pt|6|barrier from above|barrier_le
+155|3|13635398|11921462|125.46844pt|12.92491pt|8.92491pt|6|barrier from below|barrier_ge
+156|3|3006734|8844753|84.45888pt|12.92491pt|8.92491pt|6|pull-up margin holds|Design.Inet_ge_Iup
+157|3|3006734|6047735|89.24109pt|12.92491pt|8.92491pt|6|pull-down margin holds|Design.Inet_le_neg_Idn
+158|3|11397789|8844753|154.29465pt|14.4589pt|10.4589pt|6|slope while charging|IsTrajectory.slope_up
+159|3|11397789|6047735|143.37636pt|14.4589pt|10.4589pt|6|slope while discharging|IsTrajectory.slope_dn
+160|3|23052033|8844753|138.03938pt|12.92491pt|8.92491pt|6|rise by a deadline|rise_by
+161|3|23052033|6047735|146.91684pt|12.92491pt|8.92491pt|6|fall by a deadline|fall_by
+162|4|9613226|43870005|45.18875pt|8.53336pt|4.40302pt|7|time of a list of segments|riseTime
+163|4|16893938|49923817|216.14769pt|8.53336pt|4.40302pt|7|time of a rising list|riseTime
+164|4|16893938|49045437|166.31169pt|6.0pt|2.0pt|7|last level of a list|finalLevel
+165|4|16893938|48324541|169.49565pt|6.0pt|2.0pt|7|a valid rising list|RiseSegs
+166|4|16893938|47632772|26.27573pt|5.1555pt|1.21964pt|7||RiseSegs.pos
+167|4|19173000|47632772|23.07753pt|5.55556pt|1.41112pt|7||RiseSegs.le_finalLevel
+168|4|21242465|47632772|26.46042pt|5.34889pt|1.41112pt|7||RiseSegs.mem_le_finalLevel
+169|4|23533631|47632772|47.74982pt|5.511pt|1.34889pt|7||riseTime_nonneg
+170|4|16893938|46905250|249.02863pt|6.68999pt|2.0pt|7|rise through a list of levels|rise_chain
+171|4|2797019|42231250|135.79266pt|8.53336pt|4.40302pt|7|time of a falling list|fallTime
+172|4|12253383|42231250|170.41086pt|6.0pt|2.0pt|7|a valid falling list|FallSegs
+173|4|23978485|42231250|26.27573pt|5.1555pt|1.21964pt|7||FallSegs.pos
+174|4|26257547|42231250|24.50348pt|5.55556pt|1.41112pt|7||FallSegs.finalLevel_le
+175|4|28420463|42231250|26.46042pt|5.34889pt|1.41112pt|7||FallSegs.finalLevel_le_mem
+176|4|30711629|42231250|46.51472pt|5.511pt|1.34889pt|7||fallTime_nonneg
+177|4|2797019|41111043|255.83069pt|6.68999pt|2.0pt|7|fall through a list of levels|fall_chain
+178|4|2797019|39726965|127.26743pt|10.3833pt|4.48175pt|7|rising slopes from the margin|Design.upSegs
+179|4|11792977|39726965|127.33965pt|10.3833pt|4.48175pt|7|falling slopes from the margin|Design.dnSegs
+180|4|2797019|38369202|332.08014pt|7.5pt|2.5pt|7|a rising certificate|Design.ValidRiseCert
+181|4|2797019|37206851|324.95685pt|7.5pt|2.5pt|7|a falling certificate|Design.ValidFallCert
+182|4|5866260|35916634|379.97418pt|8.45108pt|2.75433pt|7|rise through certified levels|IsTrajectory.rise_certificate
+183|4|4894169|34672080|364.85052pt|7.5pt|2.5pt|7|fall through certified levels|IsTrajectory.fall_certificate
+184|4|4894169|33509729|155.21294pt|7.5pt|2.86108pt|7|a rising certificate proves its deadline|IsTrajectory.rise_of_cert
+185|4|15721564|33509729|152.10234pt|7.5pt|2.86108pt|7|a falling certificate proves its deadline|IsTrajectory.fall_of_cert
+186|4|5071649|27317845|124.85855pt|6.0pt|2.0pt|8|clamp|clamp
+187|4|5071649|26465877|82.41011pt|6.0pt|2.0pt|8||clamp_mem
+188|4|10843854|26465877|83.60898pt|6.0pt|2.0pt|8||clamp_of_mem
+189|4|5071649|25613909|107.32602pt|6.0pt|2.0pt|8|clamp is 1-Lipschitz|abs_clamp_sub_le
+190|4|4535329|22364813|188.05302pt|8.59998pt|4.63733pt|8|the clamped right-hand side|clampedField
+191|4|3006734|20125980|234.70204pt|6.0pt|2.0pt|8|Lipschitz and bounded|exists_clampedField_bounds
+192|4|18760965|25714883|251.84406pt|6.15668pt|2.0pt|8|existence|exists_solution
+193|4|18801608|23646250|250.60374pt|6.68999pt|2.0pt|8|solutions are runs|IsTrajectory.of_ode
+194|4|21400363|21804180|171.29602pt|6.0pt|2.0pt|8|solutions with drifting parameters are runs|IsTrajectory.of_ode_varying
+195|4|22241061|19939501|145.63997pt|6.0pt|2.0pt|8|runs exist|exists_trajectory
+196|4|21433411|18074822|170.28749pt|6.0pt|2.0pt|8|runs exist, constant capacitance|exists_trajectory_const
+197|4|4446296|17701892|190.77008pt|6.0pt|2.0pt|8|uniqueness|solution_unique
+198|4|10331243|15464283|272.94133pt|6.0pt|2.0pt|8|runs exist for an input with one jump|exists_trajectory_step
+199|4|2797019|3961606|149.51506pt|12.92491pt|8.92491pt|9|a current between two box members|Design.exists_inBox_of_between
+200|4|3354075|2786879|124.11058pt|6.0pt|2.0pt|9|a current between two box members (conclusion)|Design.exists_inBox_of_between
+201|4|15887052|10749321|174.26978pt|6.0pt|2.0pt|9|mixing two parameter points|Params.mix
+202|4|27865052|10749321|56.62318pt|6.0pt|2.0pt|9||Params.mix_zero
+203|4|32132965|10749321|56.62318pt|6.0pt|2.0pt|9||Params.mix_one
+204|4|15887052|10028425|146.36234pt|6.0pt|2.0pt|9|current along the mix is continuous|continuous_Inet_mix
+205|4|15887052|9307529|164.18889pt|6.0pt|2.0pt|9|interpolation stays in range|Design.interp_mem
+206|4|15887052|8523937|151.92874pt|6.0pt|2.0pt|9|the box is convex|Design.InBox.mix
+207|4|26400910|8523937|120.57614pt|6.95667pt|2.46704pt|9|NMOS off for low inputs|Design.InBox.In_eq_zero
+208|4|15887052|7709737|187.68343pt|6.95667pt|3.63371pt|9|no current at a grounded node|Design.InBox.Inet_ground_eq_zero
+209|4|15887052|6685166|279.91605pt|6.0pt|2.0pt|9|another current law|IsTrajectory.of_model_error
+210|4|16444108|5919051|221.79382pt|6.68999pt|2.0pt|9|another current law (conclusion)|IsTrajectory.of_model_error
+211|4|15887052|5198155|279.835pt|6.0pt|2.0pt|9|the sandwich form|IsTrajectory.of_sandwich
+212|4|15887052|4023428|282.86273pt|12.92491pt|8.92491pt|9|the static sandwich|IsTrajectory.of_static_sandwich
+213|4|15887052|2803482|189.669pt|6.68999pt|2.0pt|9|a slew bound|slew_bound_of_rderiv
+214|5|13537821|50289913|304.01392pt|23.84982pt|19.84982pt|9|charge balance with coupling capacitors|IsTrajectory.of_charge_balance
+215|5|2797019|43104626|225.73341pt|6.95667pt|2.87659pt|10|the record at one supply value|Design.atSupply
+216|5|2797019|42263586|160.26833pt|6.95667pt|3.63371pt|10|the upper split point is below the PMOS reverse knee|Design.Admissible.uHi_lt
+217|5|13857420|42263586|127.13293pt|6.95667pt|2.90991pt|10|the NMOS top margin is unchanged|Design.Admissible.RhiN_atSupply
+218|5|2797019|41372927|147.59467pt|6.95667pt|2.87659pt|10|admissible at every supply value|Design.Admissible.atSupply
+219|5|13026839|41372927|109.06343pt|6.0pt|3.24445pt|10|a box point is in its own restricted box|Design.InBox.atSupply
+220|5|2797019|40507779|194.0273pt|6.95667pt|2.87659pt|10|runs at one supply stay near it|trajectory_safe_atSupply
+221|5|2797019|39729435|168.42339pt|6.0pt|3.24445pt|10|constant-parameter solutions are runs at their supply|IsTrajectory.of_ode_atSupply
+222|5|2797019|38864287|258.6475pt|6.95667pt|2.87659pt|10|constant-parameter solutions stay near their supply|solution_safe_atSupply
+223|5|2797019|33123851|249.39754pt|11.53442pt|4.10991pt|11|largest charging current|Design.IchargeMax
+224|5|19698592|33123851|33.9209pt|5.46666pt|4.10991pt|11||Design.IchargeMax_nonneg
+225|5|2797019|31901976|222.85681pt|11.53442pt|4.10991pt|11|largest discharging current|Design.IdischargeMax
+226|5|17959219|31901976|33.9209pt|5.46666pt|4.10991pt|11||Design.IdischargeMax_nonneg
+227|5|2797019|31042805|160.63083pt|6.0pt|4.10991pt|11|charging current is bounded|Design.Inet_le_IchargeMax
+228|5|13881177|31042805|167.63086pt|6.0pt|4.10991pt|11|discharging current is bounded|Design.neg_IdischargeMax_le_Inet
+229|5|2797019|29148357|134.54448pt|10.79707pt|4.51512pt|11|the output cannot rise faster|IsTrajectory.rise_at_most
+230|5|12171582|29148357|134.5447pt|10.79707pt|4.51512pt|11|the output cannot fall faster|IsTrajectory.fall_at_most
+231|5|2797019|21420789|324.83797pt|6.0pt|2.57777pt|12|low in, low out of two stages|chain_low
+232|5|2797019|20465420|324.83797pt|6.0pt|2.57777pt|12|high in, high out of two stages|chain_high
+233|5|2797019|19542098|187.5262pt|5.511pt|2.57777pt|12|two copies restore a low bit|chain_restores_low
+234|5|15643792|19542098|190.27065pt|5.511pt|2.57777pt|12|two copies restore a high bit|chain_restores_high
+235|5|9691279|18586729|224.83046pt|6.0pt|2.0pt|12|a second stage can be driven|Examples.exists_second_stage
+236|5|2797019|17669225|349.09378pt|6.0pt|2.0pt|12|a two-stage run restoring a low bit|Examples.chain_witness
+237|5|2797019|16686185|349.09378pt|6.0pt|2.0pt|12|a two-stage run restoring a high bit|Examples.chain_witness_high
+238|5|9148734|12703440|38.90672pt|6.0pt|2.0pt|13|the box is not empty|Design.Admissible.exists_inBox
+239|5|12255581|12703440|45.35901pt|5.46666pt|1.34445pt|13||Design.Admissible.VOL_lt_VOH
+240|5|15785285|12703440|20.37256pt|5.46666pt|0.505pt|13||Design.Admissible.zero_mem_safe
+241|5|17677477|12703440|32.4492pt|5.46666pt|1.34445pt|13||Design.Admissible.VOL_mem_safe
+242|5|20361124|12703440|33.82143pt|5.46666pt|1.34445pt|13||Design.Admissible.VOH_mem_safe
+243|5|23134701|12703440|23.68909pt|5.1555pt|2.57777pt|13||Design.Admissible.tauUp_pos
+244|5|25244245|12703440|23.68909pt|5.1555pt|2.57777pt|13||Design.Admissible.tauDn_pos
+245|5|2797019|11720400|251.4417pt|6.0pt|2.57777pt|13|a run that rises|Design.Admissible.exists_rise_run
+246|5|2797019|10933968|252.81392pt|6.0pt|2.57777pt|13|a run that falls|Design.Admissible.exists_fall_run
+247|5|2797019|6938115|19.12614pt|6.83331pt|1.49998pt|14|the illustrative record|Examples.illustrative
+248|5|2797020|5604136|45.76263pt|7.95662pt|1.87663pt|14||Examples.illustrative@VDDlo
+249|5|6705866|5604136|45.76263pt|7.95662pt|1.87663pt|14||Examples.illustrative@VDDhi
+250|5|10491399|5604136|37.56583pt|7.95662pt|1.58337pt|14||Examples.illustrative@knlo
+251|5|14218572|5604136|37.95465pt|7.95662pt|1.58337pt|14||Examples.illustrative@knhi
+252|5|17990089|5604136|32.94083pt|7.95662pt|2.75005pt|14||Examples.illustrative@kplo
+253|5|21851536|5604136|37.95465pt|7.95662pt|2.75005pt|14||Examples.illustrative@kphi
+254|5|2797020|4775111|42.50539pt|7.95662pt|1.58337pt|14||Examples.illustrative@Vtnlo
+255|5|6705866|4775111|42.89421pt|7.95662pt|1.58337pt|14||Examples.illustrative@Vtnhi
+256|5|10491399|4775111|42.50539pt|7.95662pt|2.75005pt|14||Examples.illustrative@Vtplo
+257|5|14218572|4775111|42.89421pt|7.95662pt|2.75005pt|14||Examples.illustrative@Vtphi
+258|5|17990089|4775111|29.8386pt|6.14998pt|1.03336pt|14||Examples.illustrative@Clo
+259|5|21851536|4775111|34.85242pt|6.14998pt|1.03336pt|14||Examples.illustrative@Chi
+260|5|2797020|3946086|21.2524pt|5.6945pt|0.0pt|14||Examples.illustrative@eps
+261|5|6705866|3946086|43.49991pt|6.14998pt|1.00003pt|14||Examples.illustrative@VIL
+262|5|10491399|3946086|44.87213pt|6.14998pt|1.00003pt|14||Examples.illustrative@VIH
+263|5|14218572|3946086|45.54877pt|6.14998pt|1.00003pt|14||Examples.illustrative@VOL
+264|5|17990089|3946086|46.92099pt|6.14998pt|1.00003pt|14||Examples.illustrative@VOH
+265|5|21851536|3946086|39.97833pt|5.6945pt|1.03336pt|14||Examples.illustrative@uHi
+266|5|2797020|3117061|47.64424pt|6.14998pt|1.03336pt|14||Examples.illustrative@Vlo
+267|5|6705866|3117061|40.83867pt|6.14998pt|1.03336pt|14||Examples.illustrative@Vhi
+268|5|10491399|3117061|39.12265pt|5.6945pt|1.03336pt|14||Examples.illustrative@uLo
+269|6|2797019|52115079|67.5702pt|6.88875pt|1.49998pt|14|it passes the checks|Examples.illustrative_admissible
+270|6|7880660|52115079|22.9964pt|6.29724pt|0.39098pt|14||Examples.illustrative_eps_pos
+271|6|10043112|52115079|77.5981pt|7.5pt|2.86108pt|14||Examples.illustrative_Iup
+272|6|15783941|52115079|75.99951pt|7.5pt|2.86108pt|14||Examples.illustrative_Idn
+273|6|21420005|52115079|40.88475pt|8.41226pt|2.79315pt|14||Examples.illustrative_RhiP
+274|6|24754788|52115079|51.36607pt|8.41226pt|2.79315pt|14||Examples.illustrative_RhiN
+275|6|28776475|52115079|46.36607pt|8.41226pt|2.79315pt|14||Examples.illustrative_RloN
+276|6|32470482|52115079|50.45409pt|8.41226pt|2.79315pt|14||Examples.illustrative_RloP
+277|6|2797019|50784082|40.64613pt|8.44832pt|3.44841pt|14||Examples.illustrative_tauUp
+278|6|6116164|50784082|40.07977pt|6.35971pt|2.86108pt|14||Examples.illustrative_tauUp_le
+279|6|9398192|50784082|40.64613pt|8.44832pt|3.44841pt|14||Examples.illustrative_tauDn
+280|6|12717337|50784082|40.07977pt|6.35971pt|2.86108pt|14||Examples.illustrative_tauDn_le
+281|6|2797019|48900032|400.54654pt|16.29991pt|11.29991pt|14|the guarantee in numbers|Examples.illustrative_guarantee
+282|6|2797019|47078137|469.04005pt|7.5pt|2.5pt|14|runs exist for it|Examples.illustrative_exists
+283|6|2797019|46291705|113.25127pt|6.88875pt|0.0pt|14|runs exist, constant capacitance|Examples.illustrative_exists_const
+284|6|2797019|45112057|390.9603pt|7.5pt|2.5pt|14|runs at one supply stay within 0.10 V of it|Examples.illustrative_safe_atSupply
+285|6|3449652|41106463|62.56438pt|6.0pt|2.0pt|14|it starts undefined|Examples.illustrative_initial_undefined
+286|6|11673765|43320763|80.53802pt|6.0pt|2.0pt|14|an explicit run|Examples.illustrative_scenario
+287|6|9150288|40043588|76.28802pt|6.0pt|2.0pt|14|an explicit run (low part)|Examples.illustrative_scenario
+288|6|2797019|37967089|141.71944pt|6.0pt|2.0pt|14|the ramp input|Examples.uRamp
+289|6|19579138|43539193|109.32683pt|6.0pt|2.0pt|14|nominal parameters|Examples.nominal
+290|6|27301037|43539193|34.3496pt|5.55556pt|1.0pt|14||Examples.nominal_inBox
+291|6|19579138|42916601|47.46967pt|5.1555pt|0.0pt|14||Examples.continuous_uRamp
+292|6|23247166|42916601|58.99118pt|5.34889pt|1.34889pt|14||Examples.uRamp_high
+293|6|27670268|42916601|74.10254pt|5.34889pt|1.34889pt|14||Examples.uRamp_low
+294|6|19579138|42294009|47.91835pt|6.0pt|2.0pt|14|a sinusoidal disturbance|Examples.wSin
+295|6|23276571|42294009|48.8632pt|5.1555pt|0.0pt|14||Examples.continuous_wSin
+296|6|27035926|42294009|26.62068pt|6.0pt|2.0pt|14||Examples.abs_wSin_le
+297|6|19579138|41119282|176.94487pt|12.92491pt|8.92491pt|14|the explicit run, its equation|Examples.illustrative_scenario
+298|6|19579138|39737679|87.6776pt|6.0pt|2.57779pt|14|a moving valid-low input|Examples.uFeed
+299|6|25882233|39737679|36.15767pt|5.34889pt|2.57779pt|14||Examples.uFeed_le
+300|6|28808918|39737679|52.26134pt|5.1555pt|2.57779pt|14||Examples.continuous_uFeed
+301|6|32790973|39737679|51.08017pt|6.15668pt|4.10992pt|14||Examples.hasDerivAt_uFeed
+302|6|19579138|38868239|82.29657pt|6.0pt|2.0pt|14|an aggressor|Examples.gFeed
+303|6|25529582|38868239|48.39359pt|6.15668pt|1.55556pt|14||Examples.hasDerivAt_gFeed
+304|6|19579138|37300292|186.73715pt|18.92497pt|14.92496pt|14|a run with feedthrough and coupling|Examples.illustrative_feedthrough_scenario
+305|6|3015449|32428922|102.23126pt|6.0pt|2.0pt|15|false even from 0.25 V|Examples.rise_deadline_1p64_is_false_from_valid_low
+306|6|11848247|32297850|19.36115pt|5.1555pt|0.0pt|15|false below 2.168|Examples.rise_deadline_counterexample
+307|6|5673218|30914227|112.18968pt|5.511pt|1.55556pt|15|no certificate below 2.168|Examples.riseCert_deadline_ge
+308|6|14598326|32428922|55.77042pt|6.0pt|2.0pt|15|16 levels prove 2.26|Examples.illustrative_riseCert_16
+309|6|15211768|30882180|51.52042pt|6.0pt|2.0pt|15|3 levels prove 2.34|Examples.illustrative_riseCert_3
+310|6|21254089|30914227|107.29095pt|5.511pt|1.55556pt|15|the 3-level list does not prove 2.0|Examples.illustrative_riseCert_rejected
+311|6|6057254|29200136|23.61115pt|5.1555pt|0.0pt|15|false below 1.0234|Examples.fall_deadline_counterexample
+312|6|3015449|27816513|116.43968pt|5.511pt|1.55556pt|15|no certificate below 1.0234|Examples.fallCert_deadline_ge
+313|6|10106131|29331208|60.02042pt|6.0pt|2.0pt|15|16 levels prove 1.425|Examples.illustrative_fallCert_16
+314|6|2797019|25333450|275.13857pt|6.88875pt|1.94443pt|15|the guarantee with 2.26 and 1.425|Examples.illustrative_guarantee_refined
+315|6|2797019|24350410|216.95456pt|6.88875pt|1.94443pt|15|rise: false below, true from|Examples.rise_deadline_bracket
+316|6|17670713|24350410|225.48215pt|6.88875pt|1.94443pt|15|fall: false below, true from|Examples.fall_deadline_bracket
+317|6|2797019|23194721|107.938pt|6.0pt|2.57777pt|15|slow pull-up corner|Examples.slowUpCorner
+318|6|10427900|23194721|24.46077pt|5.55556pt|2.57777pt|15||Examples.slowUpCorner_inBox
+319|6|12588017|23194721|142.77692pt|6.0pt|2.57777pt|15||Examples.Inet_slowUp_le
+320|6|22502101|23194721|154.51874pt|6.68999pt|2.0pt|15|below a line|Examples.le_line_of_rderiv_le
+321|6|2797019|22229084|318.28496pt|6.15668pt|2.57777pt|15|a slow rising run|Examples.slow_rise_run
+322|6|2797019|21228496|112.188pt|6.0pt|2.57777pt|15|slow pull-down corner|Examples.slowDnCorner
+323|6|10706428|21228496|24.46077pt|5.55556pt|2.57777pt|15||Examples.slowDnCorner_inBox
+324|6|12866545|21228496|138.52692pt|6.0pt|2.57777pt|15||Examples.Inet_slowDn_ge
+325|6|22502101|21228496|163.98206pt|6.68999pt|2.0pt|15|above a line|Examples.ge_line_of_rderiv_ge
+326|6|2797019|20262859|314.03496pt|6.15668pt|2.57777pt|15|a slow falling run|Examples.slow_fall_run
+327|6|2797019|19232955|196.16917pt|5.511pt|1.5555pt|15|a larger provable disturbance|Examples.illustrativeEps
+328|6|16210218|19232955|46.89317pt|5.511pt|0.0pt|15||Examples.illustrativeEps_admissible
+329|6|19840465|19232955|43.8388pt|7.13731pt|3.13733pt|15||Examples.illustrativeEps_tauUp
+330|6|23270541|19232955|43.8388pt|7.13731pt|3.13733pt|15||Examples.illustrativeEps_tauDn
+331|6|2797019|18249915|233.30807pt|5.511pt|1.55556pt|15|no split points help beyond 2.3802|Examples.illustrative_eps_no_split_points
+332|6|3031082|13642416|97.20055pt|6.0pt|2.0pt|16|old value at the jump|Examples.uStepL
+333|6|3015449|9167196|97.67761pt|6.0pt|2.0pt|16|new value at the jump|Examples.uStepR
+334|6|16222510|13860846|84.04536pt|6.0pt|2.0pt|16|they differ only at 4|Examples.uStepL_eq_uStepR_of_ne
+335|6|16222510|13139950|158.60223pt|6.0pt|2.0pt|16|no run for the left-continuous step|Examples.stepL_no_trajectory
+336|6|16222510|12419054|155.13837pt|6.0pt|2.0pt|16|runs for the right-continuous step|Examples.stepR_has_trajectory
+337|6|16222510|11698158|235.46593pt|6.0pt|2.0pt|16|the scope of the guarantee|Examples.step_input_scope
+338|6|16222510|10932043|87.21835pt|6.68999pt|2.0pt|16|the ideal step has right derivative 0|Examples.uStepR_hasDerivWithinAt_zero
+339|6|22495508|10932043|104.55417pt|6.0pt|2.0pt|16|and is not continuous|Examples.uStepR_not_continuousOn
+340|6|16222510|10211147|95.62953pt|6.0pt|2.0pt|16|a one-instant spike|Examples.uSpike
+341|6|23046743|10211147|178.46999pt|6.0pt|2.0pt|16|no run through the spike|Examples.spike_no_trajectory
+342|6|16222510|9490251|281.56152pt|6.0pt|2.0pt|16|the local obstruction|Examples.no_trajectory_through_left_continuous_jump
+343|6|16222510|8724136|275.96391pt|6.68999pt|2.0pt|16|a lower bound on a right derivative|Examples.rderiv_ge_of_right_nhd
+344|6|16222510|8003240|300.02563pt|6.0pt|2.16667pt|16|the box in numbers|Examples.illustrative_box_bounds
+345|6|16222510|7271421|144.37564pt|6.0pt|2.0pt|16||Examples.Inet_high_le
+346|6|26241368|7271421|121.67972pt|6.0pt|2.0pt|16||Examples.Inet_high_ge
+347|6|16222510|6550525|150.5145pt|6.0pt|2.0pt|16||Examples.Inet_low_ge
+348|7|9695452|50571702|74.27928pt|6.95667pt|2.0pt|17|an inverted NMOS range|Examples.badBox
+349|7|14934795|50571702|53.45702pt|5.511pt|0.0pt|17||Examples.badBox_not_admissible
+350|7|18809530|50571702|21.35645pt|6.0pt|0.44444pt|17|its box is empty|Examples.badBox_empty
+351|7|9695452|49659119|286.07352pt|6.0pt|2.0pt|17|no valid high within 38 ps|Examples.illustrative_no_early_high
+352|7|9695452|48623842|92.44115pt|10.79707pt|4.51512pt|17|largest rising slew|Examples.illustrative_max_rise_slew
+353|7|16125051|48623842|102.05222pt|10.79707pt|4.51512pt|17|largest falling slew|Examples.illustrative_max_fall_slew
+354|7|23184521|48623842|165.83727pt|6.0pt|2.0pt|17|38 ps is too early|Examples.early_sampling_counterexample
+355|7|9695452|47826758|112.64636pt|6.0pt|2.57779pt|17|fast pull-up corner|Examples.fastUp
+356|7|17449220|47826758|24.91913pt|5.55556pt|2.57779pt|17||Examples.fastUp_inBox
+357|7|19453696|47826758|165.93126pt|6.0pt|2.57779pt|17||Examples.Inet_fastUp_ge
+358|7|9695452|47057728|256.9194pt|6.15668pt|2.57779pt|17|with u = -1, high within 38 ps|Examples.valid_low_input_can_give_valid_high_within_38ps
+359|7|9695452|46341753|170.84576pt|6.68999pt|2.0pt|17|rising slew unbounded|Examples.valid_low_rise_slew_unbounded
+360|7|21263376|46341753|177.45697pt|6.68999pt|2.0pt|17|falling slew unbounded|Examples.valid_high_fall_slew_unbounded
+361|7|9695452|45357641|380.99529pt|8.73886pt|4.00006pt|17|the miswired network|Examples.InetSwapped
+362|7|9695452|44460450|197.07234pt|6.68999pt|2.0pt|17||Examples.InetSwapped_le
+363|7|9695452|43694335|301.8613pt|6.68999pt|2.0pt|17|it never goes high|Examples.miswired_never_high
+364|7|9695452|42973439|296.23914pt|6.0pt|2.0pt|17|a run that never goes high|Examples.miswired_counterexample
+365|7|9695452|42257464|73.89888pt|5.511pt|1.1111pt|17|a noisy record|Examples.noisy
+366|7|14909865|42257464|53.45702pt|5.511pt|0.0pt|17||Examples.noisy_not_admissible
+367|7|18784600|42257464|109.62547pt|6.0pt|2.0pt|17|weak pull-up corner|Examples.weakCorner
+368|7|26340391|42257464|26.14824pt|5.55556pt|1.0pt|17||Examples.weakCorner_inBox
+369|7|9695452|41536568|211.9362pt|6.0pt|2.0pt|17|the guarantee is then false|Examples.noisy_counterexample
+370|7|14168588|36386243|56.53667pt|5.60449pt|1.55556pt|18|the library root|mod:VoltageToBit
+371|7|3168216|33778767|22.35571pt|5.511pt|1.5555pt|18||mod:Model/PosSq
+372|7|3092377|32422527|24.67015pt|5.511pt|0.0pt|18||mod:Model/Device
+373|7|2941198|31117229|29.28377pt|5.511pt|0.0pt|18||mod:Model/Inverter
+374|7|9070110|33778769|30.03249pt|5.511pt|1.55556pt|18||mod:Proofs/Margins
+375|7|9315452|32422527|22.54523pt|5.511pt|0.0pt|18||mod:Proofs/Reach
+376|7|8790984|31117229|38.55072pt|5.511pt|0.0pt|18||mod:Proofs/Guarantee
+377|7|8785099|29811960|38.73033pt|5.511pt|0.0pt|18||mod:Proofs/Certificate
+378|7|8646609|28557662|42.9567pt|5.511pt|1.55556pt|18||mod:Proofs/NonVacuity
+379|7|14117213|33727797|35.34265pt|5.511pt|0.0pt|18||mod:Proofs/Existence
+380|7|14408771|32422527|26.445pt|5.511pt|0.0pt|18||mod:Proofs/Concat
+381|7|13863050|31117229|43.0991pt|5.511pt|0.0pt|18||mod:Proofs/ModelError
+382|7|14122771|29862932|35.17305pt|5.511pt|1.55556pt|18||mod:Proofs/AtSupply
+383|7|13457122|28506690|55.48705pt|5.511pt|0.0pt|18||mod:Proofs/Contamination
+384|7|14548041|27201420|22.19484pt|5.511pt|0.0pt|18||mod:Proofs/Chain
+385|7|19473010|33778769|65.37502pt|5.511pt|1.55556pt|18||mod:Examples/IllustrativeDesign
+386|7|20290686|32422527|40.42152pt|5.511pt|0.0pt|18||mod:Examples/Illustrative
+387|7|19524915|31117229|63.791pt|5.511pt|0.0pt|18||mod:Examples/RefinedDeadlines
+388|7|19509222|29811960|64.26991pt|5.511pt|0.0pt|18||mod:Examples/DeadlineBrackets
+389|7|27176128|33727797|23.77281pt|5.511pt|0.0pt|18||mod:Examples/Limits
+390|7|26644728|32473497|39.98984pt|5.511pt|1.5555pt|18||mod:Examples/InputClass
+391|7|26779086|31168201|35.88956pt|5.511pt|1.55556pt|18||mod:Examples/TwoStage
+392|7|25864607|29862932|63.79726pt|5.511pt|1.55556pt|18||mod:Examples/NegativeControls

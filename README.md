@@ -312,7 +312,7 @@ machine.
 | `VoltageToBit/Examples/Illustrative.lean` | admissibility of the concrete instance, its guarantee with numbers, explicit runs |
 | `VoltageToBit/Examples/RefinedDeadlines.lean`, `Limits.lean`, `DeadlineBrackets.lean` | proved deadlines, what is false below them, and the cap on `ε_I` |
 | `VoltageToBit/Examples/NegativeControls.lean`, `InputClass.lean`, `TwoStage.lean` | negative controls, the input class, a two-stage witness |
-| `guide/` | the specification in plain words, each passage linked to the Lean that states it (a formal-companion overlay in `annotations/` and `pdf-overlay/`), published at <https://deicyde.github.io/voltage-to-bit/pdf-overlay/viewer/index.html> |
+| `guide/` | the specification and its proof in equations and diagrams; every framed formula, symbol and node links to the exact Lean lines that state it, and the links together cover every line of the library (a formal-companion overlay in `annotations/` and `pdf-overlay/`), published at <https://deicyde.github.io/voltage-to-bit/pdf-overlay/viewer/index.html> |
 | `docs/interface.md` | the frozen interface: definitions and what is proved |
 | `docs/assumptions.md` | the assumption register, by type of evidence |
 | `docs/model.md` | the model and its physical reading |

@@ -1,15 +1,19 @@
-# What voltage-to-bit specifies
+# voltage-to-bit: the specification and its proof
 
 [`reading-guide.pdf`](reading-guide.pdf) (from [`reading-guide.tex`](reading-guide.tex))
-states the specification in plain words: the circuit and its transistor law, what
-is uncertain, how the output may move, how voltages are read as bits, the
-arithmetic checks a design must pass, the deadlines, the guarantee, the concrete
-1.8 V inverter, how tight its deadlines are, why runs exist, what another model
-of the node must satisfy, and what is not claimed.
+states the library in equations and diagrams: the circuit and its square law,
+the design record and the box, runs, the 26 checks, the deadlines and the
+guarantee, a map of its proof, certificates, existence and uniqueness, other
+models of the node, the supply-relative safe range, speed limits, two stages,
+non-vacuity, the 1.8 V record and how tight its deadlines are, inputs that jump,
+the negative controls, and a map of the modules.
 
-The text names no Lean. The annotated version links each passage to the Lean that
-states it: select a passage and the declarations appear beside it, with their
-statements and links to the source. It is published at
+The text names no Lean. In the annotated version every framed formula, symbol,
+table cell and diagram node is linked to the exact Lean lines that state it: a
+declaration, one field of a structure, one line of the 1.8 V record, or a
+module's structural lines (imports, header comment, namespaces, section
+comments). Together the links cover every non-blank line of the 23 Lean files of
+the library, proofs included. It is published at
 <https://deicyde.github.io/voltage-to-bit/pdf-overlay/viewer/index.html>
 by `.github/workflows/pages.yml` on every push to `main`. It is a
 [formal-companion](https://github.com/mathlib-initiative/formal-companion) PDF
@@ -32,30 +36,32 @@ pin; copying `guide/reading-guide.pdf` to
 
 | File | Role |
 | --- | --- |
-| `reading-guide.tex` | the text; each passage is marked by `% @passage <id>` and `% @end <id>` |
-| `make_blueprint.py` | the table of passages and the declarations each one is linked to; writes `blueprint/sources/reading-guide-locators.md` (line ranges and the TeX file's sha256) and one roadmap page per passage under `blueprint/roadmap/` |
-| `build.sh` | typesets the PDF reproducibly (two builds give the same bytes) and runs `make_blueprint.py` |
+| `reading-guide.tex` | the text; `\lk[title]{targets}{content}` typesets a linked piece and records, at shipout, its page and exact box, with its Lean targets, in `reading-guide.lk` |
+| `reading-guide.lk` | those records, one line per box (committed: the annotations are generated from it) |
+| `make_links.py` | resolves every target to Lean lines, checks that no two boxes overlap and that every non-blank line of the library is linked, and writes the annotations |
+| `build.sh` | typesets the PDF reproducibly (two builds give the same bytes) and runs `make_links.py --check` |
 | `make_site.py` | writes the landing page of the site, since this repository has no Verso site |
 
-After a change to the text, regenerate everything with a clone of
-formal-companion (`FC` below) and commit at each step, since the export reads a
-clean checkout at a named commit:
+A target is a Lean name under the namespace `VoltageToBit` (a declaration from
+its doc comment to its last line; for a structure, its doc comment and header),
+`Struct.field` (one field with its doc comment), `Name@field` (the line
+`field := …` of a definition written with `where`), or `mod:Path` (the
+structural lines of `VoltageToBit/Path.lean`; `mod:VoltageToBit` is the root
+file).
+
+After a change to the text or to the Lean, regenerate everything with a clone of
+formal-companion (`FC` below) and commit at each step, since the annotations pin
+the PDF at a named commit:
 
 ```sh
 sh guide/build.sh && git add guide && git commit -m "guide: ..."
-C=$(git rev-parse HEAD)
-python3 "$FC/scripts/cf.py" overlay export . --convention roadmap-locators --commit "$C" -- \
-  --pdf guide/reading-guide.pdf \
-  --pdf-url "https://raw.githubusercontent.com/Deicyde/voltage-to-bit/$C/guide/reading-guide.pdf" \
-  --tex guide/reading-guide.tex --blueprint guide/blueprint \
-  --source-id voltage-to-bit-reading-guide \
-  --source-title "What voltage-to-bit specifies" --page-offset 0
+python3 guide/make_links.py --commit "$(git rev-parse HEAD)"
 python3 "$FC/scripts/cf.py" overlay sync . && python3 "$FC/scripts/cf.py" overlay check .
 git add annotations pdf-overlay && git commit -m "Regenerate the overlay"
 ```
 
-The text is typeset without `hyperref`: `pdftotext -bbox-layout` of poppler
-26.04.0, which the export uses, aborts on a PDF built with it.
+The text is typeset without `hyperref`, so that the PDF's own links do not
+cover the overlay's boxes.
 
 ## Licence
 
