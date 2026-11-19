@@ -13,10 +13,10 @@ ROOT.mkdir(parents=True, exist_ok=True)
 (ROOT / "index.html").write_text("""<!doctype html>
 <html lang="en">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>voltage-to-bit: reading guide</title></head>
+<title>voltage-to-bit: the specification in plain words</title></head>
 <body>
-<h1>voltage-to-bit: reading the trusted specification</h1>
-<p>The reading guide, with each passage boxed and the Lean declarations it names beside it.</p>
+<h1>What voltage-to-bit specifies</h1>
+<p>The specification in plain words, each passage linked to the Lean that states it.</p>
 </body>
 </html>
 """, encoding="utf-8")

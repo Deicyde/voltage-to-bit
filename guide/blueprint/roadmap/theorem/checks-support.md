@@ -1,14 +1,14 @@
 ---
 declaration: definition-or-theorem
-origin: cited
+origin: bridged
 statement: formalized
 lean: VoltageToBit.Design.Iup, VoltageToBit.Design.Idn, VoltageToBit.Design.RhiP, VoltageToBit.Design.RhiN, VoltageToBit.Design.RloN, VoltageToBit.Design.RloP
 ---
 
-# The current margins
+# The arithmetic checks
 
-A passage of the reading guide and the declarations it describes.
+A passage of the specification in plain words, and the Lean that states it.
 
 ## Sources
 
-- [The current margins](../../sources/reading-guide-locators.md#the-current-margins)
+- [The arithmetic checks](../../sources/reading-guide-locators.md#the-arithmetic-checks)

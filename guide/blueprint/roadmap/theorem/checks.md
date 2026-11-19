@@ -7,7 +7,7 @@ lean: VoltageToBit.Design.Admissible
 
 # The arithmetic checks
 
-A passage of the reading guide and the declarations it describes.
+A passage of the specification in plain words, and the Lean that states it.
 
 ## Sources
 

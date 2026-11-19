@@ -2,8 +2,8 @@
   "schema": "formal-companion/overlay-config",
   "schema_version": 1,
   "source_id": "voltage-to-bit-reading-guide",
-  "title": "Reading the trusted specification of voltage-to-bit",
-  "lede": "Each passage of the reading guide, and the Lean declarations it tells you to read.",
+  "title": "What voltage-to-bit specifies",
+  "lede": "The specification in plain words; select a passage to see the Lean that states it.",
   "back_link": {
     "href": "../../index.html",
     "text": "Back to the site"

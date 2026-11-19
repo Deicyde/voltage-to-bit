@@ -31,44 +31,44 @@ LOCATORS = BLUEPRINT / "sources" / "reading-guide-locators.md"
 
 # id: (group, heading, key declarations, supporting declarations)
 PASSAGES: dict[str, tuple[str, str, list[str], list[str]]] = {
-    "psq": ("path-a", "The positive part squared", ["VoltageToBit.psq"], []),
-    "params": ("path-a", "The five device parameters", ["VoltageToBit.Params"], []),
-    "currents": ("path-a", "The transistor currents",
-                 ["VoltageToBit.In", "VoltageToBit.Ip", "VoltageToBit.Inet"], []),
-    "design": ("path-a", "The design record", ["VoltageToBit.Design"], []),
-    "box": ("path-a", "The parameter box", ["VoltageToBit.Design.InBox"], []),
-    "safe": ("path-a", "The safe voltage domain", ["VoltageToBit.Design.Safe"], []),
-    "trajectory": ("path-a", "Trajectories: the dynamics", ["VoltageToBit.IsTrajectory"], []),
-    "record": ("path-a", "The illustrative record", ["VoltageToBit.Examples.illustrative"], []),
-    "guarantee": ("path-a", "The theorem", ["VoltageToBit.Examples.illustrative_guarantee"], []),
-    "admissible": ("path-b", "The arithmetic checks", ["VoltageToBit.Design.Admissible"], []),
-    "margins": ("path-b", "The current margins",
-                ["VoltageToBit.Design.Iup", "VoltageToBit.Design.Idn", "VoltageToBit.Design.RhiP",
-                 "VoltageToBit.Design.RhiN", "VoltageToBit.Design.RloN", "VoltageToBit.Design.RloP"], []),
-    "deadlines": ("path-b", "The two deadlines",
-                  ["VoltageToBit.Design.tauUp", "VoltageToBit.Design.tauDn"], []),
-    "decoding": ("path-b", "Decoding to bits",
-                 ["VoltageToBit.decode", "VoltageToBit.Design.decodeIn",
-                  "VoltageToBit.Design.decodeOut", "VoltageToBit.Design.tau"], []),
-    "general": ("path-b", "The four general statements",
-                ["VoltageToBit.IsTrajectory.safe", "VoltageToBit.IsTrajectory.rise",
-                 "VoltageToBit.IsTrajectory.fall", "VoltageToBit.IsTrajectory.decoded"], []),
-    "admissible-instance": ("instances", "The record passes the checks",
-                            ["VoltageToBit.Examples.illustrative_admissible"], []),
-    "existence": ("instances", "Runs exist",
-                  ["VoltageToBit.exists_trajectory", "VoltageToBit.Examples.illustrative_scenario"],
-                  ["VoltageToBit.Examples.nominal", "VoltageToBit.Examples.uRamp",
-                   "VoltageToBit.Examples.wSin"]),
-    "brackets": ("instances", "How tight the deadlines are",
-                 ["VoltageToBit.Examples.rise_deadline_bracket",
-                  "VoltageToBit.Examples.fall_deadline_bracket"], []),
-    "steps": ("instances", "Where the theorem says nothing",
-              ["VoltageToBit.Examples.stepL_no_trajectory", "VoltageToBit.Examples.step_input_scope"],
-              ["VoltageToBit.Examples.uStepL", "VoltageToBit.Examples.uStepR"]),
+    "circuit": ("model", "The circuit and its transistors",
+                ["VoltageToBit.psq", "VoltageToBit.Params", "VoltageToBit.In", "VoltageToBit.Ip",
+                 "VoltageToBit.Inet"], []),
+    "uncertainty": ("model", "What is uncertain",
+                    ["VoltageToBit.Design", "VoltageToBit.Design.InBox"], []),
+    "dynamics": ("model", "How the output may move",
+                 ["VoltageToBit.IsTrajectory", "VoltageToBit.Design.Safe"], []),
+    "bits": ("model", "Reading bits",
+             ["VoltageToBit.decode", "VoltageToBit.Design.decodeIn", "VoltageToBit.Design.decodeOut"], []),
+    "checks": ("theorem", "The arithmetic checks",
+               ["VoltageToBit.Design.Admissible"],
+               ["VoltageToBit.Design.Iup", "VoltageToBit.Design.Idn", "VoltageToBit.Design.RhiP",
+                "VoltageToBit.Design.RhiN", "VoltageToBit.Design.RloN", "VoltageToBit.Design.RloP"]),
+    "deadlines": ("theorem", "The deadlines",
+                  ["VoltageToBit.Design.tauUp", "VoltageToBit.Design.tauDn"], ["VoltageToBit.Design.tau"]),
+    "guarantee": ("theorem", "The guarantee",
+                  ["VoltageToBit.IsTrajectory.safe", "VoltageToBit.IsTrajectory.rise",
+                   "VoltageToBit.IsTrajectory.fall", "VoltageToBit.IsTrajectory.decoded"], []),
+    "instance": ("instance", "A concrete inverter",
+                 ["VoltageToBit.Examples.illustrative_guarantee", "VoltageToBit.Examples.illustrative",
+                  "VoltageToBit.Examples.illustrative_admissible"], []),
+    "tightness": ("instance", "How tight the deadlines are",
+                  ["VoltageToBit.Examples.illustrative_guarantee_refined",
+                   "VoltageToBit.Examples.rise_deadline_bracket",
+                   "VoltageToBit.Examples.fall_deadline_bracket"], []),
+    "existence": ("instance", "Runs exist",
+                  ["VoltageToBit.exists_trajectory", "VoltageToBit.exists_solution",
+                   "VoltageToBit.solution_unique", "VoltageToBit.Examples.illustrative_scenario"], []),
+    "models": ("scope", "Other models of the same node",
+               ["VoltageToBit.IsTrajectory.of_sandwich", "VoltageToBit.IsTrajectory.of_static_sandwich",
+                "VoltageToBit.IsTrajectory.of_charge_balance"], []),
+    "limits": ("scope", "What is not claimed",
+               ["VoltageToBit.Examples.stepL_no_trajectory", "VoltageToBit.Examples.step_input_scope"],
+               ["VoltageToBit.Examples.uStepL", "VoltageToBit.Examples.uStepR"]),
 }
 
 MARK = re.compile(r"^% @(passage|end) ([a-z0-9-]+)\s*$")
-SUBSECTION = re.compile(r"\\subsection\{([^}]*)\}")
+SECTION = re.compile(r"\\(?:sub)?section\{([^}]*)\}")
 
 
 def spans(lines: list[str]) -> dict[str, tuple[int, int]]:
@@ -105,7 +105,7 @@ def page(heading: str, names: list[str], origin: str, anchor: str) -> str:
         "",
         f"# {heading}",
         "",
-        "A passage of the reading guide and the declarations it describes.",
+        "A passage of the specification in plain words, and the Lean that states it.",
         "",
         "## Sources",
         "",
@@ -122,16 +122,16 @@ def main() -> None:
     if missing:
         sys.exit(f"passages listed here but not marked in {TEX.name}: {', '.join(missing)}")
     digest = hashlib.sha256(raw).hexdigest()
-    out = ["# Locators for the reading guide", "",
+    out = ["# Locators for the specification in plain words", "",
            f"Line ranges refer to `{TEX.name}` in `guide/` (SHA-256 `{digest}`).",
            "Each section is one passage of the guide, generated by `guide/make_blueprint.py`.", ""]
     for ident, (group, heading, key, support) in PASSAGES.items():
         first, last = found[ident]
         text = "\n".join(lines[first - 1:last])
-        sub = SUBSECTION.search(text)
+        sub = SECTION.search(text)
         if not sub or sub.group(1) != heading:
             sys.exit(f"passage {ident}: its heading in {TEX.name} is not {heading!r}")
-        out += [f"## {heading}", "", f"Lines {first}-{last}: the passage of the guide on {heading.lower()}.", ""]
+        out += [f"## {heading}", "", f"Lines {first}-{last}: {heading.lower()}.", ""]
     LOCATORS.parent.mkdir(parents=True, exist_ok=True)
     LOCATORS.write_text("\n".join(out), encoding="utf-8")
     roadmap = BLUEPRINT / "roadmap"

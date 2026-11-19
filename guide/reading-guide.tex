@@ -2,6 +2,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb}
 \usepackage[a4paper,margin=25mm]{geometry}
 % no hyperref: pdftotext -bbox-layout (poppler 26.04.0) aborts on a PDF built with it,
 % and the overlay's exporter reads the PDF that way
@@ -11,245 +12,174 @@
 \exhyphenpenalty=10000
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt}
-\newcommand{\lean}[1]{\texttt{#1}}
-\newcommand{\at}[1]{\texttt{#1}}
-\title{Reading the trusted specification of voltage-to-bit}
-\author{A reading guide}
-\date{\small This guide is licensed under the Creative Commons Attribution 4.0 International License (CC BY 4.0).}
+\newcommand{\psq}{\operatorname{psq}}
+\title{What voltage-to-bit specifies}
+\author{The specification in plain words}
+\date{\small This text is licensed under the Creative Commons Attribution 4.0 International License (CC BY 4.0).}
 \begin{document}
 \maketitle
 
-% @passage how-to-use
-\section{How to use this guide}
-A theorem is as good as its statement. Lean's kernel checks every proof in this
-repository, and six checkers bundled with Lean check them again, so what you
-have to read is the statements of the main theorems and the definitions those
-statements use. This guide lists exactly those lines, in the order to read
-them, with what each says in words and what to check. There are two paths.
-Path A, Section 2, is about eighty lines of Lean and is enough to trust the
-theorem about the illustrative 1.8 V inverter. Path B, Section 3, covers the
-theorem about every design record that passes the arithmetic checks: it keeps
-the definitions of Path A except the record and its theorem, and adds about
-sixty-five lines, about 120 in all. Section 4 lists the statements that show the hypotheses
-can be met, Section 5 what Lean and Mathlib supply, and Section 6 what you can
-skip. Line numbers refer to the Lean files of this repository at the commit
-this guide was added in; the Lean code has not changed since commit 24bdbcc.
-% @end how-to-use
+When does a voltage that changes continuously become a bit you can rely on?
+This project answers the question for one CMOS inverter. Below, in words, is
+what the Lean development assumes about the inverter, what it proves, and what
+it leaves open. Each passage is linked to the Lean that states it.
 
-\section{Path A: the theorem about the illustrative inverter}
+% @passage circuit
+\section{The circuit and its transistors}
+An inverter has two transistors whose gates both see the input voltage $u$.
+The PMOS transistor connects the supply to the output, and the NMOS transistor
+connects the output to ground. The output is one node, with voltage $v$. Each
+transistor follows the textbook square law. Write $\psq(x)$ for the square of
+the positive part of $x$, which is zero when $x$ is negative. Then the current
+the NMOS drains from the output and the current the PMOS feeds into it are
+\[
+I_n = \tfrac{k_n}{2}\bigl(\psq(u - V_{tn}) - \psq(u - v - V_{tn})\bigr),\qquad
+I_p = \tfrac{k_p}{2}\bigl(\psq(V_{DD} - u - V_{tp}) - \psq(v - u - V_{tp})\bigr),
+\]
+and the net current into the output is their difference. The five numbers in
+these formulas are the supply voltage, the two transconductance factors and the
+two threshold voltages. The same formulas also describe a transistor conducting
+backwards, when the output is below ground or above the supply.
+% @end circuit
 
-% @passage psq
-\subsection{The positive part squared}
-\lean{psq}, in \at{VoltageToBit/Model/PosSq.lean} line 13. It takes a real
-number to the square of its positive part: zero for a number at or below zero,
-and its square above. It is the only nonlinear function of the transistor law.
-% @end psq
+% @passage uncertainty
+\section{What is uncertain}
+Real transistors and supplies are never exactly known, so the specification
+never fixes the five numbers. A design record gives a range for each of them,
+and any choice inside all five ranges is allowed. It also gives a range for the
+capacitance of the output node, and a bound on an extra current that the square
+law does not account for. The record holds a few more numbers: the logic
+thresholds, the two ends of a safe voltage range, and two values that only the
+proofs use.
+% @end uncertainty
 
-% @passage params
-\subsection{The five device parameters}
-\lean{Params}, in \at{VoltageToBit/Model/Device.lean} line 35. A parameter
-point has five real fields: the supply voltage, the transconductance factors of
-the NMOS and the PMOS transistor, and their two threshold voltages, where the
-PMOS threshold is given as a magnitude. Nothing here requires a field to be
-positive; the parameter box of the design record does that.
-% @end params
+% @passage dynamics
+\section{How the output may move}
+The output voltage is a function of time. It counts as a possible run of the
+circuit, on an interval of time and for a given input, when it is continuous on
+that interval and, at every instant before the end, it has a rate of change from
+the right that the circuit could produce: there are a capacitance in the allowed
+range and a choice of the five device numbers in their ranges such that the
+capacitance times the rate of change equals the net current, up to the bound on
+the extra current. The capacitance and the device numbers may be different at
+every instant, so device numbers that drift within their ranges during a run
+are covered too. The input
+can be any function at all. One thing is deliberately left loose: the balance
+of currents is required only while the output lies in the safe voltage range.
+Outside it, a run only has to be continuous with a rate of change from the
+right. This is why every statement below is about runs that start in the safe
+range.
+% @end dynamics
 
-% @passage currents
-\subsection{The transistor currents}
-\lean{In}, \lean{Ip} and \lean{Inet}, in the same file, lines 48 to 56. The
-NMOS current flows from the output node to ground, the PMOS current from the
-supply into the output node, and the net current into the node is the PMOS
-current minus the NMOS current. Each is half the transconductance factor times
-a difference of two positive parts squared: the symmetric square law. Check the
-signs: a high input should make the NMOS conduct and the net current negative.
-For an output below ground or above the supply the same formulas describe
-conduction in the reverse direction.
-% @end currents
+% @passage bits
+\section{Reading bits}
+An input at or below the low input threshold is a valid low, and one at or
+above the high input threshold is a valid high. The output is read the same way
+with its own two thresholds. A voltage between two thresholds is read as no bit
+at all, never as a zero or a one.
+% @end bits
 
-% @passage design
-\subsection{The design record}
-\lean{Design}, in \at{VoltageToBit/Model/Inverter.lean} line 26. A record of
-twenty-one real numbers and nothing else: the bounds of the parameter box, the
-range of the node capacitance, the bound on the unmodelled current, the four
-logic thresholds, the two ends of the safe voltage domain, and two split
-points that only the proofs use. Nothing constrains the numbers here.
-% @end design
-
-% @passage box
-\subsection{The parameter box}
-\lean{Design.InBox}, in the same file, line 68. A parameter point is in the
-box when each of its five fields lies in the closed interval the record gives
-for it. Check that every one of the ten bounds is used, in the right direction.
-% @end box
-
-% @passage safe
-\subsection{The safe voltage domain}
-\lean{Design.Safe}, in the same file, line 81. The closed interval from the
-lower end to the upper end of the safe domain that the record names.
-% @end safe
-
-% @passage trajectory
-\subsection{Trajectories: the dynamics}
-\lean{IsTrajectory}, in the same file, line 200. This is the heart of the
-specification, so read every word of it. A function of time is a trajectory on
-a closed interval for a given input when it is continuous on that interval and,
-at every instant before the end, it has a right derivative and there is a
-capacitance value in the record's range such that, if the output is in the safe
-domain at that instant, some parameter point of the box makes the capacitance
-times the derivative equal to the net current up to the bound on the unmodelled
-current. Four things to check. The derivative is one sided, from the right. The
-capacitance and the parameter point may be different at every instant. Outside
-the safe domain nothing is asked of the current, only continuity and a right
-derivative, which is why every theorem assumes that the run starts in the safe
-domain. And nothing at all is asked of the input: it can be any function.
-% @end trajectory
-
-% @passage record
-\subsection{The illustrative record}
-\lean{Examples.illustrative}, in \at{VoltageToBit/Examples/IllustrativeDesign.lean}
-line 15. The twenty-one numbers of the concrete instance, in volts, microamperes,
-femtofarads and nanoseconds. The file is generated from
-\at{designs/illustrative-1v8.json}, and the first step of the checking script
-fails when the two disagree. The numbers are plausible orders of magnitude, not
-fitted to any process or measurement.
-% @end record
-
-% @passage guarantee
-\subsection{The theorem}
-\lean{Examples.illustrative\_guarantee}, in \at{VoltageToBit/Examples/Illustrative.lean}
-line 93. For every input and every trajectory of the illustrative record on an
-interval whose output at the start is between minus 0.10 and 2.08 volts: the
-output stays between
-those two values; whenever the input is at most 0.40 volts on a window inside
-the interval, the output is at least 1.35 volts from 3.43 nanoseconds after the
-start of the window to its end; and whenever the input is at least 1.25 volts on
-such a window, the output is at most 0.25 volts from 2.57 nanoseconds after its
-start. Check the numbers, that the window lies inside the interval, and that the
-conclusion is claimed only up to the end of the window. The two deadlines round
-up the closed forms 7250 over 2119 and 4575 over 1787 nanoseconds.
-% @end guarantee
-
-\section{Path B: the theorem about every admissible record}
-
-% @passage admissible
-\subsection{The arithmetic checks}
-\lean{Design.Admissible}, in \at{VoltageToBit/Model/Inverter.lean} line 142.
-Twenty-six conditions on the numbers of a record: the box is consistent and its
-lower bounds of the supply and the transconductances are positive, the threshold
-bounds are not negative, the capacitance range is positive, the bound on the
-unmodelled current is not negative, the safe domain reaches ground and the
-highest supply, the thresholds are ordered with a gap between the two input
-thresholds, and six current margins exceed the bound on the unmodelled current.
-This is a hypothesis. You need it to be checkable arithmetic that some record
-passes, as Section 4 shows, and not to be the right condition: a wrong condition
-would only make a proof fail.
-% @end admissible
-
-% @passage margins
-\subsection{The current margins}
-\lean{Design.Iup}, \lean{Design.Idn}, \lean{Design.RhiP}, \lean{Design.RhiN},
-\lean{Design.RloN} and \lean{Design.RloP}, in the same file, lines 89 to 117.
-Closed-form currents at the worst corner of the box: the pull-up and the
-pull-down margin at a given level, and four restoring currents at the two ends
-of the safe domain. They are numbers computed from the record. The proofs show
-that the transistor law really delivers at least these currents, and would fail
-otherwise, so they need not be right. Read the two that the deadlines use, the
-pull-up and the pull-down margin, to know what a deadline is.
-% @end margins
+% @passage checks
+\section{The arithmetic checks}
+The theorem holds for every design record that passes a finite list of
+arithmetic checks, twenty-six in all. Each range has its lower end at or below
+its upper end, and the smallest supply, the transconductance factors and the
+capacitance are positive. The two transistor thresholds, the low output
+threshold and the bound on the extra current are not negative. The safe range reaches from ground or below to the highest supply
+or above. The four logic thresholds are ordered: low output at most low input,
+which is below high input, which is at most high output, which is at most the
+lowest supply. Finally six currents, computed in closed form at the worst
+combination of the ranges, must each be larger than the bound on the extra
+current. Two of them say how hard the output is pushed towards a valid level,
+and four say how hard it is pulled back at the two ends of the safe range. The
+proofs show that the transistors really deliver at least these currents.
+% @end checks
 
 % @passage deadlines
-\subsection{The two deadlines}
-\lean{Design.tauUp} and \lean{Design.tauDn}, in the same file, lines 128 and
-138. The rising deadline is the largest capacitance times the distance from the
-lower end of the safe domain to the high output threshold, divided by the
-pull-up margin at that threshold less the bound on the unmodelled current; the
-falling deadline is the mirror image. Lean divides by zero to zero, but the
-arithmetic checks keep both denominators positive.
+\section{The deadlines}
+Each record has two deadlines, computed in closed form. The rising deadline is
+the time the largest capacitance needs to charge from the bottom of the safe
+range up to the high output threshold, if it receives only the smallest pushing
+current the checks guarantee, less the extra current. The falling deadline is
+the same from the top of the safe range down to the low output threshold.
 % @end deadlines
 
-% @passage decoding
-\subsection{Decoding to bits}
-\lean{decode}, \lean{Design.decodeIn}, \lean{Design.decodeOut} and
-\lean{Design.tau}, in the same file, lines 217 to 267. A voltage at or below
-the low threshold decodes to false, one at or above the high threshold to true,
-and one in between to no bit at all. Inputs use the input thresholds, outputs
-the output thresholds, and the deadline of an input bit is the rising one for a
-low input and the falling one for a high input.
-% @end decoding
+% @passage guarantee
+\section{The guarantee}
+Take a record that passes the checks, any input, and any run that starts in the
+safe range. Then three things hold. The output stays in the safe range for the
+whole run. If the input is a valid low throughout a window of time inside the
+run, then the output is a valid high from the rising deadline after the start of
+the window until its end. If the input is a valid high throughout such a window,
+the output is a valid low from the falling deadline after its start until its
+end. Read as bits: an input that is the same valid bit throughout a window gives
+the opposite bit at the output once the deadline has passed. If the window is
+shorter than the deadline, nothing is claimed for it.
+% @end guarantee
 
-% @passage general
-\subsection{The four general statements}
-\lean{IsTrajectory.safe}, \lean{IsTrajectory.rise}, \lean{IsTrajectory.fall}
-and \lean{IsTrajectory.decoded}, in \at{VoltageToBit/Proofs/Guarantee.lean}
-lines 83, 156, 178 and 201. For an admissible record and a trajectory that
-starts in the safe domain: the output stays in the safe domain; a valid low
-input on a window inside the interval gives a valid high output from the rising
-deadline after the start of the window to its end; a valid high input gives a
-valid low output after the falling deadline; and the same in decoded form.
-% @end general
+% @passage instance
+\section{A concrete inverter}
+One record, chosen as a plausible small 1.8 volt inverter but not fitted to any
+real process, passes all the checks. Its supply lies between 1.62 and 1.98
+volts, its transconductance factors between 160 and 240 and between 80 and 120
+microamperes per square volt, its thresholds between 0.45 and 0.60 volts, its
+node capacitance between
+5 and 20 femtofarads, and it allows an extra current of 2 microamperes. A valid
+low input is at most 0.40 volts and a valid high at least 1.25 volts; a valid
+low output is at most 0.25 volts and a valid high at least 1.35 volts; the safe
+range runs from minus 0.10 to 2.08 volts. For this inverter the guarantee reads:
+the output never leaves that range, a valid low input gives a valid high output
+after 3.43 nanoseconds, and a valid high input gives a valid low output after
+2.57 nanoseconds.
+% @end instance
 
-\section{Statements that show the hypotheses can be met}
-
-% @passage admissible-instance
-\subsection{The record passes the checks}
-\lean{Examples.illustrative\_admissible}, in
-\at{VoltageToBit/Examples/Illustrative.lean} line 35. The illustrative record
-satisfies all twenty-six conditions, so the general theorem applies to it.
-% @end admissible-instance
+% @passage tightness
+\section{How tight the deadlines are}
+A sharper argument proves shorter deadlines for the same inverter: 2.26
+nanoseconds for a rising output and 1.425 for a falling one. They cannot be
+made much shorter. A rising deadline below 2.168 nanoseconds and a falling one
+below 1.0234 nanoseconds are false, because there are runs that start in the
+safe range, with a valid input throughout, whose output is still not valid
+after that long. For deadlines between these values no statement is made
+either way.
+% @end tightness
 
 % @passage existence
-\subsection{Runs exist}
-\lean{exists\_trajectory}, in \at{VoltageToBit/Proofs/Existence.lean} line 325,
-and \lean{Examples.illustrative\_scenario}, in
-\at{VoltageToBit/Examples/Illustrative.lean} line 204. For an admissible record,
-a continuous input and any start in the safe domain a trajectory exists, so the
-theorems are not about an empty set of runs; and one explicit run of the
-illustrative record shows both logic directions. The second statement also
-uses the definitions of its input, disturbance and nominal parameters.
+\section{Runs exist}
+The guarantee would be empty if there were no runs. For every record that passes
+the checks, every input that is continuous, and every starting voltage in the
+safe range, a run exists. With the device numbers fixed, a capacitance that
+depends smoothly on the voltage and a continuous extra current, the circuit's
+equation has exactly one solution from each such start. One explicit run of the
+concrete inverter shows both logic levels in turn.
 % @end existence
 
-% @passage brackets
-\subsection{How tight the deadlines are}
-\lean{Examples.rise\_deadline\_bracket} and
-\lean{Examples.fall\_deadline\_bracket}, in
-\at{VoltageToBit/Examples/DeadlineBrackets.lean} lines 109 and 140. For the
-illustrative record a rising deadline below 2.168 nanoseconds is false and one
-of 2.26 nanoseconds or more holds; a falling deadline below 1.0234 nanoseconds
-is false and one of 1.425 nanoseconds or more holds.
-% @end brackets
+% @passage models
+\section{Other models of the same node}
+The square law is a model, not a transistor. The specification states what any
+other description of the node must satisfy to be covered by the theorem. Its
+capacitance must stay in the allowed range, and, while the output is in the safe
+range and for the input values that occur, its net current must lie between the
+currents of two choices inside the ranges, up to an allowance that leaves room
+for any further disturbance within the bound on the extra current. Current that
+the input or a neighbouring wire couples into the node through fixed capacitors
+is covered when the total capacitance stays in the allowed range and both
+signals change continuously and slowly enough that the coupled current, with
+any other disturbance, fits in the bound. No one has shown that a real device or a simulator model meets these
+conditions.
+% @end models
 
-% @passage steps
-\subsection{Where the theorem says nothing}
-\lean{Examples.stepL\_no\_trajectory} and \lean{Examples.step\_input\_scope}, in
-\at{VoltageToBit/Examples/InputClass.lean} lines 324 and 387. For a step input
-that keeps its old value at the jump instant, no trajectory of the illustrative
-record on the interval from 0 to 10 nanoseconds starts in the safe domain, so
-for that input the theorem holds vacuously there. The step that takes its new
-value at the jump instant has trajectories on that interval from every safe
-start.
-% @end steps
-
-% @passage trusted
-\section{What Lean and Mathlib supply}
-You trust Lean's kernel and the definitions of Mathlib that the statements use:
-the real numbers, closed and half-open intervals, continuity on a set, the
-derivative within a set, which at a point with the set of times from that point
-on is the right derivative, the maximum of two numbers and the absolute value.
-Lean's division by zero gives zero. The checking script replays every proof with
-Lean's kernel and has an export of the library, with everything it depends on,
-checked by six checkers; the README, section Reproduce, says what a pass
-establishes.
-% @end trusted
-
-% @passage skip
-\section{What you can skip}
-Every proof, because Lean checks it. Everything under
-\at{VoltageToBit/Proofs/} except the four statements of Path B and the
-statement of \lean{exists\_trajectory}. The other
-example files, except the statements of Section 4. The doc comments and the
-documents, which are prose: where they differ from the Lean, the Lean is right.
-The checking scripts, which show that the checks were run, and the numerical
-experiments, which simulate the model and say nothing about a device.
-% @end skip
+% @passage limits
+\section{What is not claimed}
+Nothing is said about runs that start outside the safe range. When the input is
+not one valid bit throughout a window, only the first statement applies: the
+output stays in the safe range and may read as either bit or as none. Nor does
+the theorem speak about runs that do not exist. For an input that drops from 1.8
+to 0 volts at 4 nanoseconds and still has its old value at that instant, the
+concrete inverter has no run from time 0 to 10 nanoseconds that starts in the
+safe range, so the guarantee says nothing there; the same drop taking its new
+value at that instant has runs from every safe start. And nothing here is evidence about a physical device: whether a real
+inverter stays inside these ranges is an open question.
+% @end limits
 
 \end{document}
