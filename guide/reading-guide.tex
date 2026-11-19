@@ -178,7 +178,7 @@ PMOS rev. &
 \lk[NMOS below its saturation current]{In_le_sat}{$0\le k_n\Rightarrow I_n\le\frac{k_n}{2}\psq(u-V_{tn})$}\sep
 \lk[PMOS below its saturation current]{Ip_le_sat}{$0\le k_p\Rightarrow I_p\le\frac{k_p}{2}\psq(\VDD-u-V_{tp})$}\sep
 \lk[net current is continuous]{continuous_Inet}{$(u,v)\mapsto\Inet(\theta,u,v)$ continuous}\par
-\lk[net current is Lipschitz in v]{abs_Inet_sub_le}{$0\le k_n,k_p\Rightarrow|\Inet(\theta,u,v_1)-\Inet(\theta,u,v_2)|\le\bigl(\frac{k_p}{2}(|v_1-u-V_{tp}|+|v_2-u-V_{tp}|)+\frac{k_n}{2}(|u-v_1-V_{tn}|+|u-v_2-V_{tn}|)\bigr)|v_1-v_2|$}\par
+\lk[net current is locally Lipschitz in v]{abs_Inet_sub_le}{$0\le k_n,k_p\Rightarrow|\Inet(\theta,u,v_1)-\Inet(\theta,u,v_2)|\le\bigl(\frac{k_p}{2}(|v_1-u-V_{tp}|+|v_2-u-V_{tp}|)+\frac{k_n}{2}(|u-v_1-V_{tn}|+|u-v_2-V_{tn}|)\bigr)|v_1-v_2|$}\par
 \textbf{psq}\quad
 \lk{psq_nonneg}{$0\le\psq x$}\sep
 \lk{psq_of_nonneg}{$0\le x\Rightarrow\psq x=x^2$}\sep
@@ -270,7 +270,7 @@ input split points & \lk{Design.uHi}{$\uHi$}\quad\lk{Design.uLo}{$\uLo$}
   \fill (3,3.1) circle (1.5pt);
   \draw[densely dashed] (3,3.1) -- (4.6,4.6);
   \draw[densely dashed] (3,3.1) -- (4.8,3.6);
-  \node[lab, align=left] at (3.4,-0.5) {\lk[(ii) with the canonical right derivative]{IsTrajectory.balance}{$\exists c,\theta:\ c\,\rd v(t)\in\Inet(\theta,u(t),v(t))\pm\varepsilon$}};
+  \node[lab, align=left] at (3.6,-1.0) {\lk[(ii) with the canonical right derivative]{IsTrajectory.balance}{$\begin{array}{@{}l@{}}t\in[a,b),\ v(t)\in\SafeS\Rightarrow\exists c\in[\Clo,\Chi],\ \theta\in\Bx(D):\\ c\,\rd v(t)\in\Inet(\theta,u(t),v(t))\pm\varepsilon\end{array}$}};
   \node[lab] at (5.0,6.2) {\lk[a run has its right derivative]{IsTrajectory.hasDeriv}{$v$ has right derivative $\rd v(t)$ on $[a,b)$}};
 \end{tikzpicture}
 \end{minipage}\hfill
@@ -283,7 +283,7 @@ input split points & \lk{Design.uHi}{$\uHi$}\quad\lk{Design.uLo}{$\uLo$}
 \row
 \lk[gluing two runs]{IsTrajectory.concat}{$\begin{array}{@{}l@{}}a\le c\le b,\ v_1\text{ run on }[a,c],\ v_2\text{ run on }[c,b],\ v_1(c)=v_2(c)\\ \Rightarrow\ (t\mapsto t\le c\ ?\ v_1(t):v_2(t))\text{ run on }[a,b]\end{array}$}
 \row
-{\footnotesize The capacitance $c$ and the point $\theta$ may differ at every instant; outside $\SafeS$ only (i) and a right derivative are required.}
+{\footnotesize The capacitance $c$ and the point $\theta$ may differ at every instant; outside $\SafeS$ only (i), a right derivative and some $c\in[\Clo,\Chi]$ are required. In a hypothesis, $\rd v(t)$ stands for a right derivative of $v$ at $t$ that exists.}
 \end{minipage}
 
 % ===========================================================================
@@ -345,7 +345,7 @@ $\Hyp$:\ \ $D$ admissible, $v$ a run of $D$ on $[a,b]$ for $u$, $v(a)\in\SafeS$,
   \fill[black!15] (6.2,4.4) rectangle (11,5.4);
   \draw[densely dashed] (1.2,0.6) -- (6.2,4.4);
   \node[lab] at (8.6,4.9) {\lk[(R) the guaranteed region]{IsTrajectory.rise}{$\VOH\le v$}};
-  \node[lab, right] at (4.3,1.5) {\lk[the slope while charging]{IsTrajectory.slope_up}{slope $\ge\frac{\Iup(c)-\varepsilon}{\Chi}$}};
+  \node[lab, right] at (4.3,1.5) {\lk[the slope while charging]{IsTrajectory.slope_up}{slope $\ge\frac{\Iup(\VOH)-\varepsilon}{\Chi}$ while $v\le\VOH$}};
   \foreach \x/\l in {1.2/s,11/e} {\draw (\x,-0.12) -- (\x,0.12); \node[below, lab] at (\x,-0.1) {$\l$};}
   \draw (6.2,-0.12) -- (6.2,0.12); \node[below, lab] at (6.2,-0.1) {\lk[rising deadline]{Design.tauUp}{$s+\tup$}};
   \draw[thick] (1.2,-2.1) -- (11,-2.1); \node[lab, below] at (6.1,-2.1) {$u\le\VIL$ on $[s,e)$};
@@ -357,7 +357,7 @@ $\Hyp$:\ \ $D$ admissible, $v$ a run of $D$ on $[a,b]$ for $u$, $v(a)\in\SafeS$,
   \fill[black!15] (5.2,0.6) rectangle (11,1.6);
   \draw[densely dashed] (1.2,5.4) -- (5.2,1.6);
   \node[lab] at (8.2,1.1) {\lk[(F) the guaranteed region]{IsTrajectory.fall}{$v\le\VOL$}};
-  \node[lab, right] at (3.8,4.3) {\lk[the slope while discharging]{IsTrajectory.slope_dn}{slope $\le-\frac{\Idn(c)-\varepsilon}{\Chi}$}};
+  \node[lab, right] at (3.8,4.3) {\lk[the slope while discharging]{IsTrajectory.slope_dn}{slope $\le-\frac{\Idn(\VOL)-\varepsilon}{\Chi}$ while $\VOL\le v$}};
   \foreach \x/\l in {1.2/s,11/e} {\draw (\x,-0.12) -- (\x,0.12); \node[below, lab] at (\x,-0.1) {$\l$};}
   \draw (5.2,-0.12) -- (5.2,0.12); \node[below, lab] at (5.2,-0.1) {\lk[falling deadline]{Design.tauDn}{$s+\tdn$}};
   \draw[thick] (1.2,-2.1) -- (11,-2.1); \node[lab, below] at (6.1,-2.1) {$\VIH\le u$ on $[s,e)$};
@@ -367,7 +367,7 @@ $\Hyp$:\ \ $D$ admissible, $v$ a run of $D$ on $[a,b]$ for $u$, $v(a)\in\SafeS$,
 % ===========================================================================
 \section{How the guarantee is proved}
 
-{\footnotesize Margin facts hold for $D$ admissible and every $\theta\in\Bx(D)$; slope facts for runs under $\Hyp$, using (S).}\par
+{\footnotesize Margin facts hold for $D$ admissible and every $\theta\in\Bx(D)$; slope facts for runs under $\Hyp$, using (S); barrier and deadline facts for every $v$ continuous on $[a,b]$ with a right derivative on $[a,b)$. In every node a hypothesis on $t$ is for $t\in[a,b)$ and a conclusion for $t\in[a,b]$.}\par
 \smallskip
 \begin{tikzpicture}[every node/.append style={anchor=west}]
   \newcommand\tl[1]{$\begin{array}{@{}l@{}}#1\end{array}$}
@@ -422,7 +422,7 @@ $\Hyp$:\ \ $D$ admissible, $v$ a run of $D$ on $[a,b]$ for $u$, $v(a)\in\SafeS$,
 \lk[last level of a list]{finalLevel}{$\mathrm{finalLevel}(\ell,[\dots,(c_k,m_k)])=c_k$ ($\ell$ if empty)}\par
 \lk[a valid rising list]{RiseSegs}{$\mathrm{RiseSegs}(\ell,\cdot)\iff\ell\le c_1\le\dots\le c_k,\ 0<m_i$}\par
 \lk{RiseSegs.pos}{$0<m_i$}\sep\lk{RiseSegs.le_finalLevel}{$\ell\le c_k$}\sep\lk{RiseSegs.mem_le_finalLevel}{$c_i\le c_k$}\sep\lk{riseTime_nonneg}{$0\le\mathrm{riseTime}$}\par
-\lk[rise through a list of levels]{rise_chain}{$(v\le c_i\Rightarrow m_i\le\rd v)\ \forall i,\ \ell\le v(s)\Rightarrow c_k\le v(t)$ for $t\ge s+\mathrm{riseTime}$}
+\lk[rise through a list of levels]{rise_chain}{$\begin{array}{@{}l@{}}\mathrm{RiseSegs}(\ell,\cdot),\ v\text{ continuous on }[a,b],\ (v\le c_i\Rightarrow m_i\le\rd v)\text{ on }[a,b)\ \forall i,\\ s\in[a,b],\ \ell\le v(s)\Rightarrow c_k\le v(t)\text{ for }t\in[s,b],\ t\ge s+\mathrm{riseTime}\end{array}$}
 \end{minipage}
 
 \smallskip
@@ -430,20 +430,20 @@ $\Hyp$:\ \ $D$ admissible, $v$ a run of $D$ on $[a,b]$ for $u$, $v(a)\in\SafeS$,
 \lk[time of a falling list]{fallTime}{$\mathrm{fallTime}(h,\cdot)=\sum_i\frac{c_{i-1}-c_i}{m_i},\ c_0=h$}\sep
 \lk[a valid falling list]{FallSegs}{$\mathrm{FallSegs}(h,\cdot)\iff h\ge c_1\ge\dots\ge c_k,\ 0<m_i$}\sep
 \lk{FallSegs.pos}{$0<m_i$}\sep\lk{FallSegs.finalLevel_le}{$c_k\le h$}\sep\lk{FallSegs.finalLevel_le_mem}{$c_k\le c_i$}\sep\lk{fallTime_nonneg}{$0\le\mathrm{fallTime}$}\par
-\lk[fall through a list of levels]{fall_chain}{$(c_i\le v\Rightarrow\rd v\le-m_i)\ \forall i,\ v(s)\le h\Rightarrow v(t)\le c_k$ for $t\ge s+\mathrm{fallTime}$}}
+\lk[fall through a list of levels]{fall_chain}{$\mathrm{FallSegs}(h,\cdot),\ v$ continuous on $[a,b]$, $(c_i\le v\Rightarrow\rd v\le-m_i)$ on $[a,b)\ \forall i$, $s\in[a,b]$, $v(s)\le h\Rightarrow v(t)\le c_k$ for $t\in[s,b]$, $t\ge s+\mathrm{fallTime}$}}
 
 \smallskip
 \lk[rising slopes from the margin]{Design.upSegs}{$\mathrm{up}(cs)=[(c,\frac{\Iup(c)-\varepsilon}{\Chi}):c\in cs]$}\sep
 \lk[falling slopes from the margin]{Design.dnSegs}{$\mathrm{dn}(cs)=[(c,\frac{\Idn(c)-\varepsilon}{\Chi}):c\in cs]$}
 \row
-\lk[a rising certificate]{Design.ValidRiseCert}{$\mathrm{RiseCert}(cs,\tau)\iff\mathrm{RiseSegs}(\Vlo,\mathrm{up}\,cs)\wedge\mathrm{finalLevel}=\VOH\wedge\mathrm{riseTime}\le\tau$}
+\lk[a rising certificate]{Design.ValidRiseCert}{$cs\ne[\,]$: $\mathrm{RiseCert}(cs,\tau)\iff\mathrm{RiseSegs}(\Vlo,\mathrm{up}\,cs)\wedge\mathrm{finalLevel}=\VOH\wedge\mathrm{riseTime}\le\tau$}
 \row
-\lk[a falling certificate]{Design.ValidFallCert}{$\mathrm{FallCert}(cs,\tau)\iff\mathrm{FallSegs}(\Vhi,\mathrm{dn}\,cs)\wedge\mathrm{finalLevel}=\VOL\wedge\mathrm{fallTime}\le\tau$}
+\lk[a falling certificate]{Design.ValidFallCert}{$cs\ne[\,]$: $\mathrm{FallCert}(cs,\tau)\iff\mathrm{FallSegs}(\Vhi,\mathrm{dn}\,cs)\wedge\mathrm{finalLevel}=\VOL\wedge\mathrm{fallTime}\le\tau$}
 \row
 Under $\Hyp$:\ \
-\lk[rise through certified levels]{IsTrajectory.rise_certificate}{$\mathrm{RiseSegs}(\Vlo,\mathrm{up}\,cs),\ cs\le\VDDlo,\ u\le\VIL$ on $[s,e)\Rightarrow\mathrm{finalLevel}\le v(t),\ t\ge s+\mathrm{riseTime}$}
+\lk[rise through certified levels]{IsTrajectory.rise_certificate}{$\mathrm{RiseSegs}(\Vlo,\mathrm{up}\,cs),\ cs\le\VDDlo,\ u\le\VIL$ on $[s,e)\Rightarrow\mathrm{finalLevel}\le v(t)$ for $t\in[s,e]$, $t\ge s+\mathrm{riseTime}$}
 \row
-\hspace*{3.2em}\lk[fall through certified levels]{IsTrajectory.fall_certificate}{$\mathrm{FallSegs}(\Vhi,\mathrm{dn}\,cs),\ 0\le cs,\ \VIH\le u$ on $[s,e)\Rightarrow v(t)\le\mathrm{finalLevel},\ t\ge s+\mathrm{fallTime}$}
+\hspace*{3.2em}\lk[fall through certified levels]{IsTrajectory.fall_certificate}{$\mathrm{FallSegs}(\Vhi,\mathrm{dn}\,cs),\ 0\le cs,\ \VIH\le u$ on $[s,e)\Rightarrow v(t)\le\mathrm{finalLevel}$ for $t\in[s,e]$, $t\ge s+\mathrm{fallTime}$}
 \row
 \hspace*{3.2em}\lk[a rising certificate proves its deadline]{IsTrajectory.rise_of_cert}{$\mathrm{RiseCert}(cs,\tau)\Rightarrow$ (R) with $\tau$ for $\tup$}\sep
 \lk[a falling certificate proves its deadline]{IsTrajectory.fall_of_cert}{$\mathrm{FallCert}(cs,\tau)\Rightarrow$ (F) with $\tau$ for $\tdn$}
@@ -451,26 +451,28 @@ Under $\Hyp$:\ \
 % ===========================================================================
 \section{Runs exist and are unique}
 
-$\Hyp_0$:\ \ $D$ admissible, $\theta\in\Bx(D)$, $u,w$ continuous, $|w|\le\varepsilon$ on $[a,b]$, $a\le b$, $v_0\in\SafeS$, $\Clo\le C(x)$ for all $x$, $|C(x)-C(y)|\le K|x-y|$ on $\SafeS$.\par
+$\Hyp_0$:\ \ $D$ admissible, $\theta\in\Bx(D)$, $u,w$ continuous, $|w|\le\varepsilon$ on $[a,b]$, $a\le b$, $v_0\in\SafeS$, $\Clo\le C(x)$ for all $x$, $|C(x)-C(y)|\le K_C|x-y|$ on $\SafeS$.\par
 \smallskip
-\begin{tikzpicture}[node distance=3mm]
+\begin{tikzpicture}[every node/.append style={anchor=north west}]
+  \newcommand\tl[1]{$\begin{array}{@{}l@{}}#1\end{array}$}
   \node[pm] (cl) at (0,0) {\lk[clamp]{clamp}{$\mathrm{clamp}(\ell,h,x)=\max(\min(x,h),\ell)$}\\[2pt]
      \lk{clamp_mem}{$\ell\le h\Rightarrow\mathrm{clamp}\in[\ell,h]$}\ \ \lk{clamp_of_mem}{$x\in[\ell,h]\Rightarrow\mathrm{clamp}=x$}\\[2pt]
      \lk[clamp is 1-Lipschitz]{abs_clamp_sub_le}{$|\mathrm{clamp}\,x-\mathrm{clamp}\,y|\le|x-y|$}};
-  \node[pm] (cf) at (0,-2.2) {\lk[the clamped right-hand side]{clampedField}{$f(t,x)=\frac{\Inet(\theta,u(t),\bar x)+w(t)}{C(\bar x)},\ \bar x=\mathrm{clamp}(\Vlo,\Vhi,x)$}};
-  \node[pm] (bd) at (0,-3.4) {\lk[Lipschitz and bounded]{exists_clampedField_bounds}{$\exists K,L\ge0:\ |f(t,x)-f(t,y)|\le K|x-y|,\ |f(t,x)|\le L$ on $[a,b]$}};
-  \node[pm] (ex) at (8.75,-0.4) {\lk[existence]{exists_solution}{$\Hyp_0\Rightarrow\exists v:\ v(a)=v_0,\ v\in\SafeS$ and $C(v)\,v'=\Inet(\theta,u,v)+w$ on $[a,b]$}};
-  \node[pm] (od) at (8.75,-1.5) {\lk[solutions are runs]{IsTrajectory.of_ode}{$\theta\in\Bx,\ \Clo\le C\le\Chi,\ |w|\le\varepsilon,\ C(v)\,\rd v=\Inet(\theta,u,v)+w\Rightarrow$ run}};
-  \node[pm] (ov) at (8.75,-2.5) {\lk[solutions with drifting parameters are runs]{IsTrajectory.of_ode_varying}{the same with $\theta(t)\in\Bx$ moving in time $\Rightarrow$ run}};
-  \node[pm] (et) at (8.75,-3.5) {\lk[runs exist]{exists_trajectory}{$\Hyp_0,\ C\le\Chi\Rightarrow\exists$ run $v$ with $v(a)=v_0$}};
-  \node[pm] (ec) at (8.75,-4.5) {\lk[runs exist, constant capacitance]{exists_trajectory_const}{$\Clo\le C\le\Chi$ constant $\Rightarrow\exists$ run $v$, $v(a)=v_0$}};
-  \node[pm] (un) at (0,-4.7) {\lk[uniqueness]{solution_unique}{two solutions with $v_1(a)=v_2(a)\in\SafeS$ agree on $[a,b]$}};
-  \node[pm] (st) at (4.6,-5.9) {\lk[runs exist for an input with one jump]{exists_trajectory_step}{$u_1,u_2$ continuous, $a\le c\le b\Rightarrow\exists$ run for $(t<c\ ?\ u_1(t):u_2(t))$, $v(a)=v_0$}};
-  \draw[ar] (cl) -- (cf); \draw[ar] (cf) -- (bd);
-  \draw[ar] (bd.east) -- (ex.west);
-  \draw[ar] (ex.south) -- (od.north);
-  \draw[ar] (od.east) -- ++(0.4,0) |- (et.east);
-  \draw[ar] (et.south) -- (ec.north);
+  \node[pm] (cf) at (0,-2.0) {\lk[the clamped right-hand side]{clampedField}{$f(t,x)=\frac{\Inet(\theta,u(t),\bar x)+w(t)}{C(\bar x)},\ \bar x=\mathrm{clamp}(\Vlo,\Vhi,x)$}};
+  \node[pm] (bd) at (0,-3.2) {\lk[Lipschitz and bounded]{exists_clampedField_bounds}{\tl{\exists K,L\ge0:\ |f(t,x)-f(t,y)|\le K|x-y|,\\ |f(t,x)|\le L\text{ for }t\in[a,b]}}};
+  \node[pm] (un) at (0,-4.7) {\lk[uniqueness]{solution_unique}{\tl{C\le\Chi:\ \text{two solutions with }v_1(a)=v_2(a)\in\SafeS\\ \text{agree on }[a,b]}}};
+  \node[pm] (st) at (0,-6.2) {\lk[runs exist for an input with one jump]{exists_trajectory_step}{\tl{C\le\Chi,\ u_1,u_2\text{ continuous},\ a\le c\le b\\ \Rightarrow\exists\text{ run for }(t<c\ ?\ u_1(t):u_2(t)),\ v(a)=v_0}}};
+  \node[pm] (ex) at (9.0,0) {\lk[existence]{exists_solution}{\tl{\Hyp_0\Rightarrow\exists v:\ v(a)=v_0,\ v\in\SafeS\text{ on }[a,b],\\ C(v)\,v'=\Inet(\theta,u,v)+w\text{ on }[a,b]}}};
+  \node[pm] (od) at (9.0,-1.5) {\lk[solutions are runs]{IsTrajectory.of_ode}{\tl{\theta\in\Bx,\ \Clo\le C\le\Chi,\ |w|\le\varepsilon,\ v\text{ continuous},\\ C(v)\,\rd v=\Inet(\theta,u,v)+w\Rightarrow\text{run}}}};
+  \node[pm] (ov) at (9.0,-3.0) {\lk[solutions with drifting parameters are runs]{IsTrajectory.of_ode_varying}{the same with $\theta(t)\in\Bx$ moving in time $\Rightarrow$ run}};
+  \node[pm] (et) at (9.0,-4.0) {\lk[runs exist]{exists_trajectory}{$\Hyp_0,\ C\le\Chi\Rightarrow\exists$ run $v$ with $v(a)=v_0$}};
+  \node[pm] (ec) at (9.0,-5.0) {\lk[runs exist, constant capacitance]{exists_trajectory_const}{$\Clo\le C\le\Chi$ constant $\Rightarrow\exists$ run $v$, $v(a)=v_0$}};
+  \draw[ar] ($(cl.south west)+(1.5,0)$) -- ($(cf.north west)+(1.5,0)$);
+  \draw[ar] ($(cf.south west)+(1.5,0)$) -- ($(bd.north west)+(1.5,0)$);
+  \draw[ar] (bd.east) -| ($(ex.west)+(-0.45,0)$) -- (ex.west);
+  \draw[ar] ($(ex.south west)+(1.2,0)$) -- ($(od.north west)+(1.2,0)$);
+  \draw[ar] (od.west) -- ++(-0.25,0) |- (et.west);
+  \draw[ar] ($(et.south west)+(1.2,0)$) -- ($(ec.north west)+(1.2,0)$);
 \end{tikzpicture}
 
 % ===========================================================================
@@ -487,8 +489,8 @@ $\Hyp_0$:\ \ $D$ admissible, $\theta\in\Bx(D)$, $u,w$ continuous, $|w|\le\vareps
   \node[lab, right] at (5.8,5.0) {$\Inet(\theta_2)+\varepsilon_m$};
   \node[lab, right] at (5.8,3.9) {$J$};
 \end{tikzpicture}\par
-{\footnotesize\lk[a current between two box members]{Design.exists_inBox_of_between}{$\begin{array}{@{}l@{}}\theta_1,\theta_2\in\Bx,\ 0\le\varepsilon,\\ \Inet(\theta_1,u,x)-\varepsilon\le J\le\Inet(\theta_2,u,x)+\varepsilon\end{array}$}\par
-\hspace*{1em}\lk[a current between two box members (conclusion)]{Design.exists_inBox_of_between}{$\Rightarrow\exists\theta\in\Bx:\ |J-\Inet(\theta,u,x)|\le\varepsilon$}}
+{\footnotesize\lk[a current between two box members]{Design.exists_inBox_of_between}{$\begin{array}{@{}l@{}}\theta_1,\theta_2\in\Bx,\ 0\le\delta,\\ \Inet(\theta_1,u,x)-\delta\le J\le\Inet(\theta_2,u,x)+\delta\end{array}$}\par
+\hspace*{1em}\lk[a current between two box members (conclusion)]{Design.exists_inBox_of_between}{$\Rightarrow\exists\theta\in\Bx:\ |J-\Inet(\theta,u,x)|\le\delta$}}
 \end{minipage}\hfill
 \begin{minipage}[t]{0.61\linewidth}\vspace{0pt}\footnotesize
 \lk[mixing two parameter points]{Params.mix}{$\mathrm{mix}(\theta_1,\theta_2,s)=\theta_1+s(\theta_2-\theta_1)$ componentwise}\sep
@@ -502,9 +504,9 @@ $\Hyp_0$:\ \ $D$ admissible, $\theta\in\Bx(D)$, $u,w$ continuous, $|w|\le\vareps
 \smallskip
 \lk[another current law]{IsTrajectory.of_model_error}{$\varepsilon_m+\varepsilon_w\le\varepsilon,\ \forall t,\forall x\in\SafeS\ \exists\theta\in\Bx:|J(t,x)-\Inet(\theta,u(t),x)|\le\varepsilon_m,\ |w|\le\varepsilon_w,$}\par
 \hspace*{1em}\lk[another current law (conclusion)]{IsTrajectory.of_model_error}{$v$ continuous, $c\,\rd v=J(t,v)+w$ with $c\in[\Clo,\Chi]\ \Rightarrow$ run}\par
-\lk[the sandwich form]{IsTrajectory.of_sandwich}{$0\le\varepsilon_m$, $\Inet(\theta_1,u(t),x)-\varepsilon_m\le J(t,x)\le\Inet(\theta_2,u(t),x)+\varepsilon_m$ on $\SafeS\Rightarrow$ run}\par
-\lk[the static sandwich]{IsTrajectory.of_static_sandwich}{$\begin{array}{@{}l@{}}u(t)\in U;\ \forall x\in U,y\in\SafeS:\ \Inet(\theta_1,x,y)-\varepsilon_m\le J(x,y)\le\Inet(\theta_2,x,y)+\varepsilon_m;\\ c\,\rd v=J(u,v)+w\Rightarrow\text{run}\end{array}$}\par
-\lk[a slew bound]{slew_bound_of_rderiv}{$u$ continuous, $|\rd u|\le S\Rightarrow|u(t)-u(s)|\le S\,(t-s)$}
+\lk[the sandwich form]{IsTrajectory.of_sandwich}{$\begin{array}{@{}l@{}}0\le\varepsilon_m,\ \forall t,\forall x\in\SafeS\ \exists\theta_1,\theta_2\in\Bx:\\ \quad\Inet(\theta_1,u(t),x)-\varepsilon_m\le J(t,x)\le\Inet(\theta_2,u(t),x)+\varepsilon_m,\\ \text{the other hypotheses as above}\Rightarrow\text{run}\end{array}$}\par
+\lk[the static sandwich]{IsTrajectory.of_static_sandwich}{$\begin{array}{@{}l@{}}u(t)\in U;\ \forall x\in U,y\in\SafeS\ \exists\theta_1,\theta_2\in\Bx:\\ \quad\Inet(\theta_1,x,y)-\varepsilon_m\le J(x,y)\le\Inet(\theta_2,x,y)+\varepsilon_m;\\ c\,\rd v=J(u,v)+w,\ \text{the other hypotheses as above}\Rightarrow\text{run}\end{array}$}\par
+\lk[a slew bound]{slew_bound_of_rderiv}{$\begin{array}{@{}l@{}}u\text{ continuous on }[a,b],\ |\rd u|\le S\text{ on }[a,b)\\ \Rightarrow|u(t)-u(s)|\le S\,(t-s)\text{ for }a\le s\le t\le b\end{array}$}
 \end{minipage}
 
 \smallskip
@@ -533,12 +535,12 @@ q=C_Lv+C_M(v-u)+C_c(v-g)\text{ continuous},\ u,g\text{ continuous},\\ \rd q=\Ine
 \begin{minipage}[t]{0.72\linewidth}\vspace{0pt}\footnotesize
 \lk[the record at one supply value]{Design.atSupply}{$D|_{V_0}$: $D$ with $\VDDlo=\VDDhi=V_0$ and $\Vhi=V_0+(\Vhi-\VDDhi)$}\par
 \lk[the upper split point is below the PMOS reverse knee]{Design.Admissible.uHi_lt}{$D$ adm.\ $\Rightarrow\uHi<\VDDlo-\Vtphi+(\Vhi-\VDDhi)$}\sep
-\lk[the NMOS top margin is unchanged]{Design.Admissible.RhiN_atSupply}{$\VDDlo\le V_0\Rightarrow\RhiN(D|_{V_0})=\RhiN(D)$}\par
+\lk[the NMOS top margin is unchanged]{Design.Admissible.RhiN_atSupply}{$D$ adm., $\VDDlo\le V_0\Rightarrow\RhiN(D|_{V_0})=\RhiN(D)$}\par
 \lk[admissible at every supply value]{Design.Admissible.atSupply}{$D$ adm., $V_0\in[\VDDlo,\VDDhi]\Rightarrow D|_{V_0}$ adm.}\sep
 \lk[a box point is in its own restricted box]{Design.InBox.atSupply}{$\theta\in\Bx(D)\Rightarrow\theta\in\Bx(D|_{\VDD(\theta)})$}\par
-\lk[runs at one supply stay near it]{trajectory_safe_atSupply}{run of $D|_{V_0}$ from $[\Vlo,V_0+(\Vhi-\VDDhi)]$ stays there}\par
-\lk[constant-parameter solutions are runs at their supply]{IsTrajectory.of_ode_atSupply}{solution with constant $\theta$ is a run of $D|_{\VDD(\theta)}$}\par
-\lk[constant-parameter solutions stay near their supply]{solution_safe_atSupply}{solution with constant $\theta$ from $[\Vlo,\VDD(\theta)+(\Vhi-\VDDhi)]$ stays there}
+\lk[runs at one supply stay near it]{trajectory_safe_atSupply}{$D$ adm., $V_0\in[\VDDlo,\VDDhi]$: a run of $D|_{V_0}$ on $[a,b]$ from $[\Vlo,V_0+(\Vhi-\VDDhi)]$ stays there}\par
+\lk[constant-parameter solutions are runs at their supply]{IsTrajectory.of_ode_atSupply}{$\begin{array}{@{}l@{}}\theta\in\Bx,\ \Clo\le C\le\Chi,\ |w|\le\varepsilon,\ v\text{ continuous},\ C(v)\,\rd v=\Inet(\theta,u,v)+w\\ \Rightarrow v\text{ is a run of }D|_{\VDD(\theta)}\end{array}$}\par
+\lk[constant-parameter solutions stay near their supply]{solution_safe_atSupply}{$D$ adm.\ and $v$ as in the line above, from $[\Vlo,\VDD(\theta)+(\Vhi-\VDDhi)]\Rightarrow$ stays there}
 \end{minipage}\hfill
 \begin{minipage}[t]{0.26\linewidth}\vspace{0pt}
 \begin{tikzpicture}[y=0.42cm]
@@ -554,15 +556,16 @@ q=C_Lv+C_M(v-u)+C_c(v-g)\text{ continuous},\ u,g\text{ continuous},\\ \rd q=\Ine
 \section{Speed limits}
 
 \begin{minipage}[t]{0.7\linewidth}\vspace{0pt}\footnotesize
-\lk[largest charging current]{Design.IchargeMax}{$I^{\max}_{\uparrow}(u_1,u_2)=\frac{\kphi}{2}\psq(\VDDhi-u_1-\Vtplo)+\frac{\knhi}{2}\psq(u_2-\Vlo-\Vtnlo)$}\sep
+For $D$ admissible and $\theta\in\Bx(D)$:\par
+\lk[a bound on the charging current]{Design.IchargeMax}{$I^{\max}_{\uparrow}(u_1,u_2)=\frac{\kphi}{2}\psq(\VDDhi-u_1-\Vtplo)+\frac{\knhi}{2}\psq(u_2-\Vlo-\Vtnlo)$}\par
 \lk{Design.IchargeMax_nonneg}{$0\le I^{\max}_{\uparrow}$}\par
-\lk[largest discharging current]{Design.IdischargeMax}{$I^{\max}_{\downarrow}(u_1,u_2)=\frac{\knhi}{2}\psq(u_2-\Vtnlo)+\frac{\kphi}{2}\psq(\Vhi-u_1-\Vtplo)$}\sep
+\lk[a bound on the discharging current]{Design.IdischargeMax}{$I^{\max}_{\downarrow}(u_1,u_2)=\frac{\knhi}{2}\psq(u_2-\Vtnlo)+\frac{\kphi}{2}\psq(\Vhi-u_1-\Vtplo)$}\par
 \lk{Design.IdischargeMax_nonneg}{$0\le I^{\max}_{\downarrow}$}\par
-\lk[charging current is bounded]{Design.Inet_le_IchargeMax}{$u\in[u_1,u_2],\ \Vlo\le v\Rightarrow\Inet(\theta,u,v)\le I^{\max}_{\uparrow}$}\sep
-\lk[discharging current is bounded]{Design.neg_IdischargeMax_le_Inet}{$u\in[u_1,u_2],\ v\le\Vhi\Rightarrow-I^{\max}_{\downarrow}\le\Inet(\theta,u,v)$}\par
+\lk[charging current is bounded]{Design.Inet_le_IchargeMax}{$u\in[u_1,u_2],\ \Vlo\le v\Rightarrow\Inet(\theta,u,v)\le I^{\max}_{\uparrow}(u_1,u_2)$}\par
+\lk[discharging current is bounded]{Design.neg_IdischargeMax_le_Inet}{$u\in[u_1,u_2],\ v\le\Vhi\Rightarrow-I^{\max}_{\downarrow}(u_1,u_2)\le\Inet(\theta,u,v)$}\par
 Under $\Hyp$ with $u\in[u_1,u_2]$ on $[s,e)$:\par
-\lk[the output cannot rise faster]{IsTrajectory.rise_at_most}{$v(s)\le\ell\Rightarrow v(t)\le\ell+\frac{I^{\max}_{\uparrow}+\varepsilon}{\Clo}(t-s)$}\sep
-\lk[the output cannot fall faster]{IsTrajectory.fall_at_most}{$\ell\le v(s)\Rightarrow\ell-\frac{I^{\max}_{\downarrow}+\varepsilon}{\Clo}(t-s)\le v(t)$}
+\lk[the output cannot rise faster]{IsTrajectory.rise_at_most}{$v(s)\le\ell\Rightarrow v(t)\le\ell+\frac{I^{\max}_{\uparrow}+\varepsilon}{\Clo}(t-s)$ for $t\in[s,e]$}\par
+\lk[the output cannot fall faster]{IsTrajectory.fall_at_most}{$\ell\le v(s)\Rightarrow\ell-\frac{I^{\max}_{\downarrow}+\varepsilon}{\Clo}(t-s)\le v(t)$ for $t\in[s,e]$}
 \end{minipage}\hfill
 \begin{minipage}[t]{0.27\linewidth}\vspace{0pt}
 \begin{tikzpicture}[x=0.42cm,y=0.4cm]
@@ -585,15 +588,15 @@ Under $\Hyp$ with $u\in[u_1,u_2]$ on $[s,e)$:\par
   \draw[ar] (d1) -- node[above] {$v_1$} (d2);
   \draw[ar] (d2) -- (6.0,0) node[right] {$v_2$};
 \end{tikzpicture}\par
-{\footnotesize $v_1$ a run of $D_1$ for $u$, $v_2$ a run of $D_2$ for $v_1$, both admissible, both starting in their safe ranges:}\par
+{\footnotesize $v_1$ a run of $D_1$ for $u$, $v_2$ a run of $D_2$ for $v_1$, both on $[a,b]$, both records admissible, both runs starting in their safe ranges, $a\le s$, $e\le b$:}\par
 \smallskip
 {\footnotesize
-\lk[low in, low out of two stages]{chain_low}{$D_2.\VIH\le D_1.\VOH,\ u\le D_1.\VIL$ on $[s,e)\Rightarrow v_2(t)\le D_2.\VOL$ for $t\ge s+D_1.\tup+D_2.\tdn$}\par
-\lk[high in, high out of two stages]{chain_high}{$D_1.\VOL\le D_2.\VIL,\ D_1.\VIH\le u$ on $[s,e)\Rightarrow D_2.\VOH\le v_2(t)$ for $t\ge s+D_1.\tdn+D_2.\tup$}\par
-\lk[two copies restore a low bit]{chain_restores_low}{$D_1=D_2=D$: $u\le\VIL\Rightarrow v_2\le\VOL$ after $\tup+\tdn$}\sep
-\lk[two copies restore a high bit]{chain_restores_high}{$D_1=D_2=D$: $\VIH\le u\Rightarrow\VOH\le v_2$ after $\tdn+\tup$}\par
+\lk[low in, low out of two stages]{chain_low}{$D_2.\VIH\le D_1.\VOH,\ u\le D_1.\VIL$ on $[s,e)\Rightarrow v_2(t)\le D_2.\VOL$ for $t\in[s,e]$, $t\ge s+D_1.\tup+D_2.\tdn$}\par
+\lk[high in, high out of two stages]{chain_high}{$D_1.\VOL\le D_2.\VIL,\ D_1.\VIH\le u$ on $[s,e)\Rightarrow D_2.\VOH\le v_2(t)$ for $t\in[s,e]$, $t\ge s+D_1.\tdn+D_2.\tup$}\par
+\lk[two copies restore a low bit]{chain_restores_low}{$D_1=D_2=D$: $u\le\VIL$ on $[s,e)\Rightarrow v_2\le\VOL$ on $[s+\tup+\tdn,e]$}\sep
+\lk[two copies restore a high bit]{chain_restores_high}{$D_1=D_2=D$: $\VIH\le u$ on $[s,e)\Rightarrow\VOH\le v_2$ on $[s+\tdn+\tup,e]$}\par
 For the 1.8 V record below:\
-\lk[a second stage can be driven]{Examples.exists_second_stage}{$v_1$ continuous on $[0,10]$, $v_0\in[-0.10,2.08]\Rightarrow\exists$ run $v_2$ for $v_1$}\par
+\lk[a second stage can be driven]{Examples.exists_second_stage}{$v_1$ continuous on $[0,10]$, $v_0\in[-0.10,2.08]\Rightarrow\exists$ run $v_2$ for $v_1$ on $[0,10]$ with $v_2(0)=v_0$}\par
 \lk[a two-stage run restoring a low bit]{Examples.chain_witness}{$\exists u\le0.40,v_1,v_2$ runs on $[0,10]$, $v_1(0)=v_2(0)=1$: $1.35\le v_1$ on $[3.43,10]$, $v_2\le0.25$ on $[6,10]$}\par
 \lk[a two-stage run restoring a high bit]{Examples.chain_witness_high}{$\exists u\ge1.25,v_1,v_2$ runs on $[0,10]$, $v_1(0)=v_2(0)=1$: $v_1\le0.25$ on $[2.57,10]$, $1.35\le v_2$ on $[6,10]$}}
 
@@ -647,12 +650,12 @@ For the 1.8 V record below:\
 \lk{Examples.illustrative_tauDn_le}{$\tdn\le2.57$}
 \row
 \lk[the guarantee in numbers]{Examples.illustrative_guarantee}{$\begin{array}{@{}l@{}}v\text{ run of }D_{1.8}\text{ on }[a,b],\ v(a)\in[-0.10,2.08]\ \Rightarrow\ v\in[-0.10,2.08]\text{ on }[a,b],\\
-u\le0.40\text{ on }[s,e)\Rightarrow1.35\le v\text{ on }[s+3.43,e],\quad 1.25\le u\text{ on }[s,e)\Rightarrow v\le0.25\text{ on }[s+2.57,e]\end{array}$}
+{}[s,e)\subseteq[a,b]:\ u\le0.40\text{ on }[s,e)\Rightarrow1.35\le v\text{ on }[s+3.43,e],\quad 1.25\le u\text{ on }[s,e)\Rightarrow v\le0.25\text{ on }[s+2.57,e]\end{array}$}
 \row
-\lk[runs exist for it]{Examples.illustrative_exists}{$\theta\in\Bx,\ C\in[5,20]$ Lipschitz on $[-0.10,2.08]$, $u,w$ continuous, $|w|\le2$, $v_0\in[-0.10,2.08]\Rightarrow\exists$ run, $v(a)=v_0$}\sep
+\lk[runs exist for it]{Examples.illustrative_exists}{$\begin{array}{@{}l@{}}\theta\in\Bx,\ C\in[5,20]\text{ Lipschitz on }[-0.10,2.08],\ u,w\text{ continuous},\ |w|\le2\text{ on }[a,b],\ a\le b,\\ v_0\in[-0.10,2.08]\Rightarrow\exists\text{ run on }[a,b],\ v(a)=v_0\end{array}$}\sep
 \lk[runs exist, constant capacitance]{Examples.illustrative_exists_const}{the same with $C$ constant}
 \row
-\lk[runs at one supply stay within 0.10 V of it]{Examples.illustrative_safe_atSupply}{solution with constant $\theta\in\Bx$, $C\in[5,20]$, $|w|\le2$, from $[-0.10,\VDD(\theta)+0.10]$ stays there}
+\lk[runs at one supply stay within 0.10 V of its rails]{Examples.illustrative_safe_atSupply}{solution with constant $\theta\in\Bx$, $C\in[5,20]$, $|w|\le2$, from $[-0.10,\VDD(\theta)+0.10]$ stays there}
 
 \smallskip
 \begin{minipage}[t]{0.47\linewidth}\vspace{0pt}
@@ -689,7 +692,7 @@ Only what is proved is drawn: the input, and the windows where the output reads 
 \lk{Examples.hasDerivAt_uFeed}{$u_f'=2\cos10t$}\par
 \lk[an aggressor]{Examples.gFeed}{$g(t)=0.9+0.5\sin10t$}\sep
 \lk{Examples.hasDerivAt_gFeed}{$g'=5\cos10t$}\par
-\lk[a run with feedthrough and coupling]{Examples.illustrative_feedthrough_scenario}{$\begin{array}{@{}l@{}}\exists v,\ v(0)=1,\ \rd\bigl(9.4v+0.5(v-u_f)+0.1(v-g)\bigr)\\ \quad=\Inet(\theta_{\mathrm{nom}},u_f,v)+0.5\sin t,\ \ v\text{ a run for }u_f,\\ v\text{ reads 1 on }[3.43,10]\end{array}$}
+\lk[a run with feedthrough and coupling]{Examples.illustrative_feedthrough_scenario}{$\begin{array}{@{}l@{}}\exists v,\ v(0)=1,\ \rd\bigl(9.4v+0.5(v-u_f)+0.1(v-g)\bigr)\\ \quad=\Inet(\theta_{\mathrm{nom}},u_f,v)+0.5\sin t\text{ on }[0,10),\ \ v\text{ a run for }u_f\text{ on }[0,10],\\ v\text{ reads 1 on }[3.43,10]\end{array}$}
 \end{minipage}
 
 % ===========================================================================
@@ -699,13 +702,13 @@ Only what is proved is drawn: the input, and the windows where the output reads 
   \draw[->] (1.45,0) -- (3.68,0) node[right, lab] {rise (ns)};
   \fill[black!22] (1.45,-0.09) rectangle (2.168,0.09);
   \fill[black!6] (2.26,-0.09) rectangle (3.6,0.09);
-  \foreach \x in {1.64,2.168,2.26,2.34,3.43} \draw (\x,-0.15) -- (\x,0.15);
+  \foreach \x in {1.64,2.0,2.168,2.26,2.34,3.43} \draw (\x,-0.15) -- (\x,0.15);
   \node[lab, above] at (1.64,0.15) {\lk[false even from 0.25 V]{Examples.rise_deadline_1p64_is_false_from_valid_low}{$1.64$: false from $v(0)=0.25$}};
   \node[lab, above left] at (2.175,0.15) {\lk[false below 2.168]{Examples.rise_deadline_counterexample}{$2.168$}};
   \node[lab, below left] at (2.168,-0.15) {\lk[no certificate below 2.168]{Examples.riseCert_deadline_ge}{every certificate has $\tau\ge2.168$}};
   \node[lab, above right] at (2.253,0.15) {\lk[16 levels prove 2.26]{Examples.illustrative_riseCert_16}{$2.26$ (16 levels)}};
   \node[lab, below right] at (2.30,-0.15) {\lk[3 levels prove 2.34]{Examples.illustrative_riseCert_3}{$2.34$ (3 levels)}};
-  \node[lab, below] at (3.05,-0.15) {\lk[the 3-level list does not prove 2.0]{Examples.illustrative_riseCert_rejected}{those 3 levels do not give $2.0$}};
+  \node[lab, below] at (1.92,-0.55) {\lk[the 3-level list does not prove 2.0]{Examples.illustrative_riseCert_rejected}{those 3 levels do not give $2.0$}};
   \node[lab, above] at (3.43,0.15) {closed form $3.43$};
 \end{tikzpicture}
 
@@ -731,13 +734,13 @@ Only what is proved is drawn: the input, and the windows where the output reads 
 \lk[slow pull-up corner]{Examples.slowUpCorner}{$\theta_{\uparrow}=(1.62,240,80,0.60,0.60)$}\sep
 \lk{Examples.slowUpCorner_inBox}{$\theta_{\uparrow}\in\Bx$}\sep
 \lk{Examples.Inet_slowUp_le}{$-0.10\le x\Rightarrow\Inet(\theta_{\uparrow},0.40,x)\le15.376$}\sep
-\lk[below a line]{Examples.le_line_of_rderiv_le}{$\rd v\le m,\ v(a)\le\ell\Rightarrow v(t)\le\ell+m(t-a)$}\par
-\lk[a slow rising run]{Examples.slow_rise_run}{$\forall v_0\in\SafeS\ \exists v$: $v(0)=v_0$, $20v'=\Inet(\theta_{\uparrow},0.40,v)-2$, run for $u\equiv0.40$, $v\le v_0+0.6688\,t$}\par
+\lk[below a line]{Examples.le_line_of_rderiv_le}{$v$ continuous on $[a,b]$, $\rd v\le m$ on $[a,b)$, $v(a)\le\ell\Rightarrow v(t)\le\ell+m(t-a)$ on $[a,b]$}\par
+\lk[a slow rising run]{Examples.slow_rise_run}{$\forall v_0\in\SafeS\ \exists v$: $v(0)=v_0$, $20v'=\Inet(\theta_{\uparrow},0.40,v)-2$ and run for $u\equiv0.40$ on $[0,10]$, $v\le v_0+0.6688\,t$ on $[0,10]$}\par
 \lk[slow pull-down corner]{Examples.slowDnCorner}{$\theta_{\downarrow}=(1.98,160,120,0.60,0.45)$}\sep
 \lk{Examples.slowDnCorner_inBox}{$\theta_{\downarrow}\in\Bx$}\sep
 \lk{Examples.Inet_slowDn_ge}{$x\le2.08\Rightarrow-37.76\le\Inet(\theta_{\downarrow},1.25,x)$}\sep
-\lk[above a line]{Examples.ge_line_of_rderiv_ge}{$-m\le\rd v,\ h\le v(a)\Rightarrow h-m(t-a)\le v(t)$}\par
-\lk[a slow falling run]{Examples.slow_fall_run}{$\forall v_0\in\SafeS\ \exists v$: $v(0)=v_0$, $20v'=\Inet(\theta_{\downarrow},1.25,v)+2$, run for $u\equiv1.25$, $v_0-1.788\,t\le v$}\par
+\lk[above a line]{Examples.ge_line_of_rderiv_ge}{$v$ continuous on $[a,b]$, $-m\le\rd v$ on $[a,b)$, $h\le v(a)\Rightarrow h-m(t-a)\le v(t)$ on $[a,b]$}\par
+\lk[a slow falling run]{Examples.slow_fall_run}{$\forall v_0\in\SafeS\ \exists v$: $v(0)=v_0$, $20v'=\Inet(\theta_{\downarrow},1.25,v)+2$ and run for $u\equiv1.25$ on $[0,10]$, $v_0-1.788\,t\le v$ on $[0,10]$}\par
 \lk[a larger provable disturbance]{Examples.illustrativeEps}{$D_{1.8}$ with $\varepsilon=2.3801$, $\uHi=0.772486$, $\uLo=0.742506$}\sep
 \lk{Examples.illustrativeEps_admissible}{is admissible}\sep
 \lk{Examples.illustrativeEps_tauUp}{$\tup=\frac{290000}{80959}$}\sep
@@ -769,17 +772,17 @@ Only what is proved is drawn: the input, and the windows where the output reads 
 \lk[they differ only at 4]{Examples.uStepL_eq_uStepR_of_ne}{$t\ne4\Rightarrow u_L(t)=u_R(t)$}\par
 \lk[no run for the left-continuous step]{Examples.stepL_no_trajectory}{no run of $D_{1.8}$ for $u_L$ on $[0,10]$ starts in $\SafeS$}\par
 \lk[runs for the right-continuous step]{Examples.stepR_has_trajectory}{$\forall v_0\in\SafeS\ \exists$ run for $u_R$ on $[0,10]$, $v(0)=v_0$}\par
-\lk[the scope of the guarantee]{Examples.step_input_scope}{both facts at once: the guarantee says nothing for $u_L$ on $[0,10]$}\par
+\lk[the scope of the guarantee]{Examples.step_input_scope}{the three facts at once: the guarantee says nothing for $u_L$ on $[0,10]$}\par
 \lk[the ideal step has right derivative 0]{Examples.uStepR_hasDerivWithinAt_zero}{$\rd u_R(t)=0$ for every $t$}\sep
 \lk[and is not continuous]{Examples.uStepR_not_continuousOn}{$u_R$ not continuous on $[0,10]$}\par
 \lk[a one-instant spike]{Examples.uSpike}{$u_s(t)=1.8$ if $t=0$, else $0$}\sep
 \lk[no run through the spike]{Examples.spike_no_trajectory}{no run for $u_s$ on $[0,10]$ with $v(0)\in[-0.02,0.25]$}\par
-\lk[the local obstruction]{Examples.no_trajectory_through_left_continuous_jump}{run from $\SafeS$, $u(t_0)=1.8$, $u=0$ on $(t_0,t_0+0.002)$, $v(t_0)\in[-0.02,0.25]\Rightarrow\bot$}\par
-\lk[a lower bound on a right derivative]{Examples.rderiv_ge_of_right_nhd}{$\delta>0$, $v$ continuous on $[t_0,t_0+\delta]$, $\rd v\ge m$ on $(t_0,t_0+\delta)\Rightarrow m\le\rd v(t_0)$}\par
+\lk[the local obstruction]{Examples.no_trajectory_through_left_continuous_jump}{$\begin{array}{@{}l@{}}\text{run on }[a,b]\text{ from }\SafeS,\ [t_0,t_0+0.002]\subseteq[a,b],\ u(t_0)=1.8,\\ u=0\text{ on }(t_0,t_0+0.002),\ v(t_0)\in[-0.02,0.25]\Rightarrow\bot\end{array}$}\par
+\lk[a lower bound on a right derivative]{Examples.rderiv_ge_of_right_nhd}{$\begin{array}{@{}l@{}}\delta>0,\ v\text{ continuous on }[t_0,t_0+\delta],\ \rd v(t_0)\text{ exists},\\ \rd v\ge m\text{ on }(t_0,t_0+\delta)\Rightarrow m\le\rd v(t_0)\end{array}$}\par
 \lk[the box in numbers]{Examples.illustrative_box_bounds}{$\theta\in\Bx\Rightarrow\VDD\in[1.62,1.98],\ k_n\in[160,240],\ k_p\in[80,120],\ V_{tn},V_{tp}\in[0.45,0.60]$}\par
-\lk{Examples.Inet_high_le}{$x\in[-0.02,0.25]\Rightarrow\Inet(\theta,1.8,x)\le6.6$}\sep
-\lk{Examples.Inet_high_ge}{$x\le-0.02\Rightarrow3.8\le\Inet(\theta,1.8,x)$}\sep
-\lk{Examples.Inet_low_ge}{$x\in[-0.10,0.45]\Rightarrow41.616\le\Inet(\theta,0,x)$}
+\lk{Examples.Inet_high_le}{$\theta\in\Bx,\ x\in[-0.02,0.25]\Rightarrow\Inet(\theta,1.8,x)\le6.6$}\par
+\lk{Examples.Inet_high_ge}{$\theta\in\Bx,\ x\le-0.02\Rightarrow3.8\le\Inet(\theta,1.8,x)$}\par
+\lk{Examples.Inet_low_ge}{$\theta\in\Bx,\ x\in[-0.10,0.45]\Rightarrow41.616\le\Inet(\theta,0,x)$}
 \end{minipage}
 
 % ===========================================================================
@@ -792,22 +795,22 @@ inverted range &
 \lk{Examples.badBox_not_admissible}{not admissible}\ \
 \lk[its box is empty]{Examples.badBox_empty}{$\Bx=\emptyset$}\\[3pt]
 sampling too early &
-\lk[no valid high within 38 ps]{Examples.illustrative_no_early_high}{run from $\SafeS$, $u\in[0,0.40]$ on $[s,e)$, $v(s)\le0.25\Rightarrow v(t)<1.35$ for $t\le s+0.038$}\par
-\lk[largest rising slew]{Examples.illustrative_max_rise_slew}{$\frac{I^{\max}_{\uparrow}(0,0.40)+\varepsilon}{\Clo}=28.5508$}\ \
-\lk[largest falling slew]{Examples.illustrative_max_fall_slew}{$\frac{I^{\max}_{\downarrow}(1.25,1.98)+\varepsilon}{\Clo}=58.3144$}\ \
+\lk[no valid high within 38 ps]{Examples.illustrative_no_early_high}{run from $\SafeS$, $u\in[0,0.40]$ on $[s,e)$, $v(s)\le0.25\Rightarrow v(t)<1.35$ for $t\in[s,e]$, $t\le s+0.038$}\par
+\lk[a bound on the rising slew for u in 0 to 0.40]{Examples.illustrative_max_rise_slew}{$\frac{I^{\max}_{\uparrow}(0,0.40)+\varepsilon}{\Clo}=28.5508$}\ \
+\lk[a bound on the falling slew for u in 1.25 to 1.98]{Examples.illustrative_max_fall_slew}{$\frac{I^{\max}_{\downarrow}(1.25,1.98)+\varepsilon}{\Clo}=58.3144$}\ \
 \lk[38 ps is too early]{Examples.early_sampling_counterexample}{$\exists$ run, $u\le0.40$, $v(0)=0.25$, $v(0.038)<1.35$}\\[3pt]
 input below ground &
 \lk[fast pull-up corner]{Examples.fastUp}{$\theta_f=(1.98,240,120,0.45,0.45)$}\ \
 \lk{Examples.fastUp_inBox}{$\theta_f\in\Bx$}\ \
 \lk{Examples.Inet_fastUp_ge}{$x\in[-0.10,1.35]\Rightarrow167.454\le\Inet(\theta_f,-1,x)$}\par
-\lk[with u = -1, high within 38 ps]{Examples.valid_low_input_can_give_valid_high_within_38ps}{$u\equiv-1$: $\exists v$, $v(0)=0.25$, $5v'=\Inet(\theta_f,-1,v)$, a run, $1.35\le v(0.038)$}\\[3pt]
+\lk[with u = -1, high within 38 ps]{Examples.valid_low_input_can_give_valid_high_within_38ps}{$u\equiv-1$: $\exists v$, $v(0)=0.25$, $5v'=\Inet(\theta_f,-1,v)$ and a run on $[0,10]$, $1.35\le v(0.038)$}\\[3pt]
 no slew bound &
 \lk[rising slew unbounded]{Examples.valid_low_rise_slew_unbounded}{$\forall M\ \exists$ run, $u\le0.40$, $v(0)=0.25$, $\rd v(0)>M$}\ \
 \lk[falling slew unbounded]{Examples.valid_high_fall_slew_unbounded}{$\forall M\ \exists$ run, $u\ge1.25$, $v(0)=1.35$, $\rd v(0)<-M$}\\[3pt]
 swapped transistors &
 \lk[the miswired network]{Examples.InetSwapped}{$I^{\times}(\theta,u,v)=\frac{k_n}{2}\bigl(\psq(u-v-V_{tn})-\psq(u-\VDD-V_{tn})\bigr)-\frac{k_p}{2}\bigl(\psq(v-u-V_{tp})-\psq(0-u-V_{tp})\bigr)$}\par
 \lk{Examples.InetSwapped_le}{$u\le0.40,\ 1.2\le L\Rightarrow I^{\times}(\theta_{\mathrm{nom}},u,L)\le-50(L-0.9)^2$}\par
-\lk[it never goes high]{Examples.miswired_never_high}{$|c\,\rd v-I^{\times}(\theta_{\mathrm{nom}},u,v)|\le2$, $c\in[5,20]$, $u\le0.40$, $v(a)<1.35\Rightarrow v<1.35$ on $[a,b]$}\par
+\lk[it never goes high]{Examples.miswired_never_high}{$\begin{array}{@{}l@{}}v\text{ continuous on }[a,b];\text{ on }[a,b):\ |c\,\rd v-I^{\times}(\theta_{\mathrm{nom}},u,v)|\le2\text{ for some }c\in[5,20],\ u\le0.40;\\ v(a)<1.35\Rightarrow v<1.35\text{ on }[a,b]\end{array}$}\par
 \lk[a run that never goes high]{Examples.miswired_counterexample}{$\forall T\ \exists u\le0.40$, $v(0)\in[-0.10,2.08]$, $v$ in that inclusion on $[0,T]$, $v<1.35$ always}\\[3pt]
 too much noise &
 \lk[a noisy record]{Examples.noisy}{$D_{1.8}$ with $\varepsilon=10.76$}\ \
