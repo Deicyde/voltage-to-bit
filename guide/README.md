@@ -66,3 +66,11 @@ The guide is typeset without `hyperref`: `pdftotext -bbox-layout` of poppler
 
 The guide is prose. Where it differs from the Lean, the Lean is right, and the
 cards beside each passage show the Lean itself.
+
+## Licence
+
+The guide, `reading-guide.tex` and `reading-guide.pdf`, is licensed under the
+Creative Commons Attribution 4.0 International License ([`LICENSE`](LICENSE)); the PDF
+states it under its title. That licence lets the overlay publish the PDF with its
+site (`pdf.publish` in `pdf-overlay/overlay.config.json`). It covers the guide only:
+the rest of the repository has no licence yet.

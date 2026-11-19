@@ -13,7 +13,10 @@
   "pdf": {
     "file_name": "voltage-to-bit-reading-guide.pdf",
     "cache_dir": ".lake/overlay-pdf",
-    "route": "/__overlay_pdf__/voltage-to-bit-reading-guide.pdf"
+    "route": "/__overlay_pdf__/voltage-to-bit-reading-guide.pdf",
+    "publish": {
+      "license": "CC-BY-4.0"
+    }
   },
   "site": {
     "output_root": ".lake/build/guide-site",
