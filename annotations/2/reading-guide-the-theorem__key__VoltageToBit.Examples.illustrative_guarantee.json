@@ -4,7 +4,7 @@
     {
       "location": {
         "page": 2,
-        "rect": [0.108968, 0.745282, 0.781299, 0.157514]
+        "rect": [0.108968, 0.745282, 0.781351, 0.157514]
       },
       "title": "The theorem",
       "extensions": {
@@ -16,7 +16,7 @@
     {
       "location": {
         "page": 3,
-        "rect": [0.108968, 0.085888, 0.781299, 0.04679]
+        "rect": [0.108968, 0.085888, 0.781351, 0.04679]
       },
       "title": "The theorem",
       "extensions": {
@@ -41,7 +41,7 @@
           },
           "destination": {
             "fragment": "L93",
-            "href": "https://github.com/Deicyde/voltage-to-bit/blob/250cb35b47d502fd5ef7356039665dc63518aace/VoltageToBit/Examples/Illustrative.lean"
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/7c6925a075a4b3d6ab8c8894fc6efadbd786c8ad/VoltageToBit/Examples/Illustrative.lean"
           },
           "snippet": {
             "line": 93,

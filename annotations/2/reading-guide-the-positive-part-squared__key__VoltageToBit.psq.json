@@ -4,12 +4,12 @@
     {
       "location": {
         "page": 1,
-        "rect": [0.108968, 0.514311, 0.781299, 0.102503]
+        "rect": [0.108968, 0.541256, 0.781351, 0.101953]
       },
       "title": "The positive part squared",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
-          "region": "p001-r015-018"
+          "region": "p001-r016-019"
         }
       }
     }
@@ -29,7 +29,7 @@
           },
           "destination": {
             "fragment": "L13",
-            "href": "https://github.com/Deicyde/voltage-to-bit/blob/250cb35b47d502fd5ef7356039665dc63518aace/VoltageToBit/Model/PosSq.lean"
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/7c6925a075a4b3d6ab8c8894fc6efadbd786c8ad/VoltageToBit/Model/PosSq.lean"
           },
           "snippet": {
             "line": 13,

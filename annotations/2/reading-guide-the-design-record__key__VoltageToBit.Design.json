@@ -4,7 +4,7 @@
     {
       "location": {
         "page": 2,
-        "rect": [0.108968, 0.085103, 0.781299, 0.109233]
+        "rect": [0.108968, 0.085103, 0.781351, 0.109233]
       },
       "title": "The design record",
       "extensions": {
@@ -29,7 +29,7 @@
           },
           "destination": {
             "fragment": "L26",
-            "href": "https://github.com/Deicyde/voltage-to-bit/blob/250cb35b47d502fd5ef7356039665dc63518aace/VoltageToBit/Model/Inverter.lean"
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/7c6925a075a4b3d6ab8c8894fc6efadbd786c8ad/VoltageToBit/Model/Inverter.lean"
           },
           "snippet": {
             "line": 26,

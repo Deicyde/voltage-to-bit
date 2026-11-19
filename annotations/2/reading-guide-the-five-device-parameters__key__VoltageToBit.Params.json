@@ -4,12 +4,12 @@
     {
       "location": {
         "page": 1,
-        "rect": [0.108968, 0.616813, 0.781299, 0.121643]
+        "rect": [0.108968, 0.643209, 0.781351, 0.120542]
       },
       "title": "The five device parameters",
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
-          "region": "p001-r019-023"
+          "region": "p001-r020-024"
         }
       }
     }
@@ -29,7 +29,7 @@
           },
           "destination": {
             "fragment": "L35",
-            "href": "https://github.com/Deicyde/voltage-to-bit/blob/250cb35b47d502fd5ef7356039665dc63518aace/VoltageToBit/Model/Device.lean"
+            "href": "https://github.com/Deicyde/voltage-to-bit/blob/7c6925a075a4b3d6ab8c8894fc6efadbd786c8ad/VoltageToBit/Model/Device.lean"
           },
           "snippet": {
             "line": 35,

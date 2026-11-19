@@ -3,7 +3,7 @@
   "subject": {
     "location": {
       "page": 3,
-      "rect": [0.108968, 0.666892, 0.781299, 0.137737]
+      "rect": [0.108968, 0.666892, 0.781351, 0.137737]
     },
     "title": "Decoding to bits",
     "extensions": {
@@ -20,7 +20,7 @@
           "kind": "def"
         },
         "destination": {
-          "href": "https://github.com/Deicyde/voltage-to-bit/blob/250cb35b47d502fd5ef7356039665dc63518aace/VoltageToBit/Model/Inverter.lean"
+          "href": "https://github.com/Deicyde/voltage-to-bit/blob/7c6925a075a4b3d6ab8c8894fc6efadbd786c8ad/VoltageToBit/Model/Inverter.lean"
         }
       }
     }

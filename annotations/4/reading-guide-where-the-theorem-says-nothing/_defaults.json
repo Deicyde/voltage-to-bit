@@ -3,7 +3,7 @@
   "subject": {
     "location": {
       "page": 4,
-      "rect": [0.108968, 0.570329, 0.781299, 0.155923]
+      "rect": [0.108968, 0.570329, 0.781351, 0.155923]
     },
     "title": "Where the theorem says nothing",
     "extensions": {
@@ -16,7 +16,7 @@
     "extensions": {
       "org.mathlib-initiative.formal-companion.overlay": {
         "destination": {
-          "href": "https://github.com/Deicyde/voltage-to-bit/blob/250cb35b47d502fd5ef7356039665dc63518aace/VoltageToBit/Examples/InputClass.lean"
+          "href": "https://github.com/Deicyde/voltage-to-bit/blob/7c6925a075a4b3d6ab8c8894fc6efadbd786c8ad/VoltageToBit/Examples/InputClass.lean"
         }
       }
     }

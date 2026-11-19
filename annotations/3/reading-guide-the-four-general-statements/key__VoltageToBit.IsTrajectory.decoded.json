@@ -3,7 +3,7 @@
     {
       "location": {
         "page": 3,
-        "rect": [0.108968, 0.804628, 0.781299, 0.109233]
+        "rect": [0.108968, 0.804628, 0.781351, 0.109233]
       },
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {
@@ -14,7 +14,7 @@
     {
       "location": {
         "page": 4,
-        "rect": [0.108968, 0.085888, 0.781299, 0.04679]
+        "rect": [0.108968, 0.085888, 0.781351, 0.04679]
       },
       "extensions": {
         "org.mathlib-initiative.formal-companion.overlay": {

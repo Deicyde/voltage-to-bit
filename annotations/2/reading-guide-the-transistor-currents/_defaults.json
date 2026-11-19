@@ -3,12 +3,12 @@
   "subject": {
     "location": {
       "page": 1,
-      "rect": [0.108968, 0.738456, 0.781299, 0.157514]
+      "rect": [0.108968, 0.763751, 0.781351, 0.156964]
     },
     "title": "The transistor currents",
     "extensions": {
       "org.mathlib-initiative.formal-companion.overlay": {
-        "region": "p001-r024-031"
+        "region": "p001-r025-032"
       }
     }
   },
@@ -20,7 +20,7 @@
           "kind": "def"
         },
         "destination": {
-          "href": "https://github.com/Deicyde/voltage-to-bit/blob/250cb35b47d502fd5ef7356039665dc63518aace/VoltageToBit/Model/Device.lean"
+          "href": "https://github.com/Deicyde/voltage-to-bit/blob/7c6925a075a4b3d6ab8c8894fc6efadbd786c8ad/VoltageToBit/Model/Device.lean"
         }
       }
     }

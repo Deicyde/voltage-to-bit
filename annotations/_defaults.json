@@ -3,17 +3,17 @@
   "status": "formalized",
   "subject": {
     "type": "pdf",
-    "uri": "https://raw.githubusercontent.com/Deicyde/voltage-to-bit/250cb35b47d502fd5ef7356039665dc63518aace/guide/reading-guide.pdf",
-    "sha256": "c3568939678a00a054f2ee96cb5af571cd41b6403dba4ae628c619f1137a3056",
+    "uri": "https://raw.githubusercontent.com/Deicyde/voltage-to-bit/7c6925a075a4b3d6ab8c8894fc6efadbd786c8ad/guide/reading-guide.pdf",
+    "sha256": "28450b554611f6aba3896f54c57c00fb441e645342793cb7a5bce9bb50f1d4de",
     "citation": {
       "type": "book",
-      "URL": "https://raw.githubusercontent.com/Deicyde/voltage-to-bit/250cb35b47d502fd5ef7356039665dc63518aace/guide/reading-guide.pdf",
+      "URL": "https://raw.githubusercontent.com/Deicyde/voltage-to-bit/7c6925a075a4b3d6ab8c8894fc6efadbd786c8ad/guide/reading-guide.pdf",
       "id": "voltage-to-bit-reading-guide",
       "title": "Reading the trusted specification of voltage-to-bit"
     },
     "extensions": {
       "org.mathlib-initiative.formal-companion.overlay": {
-        "bytes": 148974,
+        "bytes": 149381,
         "physical_page_count": 5,
         "source_id": "voltage-to-bit-reading-guide"
       }
@@ -22,7 +22,7 @@
   "object": {
     "type": "lean",
     "uri": "https://github.com/Deicyde/voltage-to-bit",
-    "version": "250cb35b47d502fd5ef7356039665dc63518aace",
+    "version": "7c6925a075a4b3d6ab8c8894fc6efadbd786c8ad",
     "extensions": {
       "org.mathlib-initiative.formal-companion.overlay": {
         "destination": {
