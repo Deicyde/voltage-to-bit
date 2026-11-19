@@ -39,7 +39,11 @@ I_p = \tfrac{k_p}{2}\bigl(\psq(V_{DD} - u - V_{tp}) - \psq(v - u - V_{tp})\bigr)
 and the net current into the output is their difference. The five numbers in
 these formulas are the supply voltage, the two transconductance factors and the
 two threshold voltages. The same formulas also describe a transistor conducting
-backwards, when the output is below ground or above the supply.
+backwards, when the output is below ground or above the supply. Effects that
+the square law leaves out, such as conduction below threshold,
+channel-length modulation, the body effect, velocity saturation and junction
+diodes, are not in the formulas; whatever they contribute has to fit in the
+bound on the extra current described next.
 % @end circuit
 
 % @passage uncertainty
@@ -49,8 +53,8 @@ never fixes the five numbers. A design record gives a range for each of them,
 and any choice inside all five ranges is allowed. It also gives a range for the
 capacitance of the output node, and a bound on an extra current that the square
 law does not account for. The record holds a few more numbers: the logic
-thresholds, the two ends of a safe voltage range, and two values that only the
-proofs use.
+thresholds, the two ends of a safe voltage range, and two auxiliary input
+voltages at which some of the arithmetic checks split their estimates.
 % @end uncertainty
 
 % @passage dynamics
@@ -148,9 +152,11 @@ either way.
 \section{Runs exist}
 The guarantee would be empty if there were no runs. For every record that passes
 the checks, every input that is continuous, and every starting voltage in the
-safe range, a run exists. With the device numbers fixed, a capacitance that
-depends smoothly on the voltage and a continuous extra current, the circuit's
-equation has exactly one solution from each such start. One explicit run of the
+safe range, a run exists. Fix the device numbers, let the capacitance be any
+function of the voltage that stays in the allowed range and changes by at most
+a fixed multiple of any change in voltage, and let the extra current be
+continuous and within its bound. Then the circuit's equation has exactly one
+solution from each such start. One explicit run of the
 concrete inverter shows both logic levels in turn.
 % @end existence
 
@@ -173,7 +179,7 @@ conditions.
 \section{What is not claimed}
 Nothing is said about runs that start outside the safe range. When the input is
 not one valid bit throughout a window, only the first statement applies: the
-output stays in the safe range and may read as either bit or as none. Nor does
+output stays in the safe range, and nothing more is claimed about it. Nor does
 the theorem speak about runs that do not exist. For an input that drops from 1.8
 to 0 volts at 4 nanoseconds and still has its old value at that instant, the
 concrete inverter has no run from time 0 to 10 nanoseconds that starts in the
